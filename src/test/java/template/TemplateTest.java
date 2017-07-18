@@ -24,15 +24,18 @@ class TemplateTest {
                 "        return ${expression};\n" +
                 "    }\n" +
                 "}\n";
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < 100 * 100; i++) {
-            String src = template;
-            src = StringUtils.replace(src, "${attrs}", "lfkdsk");
-            src = StringUtils.replace(src, "${localVars}", "lfkdsk");
-            src = StringUtils.replace(src, "${expression}", "lfkdsk");
+        for (int j = 0; j < 10; j++) {
+            long start = System.currentTimeMillis();
+            for (int i = 0; i < 100 * 100; i++) {
+                String src = template;
+                src = StringUtils.replace(src, "${attrs}", "lfkdsk");
+                src = StringUtils.replace(src, "${localVars}", "lfkdsk");
+                src = StringUtils.replace(src, "${expression}", "lfkdsk");
+            }
+            long end = System.currentTimeMillis();
+            System.out.println(end - start);
         }
 
-        long end = System.currentTimeMillis();
-        System.out.println(end - start);
+
     }
 }

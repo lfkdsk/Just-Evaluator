@@ -44,15 +44,14 @@ public class Template {
         context.put("${className}", "FakeName");
         context.put("${localVars}", "int i = 10;");
         context.put("${expression}", "0;");
-        long start = System.currentTimeMillis();
-
-        for (int i = 0; i < 100 * 100; i++) {
-//        System.out.println(templateGen.fakeGenerateString(context));
-            templateGen.fakeGenerateString(context);
+        for (int j = 0; j < 10; j++) {
+            long start = System.currentTimeMillis();
+            for (int i = 0; i < 100 * 100; i++) {
+                templateGen.fakeGenerateString(context);
+            }
+            long end = System.currentTimeMillis();
+            System.out.println(end - start);
         }
-        long end = System.currentTimeMillis();
-        System.out.println(end - start);
     }
-
 
 }
