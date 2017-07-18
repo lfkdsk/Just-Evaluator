@@ -7,4 +7,6 @@ public interface JustContext {
     boolean contain(String name);
 
     Object get(String objName);
+
+    Object put(String key, Object val);
 }

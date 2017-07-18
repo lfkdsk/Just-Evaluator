@@ -16,7 +16,7 @@ public class SingleDomComponent implements DomComponent {
     @Override
     public StringBuilder generate(JustContext context,
                                   StringBuilder builder) {
-        return builder.append(context.get(arg).toString());
+        return builder.append(context.get(arg).toString()).append(" ");
     }
 
     @Override

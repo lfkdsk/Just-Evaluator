@@ -22,7 +22,9 @@ public class SequenceDomComponent implements DomComponent {
 
     @Override
     public StringBuilder generate(JustContext context, StringBuilder builder) {
-        sequenceDom.forEach((DomComponent con) -> builder.append(con.generate(context, builder)));
+        for (DomComponent domComponent : sequenceDom) {
+            domComponent.generate(context, builder);
+        }
         return builder;
     }
 

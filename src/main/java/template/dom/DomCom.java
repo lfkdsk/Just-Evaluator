@@ -15,6 +15,10 @@ public class DomCom {
         this.components = new ArrayList<>();
     }
 
+    public static DomCom rule() {
+        return new DomCom();
+    }
+
     public List<DomComponent> getComponents() {
         return components;
     }
@@ -24,12 +28,17 @@ public class DomCom {
         return this;
     }
 
+    public DomCom bind(String bindVar) {
+        components.add(new SingleDomComponent(bindVar));
+        return this;
+    }
+
     public DomCom ast(DomComponent component) {
         components.add(component);
         return this;
     }
 
-    public DomCom bind(DomComponent... component) {
+    public DomCom seq(DomComponent... component) {
         components.add(new SequenceDomComponent(component));
         return this;
     }

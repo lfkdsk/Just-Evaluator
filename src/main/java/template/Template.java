@@ -1,45 +1,58 @@
 package template;
 
-import grammar.Grammar;
-import parser.BnfCom;
+import context.JustMapContext;
+import template.dom.DomCom;
 
 /**
  * Created by liufengkai on 2017/7/18.
  */
 public class Template {
 
-    public static final BnfCom importGen = BnfCom.rule(Import.class)
-            .sep("import")
-            .ast(Grammar.string)
-            .sep(";");
-
-    public static final BnfCom packageGen = BnfCom.rule(Package.class)
+    public static final DomCom packageGen = DomCom.rule()
             .sep("package")
-            .ast(Grammar.string)
-            .sep(";");
+            .sep("com.greenpineyu.fel.compile;");
 
-    public static final BnfCom functionGen = BnfCom.rule(Function.class)
-            .ast(Grammar.string)
+    public static final DomCom importGen = DomCom.rule()
+            .sep("import")
+            .sep("com.greenpineyu.fel.common.*;");
+
+    public static final DomCom functionGen = DomCom.rule()
+            .bind("${attrs}")
             .sep("public Object eval(JustContext context) {")
-            .ast(Grammar.string)
+            .bind("${localVars}")
             .sep("return")
-            .ast(Grammar.string)
+            .bind("${expression}")
             .sep("}");
 
-    public static final BnfCom classGen = BnfCom.rule(Class.class)
+    public static final DomCom classGen = DomCom.rule()
             .sep("public class")
-            .ast(Grammar.string)
+            .bind("${className}")
             .sep("implement Expression")
             .sep("{")
-            .ast(functionGen)
+            .append(functionGen)
             .sep("}");
 
-    public static final BnfCom templateGen = BnfCom.rule(TemplateGen.class)
-            .ast(packageGen)
-            .repeat(importGen)
-            .ast(classGen);
+    public static final DomCom templateGen = DomCom.rule()
+            .append(packageGen)
+            .append(importGen)
+            .append(classGen);
 
     public static void main(String[] args) {
 
+        JustMapContext context = new JustMapContext();
+        context.put("${attrs}", "@Override");
+        context.put("${className}", "FakeName");
+        context.put("${localVars}", "int i = 10;");
+        context.put("${expression}", "0;");
+        long start = System.currentTimeMillis();
+
+        for (int i = 0; i < 100 * 100; i++) {
+//        System.out.println(templateGen.fakeGenerateString(context));
+            templateGen.fakeGenerateString(context);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
     }
+
+
 }
