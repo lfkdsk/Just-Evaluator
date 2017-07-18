@@ -1,14 +1,14 @@
 package grammar;
 
 import literal.StringLiteral;
-import parser.BnfCon;
+import parser.BnfCom;
 
 /**
  * Created by liufengkai on 2017/7/18.
  */
 public class Grammar {
-    public static final BnfCon string = BnfCon.rule().string(StringLiteral.class);
+    public static final BnfCom string = BnfCom.rule().string(StringLiteral.class);
 
-    public static final BnfCon expr = BnfCon.rule();
+    public static final BnfCom expr = BnfCom.rule();
 
 }

@@ -1,24 +1,24 @@
 package template;
 
 import grammar.Grammar;
-import parser.BnfCon;
+import parser.BnfCom;
 
 /**
  * Created by liufengkai on 2017/7/18.
  */
 public class Template {
 
-    public static final BnfCon importGen = BnfCon.rule(Import.class)
+    public static final BnfCom importGen = BnfCom.rule(Import.class)
             .sep("import")
             .ast(Grammar.string)
             .sep(";");
 
-    public static final BnfCon packageGen = BnfCon.rule(Package.class)
+    public static final BnfCom packageGen = BnfCom.rule(Package.class)
             .sep("package")
             .ast(Grammar.string)
             .sep(";");
 
-    public static final BnfCon functionGen = BnfCon.rule(Function.class)
+    public static final BnfCom functionGen = BnfCom.rule(Function.class)
             .ast(Grammar.string)
             .sep("public Object eval(JustContext context) {")
             .ast(Grammar.string)
@@ -26,7 +26,7 @@ public class Template {
             .ast(Grammar.string)
             .sep("}");
 
-    public static final BnfCon classGen = BnfCon.rule(Class.class)
+    public static final BnfCom classGen = BnfCom.rule(Class.class)
             .sep("public class")
             .ast(Grammar.string)
             .sep("implement Expression")
@@ -34,7 +34,7 @@ public class Template {
             .ast(functionGen)
             .sep("}");
 
-    public static final BnfCon templateGen = BnfCon.rule(TemplateGen.class)
+    public static final BnfCom templateGen = BnfCom.rule(TemplateGen.class)
             .ast(packageGen)
             .repeat(importGen)
             .ast(classGen);

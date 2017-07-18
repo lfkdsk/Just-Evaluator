@@ -15,12 +15,12 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * BnfCon 巴克斯范式解析引擎
+ * BnfCom 巴克斯范式解析引擎
  *
  * @author liufengkai
  *         Created by liufengkai on 16/7/11.
  */
-public class BnfCon {
+public class BnfCom {
 
     protected static abstract class Element {
         /**
@@ -49,9 +49,9 @@ public class BnfCon {
      * 只是个构造基类
      */
     protected static class Tree extends Element {
-        protected BnfCon parser;
+        protected BnfCom parser;
 
-        public Tree(BnfCon parser) {
+        public Tree(BnfCom parser) {
             this.parser = parser;
         }
 
@@ -71,15 +71,15 @@ public class BnfCon {
      * [] | []
      */
     protected static class OrTree extends Element {
-        protected BnfCon[] parsers;
+        protected BnfCom[] parsers;
 
-        public OrTree(BnfCon[] parsers) {
+        public OrTree(BnfCom[] parsers) {
             this.parsers = parsers;
         }
 
         @Override
         protected void parse(Lexer lexer, List<AstNode> nodes) throws ParseException {
-            BnfCon parser = choose(lexer);
+            BnfCom parser = choose(lexer);
             if (parser == null) {
                 throw new ParseException(lexer.peek(0));
             } else {
@@ -92,8 +92,8 @@ public class BnfCon {
             return choose(lexer) != null;
         }
 
-        protected BnfCon choose(Lexer lexer) throws ParseException {
-            for (BnfCon parser : parsers) {
+        protected BnfCom choose(Lexer lexer) throws ParseException {
+            for (BnfCom parser : parsers) {
                 if (parser.match(lexer)) {
                     return parser;
                 }
@@ -106,8 +106,8 @@ public class BnfCon {
          *
          * @param parser BNF
          */
-        protected void insert(BnfCon parser) {
-            BnfCon[] newParsers = new BnfCon[parsers.length + 1];
+        protected void insert(BnfCom parser) {
+            BnfCom[] newParsers = new BnfCom[parsers.length + 1];
             newParsers[0] = parser;
             System.arraycopy(parsers, 0, newParsers, 1, parsers.length);
             parsers = newParsers;
@@ -121,7 +121,7 @@ public class BnfCon {
      * 还有Option
      */
     protected static class Repeat extends Element {
-        protected BnfCon parser;
+        protected BnfCom parser;
 
         protected boolean onlyOne;
 
@@ -129,7 +129,7 @@ public class BnfCon {
          * @param parser  BNF
          * @param onlyOne 节点出现次数
          */
-        public Repeat(BnfCon parser, boolean onlyOne) {
+        public Repeat(BnfCom parser, boolean onlyOne) {
             this.parser = parser;
             this.onlyOne = onlyOne;
         }
@@ -397,9 +397,9 @@ public class BnfCon {
 
         protected Operators ops;
 
-        protected BnfCon factor;
+        protected BnfCom factor;
 
-        public Expr(Class<? extends AstNode> clazz, BnfCon factor, Operators ops) {
+        public Expr(Class<? extends AstNode> clazz, BnfCom factor, Operators ops) {
 
             this.factory = Factory.getForAstList(clazz);
             this.factor = factor;
@@ -580,11 +580,11 @@ public class BnfCon {
      */
     protected Factory factory;
 
-    public BnfCon(Class<? extends AstNode> clazz) {
+    public BnfCom(Class<? extends AstNode> clazz) {
         reset(clazz);
     }
 
-    protected BnfCon(BnfCon parser) {
+    protected BnfCom(BnfCom parser) {
         elements = parser.elements;
         factory = parser.factory;
     }
@@ -618,7 +618,7 @@ public class BnfCon {
      *
      * @return Ast
      */
-    public static BnfCon rule() {
+    public static BnfCom rule() {
         return rule(null);
     }
 
@@ -628,16 +628,16 @@ public class BnfCon {
      * @param clazz 类
      * @return Ast
      */
-    public static BnfCon rule(Class<? extends AstNode> clazz) {
-        return new BnfCon(clazz);
+    public static BnfCom rule(Class<? extends AstNode> clazz) {
+        return new BnfCom(clazz);
     }
 
-    public BnfCon reset() {
+    public BnfCom reset() {
         elements = new ArrayList<>();
         return this;
     }
 
-    public BnfCon reset(Class<? extends AstNode> clazz) {
+    public BnfCom reset(Class<? extends AstNode> clazz) {
         elements = new ArrayList<>();
         factory = Factory.getForAstList(clazz);
         return this;
@@ -647,58 +647,58 @@ public class BnfCon {
     // 添加识别各种Token的方法
     ///////////////////////////////////////////////////////////////////////////
 
-    public BnfCon number() {
+    public BnfCom number() {
         return number(null);
     }
 
 
-    public BnfCon number(Class<? extends AstLeaf> clazz) {
+    public BnfCom number(Class<? extends AstLeaf> clazz) {
         elements.add(new NumToken(clazz));
         return this;
     }
 
-    public BnfCon identifier(HashSet<String> reserved) {
+    public BnfCom identifier(HashSet<String> reserved) {
         return identifier(null, reserved);
     }
 
-    public BnfCon identifier(Class<? extends AstLeaf> clazz,
+    public BnfCom identifier(Class<? extends AstLeaf> clazz,
                              HashSet<String> reserved) {
         elements.add(new IdToken(clazz, reserved));
         return this;
     }
 
-    public BnfCon string() {
+    public BnfCom string() {
         return string(null);
     }
 
-    public BnfCon string(Class<? extends AstLeaf> clazz) {
+    public BnfCom string(Class<? extends AstLeaf> clazz) {
         elements.add(new StrToken(clazz));
         return this;
     }
 
-    public BnfCon bool() {
+    public BnfCom bool() {
         return bool(null);
     }
 
-    public BnfCon bool(Class<? extends AstLeaf> clazz) {
+    public BnfCom bool(Class<? extends AstLeaf> clazz) {
         elements.add(new BoolToken(clazz));
         return this;
     }
 
-    public BnfCon Null() {
+    public BnfCom Null() {
         return Null(null);
     }
 
-    public BnfCon Null(Class<? extends AstLeaf> clazz) {
+    public BnfCom Null(Class<? extends AstLeaf> clazz) {
         elements.add(new NullToken(clazz));
         return this;
     }
 
-    public BnfCon type() {
+    public BnfCom type() {
         return type(null);
     }
 
-    public BnfCon type(Class<? extends AstLeaf> clazz) {
+    public BnfCom type(Class<? extends AstLeaf> clazz) {
         elements.add(new TypeToken(clazz));
         return this;
     }
@@ -709,7 +709,7 @@ public class BnfCon {
      * @param pat
      * @return
      */
-    public BnfCon token(String... pat) {
+    public BnfCom token(String... pat) {
         elements.add(new Leaf(pat));
         return this;
     }
@@ -720,7 +720,7 @@ public class BnfCon {
      * @param pat 符号
      * @return 这种格式的符号(跳
      */
-    public BnfCon sep(String... pat) {
+    public BnfCom sep(String... pat) {
         elements.add(new Skip(pat));
         return this;
     }
@@ -731,7 +731,7 @@ public class BnfCon {
      * @param parser BNF
      * @return BNF
      */
-    public BnfCon ast(BnfCon parser) {
+    public BnfCom ast(BnfCom parser) {
         elements.add(new Tree(parser));
         return this;
     }
@@ -742,17 +742,17 @@ public class BnfCon {
      * @param parsers BNF
      * @return BNF
      */
-    public BnfCon or(BnfCon... parsers) {
+    public BnfCom or(BnfCom... parsers) {
         elements.add(new OrTree(parsers));
         return this;
     }
 
-    public BnfCon maybe(BnfCon parser) {
-        BnfCon parser1 = new BnfCon(parser);
+    public BnfCom maybe(BnfCom parser) {
+        BnfCom parser1 = new BnfCom(parser);
 
         parser1.reset();
 
-        elements.add(new OrTree(new BnfCon[]{parser, parser1}));
+        elements.add(new OrTree(new BnfCom[]{parser, parser1}));
         return this;
     }
 
@@ -762,7 +762,7 @@ public class BnfCon {
      * @param parser BNF
      * @return BNF
      */
-    public BnfCon option(BnfCon parser) {
+    public BnfCom option(BnfCom parser) {
         elements.add(new Repeat(parser, true));
         return this;
     }
@@ -773,28 +773,28 @@ public class BnfCon {
      * @param parser BNF
      * @return BNF
      */
-    public BnfCon repeat(BnfCon parser) {
+    public BnfCom repeat(BnfCom parser) {
         elements.add(new Repeat(parser, false));
         return this;
     }
 
-    public BnfCon expression(BnfCon subExp, Operators operators) {
+    public BnfCom expression(BnfCom subExp, Operators operators) {
         elements.add(new Expr(null, subExp, operators));
         return this;
     }
 
-    public BnfCon expression(Class<? extends AstNode> clazz, BnfCon subExp,
+    public BnfCom expression(Class<? extends AstNode> clazz, BnfCom subExp,
                              Operators operators) {
         elements.add(new Expr(clazz, subExp, operators));
         return this;
     }
 
-    public BnfCon insertChoice(BnfCon parser) {
+    public BnfCom insertChoice(BnfCom parser) {
         Element e = elements.get(0);
         if (e instanceof OrTree) {
             ((OrTree) e).insert(parser);
         } else {
-            BnfCon otherWise = new BnfCon(this);
+            BnfCom otherWise = new BnfCom(this);
             reset(null);
             or(parser, otherWise);
         }
