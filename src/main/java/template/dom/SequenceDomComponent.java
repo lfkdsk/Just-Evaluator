@@ -24,16 +24,12 @@ public class SequenceDomComponent implements DomComponent {
 
     @Override
     public StringBuilder generateCode(JustContext context, StringBuilder builder) {
-        for (DomComponent domComponent : sequenceDom) {
-            domComponent.generateCode(context, builder);
-        }
+        sequenceDom.forEach(domComponent -> domComponent.generateCode(context, builder));
         return builder;
     }
 
     @Override
     public boolean isValidate(JustContext context) {
-        return sequenceDom.stream()
-                .filter((DomComponent con) -> !con.isValidate(context))
-                .count() > 0;
+        return sequenceDom.stream().allMatch((DomComponent con) -> con.isValidate(context));
     }
 }

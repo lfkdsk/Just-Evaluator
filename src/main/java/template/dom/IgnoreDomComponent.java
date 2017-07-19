@@ -19,8 +19,7 @@ public class IgnoreDomComponent implements DomComponent {
 
     @Override
     public StringBuilder generateCode(JustContext context, StringBuilder builder) {
-        Arrays.stream(ignoreDomString)
-                .forEach(string -> builder.append(string).append(" "));
+        Arrays.stream(ignoreDomString).forEach(string -> builder.append(string).append(" "));
         return builder;
     }
 

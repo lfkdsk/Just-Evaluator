@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * AST 页节点
+ * AST Leaf Node
  *
  * @author liufengkai
  *         Created by liufengkai on 16/7/11.

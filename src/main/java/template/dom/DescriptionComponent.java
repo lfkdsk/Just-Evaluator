@@ -17,9 +17,7 @@ public class DescriptionComponent implements DomComponent {
 
     @Override
     public StringBuilder generateCode(JustContext context, StringBuilder builder) {
-        Arrays.stream(desString)
-                .map(string -> "//" + string + "\n")
-                .forEach(builder::append);
+        Arrays.stream(desString).map(string -> "//" + string + "\n").forEach(builder::append);
         return builder;
     }
 

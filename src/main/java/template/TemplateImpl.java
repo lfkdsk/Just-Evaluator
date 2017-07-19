@@ -14,7 +14,7 @@ public class TemplateImpl implements Template {
 
     private static final DomCom packageGen = DomCom.rule()
             .sep("package")
-            .sep("com.greenpineyu.fel.compile;");
+            .sep("com.lfkdsk.justel.generatecode;");
 
     private static final DomCom importGen = DomCom.rule()
             .sep("import")
