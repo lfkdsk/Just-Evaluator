@@ -6,12 +6,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Dom fixed structure Component Binder.
+ * We bind structure use static method in this class.
+ * Usage:
+ * <code>
+ * private static final DomCom classGen = DomCom.rule()
+ *                                  .sep("public class")
+ *                                  .bind("${className}")
+ *                                  .sep("implement Expression")
+ *                                  .sep("{")
+ *                                  .append(functionGen)
+ *                                  .sep("}");
+ * </code>
+ * @see template.TemplateImpl to get more usages
  * Created by liufengkai on 2017/7/18.
  */
 public class DomCom {
-    public List<DomComponent> components;
 
-    public DomCom() {
+    /**
+     * a set of components
+     */
+    private List<DomComponent> components;
+
+    private DomCom() {
         this.components = new ArrayList<>();
     }
 
@@ -19,39 +36,86 @@ public class DomCom {
         return new DomCom();
     }
 
-    public List<DomComponent> getComponents() {
+    /**
+     * return all components
+     *
+     * @return list of subDom
+     */
+    private List<DomComponent> getComponents() {
         return components;
     }
 
+    /**
+     * Add Ignore-Component
+     * Ignore-Component will not check exchange Vars
+     *
+     * @param comString a set of ignore-string
+     * @return bind ignore DomCom
+     */
     public DomCom sep(String... comString) {
         components.add(new IgnoreDomComponent(comString));
         return this;
     }
 
+    /**
+     * Bind Single-Vars Dom Component In Components.
+     *
+     * @param bindVar vars-exchange-code
+     * @return bind vars-DomCom
+     */
     public DomCom bind(String bindVar) {
         components.add(new SingleDomComponent(bindVar));
         return this;
     }
 
+    /**
+     * Bind one Component to DomCom
+     *
+     * @param component new component
+     * @return binder-DomCom
+     */
     public DomCom ast(DomComponent component) {
         components.add(component);
         return this;
     }
 
+    /**
+     * Bind a sequence of Components at the last of DomCom
+     *
+     * @param component a set of components
+     * @return return binder-DomCom
+     */
     public DomCom seq(DomComponent... component) {
         components.add(new SequenceDomComponent(component));
         return this;
     }
 
+    /**
+     * Append a DomCom to self
+     *
+     * @param domCom new-domCom
+     * @return return binder-DomCom
+     */
     public DomCom append(DomCom domCom) {
         components.addAll(domCom.getComponents());
         return this;
     }
 
+    /**
+     * Return Fake Generate Component.
+     *
+     * @return return a set of sequence dom.
+     */
     public DomComponent fakeGenerateComponent() {
         return new SequenceDomComponent(components);
     }
 
+    /**
+     * Return Fake Generate String.
+     *
+     * @param context Vars Context.
+     * @return return fake generate string.
+     */
     public String fakeGenerateString(JustContext context) {
         return fakeGenerateComponent()
                 .generate(context, new StringBuilder())

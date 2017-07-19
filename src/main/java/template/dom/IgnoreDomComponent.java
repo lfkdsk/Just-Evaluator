@@ -3,13 +3,15 @@ package template.dom;
 import context.JustContext;
 
 /**
+ * Ignore Component.
+ * just control generate code not about exchange Vars
  * Created by liufengkai on 2017/7/18.
  */
 public class IgnoreDomComponent implements DomComponent {
 
     private String[] ignoreDomString;
 
-    public IgnoreDomComponent(String... ignoreDomString) {
+    IgnoreDomComponent(String... ignoreDomString) {
         this.ignoreDomString = ignoreDomString;
     }
 
@@ -22,7 +24,7 @@ public class IgnoreDomComponent implements DomComponent {
     }
 
     @Override
-    public boolean validation(JustContext context) {
+    public boolean isValidate(JustContext context) {
         return true;
     }
 }

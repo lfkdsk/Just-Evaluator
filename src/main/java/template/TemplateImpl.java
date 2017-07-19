@@ -2,21 +2,25 @@ package template;
 
 import context.JustMapContext;
 import template.dom.DomCom;
+import template.dom.Template;
 
 /**
+ * Simple Template Impl
+ * Use fixed structure Ast to save the template
+ * and we can use it to generate-code as template file
  * Created by liufengkai on 2017/7/18.
  */
-public class Template {
+public class TemplateImpl implements Template {
 
-    public static final DomCom packageGen = DomCom.rule()
+    private static final DomCom packageGen = DomCom.rule()
             .sep("package")
             .sep("com.greenpineyu.fel.compile;");
 
-    public static final DomCom importGen = DomCom.rule()
+    private static final DomCom importGen = DomCom.rule()
             .sep("import")
             .sep("com.greenpineyu.fel.common.*;");
 
-    public static final DomCom functionGen = DomCom.rule()
+    private static final DomCom functionGen = DomCom.rule()
             .bind("${attrs}")
             .sep("public Object eval(JustContext context) {")
             .bind("${localVars}")
@@ -24,7 +28,7 @@ public class Template {
             .bind("${expression}")
             .sep("}");
 
-    public static final DomCom classGen = DomCom.rule()
+    private static final DomCom classGen = DomCom.rule()
             .sep("public class")
             .bind("${className}")
             .sep("implement Expression")
@@ -32,13 +36,17 @@ public class Template {
             .append(functionGen)
             .sep("}");
 
-    public static final DomCom templateGen = DomCom.rule()
+    private static final DomCom templateGen = DomCom.rule()
             .append(packageGen)
             .append(importGen)
             .append(classGen);
 
-    public static void main(String[] args) {
+    @Override
+    public DomCom generateTemplate() {
+        return templateGen;
+    }
 
+    public static void main(String[] args) {
         JustMapContext context = new JustMapContext();
         context.put("${attrs}", "@Override");
         context.put("${className}", "FakeName");
@@ -53,5 +61,4 @@ public class Template {
             System.out.println(end - start);
         }
     }
-
 }

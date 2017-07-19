@@ -6,17 +6,19 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Sequence Component
+ * We could bind a set of components in one Sequence.
  * Created by liufengkai on 2017/7/18.
  */
 public class SequenceDomComponent implements DomComponent {
 
     private List<DomComponent> sequenceDom;
 
-    public SequenceDomComponent(DomComponent... sequenceDom) {
+    SequenceDomComponent(DomComponent... sequenceDom) {
         this(Arrays.asList(sequenceDom));
     }
 
-    public SequenceDomComponent(List<DomComponent> sequenceDom) {
+    SequenceDomComponent(List<DomComponent> sequenceDom) {
         this.sequenceDom = sequenceDom;
     }
 
@@ -29,9 +31,9 @@ public class SequenceDomComponent implements DomComponent {
     }
 
     @Override
-    public boolean validation(JustContext context) {
+    public boolean isValidate(JustContext context) {
         return sequenceDom.stream()
-                .filter((DomComponent con) -> !con.validation(context))
+                .filter((DomComponent con) -> !con.isValidate(context))
                 .count() > 0;
     }
 }
