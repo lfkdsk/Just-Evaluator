@@ -3,12 +3,12 @@ package template.dom;
 /**
  * Template File Interface
  * We just need a domCom object to
- * generate template file
+ * generateCode template file
  * Created by liufengkai on 2017/7/19.
  */
 public interface Template {
     /**
-     * generate-code template
+     * generateCode-code template
      *
      * @return domCom-node
      */

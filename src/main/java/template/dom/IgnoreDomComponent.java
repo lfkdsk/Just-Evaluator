@@ -2,9 +2,11 @@ package template.dom;
 
 import context.JustContext;
 
+import java.util.Arrays;
+
 /**
  * Ignore Component.
- * just control generate code not about exchange Vars
+ * just control generateCode code not about exchange Vars
  * Created by liufengkai on 2017/7/18.
  */
 public class IgnoreDomComponent implements DomComponent {
@@ -16,10 +18,9 @@ public class IgnoreDomComponent implements DomComponent {
     }
 
     @Override
-    public StringBuilder generate(JustContext context, StringBuilder builder) {
-        for (String s : ignoreDomString) {
-            builder.append(s).append(" ");
-        }
+    public StringBuilder generateCode(JustContext context, StringBuilder builder) {
+        Arrays.stream(ignoreDomString)
+                .forEach(string -> builder.append(string).append(" "));
         return builder;
     }
 

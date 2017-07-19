@@ -13,9 +13,9 @@ public interface DomComponent {
      *
      * @param context Vars-Context
      * @param builder Builder
-     * @return return the builder in generate
+     * @return return the builder in generateCode
      */
-    StringBuilder generate(JustContext context, StringBuilder builder);
+    StringBuilder generateCode(JustContext context, StringBuilder builder);
 
     /**
      * isValidate

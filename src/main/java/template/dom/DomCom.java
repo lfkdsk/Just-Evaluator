@@ -114,11 +114,11 @@ public class DomCom {
      * Return Fake Generate String.
      *
      * @param context Vars Context.
-     * @return return fake generate string.
+     * @return return fake generateCode string.
      */
     public String fakeGenerateString(JustContext context) {
         return fakeGenerateComponent()
-                .generate(context, new StringBuilder())
+                .generateCode(context, new StringBuilder())
                 .toString();
     }
 }

@@ -1,5 +1,6 @@
 package template;
 
+import context.JustMapContext;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -35,7 +36,17 @@ class TemplateTest {
             long end = System.currentTimeMillis();
             System.out.println(end - start);
         }
+    }
 
-
+    @Test
+    void testGenerateCode() {
+        TemplateImpl template = new TemplateImpl();
+        JustMapContext context = new JustMapContext();
+        context.put("${attrs}", "@Override");
+        context.put("${className}", "FakeName");
+        context.put("${localVars}", "int i = 10;");
+        context.put("${expression}", "0;");
+        System.out.println(template.generateTemplate()
+                .fakeGenerateString(context));
     }
 }

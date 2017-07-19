@@ -7,7 +7,7 @@ import template.dom.Template;
 /**
  * Simple Template Impl
  * Use fixed structure Ast to save the template
- * and we can use it to generate-code as template file
+ * and we can use it to generateCode-code as template file
  * Created by liufengkai on 2017/7/18.
  */
 public class TemplateImpl implements Template {
