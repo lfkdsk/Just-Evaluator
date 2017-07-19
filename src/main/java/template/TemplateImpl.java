@@ -4,6 +4,8 @@ import context.JustMapContext;
 import template.dom.DomCom;
 import template.dom.Template;
 
+import static template.dom.DomCom.rule;
+
 /**
  * Simple Template Impl
  * Use fixed structure Ast to save the template
@@ -12,15 +14,15 @@ import template.dom.Template;
  */
 public class TemplateImpl implements Template {
 
-    private static final DomCom packageGen = DomCom.rule()
+    private static final DomCom packageGen = rule()
             .sep("package")
             .sep("com.lfkdsk.justel.generatecode;");
 
-    private static final DomCom importGen = DomCom.rule()
+    private static final DomCom importGen = rule()
             .sep("import")
             .sep("com.greenpineyu.fel.common.*;");
 
-    private static final DomCom functionGen = DomCom.rule()
+    private static final DomCom functionGen = rule()
             .bind("${attrs}")
             .sep("public Object eval(JustContext context) {")
             .bind("${localVars}")
@@ -28,7 +30,7 @@ public class TemplateImpl implements Template {
             .bind("${expression}")
             .sep("}");
 
-    private static final DomCom classGen = DomCom.rule()
+    private static final DomCom classGen = rule()
             .sep("public class")
             .bind("${className}")
             .sep("implement Expression")
@@ -36,7 +38,7 @@ public class TemplateImpl implements Template {
             .append(functionGen)
             .sep("}");
 
-    private static final DomCom templateGen = DomCom.rule()
+    private static final DomCom templateGen = rule()
             .append(packageGen)
             .append(importGen)
             .append(classGen);
