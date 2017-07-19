@@ -11,13 +11,14 @@ import java.util.List;
  * Usage:
  * <code>
  * private static final DomCom classGen = DomCom.rule()
- *                                  .sep("public class")
- *                                  .bind("${className}")
- *                                  .sep("implement Expression")
- *                                  .sep("{")
- *                                  .append(functionGen)
- *                                  .sep("}");
+ * .sep("public class")
+ * .bind("${className}")
+ * .sep("implement Expression")
+ * .sep("{")
+ * .append(functionGen)
+ * .sep("}");
  * </code>
+ *
  * @see template.TemplateImpl to get more usages
  * Created by liufengkai on 2017/7/18.
  */
@@ -98,6 +99,15 @@ public class DomCom {
      */
     public DomCom append(DomCom domCom) {
         components.addAll(domCom.getComponents());
+        return this;
+    }
+
+    public DomCom nop(String... nopStrings) {
+        return this;
+    }
+
+    public DomCom des(String... desStrings) {
+        components.add(new DescriptionComponent(desStrings));
         return this;
     }
 
