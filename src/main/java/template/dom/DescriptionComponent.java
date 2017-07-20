@@ -2,8 +2,6 @@ package template.dom;
 
 import context.JustContext;
 
-import java.util.Arrays;
-
 /**
  * Created by liufengkai on 2017/7/19.
  */
@@ -17,7 +15,10 @@ public class DescriptionComponent implements DomComponent {
 
     @Override
     public StringBuilder generateCode(JustContext context, StringBuilder builder) {
-        Arrays.stream(desString).map(string -> "//" + string + "\n").forEach(builder::append);
+//        Arrays.stream(desString).map(string -> "//" + string + "\n").forEach(builder::append);
+        for (String des : desString) {
+            builder.append("//").append(des).append("\n");
+        }
         return builder;
     }
 

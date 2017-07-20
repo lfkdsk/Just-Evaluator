@@ -24,7 +24,9 @@ public class SequenceDomComponent implements DomComponent {
 
     @Override
     public StringBuilder generateCode(JustContext context, StringBuilder builder) {
-        sequenceDom.forEach(domComponent -> domComponent.generateCode(context, builder));
+        for (DomComponent domComponent : sequenceDom) {
+            domComponent.generateCode(context, builder);
+        }
         return builder;
     }
 

@@ -2,8 +2,6 @@ package template.dom;
 
 import context.JustContext;
 
-import java.util.Arrays;
-
 /**
  * Ignore Component.
  * just control generateCode code not about exchange Vars
@@ -19,7 +17,9 @@ public class IgnoreDomComponent implements DomComponent {
 
     @Override
     public StringBuilder generateCode(JustContext context, StringBuilder builder) {
-        Arrays.stream(ignoreDomString).forEach(string -> builder.append(string).append(" "));
+        for (String ignore : ignoreDomString) {
+            builder.append(ignore).append(" ");
+        }
         return builder;
     }
 
