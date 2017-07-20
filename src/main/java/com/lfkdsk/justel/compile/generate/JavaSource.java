@@ -4,6 +4,8 @@ package com.lfkdsk.justel.compile.generate;
  * Created by liufengkai on 2017/7/20.
  */
 public final class JavaSource {
+    public static final String GENERATE_DEFALUT_PACKAGE = "com.lfkdsk.justel.generatecode";
+
     public final String packageName;
 
     public final String className;
@@ -16,6 +18,14 @@ public final class JavaSource {
         this.className = className;
         this.sourceCode = sourceCode;
         this.packageName = packageName;
+    }
+
+    public String getClassQualifiedName() {
+        return packageName + "." + className;
+    }
+
+    public String getFileName() {
+        return className + ".java";
     }
 
     @Override

@@ -16,15 +16,15 @@ class JustCompilerImplTest {
     void compile() {
         DomCom templateGen = new TemplateImpl().generateTemplate();
         JustCompilerImpl compiler = new JustCompilerImpl();
+
         JustMapContext context = new JustMapContext();
         String className = "JustEL" + GeneratedId.generateAtomId();
         context.put("${attrs}", "@Override");
         context.put("${className}", className);
         context.put("${localVars}", "int i = 10;");
         context.put("${expression}", "0;");
-
         String sourceCode = templateGen.fakeGenerateString(context);
-
+        System.out.println(sourceCode);
         Expression expr = compiler
                 .compile(new JavaSource("com.lfkdsk.justel.generatecode", className, sourceCode));
 

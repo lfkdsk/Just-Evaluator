@@ -44,14 +44,13 @@ public class JustMemFileManager extends ForwardingJavaFileManager<JavaFileManage
         final JavaSource source;
 
         protected MemInputJavaFileObject(JavaSource source) {
-            super(URI.create("string:///" + source.className), Kind.SOURCE);
+            super(URI.create("string:///" + source.getFileName()), Kind.SOURCE);
             this.source = source;
         }
 
         @Override
         public CharSequence getCharContent(boolean ignoreEncodingErrors) throws IOException {
-            CharBuffer buffer = CharBuffer.wrap(source.sourceCode);
-            return buffer;
+            return CharBuffer.wrap(source.sourceCode);
         }
     }
 

@@ -44,17 +44,18 @@ public class JustCompilerImpl implements JustCompiler {
 
             Boolean result = compilationTask.call();
             if (result == null || !result) {
-                throw new CompilerException("Compilation Failed!");
+                throw new CompilerException("Compilation Failed! " + diagnosticsReport.getDiagnostics().toString());
             }
 
-            return (Expression) loadClass(memClassLoader, code.className).newInstance();
+            return (Expression) loadClass(memClassLoader, code.getClassQualifiedName()).newInstance();
         } catch (IOException e) {
 
             throw new CompilerException(
-                    "Cannot com.lfkdsk.justel.compile Java Source Code With IO Exception \n"
+                    "Cannot compile Java Source Code With IO Exception \n"
                             + e.getMessage() + " \n : " + code.toString());
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
 
+            e.printStackTrace();
             throw new CompilerException(e.getMessage());
         }
     }

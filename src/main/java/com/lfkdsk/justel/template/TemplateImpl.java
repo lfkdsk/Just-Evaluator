@@ -31,7 +31,7 @@ public class TemplateImpl implements Template {
     private static final DomCom classGen = DomCom.rule()
             .sep("public class")
             .bind("${className}")
-            .sep("implement Expression")
+            .sep("implements Expression ")
             .sep("{")
             .append(functionGen)
             .sep("}");
