@@ -111,6 +111,11 @@ public class DomCom {
         return this;
     }
 
+    public DomCom randomVal() {
+        components.add(new RandomValComonent());
+        return this;
+    }
+
     /**
      * Return Fake Generate Component.
      *

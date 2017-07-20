@@ -36,7 +36,7 @@ public class TemplateImpl implements Template {
             .append(functionGen)
             .sep("}");
 
-    public static final DomCom templateGen = DomCom.rule()
+    private static final DomCom templateGen = DomCom.rule()
             .append(packageGen)
             .append(importGen)
             .append(classGen);
