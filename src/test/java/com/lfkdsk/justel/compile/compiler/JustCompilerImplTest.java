@@ -16,7 +16,6 @@ class JustCompilerImplTest {
     void compile() {
         DomCom templateGen = new TemplateImpl().generateTemplate();
         JustCompilerImpl compiler = new JustCompilerImpl();
-
         JustMapContext context = new JustMapContext();
         String className = "JustEL" + GeneratedId.generateAtomId();
         context.put("${attrs}", "@Override");
@@ -24,10 +23,16 @@ class JustCompilerImplTest {
         context.put("${localVars}", "int i = 10;");
         context.put("${expression}", "0;");
         String sourceCode = templateGen.fakeGenerateString(context);
-        System.out.println(sourceCode);
-        Expression expr = compiler
-                .compile(new JavaSource("com.lfkdsk.justel.generatecode", className, sourceCode));
+        JavaSource source = new JavaSource("com.lfkdsk.justel.generatecode", className, sourceCode);
 
-        System.out.println(expr);
+        for (int i = 0; i < 100; i++) {
+            long startTime = System.currentTimeMillis();
+//        System.out.println(sourceCode);
+            Expression expr = compiler.compile(source);
+
+            System.out.println(System.currentTimeMillis() - startTime);
+        }
+
+//        System.out.println(expr);
     }
 }

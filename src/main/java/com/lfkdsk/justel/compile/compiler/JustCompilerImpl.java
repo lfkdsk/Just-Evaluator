@@ -7,7 +7,6 @@ import com.lfkdsk.justel.exception.CompilerException;
 import com.lfkdsk.justel.expr.Expression;
 
 import javax.tools.*;
-import java.io.IOException;
 import java.util.Collections;
 
 /**
@@ -23,6 +22,8 @@ public class JustCompilerImpl implements JustCompiler {
 
     private DiagnosticCollector<JavaFileObject> diagnosticsReport;
 
+    private final JustMemFileManager manager;
+
     public JustCompilerImpl() {
         // initial compiler
         this.compiler = ToolProvider.getSystemJavaCompiler();
@@ -32,11 +33,12 @@ public class JustCompilerImpl implements JustCompiler {
         this.diagnosticsReport = new DiagnosticCollector<>();
         this.stdFileManager = compiler.getStandardFileManager(diagnosticsReport, null, null);
         this.memClassLoader = new JustMemClassLoader(this.getClass().getClassLoader());
+        this.manager = new JustMemFileManager(stdFileManager, memClassLoader);
     }
 
     @Override
     public Expression compile(JavaSource code) {
-        try (JustMemFileManager manager = new JustMemFileManager(stdFileManager, memClassLoader)) {
+        try {
             JavaFileObject javaFileObject = manager.makeStringSource(code);
 
             JavaCompiler.CompilationTask compilationTask =
@@ -48,11 +50,6 @@ public class JustCompilerImpl implements JustCompiler {
             }
 
             return (Expression) loadClass(memClassLoader, code.getClassQualifiedName()).newInstance();
-        } catch (IOException e) {
-
-            throw new CompilerException(
-                    "Cannot compile Java Source Code With IO Exception \n"
-                            + e.getMessage() + " \n : " + code.toString());
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
 
             e.printStackTrace();

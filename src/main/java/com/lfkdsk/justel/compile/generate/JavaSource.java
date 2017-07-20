@@ -1,5 +1,7 @@
 package com.lfkdsk.justel.compile.generate;
 
+import java.nio.CharBuffer;
+
 /**
  * Created by liufengkai on 2017/7/20.
  */
@@ -11,6 +13,8 @@ public final class JavaSource {
     public final String className;
 
     public final String sourceCode;
+
+    private CharSequence sourceCodeChar;
 
     public JavaSource(String packageName,
                       String className,
@@ -26,6 +30,10 @@ public final class JavaSource {
 
     public String getFileName() {
         return className + ".java";
+    }
+
+    public CharSequence getSourceCodeCharSequence() {
+        return sourceCodeChar == null ? sourceCodeChar = CharBuffer.wrap(sourceCode) : sourceCodeChar;
     }
 
     @Override
