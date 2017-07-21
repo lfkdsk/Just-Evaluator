@@ -8,8 +8,6 @@ import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by liufengkai on 2017/7/20.
@@ -17,8 +15,6 @@ import java.util.Map;
 public class JustMemFileManager extends ForwardingJavaFileManager<JavaFileManager> {
 
     private final JustMemClassLoader classLoader;
-
-    private final Map<String, MemInputJavaFileObject> memInputCache = new HashMap<>();
 
     public JustMemFileManager(JavaFileManager fileManager, JustMemClassLoader memClassLoader) {
         super(fileManager);
@@ -31,12 +27,7 @@ public class JustMemFileManager extends ForwardingJavaFileManager<JavaFileManage
     }
 
     public JavaFileObject makeStringSource(JavaSource source) {
-        if (!memInputCache.containsKey(source.getClassQualifiedName())) {
-            MemInputJavaFileObject obj = new MemInputJavaFileObject(source);
-            memInputCache.put(source.getClassQualifiedName(), obj);
-            return obj;
-        }
-        return memInputCache.get(source.getClassQualifiedName());
+        return new MemInputJavaFileObject(source);
     }
 
     @Override

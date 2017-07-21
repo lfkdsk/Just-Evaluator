@@ -15,6 +15,4 @@ public interface JustCompiler<T> {
             throws ClassNotFoundException {
         return (Class<T>) loader.loadClass(classQualifiedName);
     }
-
-
 }
