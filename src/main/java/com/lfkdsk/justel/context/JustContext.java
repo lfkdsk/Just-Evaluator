@@ -5,9 +5,9 @@ package com.lfkdsk.justel.context;
  */
 public interface JustContext {
 
-    boolean contain(String name);
+  boolean contain(String name);
 
-    Object get(String objName);
+  Object get(String objName);
 
-    Object put(String key, Object val);
+  Object put(String key, Object val);
 }

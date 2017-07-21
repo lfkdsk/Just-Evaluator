@@ -8,11 +8,11 @@ import com.lfkdsk.justel.expr.Expression;
  */
 public interface JustCompiler<T> {
 
-    Expression compile(JavaSource code);
+  Expression compile(JavaSource code);
 
-    @SuppressWarnings("unchecked")
-    default Class<T> loadClass(ClassLoader loader, String classQualifiedName)
-            throws ClassNotFoundException {
-        return (Class<T>) loader.loadClass(classQualifiedName);
-    }
+  @SuppressWarnings("unchecked")
+  default Class<T> loadClass(ClassLoader loader, String classQualifiedName)
+      throws ClassNotFoundException {
+    return (Class<T>) loader.loadClass(classQualifiedName);
+  }
 }

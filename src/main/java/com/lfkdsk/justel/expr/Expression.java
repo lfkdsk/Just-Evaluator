@@ -9,8 +9,8 @@ import com.lfkdsk.justel.exception.EvalException;
  */
 public interface Expression extends Evalable {
 
-    @Override
-    default Object eval(JustContext context) {
-        throw new EvalException("Use default eval in expression");
-    }
+  @Override
+  default Object eval(JustContext context) {
+    throw new EvalException("Use default eval in expression");
+  }
 }

@@ -9,16 +9,16 @@ import com.lfkdsk.justel.token.Token;
  */
 public class StringLiteral extends AstLeaf {
 
-    public StringLiteral(Token token) {
-        super(token);
-    }
+  public StringLiteral(Token token) {
+    super(token);
+  }
 
-    public String value() {
-        return token.getText();
-    }
+  public String value() {
+    return token.getText();
+  }
 
-    @Override
-    public Object eval(JustContext env) {
-        return super.eval(env);
-    }
+  @Override
+  public Object eval(JustContext env) {
+    return super.eval(env);
+  }
 }

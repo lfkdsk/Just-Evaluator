@@ -16,58 +16,62 @@ import java.util.Map;
  */
 public class JustCompilerImpl implements JustCompiler {
 
-    private final JavaCompiler compiler;
+  private final JavaCompiler compiler;
 
-    private final StandardJavaFileManager stdFileManager;
+  private final StandardJavaFileManager stdFileManager;
 
-    private final JustMemClassLoader memClassLoader;
+  private final JustMemClassLoader memClassLoader;
 
-    private DiagnosticCollector<JavaFileObject> diagnosticsReport;
+  private DiagnosticCollector<JavaFileObject> diagnosticsReport;
 
-    private final JustMemFileManager manager;
+  private final JustMemFileManager manager;
 
-    private final Map<String, Expression> memCompilerCache;
+  private final Map<String, Expression> memCompilerCache;
 
-    public JustCompilerImpl() {
-        // initial compiler
-        this.compiler = ToolProvider.getSystemJavaCompiler();
-        if (compiler == null) {
-            throw new IllegalStateException("Can not bind to system java compiler");
-        }
-        this.diagnosticsReport = new DiagnosticCollector<>();
-        this.stdFileManager = compiler.getStandardFileManager(diagnosticsReport, null, null);
-        this.memClassLoader = new JustMemClassLoader(this.getClass().getClassLoader());
-        this.manager = new JustMemFileManager(stdFileManager, memClassLoader);
-        this.memCompilerCache = new HashMap<>();
+  public JustCompilerImpl() {
+    // initial compiler
+    this.compiler = ToolProvider.getSystemJavaCompiler();
+    if (compiler == null) {
+      throw new IllegalStateException("Can not bind to system java compiler");
     }
+    this.diagnosticsReport = new DiagnosticCollector<>();
+    this.stdFileManager = compiler.getStandardFileManager(diagnosticsReport, null, null);
+    this.memClassLoader = new JustMemClassLoader(this.getClass().getClassLoader());
+    this.manager = new JustMemFileManager(stdFileManager, memClassLoader);
+    this.memCompilerCache = new HashMap<>();
+  }
 
-    @Override
-    public Expression compile(JavaSource code) {
-        try {
+  @Override
+  public Expression compile(JavaSource code) {
 
-            // found expression in cache.
-            if (memCompilerCache.containsKey(code.getClassQualifiedName())) {
-                return memCompilerCache.get(code.getClassQualifiedName());
-            }
+    try {
+      // found expression in cache.
+      if (memCompilerCache.containsKey(code.getClassQualifiedName())) {
+        return memCompilerCache.get(code.getClassQualifiedName());
+      }
 
-            JavaFileObject javaFileObject = manager.makeStringSource(code);
+      JavaFileObject javaFileObject = manager.makeStringSource(code);
 
-            JavaCompiler.CompilationTask compilationTask = compiler.getTask(null, manager, diagnosticsReport, null, null, Collections.singletonList(javaFileObject));
+      JavaCompiler.CompilationTask compilationTask =
+          compiler.getTask(null, manager, diagnosticsReport, null, null,
+              Collections.singletonList(javaFileObject));
 
-            Boolean result = compilationTask.call();
-            if (result == null || !result) {
-                throw new CompilerException("Compilation Failed! " + diagnosticsReport.getDiagnostics().toString());
-            }
+      Boolean result = compilationTask.call();
+      if (result == null || !result) {
+        throw new CompilerException(
+            "Compilation Failed! " + diagnosticsReport.getDiagnostics().toString());
+      }
 
-            Expression expr = (Expression) loadClass(memClassLoader, code.getClassQualifiedName()).newInstance();
-            // add release expr to cache.
-            memCompilerCache.put(code.getClassQualifiedName(), expr);
+      Expression expr =
+          (Expression) loadClass(memClassLoader, code.getClassQualifiedName()).newInstance();
+      // add release expr to cache.
+      memCompilerCache.put(code.getClassQualifiedName(), expr);
 
-            return expr;
-        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+      return expr;
+    } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
 
-            e.printStackTrace();
-            throw new CompilerException(e.getMessage());
-        }
+      e.printStackTrace();
+      throw new CompilerException(e.getMessage());
     }
+  }
 }
