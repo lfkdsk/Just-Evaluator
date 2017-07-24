@@ -7,7 +7,7 @@ import com.lfkdsk.justel.token.Token;
 /**
  * Created by liufengkai on 2017/7/18.
  */
-public class StringLiteral extends AstLeaf {
+public class StringLiteral extends Literal {
 
   public StringLiteral(Token token) {
     super(token);
