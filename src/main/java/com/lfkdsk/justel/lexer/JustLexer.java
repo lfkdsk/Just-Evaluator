@@ -3,6 +3,7 @@ package com.lfkdsk.justel.lexer;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.token.*;
 import com.lfkdsk.justel.utils.NumberUtils;
+import com.lfkdsk.justel.utils.logger.Logger;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
@@ -105,13 +106,16 @@ public class JustLexer implements Lexer {
     private String currentReadString = "";
 
     private char readChar() {
+        if (start > end) return '\n';
+
         peekChar = currentReadString.charAt(start);
         start++;
+        Logger.d("start ++ " + start);
         return peekChar;
     }
 
     private boolean readChar(char ch) {
-        return start + 1 <= end && currentReadString.charAt(start + 1) == ch;
+        return start <= end && currentReadString.charAt(start) == ch;
     }
 
     private void scanToken() {
@@ -177,6 +181,7 @@ public class JustLexer implements Lexer {
 
             case '&': {
                 if (readChar('&')) {
+                    readChar();
                     addToken(SepToken.AND_TOKEN);
                 } else {
                     addToken(SepToken.AMPERSAND_TOKEN);
@@ -186,6 +191,7 @@ public class JustLexer implements Lexer {
 
             case '|': {
                 if (readChar('|')) {
+                    readChar();
                     addToken(SepToken.OR_TOKEN);
                 } else {
                     addToken(SepToken.BAR_TOKEN);
@@ -195,6 +201,7 @@ public class JustLexer implements Lexer {
 
             case '<': {
                 if (readChar('=')) {
+                    readChar();
                     addToken(SepToken.LTE_TOKEN);
                 } else {
                     addToken(SepToken.LESS_TOKEN);
@@ -204,6 +211,7 @@ public class JustLexer implements Lexer {
 
             case '>': {
                 if (readChar('=')) {
+                    readChar();
                     addToken(SepToken.GTE_TOKEN);
                 } else {
                     addToken(SepToken.GREAT_TOKEN);
@@ -213,6 +221,7 @@ public class JustLexer implements Lexer {
 
             case '!': {
                 if (readChar('=')) {
+                    readChar();
                     addToken(SepToken.NOT_EQUAL_TOKEN);
                 } else {
                     addToken(SepToken.EXCLAM_TOKEN);
@@ -243,11 +252,11 @@ public class JustLexer implements Lexer {
     }
 
     private boolean resolveNumber() {
-        if (Character.isDigit(readChar())) {
+        if (Character.isDigit(peekChar)) {
             // int value parser
 
             // start index of digits
-            int startIndex = start;
+            int startIndex = start - 1;
 
             long v = 0;
 
@@ -310,18 +319,18 @@ public class JustLexer implements Lexer {
     }
 
     private boolean resolveString() {
-        if (readChar() == '\"') {
+        if (peekChar == '\"') {
             boolean returnFlag = false;
             StringBuilder builder = new StringBuilder();
             char lastChar = ' ';
-            for (; ; readChar()) {
-                if (peekChar == '\'' && returnFlag
+            for (readChar(); ; readChar()) {
+                if (peekChar == '\"' && returnFlag
                         && lastChar != '\\') {
                     break;
                 } else if (peekChar == '\n') {
                     lineNumber += 1;
                     continue;
-                } else if (peekChar != '\'') {
+                } else if (peekChar != '\"') {
                     builder.append(peekChar);
                 }
                 lastChar = peekChar;
@@ -329,13 +338,14 @@ public class JustLexer implements Lexer {
             }
 
             addToken(new StringToken(lineNumber, builder.toString()));
+            readChar();
             return true;
         }
         return false;
     }
 
     private boolean resolveIDToken() {
-        if (Character.isLetter(readChar())) {
+        if (Character.isLetter(peekChar)) {
             StringBuilder buffer = new StringBuilder();
 
             do {
