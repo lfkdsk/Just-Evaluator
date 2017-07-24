@@ -3,26 +3,33 @@ package com.lfkdsk.justel.lexer;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.token.*;
 import com.lfkdsk.justel.utils.NumberUtils;
-import com.lfkdsk.justel.utils.logger.Logger;
-
+import com.lfkdsk.justel.utils.collection.ArrayQueue;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
-import java.math.BigInteger;
-import java.util.ArrayList;
 
 /**
- * Created by liufengkai on 2017/7/23.
+ * Lexer - Language Token Lexer
+ * Just catch token this Engine supported.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/23.
  */
-public class JustLexer implements Lexer {
+public class JustLexerImpl implements Lexer {
 
-    private ArrayList<Token> queue = new ArrayList<>();
+    /**
+     * Token Queue
+     */
+    private ArrayQueue<Token> queue = new ArrayQueue<>();
 
+    /**
+     * has more tokens in Lexer
+     */
     private boolean hasMore;
 
     private LineNumberReader reader;
 
-    public JustLexer(Reader reader) {
+    public JustLexerImpl(Reader reader) {
         this.reader = new LineNumberReader(reader);
         this.hasMore = true;
     }
@@ -39,7 +46,7 @@ public class JustLexer implements Lexer {
     @Override
     public Token read() {
         if (fillQueue(0)) {
-            return queue.remove(0);
+            return queue.poll();
         } else {
             return Token.EOF;
         }
@@ -98,7 +105,7 @@ public class JustLexer implements Lexer {
             scanToken();
         }
 
-        queue.add(new IDToken(lineNum, Token.EOL));
+        queue.add(new SepToken(lineNum, Token.EOL));
     }
 
     private char peekChar = ' ';
