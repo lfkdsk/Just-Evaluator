@@ -58,4 +58,13 @@ public class SepToken extends Token {
     public String getText() {
         return text;
     }
+
+    @Override
+    public String toString() {
+        return "SepToken{" +
+                "text='" + text + '\'' +
+                ", lineNumber=" + lineNumber +
+                ", tag=" + tag +
+                '}';
+    }
 }

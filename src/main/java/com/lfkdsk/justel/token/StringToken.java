@@ -20,4 +20,13 @@ public class StringToken extends Token {
     public boolean isString() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "StringToken{" +
+                "text='" + text + '\'' +
+                ", lineNumber=" + lineNumber +
+                ", tag=" + tag +
+                '}';
+    }
 }

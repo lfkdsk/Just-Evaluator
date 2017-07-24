@@ -24,4 +24,13 @@ public class IDToken extends Token {
     public String getText() {
         return text;
     }
+
+    @Override
+    public String toString() {
+        return "IDToken{" +
+                "text='" + text + '\'' +
+                ", lineNumber=" + lineNumber +
+                ", tag=" + tag +
+                '}';
+    }
 }

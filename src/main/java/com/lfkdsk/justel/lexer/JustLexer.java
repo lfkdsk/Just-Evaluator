@@ -110,7 +110,6 @@ public class JustLexer implements Lexer {
 
         peekChar = currentReadString.charAt(start);
         start++;
-        Logger.d("start ++ " + start);
         return peekChar;
     }
 
@@ -132,7 +131,7 @@ public class JustLexer implements Lexer {
     }
 
     private void jumpBlank() {
-        for (; ; readChar()) {
+        for (readChar(); ; readChar()) {
             if (peekChar == ' ' || peekChar == '\t') {
                 continue;
             } else if (peekChar == '\n')

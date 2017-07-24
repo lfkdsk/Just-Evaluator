@@ -165,4 +165,12 @@ public class Token {
     public boolean isBool() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Token{" +
+                "lineNumber=" + lineNumber +
+                ", tag=" + tag +
+                '}';
+    }
 }

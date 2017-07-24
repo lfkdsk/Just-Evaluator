@@ -40,4 +40,14 @@ public class NumberToken extends Token {
     public boolean isNumber() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "NumberToken{" +
+                "tokenString='" + tokenString + '\'' +
+                ", numberValue=" + numberValue +
+                ", lineNumber=" + lineNumber +
+                ", tag=" + tag +
+                '}';
+    }
 }

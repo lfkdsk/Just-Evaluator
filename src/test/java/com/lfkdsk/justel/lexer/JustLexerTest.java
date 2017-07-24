@@ -22,5 +22,6 @@ class JustLexerTest {
         Logger.d(lexer.read().toString());
         Logger.d(lexer.read().toString());
         Logger.d(lexer.read().toString());
+        Logger.d(lexer.read().toString());
     }
 }
