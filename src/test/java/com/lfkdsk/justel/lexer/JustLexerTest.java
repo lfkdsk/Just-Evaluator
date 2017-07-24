@@ -14,10 +14,12 @@ class JustLexerTest {
 
     @Test
     void testLexer() {
-//        String lfkdsk = " 12 13.2222 \"lfkdsk\" lfkdsk 1200000000000 || &&";
-        String lfkdsk = "|| &&";
+        String lfkdsk = " 12 13.2222 \"lfkdsk\" lfkdsk 1200000000000 || &&";
+//        String lfkdsk = "|| &&";
         JustLexer lexer = new JustLexer(new StringReader(lfkdsk));
         Logger.init("logger test");
+        Logger.d(lexer.read().toString());
+        Logger.d(lexer.read().toString());
         Logger.d(lexer.read().toString());
         Logger.d(lexer.read().toString());
         Logger.d(lexer.read().toString());
