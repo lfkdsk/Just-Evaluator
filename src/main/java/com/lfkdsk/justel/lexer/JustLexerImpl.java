@@ -105,8 +105,6 @@ public class JustLexerImpl implements Lexer {
         while (start <= end) {
             scanToken();
         }
-
-        queue.add(new SepToken(lineNum, Token.EOL));
     }
 
     private char peekChar = ' ';

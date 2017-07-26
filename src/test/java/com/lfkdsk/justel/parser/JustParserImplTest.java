@@ -25,7 +25,7 @@ import static com.lfkdsk.justel.token.Token.EOF;
 class JustParserImplTest {
     @Test
     void parser() throws ParseException {
-        String lfkdsk = "lfkdsk(123,kkk)";
+        String lfkdsk = "lfkdsk()";
         Lexer lexer = new JustLexerImpl(new StringReader(lfkdsk));
         JustParser parser = new JustParserImpl();
         Logger.init("test parser");

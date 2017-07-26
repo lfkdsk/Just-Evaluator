@@ -5,7 +5,7 @@ public final class Logger {
 
     private static Printer printer = new LoggerPrinter();
 
-    //no instance
+    // no instance
     private Logger() {
 
     }

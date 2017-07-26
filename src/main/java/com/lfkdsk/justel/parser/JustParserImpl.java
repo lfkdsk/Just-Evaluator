@@ -88,18 +88,19 @@ public class JustParserImpl implements JustParser {
     // postfix = ( args | null ) | . id | [ expr ]
     ///////////////////////////////////////////////////////////////////////////
 
-    private BnfCom postfix = rule()
-            .or(
-                    rule().sep("(").maybe(args).sep(")"),
-                    rule(DotExpr.class).sep(".").identifier(reservedToken),
-                    rule(ArrayIndexExpr.class).sep("[").ast(expr).sep("]")
-            );
+    private BnfCom postfix = rule().sep("(").maybe(args).sep(")");
+
+//            rule().or(
+//                    rule().sep("(").maybe(args).sep(")"),
+//                    rule(DotExpr.class).sep(".").identifier(reservedToken),
+//                    rule(ArrayIndexExpr.class).sep("[").ast(expr).sep("]")
+//            );
 
     ///////////////////////////////////////////////////////////////////////////
     // program = expr EOL (end of line)
     ///////////////////////////////////////////////////////////////////////////
 
-    private BnfCom program = rule(AstProgram.class).ast(expr).sep(EOL);
+    private BnfCom program = rule(AstProgram.class).ast(expr);
 
 
     JustParserImpl() {
@@ -108,6 +109,8 @@ public class JustParserImpl implements JustParser {
         primary.repeat(postfix);
 
         reservedToken.add(EOL);
+        reservedToken.add("(");
+        reservedToken.add(")");
 
         operators.add("+", 4, LEFT, PlusOp.class);
         operators.add("==", 7, LEFT, EqualOp.class);
@@ -117,6 +120,6 @@ public class JustParserImpl implements JustParser {
 
     @Override
     public AstNode parser(Lexer lexer) throws ParseException {
-        return transformBinaryExpr(program.parse(lexer), operators);
+        return primary.parse(lexer);
     }
 }
