@@ -21,15 +21,6 @@ import java.util.List;
  */
 public class AstList extends AstNode {
 
-    // break 存储位置
-    public int afterPoint = 0;
-
-    public static AstList NullList = new AstList(null, -1);
-
-    public static AstList EnClosingList = NullList;
-
-    public static AstList saveList = null;
-
     protected List<AstNode> children;
 
     public AstList(List<AstNode> children, int tag) {
@@ -45,6 +36,10 @@ public class AstList extends AstNode {
     @Override
     public Iterator<AstNode> children() {
         return children.iterator();
+    }
+
+    public List<AstNode> getChildren() {
+        return children;
     }
 
     @Override
@@ -78,6 +73,11 @@ public class AstList extends AstNode {
             }
         }
         return null;
+    }
+
+    @Override
+    public AstNode setChild(int index, AstNode node) {
+        return children.set(index, node);
     }
 
     public Object eval(JustContext env) {

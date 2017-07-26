@@ -8,7 +8,6 @@
 
 package com.lfkdsk.justel.ast.operators;
 
-import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * Created by liufengkai on 2017/7/26.
  */
-public class UnEqualOp extends AstList {
+public class UnEqualOp extends OperatorExpr {
     public UnEqualOp(List<AstNode> children) {
         super(children, AstNode.UN_EQUAL_OP);
     }

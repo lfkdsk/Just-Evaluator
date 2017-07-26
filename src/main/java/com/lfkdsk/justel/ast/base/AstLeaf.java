@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.base;
 
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.exception.EvalException;
+import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.token.Token;
 
 import java.util.ArrayList;
@@ -49,6 +50,11 @@ public class AstLeaf extends AstNode {
     @Override
     public String location() {
         return "at line " + token.getLineNumber();
+    }
+
+    @Override
+    public AstNode setChild(int index, AstNode node) {
+        throw new ParseException("Didn't support this method in Leaf");
     }
 
     public Token token() {

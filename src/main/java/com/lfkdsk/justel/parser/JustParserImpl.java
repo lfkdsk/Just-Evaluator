@@ -108,12 +108,33 @@ public class JustParserImpl implements JustParser {
 
         reservedToken.add(EOL);
 
+        operators.add("+", 4, LEFT, PlusOp.class);
         operators.add("==", 7, LEFT, EqualOp.class);
         operators.add("!=", 7, LEFT, UnEqualOp.class);
     }
 
+    private void subChangeBinaryNode(AstNode parent) {
+        for (int i = 0; i < parent.childCount(); i++) {
+            AstNode child = parent.child(i);
+
+            if (child instanceof AstBinaryExpr) {
+                child = BnfCom.resetAstExpr((AstBinaryExpr) child, operators);
+                parent.setChild(i, child);
+            }
+            subChangeBinaryNode(child);
+        }
+    }
+
+    private AstNode changeBinaryNode(AstNode unchecked) {
+        if (unchecked instanceof AstBinaryExpr) {
+            unchecked = BnfCom.resetAstExpr((AstBinaryExpr) unchecked, operators);
+        }
+        subChangeBinaryNode(unchecked);
+        return unchecked;
+    }
+
     @Override
     public AstNode parser(Lexer lexer) throws ParseException {
-        return program.parse(lexer);
+        return changeBinaryNode(program.parse(lexer));
     }
 }

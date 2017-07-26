@@ -36,6 +36,10 @@ public class NumberToken extends Token {
                 "| numberValue's Type isn't integer Value " + numberValue.longValue());
     }
 
+    public Number getNumberValue() {
+        return numberValue;
+    }
+
     @Override
     public boolean isNumber() {
         return true;

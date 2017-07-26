@@ -81,6 +81,8 @@ public abstract class AstNode implements Iterable<AstNode>,
         return children();
     }
 
+    public abstract AstNode setChild(int index, AstNode node);
+
     public Object eval(JustContext context) {
         return this;
     }

@@ -8,6 +8,7 @@
 
 package com.lfkdsk.justel.ast.tree;
 
+import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 
@@ -19,5 +20,17 @@ import java.util.List;
 public class AstBinaryExpr extends AstList {
     public AstBinaryExpr(List<AstNode> children) {
         super(children, AstNode.BINARY_EXPR);
+    }
+
+    public AstNode leftChild() {
+        return child(0);
+    }
+
+    public AstNode rightChild() {
+        return child(2);
+    }
+
+    public AstLeaf midOp() {
+        return (AstLeaf) child(1);
     }
 }

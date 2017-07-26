@@ -131,13 +131,15 @@ public class JustLexerImpl implements Lexer {
     private void scanToken() {
         // jump all blank chars
         jumpBlank();
+
         // resolve symbols & operators
         if (resolveSymbol()) return;
-
+        // resolve number
         if (resolveNumber()) return;
-
+        // resolve string
         if (resolveString()) return;
 
+        // resolve id
         resolveIDToken();
     }
 
@@ -284,7 +286,7 @@ public class JustLexerImpl implements Lexer {
             } while (Character.isDigit(peekChar));
 
             // end index of digit
-            int endIndex = start - 1;
+            int endIndex = start;
 
             if (peekChar != '.') {
                 // int value

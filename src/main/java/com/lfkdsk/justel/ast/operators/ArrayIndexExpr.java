@@ -8,7 +8,6 @@
 
 package com.lfkdsk.justel.ast.operators;
 
-import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * Created by liufengkai on 2017/7/26.
  */
-public class ArrayIndexExpr extends AstList {
+public class ArrayIndexExpr extends OperatorExpr {
     public ArrayIndexExpr(List<AstNode> children) {
         super(children, AstNode.ARRAY_INDEX_OP);
     }

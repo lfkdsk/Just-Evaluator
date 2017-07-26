@@ -117,6 +117,10 @@ public class Token {
 
     public final static int EQUAL = 323;
 
+    public final static int PLUS_OP = 324;
+
+    public final static int OPERATOR = 325;
+
     /**
      * End of file
      */

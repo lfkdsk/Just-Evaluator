@@ -8,15 +8,23 @@
 
 package com.lfkdsk.justel.ast.operators;
 
+import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
 
 /**
  * Created by liufengkai on 2017/7/26.
  */
-public class EqualOp extends OperatorExpr {
-    public EqualOp(List<AstNode> children) {
-        super(children, AstNode.EQUAL_OP);
+public class OperatorExpr extends AstList {
+    public OperatorExpr(List<AstNode> children) {
+        super(children, Token.OPERATOR);
     }
+
+    public OperatorExpr(List<AstNode> children, int tag) {
+        super(children, tag);
+    }
+
+
 }

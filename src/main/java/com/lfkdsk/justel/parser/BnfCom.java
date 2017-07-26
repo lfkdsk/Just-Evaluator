@@ -3,6 +3,8 @@ package com.lfkdsk.justel.parser;
 import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.ast.operators.Operator;
+import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.token.Token;
@@ -422,33 +424,32 @@ public class BnfCom {
         private AstNode doShift(Lexer lexer, AstNode left, int prec) throws ParseException {
             ArrayList<AstNode> list = new ArrayList<>();
 
-//            list.add(left);
+            list.add(left);
             // 读取一个符号
-//            list.add(new AstLeaf(lexer.read()));
-            Token operatorToken = lexer.read();
+            list.add(new Operator(lexer.read()));
+//            Token operatorToken = lexer.read();
             // 返回节点放在右子树
-//            AstNode right = factor.parse(lexer);
             AstNode right = factor.parse(lexer);
+//            AstNode right = factor.parse(lexer);
 
-            Precedence operatorPrecedence = ops.get(operatorToken.getText());
-
-            if (operatorPrecedence != null) {
-
-                // operatorExpr local operator list
-                //      |
-                //    / | \
-                // left op right
-                List<AstNode> operatorList = new ArrayList<>();
-                operatorList.add(left);
-                operatorList.add(new AstLeaf(operatorToken));
-                operatorList.add(right);
-
-                // make operatorExpr node
-                AstNode operatorExpr = operatorPrecedence.factory.make(operatorList);
-                list.add(operatorExpr);
-            } else {
-                throw new ParseException("UnSupport Operators : " + operatorToken.getText());
-            }
+//            Precedence operatorPrecedence = ops.get(operatorToken.getText());
+//
+//            if (operatorPrecedence != null) {
+//
+//                // operatorExpr local operator list
+//                //      |
+//                //    / | \
+//                // left op right
+//                List<AstNode> operatorList = new ArrayList<>();
+//                operatorList.add(left);
+//                operatorList.add(new AstLeaf(operatorToken));
+//                operatorList.add(right);
+//
+//                // make operatorExpr node
+//                right = operatorPrecedence.factory.make(operatorList);
+//            } else {
+//                throw new ParseException("UnSupport Operators : " + operatorToken.getText());
+//            }
 
             Precedence next;
             // 子树向右拓展
@@ -815,5 +816,11 @@ public class BnfCom {
             or(parser, otherWise);
         }
         return this;
+    }
+
+    public static AstNode resetAstExpr(AstBinaryExpr expr, Operators operators) {
+        Operator operator = (Operator) expr.midOp();
+        Factory factory = operators.get(operator.getText()).factory;
+        return factory.make(expr.getChildren());
     }
 }
