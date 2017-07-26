@@ -1,6 +1,5 @@
 package com.lfkdsk.justel.lexer;
 
-import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.io.StringReader;
@@ -14,14 +13,23 @@ class JustLexerImplTest {
     void testLexer() {
         String lfkdsk = " 12 13.2222 \"lfkdsk\" lfkdsk 1200000000000 || &&";
 //        String lfkdsk = "|| &&";
+        long startTime = System.currentTimeMillis();
         JustLexerImpl lexer = new JustLexerImpl(new StringReader(lfkdsk));
-        Logger.init("logger test");
-        Logger.d(lexer.read().toString());
-        Logger.d(lexer.read().toString());
-        Logger.d(lexer.read().toString());
-        Logger.d(lexer.read().toString());
-        Logger.d(lexer.read().toString());
-        Logger.d(lexer.read().toString());
-        Logger.d(lexer.read().toString());
+
+        lexer.read();
+        lexer.read();
+        lexer.read();
+        lexer.read();
+        lexer.read();
+        lexer.read();
+//        Logger.init("logger test");
+//        Logger.d(lexer.read().toString());
+//        Logger.d(lexer.read().toString());
+//        Logger.d(lexer.read().toString());
+//        Logger.d(lexer.read().toString());
+//        Logger.d(lexer.read().toString());
+//        Logger.d(lexer.read().toString());
+//        Logger.d(lexer.read().toString());
+        System.out.println(System.currentTimeMillis() - startTime);
     }
 }

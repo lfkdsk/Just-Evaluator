@@ -13,7 +13,7 @@ public class ReservedToken extends Token {
 
     private String token;
 
-    private static Set<String> reservedToken = new HashSet<>();
+    public final static Set<String> reservedToken = new HashSet<>();
 
     public ReservedToken(int lineNumber, String token) {
         super(lineNumber, Token.RESERVED);

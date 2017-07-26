@@ -1,6 +1,5 @@
 package com.lfkdsk.justel.literal;
 
-import com.lfkdsk.justel.ast.AstLeaf;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.token.Token;
 

@@ -9,7 +9,7 @@ import java.io.IOException;
  *
  * @author liufengkai Created by liufengkai on 16/7/11.
  */
-public class ParseException extends RuntimeException {
+public class ParseException extends Exception {
 
   public ParseException(Token token) {
     this("", token);

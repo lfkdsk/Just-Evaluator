@@ -1,18 +1,15 @@
 package com.lfkdsk.justel.parser;
 
-import com.lfkdsk.justel.ast.AstLeaf;
-import com.lfkdsk.justel.ast.AstList;
-import com.lfkdsk.justel.ast.AstNode;
+import com.lfkdsk.justel.ast.base.AstLeaf;
+import com.lfkdsk.justel.ast.base.AstList;
+import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.token.Token;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * BnfCom 巴克斯范式解析引擎
@@ -201,9 +198,9 @@ public class BnfCom {
      * ID 类型的Token
      */
     protected static class IdToken extends AToken {
-        HashSet<String> reserved;
+        Set<String> reserved;
 
-        public IdToken(Class<? extends AstLeaf> clazz, HashSet<String> reserved) {
+        public IdToken(Class<? extends AstLeaf> clazz, Set<String> reserved) {
             super(clazz);
             this.reserved = reserved != null ? reserved : new HashSet<>();
         }
@@ -358,10 +355,15 @@ public class BnfCom {
     protected static class Precedence {
         int value;
         boolean leftAssoc;
+        Class<? extends AstNode> clazz;
+        Factory factory;
 
-        public Precedence(int value, boolean leftAssoc) {
+        public Precedence(int value, boolean leftAssoc,
+                          Class<? extends AstNode> clazz) {
             this.value = value;
             this.leftAssoc = leftAssoc;
+            this.clazz = clazz;
+            this.factory = Factory.getForAstList(clazz);
         }
     }
 
@@ -381,8 +383,9 @@ public class BnfCom {
          * @param pres      优先级
          * @param leftAssoc 结合性
          */
-        public void add(String name, int pres, boolean leftAssoc) {
-            put(name, new Precedence(pres, leftAssoc));
+        public void add(String name, int pres,
+                        boolean leftAssoc, Class<? extends AstNode> clazz) {
+            put(name, new Precedence(pres, leftAssoc, clazz));
         }
     }
 
@@ -390,11 +393,11 @@ public class BnfCom {
      * 表达式子树
      */
     protected static class Expr extends Element {
-        protected Factory factory;
+        Factory factory;
 
-        protected Operators ops;
+        Operators ops;
 
-        protected BnfCom factor;
+        BnfCom factor;
 
         public Expr(Class<? extends AstNode> clazz, BnfCom factor, Operators ops) {
 
@@ -419,11 +422,33 @@ public class BnfCom {
         private AstNode doShift(Lexer lexer, AstNode left, int prec) throws ParseException {
             ArrayList<AstNode> list = new ArrayList<>();
 
-            list.add(left);
+//            list.add(left);
             // 读取一个符号
-            list.add(new AstLeaf(lexer.read()));
+//            list.add(new AstLeaf(lexer.read()));
+            Token operatorToken = lexer.read();
             // 返回节点放在右子树
+//            AstNode right = factor.parse(lexer);
             AstNode right = factor.parse(lexer);
+
+            Precedence operatorPrecedence = ops.get(operatorToken.getText());
+
+            if (operatorPrecedence != null) {
+
+                // operatorExpr local operator list
+                //      |
+                //    / | \
+                // left op right
+                List<AstNode> operatorList = new ArrayList<>();
+                operatorList.add(left);
+                operatorList.add(new AstLeaf(operatorToken));
+                operatorList.add(right);
+
+                // make operatorExpr node
+                AstNode operatorExpr = operatorPrecedence.factory.make(operatorList);
+                list.add(operatorExpr);
+            } else {
+                throw new ParseException("UnSupport Operators : " + operatorToken.getText());
+            }
 
             Precedence next;
             // 子树向右拓展
@@ -651,12 +676,12 @@ public class BnfCom {
         return this;
     }
 
-    public BnfCom identifier(HashSet<String> reserved) {
+    public BnfCom identifier(Set<String> reserved) {
         return identifier(null, reserved);
     }
 
     public BnfCom identifier(Class<? extends AstLeaf> clazz,
-                             HashSet<String> reserved) {
+                             Set<String> reserved) {
         elements.add(new IdToken(clazz, reserved));
         return this;
     }

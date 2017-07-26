@@ -1,6 +1,6 @@
 package com.lfkdsk.justel.exception;
 
-import com.lfkdsk.justel.ast.AstNode;
+import com.lfkdsk.justel.ast.base.AstNode;
 
 /**
  * Runtime com.lfkdsk.justel.eval in
