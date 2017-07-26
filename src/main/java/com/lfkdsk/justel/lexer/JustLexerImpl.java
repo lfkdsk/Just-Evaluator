@@ -4,6 +4,7 @@ import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.token.*;
 import com.lfkdsk.justel.utils.NumberUtils;
 import com.lfkdsk.justel.utils.collection.ArrayQueue;
+
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
@@ -359,7 +360,24 @@ public class JustLexerImpl implements Lexer {
                 readChar();
             } while (Character.isLetterOrDigit(peekChar) || peekChar == '_');
 
-            addToken(new IDToken(lineNumber, buffer.toString()));
+            // token word
+            String token = buffer.toString();
+
+            switch (token) {
+
+                case "true":
+                case "false": {
+                    addToken(new BoolToken(lineNumber, BoolToken.getBoolean(token)));
+                    break;
+                }
+
+                default: {
+                    addToken(ReservedToken.containsReservedToken(token) ?
+                            new ReservedToken(lineNumber, token) :
+                            new IDToken(lineNumber, token));
+                    break;
+                }
+            }
 
             return true;
         }

@@ -19,6 +19,8 @@ public class Token {
             RETURN = 296,
             EOF_TAG = -1, EOL_TAG = -2;
 
+    public final static int BOOLEAN = 293;
+
     public final static int STRING = 294;
 
     public final static int FLOAT = 295;
@@ -110,6 +112,8 @@ public class Token {
     public final static int COLLECT_GET_LEFT = 320;
 
     public final static int COLLECT_GET_RIGHT = 321;
+
+    public final static int RESERVED = 322;
 
     /**
      * End of file

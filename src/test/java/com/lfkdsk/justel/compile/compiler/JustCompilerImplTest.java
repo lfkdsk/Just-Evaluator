@@ -25,7 +25,7 @@ class JustCompilerImplTest {
         String sourceCode = templateGen.fakeGenerateString(context);
         JavaSource source = new JavaSource("com.lfkdsk.justel.generatecode", className, sourceCode);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 20; i++) {
             long startTime = System.currentTimeMillis();
 //        System.out.println(sourceCode);
             Expression expr = compiler.compile(source);
