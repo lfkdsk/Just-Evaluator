@@ -17,7 +17,7 @@ import java.util.List;
  * Created by liufengkai on 2017/7/26.
  */
 public class AstBinaryExpr extends AstList {
-    public AstBinaryExpr(List<AstNode> children, int tag) {
-        super(children, tag);
+    public AstBinaryExpr(List<AstNode> children) {
+        super(children, AstNode.BINARY_EXPR);
     }
 }

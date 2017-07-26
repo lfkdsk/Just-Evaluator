@@ -16,8 +16,8 @@ import java.util.List;
 /**
  * Created by liufengkai on 2017/7/26.
  */
-public class NotExpr extends AstList {
-    public NotExpr(List<AstNode> children) {
-        super(children, AstNode.NOT_OP);
+public class EqualOp extends AstList {
+    public EqualOp(List<AstNode> children) {
+        super(children, AstNode.EQUAL_OP);
     }
 }

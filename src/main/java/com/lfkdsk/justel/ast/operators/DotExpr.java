@@ -17,7 +17,7 @@ import java.util.List;
  * Created by liufengkai on 2017/7/26.
  */
 public class DotExpr extends AstList {
-    public DotExpr(List<AstNode> children, int tag) {
-        super(children, tag);
+    public DotExpr(List<AstNode> children) {
+        super(children, AstNode.DOT_OP);
     }
 }

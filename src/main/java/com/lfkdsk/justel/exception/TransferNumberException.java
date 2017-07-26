@@ -6,18 +6,13 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.lfkdsk.justel.ast.operators;
-
-import com.lfkdsk.justel.ast.base.AstList;
-import com.lfkdsk.justel.ast.base.AstNode;
-
-import java.util.List;
+package com.lfkdsk.justel.exception;
 
 /**
  * Created by liufengkai on 2017/7/26.
  */
-public class NotExpr extends AstList {
-    public NotExpr(List<AstNode> children) {
-        super(children, AstNode.NOT_OP);
+public class TransferNumberException extends RuntimeException {
+    public TransferNumberException(String message) {
+        super(message);
     }
 }

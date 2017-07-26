@@ -17,7 +17,7 @@ import java.util.List;
  * Created by liufengkai on 2017/7/26.
  */
 public class ArrayIndexExpr extends AstList {
-    public ArrayIndexExpr(List<AstNode> children, int tag) {
-        super(children, tag);
+    public ArrayIndexExpr(List<AstNode> children) {
+        super(children, AstNode.ARRAY_INDEX_OP);
     }
 }

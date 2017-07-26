@@ -17,7 +17,7 @@ import java.util.List;
  * Created by liufengkai on 2017/7/26.
  */
 public class NegativeExpr extends AstList {
-    public NegativeExpr(List<AstNode> children, int tag) {
-        super(children, tag);
+    public NegativeExpr(List<AstNode> children) {
+        super(children, AstNode.NEGATIVE_OP);
     }
 }

@@ -115,6 +115,8 @@ public class Token {
 
     public final static int RESERVED = 322;
 
+    public final static int EQUAL = 323;
+
     /**
      * End of file
      */

@@ -17,7 +17,7 @@ import java.util.List;
  * Created by liufengkai on 2017/7/26.
  */
 public class BitwiseExpr extends AstList {
-    public BitwiseExpr(List<AstNode> children, int tag) {
-        super(children, tag);
+    public BitwiseExpr(List<AstNode> children) {
+        super(children, AstNode.BIT_WISE_OP);
     }
 }

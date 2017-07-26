@@ -1,6 +1,6 @@
 package com.lfkdsk.justel.token;
 
-import com.lfkdsk.justel.exception.ParseException;
+import com.lfkdsk.justel.exception.TransferNumberException;
 
 /**
  * Created by liufengkai on 2017/7/24.
@@ -23,7 +23,7 @@ public class NumberToken extends Token {
             return numberValue.longValue();
         }
 
-        throw new ParseException("wrong value check " +
+        throw new TransferNumberException("wrong value check " +
                 "| numberValue's Type isn't long Value " + numberValue.intValue());
     }
 
@@ -32,7 +32,7 @@ public class NumberToken extends Token {
             return numberValue.intValue();
         }
 
-        throw new ParseException("wrong value check " +
+        throw new TransferNumberException("wrong value check " +
                 "| numberValue's Type isn't integer Value " + numberValue.longValue());
     }
 

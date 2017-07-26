@@ -9,10 +9,7 @@
 package com.lfkdsk.justel.parser;
 
 import com.lfkdsk.justel.ast.base.AstNode;
-import com.lfkdsk.justel.ast.operators.ArrayIndexExpr;
-import com.lfkdsk.justel.ast.operators.DotExpr;
-import com.lfkdsk.justel.ast.operators.NegativeExpr;
-import com.lfkdsk.justel.ast.operators.NotExpr;
+import com.lfkdsk.justel.ast.operators.*;
 import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
 import com.lfkdsk.justel.ast.tree.AstFuncArguments;
 import com.lfkdsk.justel.ast.tree.AstPrimaryExpr;
@@ -23,6 +20,7 @@ import com.lfkdsk.justel.literal.IDLiteral;
 import com.lfkdsk.justel.literal.NumberLiteral;
 import com.lfkdsk.justel.literal.StringLiteral;
 
+import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
 import static com.lfkdsk.justel.parser.BnfCom.rule;
 import static com.lfkdsk.justel.token.ReservedToken.reservedToken;
 import static com.lfkdsk.justel.token.Token.EOL;
@@ -107,6 +105,11 @@ public class JustParserImpl implements JustParser {
 
         // primary { postfix }
         primary.repeat(postfix);
+
+        reservedToken.add(EOL);
+
+        operators.add("==", 7, LEFT, EqualOp.class);
+        operators.add("!=", 7, LEFT, UnEqualOp.class);
     }
 
     @Override

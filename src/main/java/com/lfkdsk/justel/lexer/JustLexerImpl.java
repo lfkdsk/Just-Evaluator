@@ -114,7 +114,10 @@ public class JustLexerImpl implements Lexer {
     private String currentReadString = "";
 
     private char readChar() {
-        if (start > end) return '\n';
+        if (start >= end) {
+            peekChar = ' ';
+            return peekChar;
+        }
 
         peekChar = currentReadString.charAt(start);
         start++;
@@ -248,6 +251,14 @@ public class JustLexerImpl implements Lexer {
 
             case ']': {
                 addToken(SepToken.COLLECT_GET_RIGHT_TOKEN);
+                break;
+            }
+
+            case '=': {
+                if (readChar('=')) {
+                    readChar();
+                    addToken(SepToken.EQUAL_TOKEN);
+                }
                 break;
             }
 

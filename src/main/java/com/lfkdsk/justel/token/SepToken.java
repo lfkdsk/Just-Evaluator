@@ -29,6 +29,7 @@ public class SepToken extends Token {
 
     public static SepToken EXCLAM_TOKEN = new SepToken(Token.EXCLAM, "!");
     public static SepToken NOT_EQUAL_TOKEN = new SepToken(Token.NOT_EQUAL, "!=");
+    public static SepToken EQUAL_TOKEN = new SepToken(Token.EQUAL, "==");
 
     public static SepToken DOT_TOKEN = new SepToken(Token.DOT, ".");
     public static SepToken COLLECT_GET_LEFT_TOKEN = new SepToken(Token.COLLECT_GET_LEFT, "[");
@@ -47,6 +48,11 @@ public class SepToken extends Token {
         if (text.equals(Token.EOL)) {
             this.tag = Token.EOL_TAG;
         }
+    }
+
+    @Override
+    public boolean isIdentifier() {
+        return true;
     }
 
     @Override

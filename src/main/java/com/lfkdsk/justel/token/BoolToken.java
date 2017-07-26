@@ -8,7 +8,7 @@
 
 package com.lfkdsk.justel.token;
 
-import com.lfkdsk.justel.exception.ParseException;
+import com.lfkdsk.justel.exception.UnSupportMethodException;
 
 import java.util.Objects;
 
@@ -44,7 +44,7 @@ public class BoolToken extends ReservedToken {
             return BooleanEnum.FALSE;
         }
 
-        throw new ParseException("use wrong boolean token " + token);
+        throw new UnSupportMethodException("use wrong boolean token " + token);
     }
 
     @Override

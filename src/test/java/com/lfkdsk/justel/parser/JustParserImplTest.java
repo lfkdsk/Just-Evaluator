@@ -8,21 +8,30 @@
 
 package com.lfkdsk.justel.parser;
 
+import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.lexer.Lexer;
+import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.io.StringReader;
+
+import static com.lfkdsk.justel.token.Token.EOF;
 
 /**
  * Created by liufengkai on 2017/7/26.
  */
 class JustParserImplTest {
     @Test
-    void parser() {
-        String lfkdsk = "";
+    void parser() throws ParseException {
+        String lfkdsk = "lfkdsk == 12345";
         Lexer lexer = new JustLexerImpl(new StringReader(lfkdsk));
         JustParser parser = new JustParserImpl();
-        parser.parser(lexer);
+        Logger.init("test parser");
+        while (lexer.peek(0) != EOF) {
+            AstNode node = parser.parser(lexer);
+            Logger.v(" => " + node.toString() + "  ");
+        }
     }
 }

@@ -17,7 +17,7 @@ import java.util.List;
  * Created by liufengkai on 2017/7/26.
  */
 public class AstFuncArguments extends AstList {
-    public AstFuncArguments(List<AstNode> children, int tag) {
-        super(children, tag);
+    public AstFuncArguments(List<AstNode> children) {
+        super(children, AstNode.FUNC_ARGUMENT_EXPR);
     }
 }

@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class AstPrimaryExpr extends AstList {
 
-    public AstPrimaryExpr(List<AstNode> children, int tag) {
-        super(children, tag);
+    public AstPrimaryExpr(List<AstNode> children) {
+        super(children, AstNode.PRIMARY_EXPR);
     }
 }
