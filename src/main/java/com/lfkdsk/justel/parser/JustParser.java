@@ -11,6 +11,9 @@ package com.lfkdsk.justel.parser;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.operators.Operator;
 import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
+import com.lfkdsk.justel.ast.tree.AstFuncArguments;
+import com.lfkdsk.justel.ast.tree.AstFuncExpr;
+import com.lfkdsk.justel.ast.tree.AstPrimaryExpr;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.Lexer;
 
@@ -51,6 +54,10 @@ public interface JustParser {
         return factory.make(expr.getChildren());
     }
 
+    default AstNode resetFuncExpr(AstPrimaryExpr expr) {
+        return new AstFuncExpr(expr.getChildren());
+    }
+
     /**
      * @param parent
      * @param operators
@@ -59,9 +66,17 @@ public interface JustParser {
         for (int i = 0; i < parent.childCount(); i++) {
             AstNode child = parent.child(i);
 
+            // fix binary => special expr
             if (child instanceof AstBinaryExpr) {
                 child = resetAstExpr((AstBinaryExpr) child, operators);
                 parent.replaceChild(i, child);
+            } else if (child instanceof AstPrimaryExpr) {
+                // fix primary => function expr
+                if (child.childCount() >= 2 &&
+                        child.child(1) instanceof AstFuncArguments) {
+                    child = resetFuncExpr((AstPrimaryExpr) child);
+                    parent.replaceChild(i, child);
+                }
             }
 
             transformBinaryExpr(child, operators);

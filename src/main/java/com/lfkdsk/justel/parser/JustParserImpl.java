@@ -88,13 +88,11 @@ public class JustParserImpl implements JustParser {
     // postfix = ( args | null ) | . id | [ expr ]
     ///////////////////////////////////////////////////////////////////////////
 
-    private BnfCom postfix = rule().sep("(").maybe(args).sep(")");
-
-//            rule().or(
-//                    rule().sep("(").maybe(args).sep(")"),
-//                    rule(DotExpr.class).sep(".").identifier(reservedToken),
-//                    rule(ArrayIndexExpr.class).sep("[").ast(expr).sep("]")
-//            );
+    private BnfCom postfix = rule().or(
+            rule().sep("(").maybe(args).sep(")"),
+            rule(DotExpr.class).sep(".").identifier(reservedToken),
+            rule(ArrayIndexExpr.class).sep("[").ast(expr).sep("]")
+    );
 
     ///////////////////////////////////////////////////////////////////////////
     // program = expr EOL (end of line)
@@ -120,6 +118,6 @@ public class JustParserImpl implements JustParser {
 
     @Override
     public AstNode parser(Lexer lexer) throws ParseException {
-        return primary.parse(lexer);
+        return transformBinaryExpr(program.parse(lexer), operators);
     }
 }

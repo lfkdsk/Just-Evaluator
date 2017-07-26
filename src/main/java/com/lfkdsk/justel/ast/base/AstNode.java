@@ -43,6 +43,8 @@ public abstract class AstNode implements Iterable<AstNode>, Evalable {
 
     public static final int UN_EQUAL_OP = 610;
 
+    public static final int FUNCTION_EXPR = 611;
+
     public static final int PROGRAM = 700;
 
     public AstNode(int tag) {
