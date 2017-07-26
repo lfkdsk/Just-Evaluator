@@ -53,7 +53,7 @@ public class AstLeaf extends AstNode {
     }
 
     @Override
-    public AstNode setChild(int index, AstNode node) {
+    public AstNode replaceChild(int index, AstNode node) {
         throw new ParseException("Didn't support this method in Leaf");
     }
 

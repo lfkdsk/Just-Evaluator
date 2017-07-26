@@ -17,8 +17,7 @@ import java.util.Iterator;
  * AST TREE NODE 抽象语法树的通用接口
  * Created by liufengkai on 16/7/11.
  */
-public abstract class AstNode implements Iterable<AstNode>,
-        Evalable {
+public abstract class AstNode implements Iterable<AstNode>, Evalable {
 
     private final int tag;
 
@@ -43,6 +42,8 @@ public abstract class AstNode implements Iterable<AstNode>,
     public static final int NOT_OP = 609;
 
     public static final int UN_EQUAL_OP = 610;
+
+    public static final int PROGRAM = 700;
 
     public AstNode(int tag) {
         this.tag = tag;
@@ -81,7 +82,7 @@ public abstract class AstNode implements Iterable<AstNode>,
         return children();
     }
 
-    public abstract AstNode setChild(int index, AstNode node);
+    public abstract AstNode replaceChild(int index, AstNode node);
 
     public Object eval(JustContext context) {
         return this;

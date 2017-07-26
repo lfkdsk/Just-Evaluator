@@ -13,6 +13,7 @@ import com.lfkdsk.justel.ast.operators.*;
 import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
 import com.lfkdsk.justel.ast.tree.AstFuncArguments;
 import com.lfkdsk.justel.ast.tree.AstPrimaryExpr;
+import com.lfkdsk.justel.ast.tree.AstProgram;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.literal.BoolLiteral;
@@ -98,7 +99,7 @@ public class JustParserImpl implements JustParser {
     // program = expr EOL (end of line)
     ///////////////////////////////////////////////////////////////////////////
 
-    private BnfCom program = rule().ast(expr).sep(EOL);
+    private BnfCom program = rule(AstProgram.class).ast(expr).sep(EOL);
 
 
     JustParserImpl() {
@@ -113,28 +114,9 @@ public class JustParserImpl implements JustParser {
         operators.add("!=", 7, LEFT, UnEqualOp.class);
     }
 
-    private void subChangeBinaryNode(AstNode parent) {
-        for (int i = 0; i < parent.childCount(); i++) {
-            AstNode child = parent.child(i);
-
-            if (child instanceof AstBinaryExpr) {
-                child = BnfCom.resetAstExpr((AstBinaryExpr) child, operators);
-                parent.setChild(i, child);
-            }
-            subChangeBinaryNode(child);
-        }
-    }
-
-    private AstNode changeBinaryNode(AstNode unchecked) {
-        if (unchecked instanceof AstBinaryExpr) {
-            unchecked = BnfCom.resetAstExpr((AstBinaryExpr) unchecked, operators);
-        }
-        subChangeBinaryNode(unchecked);
-        return unchecked;
-    }
 
     @Override
     public AstNode parser(Lexer lexer) throws ParseException {
-        return changeBinaryNode(program.parse(lexer));
+        return transformBinaryExpr(program.parse(lexer), operators);
     }
 }

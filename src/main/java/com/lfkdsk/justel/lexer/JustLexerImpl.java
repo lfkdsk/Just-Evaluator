@@ -102,7 +102,7 @@ public class JustLexerImpl implements Lexer {
         currentReadString = line;
         if (end == 0) return;
 
-        while (start < end) {
+        while (start <= end) {
             scanToken();
         }
 
@@ -116,6 +116,7 @@ public class JustLexerImpl implements Lexer {
     private char readChar() {
         if (start >= end) {
             peekChar = ' ';
+            start++;
             return peekChar;
         }
 
@@ -140,11 +141,14 @@ public class JustLexerImpl implements Lexer {
         if (resolveString()) return;
 
         // resolve id
-        resolveIDToken();
+        if (resolveIDToken()) return;
+
+        addToken(new SepToken(lineNumber, String.valueOf(peekChar)));
+        readChar();
     }
 
     private void jumpBlank() {
-        for (readChar(); ; readChar()) {
+        for (; ; readChar()) {
             if (peekChar == ' ' || peekChar == '\t') {
                 continue;
             } else if (peekChar == '\n')
@@ -274,19 +278,12 @@ public class JustLexerImpl implements Lexer {
     private boolean resolveNumber() {
         if (Character.isDigit(peekChar)) {
             // int value parser
-
-            // start index of digits
-            int startIndex = start - 1;
-
             long v = 0;
 
             do {
                 v = 10 * v + Character.digit(peekChar, 10);
                 readChar();
             } while (Character.isDigit(peekChar));
-
-            // end index of digit
-            int endIndex = start;
 
             if (peekChar != '.') {
                 // int value
@@ -299,7 +296,7 @@ public class JustLexerImpl implements Lexer {
                 }
 
                 addToken(new NumberToken(lineNumber, checkedType,
-                        currentReadString.substring(startIndex, endIndex),
+                        String.valueOf(checkedNum),
                         checkedNum));
 
                 return true;
@@ -318,8 +315,6 @@ public class JustLexerImpl implements Lexer {
                     d = d * 10;
                 }
 
-                endIndex = start - 1;
-
                 // float or double value
                 Number checkedNum = NumberUtils.parseNumber(x);
                 int checkedType = Token.FLOAT;
@@ -329,7 +324,7 @@ public class JustLexerImpl implements Lexer {
                 }
 
                 addToken(new NumberToken(lineNumber, checkedType,
-                        currentReadString.substring(startIndex, endIndex), checkedNum));
+                        String.valueOf(checkedNum), checkedNum));
 
                 return true;
             }
@@ -359,13 +354,15 @@ public class JustLexerImpl implements Lexer {
 
             addToken(new StringToken(lineNumber, builder.toString()));
             readChar();
+
             return true;
         }
+
         return false;
     }
 
     private boolean resolveIDToken() {
-        if (Character.isLetter(peekChar)) {
+        if (Character.isLetterOrDigit(peekChar) || peekChar == '_') {
             StringBuilder buffer = new StringBuilder();
 
             do {

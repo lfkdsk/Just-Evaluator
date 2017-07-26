@@ -4,7 +4,6 @@ import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.operators.Operator;
-import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.token.Token;
@@ -816,11 +815,5 @@ public class BnfCom {
             or(parser, otherWise);
         }
         return this;
-    }
-
-    public static AstNode resetAstExpr(AstBinaryExpr expr, Operators operators) {
-        Operator operator = (Operator) expr.midOp();
-        Factory factory = operators.get(operator.getText()).factory;
-        return factory.make(expr.getChildren());
     }
 }

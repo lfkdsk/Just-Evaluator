@@ -11,18 +11,18 @@ import com.lfkdsk.justel.token.Token;
  */
 public interface Lexer {
 
-  /**
-   * peek first serial nodes
-   *
-   * @param index first serial nodes
-   * @return Token
-   */
-  Token peek(int index);
+    /**
+     * peek first serial nodes
+     *
+     * @param index first serial nodes
+     * @return Token
+     */
+    Token peek(int index);
 
-  /**
-   * get first node of list
-   *
-   * @return Token
-   */
-  Token read();
+    /**
+     * get first node of list
+     *
+     * @return Token
+     */
+    Token read();
 }

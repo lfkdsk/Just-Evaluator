@@ -25,11 +25,10 @@ import static com.lfkdsk.justel.token.Token.EOF;
 class JustParserImplTest {
     @Test
     void parser() throws ParseException {
-        String lfkdsk = "lfkdsk == 12345 + 124";
+        String lfkdsk = "lfkdsk(123,kkk)";
         Lexer lexer = new JustLexerImpl(new StringReader(lfkdsk));
         JustParser parser = new JustParserImpl();
         Logger.init("test parser");
-
         long start = System.currentTimeMillis();
         while (lexer.peek(0) != EOF) {
             AstNode node = parser.parser(lexer);

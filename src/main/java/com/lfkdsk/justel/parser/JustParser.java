@@ -9,6 +9,8 @@
 package com.lfkdsk.justel.parser;
 
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.ast.operators.Operator;
+import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.Lexer;
 
@@ -18,6 +20,53 @@ import com.lfkdsk.justel.lexer.Lexer;
  * @author liufengkai
  *         Created by liufengkai on 2017/7/26.
  */
+@FunctionalInterface
 public interface JustParser {
+
+    /**
+     * Parse with Lexer(Provide Tokens)
+     *
+     * @param lexer Tokens Lexer
+     * @return Root Node of AST
+     * @throws ParseException Parse
+     */
     AstNode parser(Lexer lexer) throws ParseException;
+
+    /**
+     * Reset AstBinaryExpr to Particular Expr
+     * We use BinaryExpr to handle priority of Operator.
+     * So we should change it to particular Expr to compute the value.
+     *
+     * @param expr      Origin AstBinaryExpr
+     * @param operators Support Operators
+     * @return New Particular Expr
+     */
+    default AstNode resetAstExpr(AstBinaryExpr expr, BnfCom.Operators operators) {
+        // midOp is Operator
+        Operator operator = (Operator) expr.midOp();
+        // get the factory of sub-node
+        BnfCom.Factory factory = operators.get(operator.getText()).factory;
+        // use list to make new node
+
+        return factory.make(expr.getChildren());
+    }
+
+    /**
+     * @param parent
+     * @param operators
+     */
+    default AstNode transformBinaryExpr(AstNode parent, BnfCom.Operators operators) {
+        for (int i = 0; i < parent.childCount(); i++) {
+            AstNode child = parent.child(i);
+
+            if (child instanceof AstBinaryExpr) {
+                child = resetAstExpr((AstBinaryExpr) child, operators);
+                parent.replaceChild(i, child);
+            }
+
+            transformBinaryExpr(child, operators);
+        }
+
+        return parent;
+    }
 }
