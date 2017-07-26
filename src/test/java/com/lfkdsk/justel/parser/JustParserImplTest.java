@@ -29,9 +29,12 @@ class JustParserImplTest {
         Lexer lexer = new JustLexerImpl(new StringReader(lfkdsk));
         JustParser parser = new JustParserImpl();
         Logger.init("test parser");
+
+        long start = System.currentTimeMillis();
         while (lexer.peek(0) != EOF) {
             AstNode node = parser.parser(lexer);
             Logger.v(" => " + node.toString() + "  ");
         }
+        System.out.println(System.currentTimeMillis() - start);
     }
 }
