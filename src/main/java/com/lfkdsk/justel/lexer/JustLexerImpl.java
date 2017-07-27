@@ -97,12 +97,12 @@ public class JustLexerImpl implements Lexer {
         int lineNum = reader.getLineNumber();
 
         // init base message
-        start = 0;
+        start = -1;
         end = line.length();
         currentReadString = line;
         if (end == 0) return;
 
-        while (start <= end) {
+        while (start < end) {
             scanToken();
         }
     }
@@ -112,19 +112,18 @@ public class JustLexerImpl implements Lexer {
     private String currentReadString = "";
 
     private char readChar() {
+        start++;
         if (start >= end) {
             peekChar = ' ';
-            start++;
             return peekChar;
         }
 
         peekChar = currentReadString.charAt(start);
-        start++;
         return peekChar;
     }
 
     private boolean readChar(char ch) {
-        return start <= end && currentReadString.charAt(start) == ch;
+        return start <= end && currentReadString.charAt(start + 1) == ch;
     }
 
     private void scanToken() {
@@ -270,6 +269,7 @@ public class JustLexerImpl implements Lexer {
                 return false;
         }
 
+        readChar();
         return true;
     }
 
