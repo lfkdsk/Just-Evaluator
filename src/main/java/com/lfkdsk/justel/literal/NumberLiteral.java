@@ -9,6 +9,8 @@ import com.lfkdsk.justel.token.Token;
  * We support two kinds of Number Value :
  * - Long Value
  * - Integer Value
+ * - Float Value
+ * - Double Value
  *
  * @author liufengkai
  *         Created by liufengkai on 2017/7/24.

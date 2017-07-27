@@ -27,6 +27,9 @@ import static com.lfkdsk.justel.token.ReservedToken.reservedToken;
 import static com.lfkdsk.justel.token.Token.EOL;
 
 /**
+ * Just Parser Implementation, Support Follow Grammars:
+ * - number: int, long, double
+ * -
  * Created by liufengkai on 2017/7/26.
  */
 public class JustParserImpl implements JustParser {
@@ -98,7 +101,7 @@ public class JustParserImpl implements JustParser {
     // program = expr EOL (end of line)
     ///////////////////////////////////////////////////////////////////////////
 
-    private BnfCom program = rule(AstProgram.class).ast(expr);
+    private BnfCom program = rule(AstProgram.class).ast(expr).sep(EOL);
 
 
     JustParserImpl() {
@@ -109,6 +112,8 @@ public class JustParserImpl implements JustParser {
         reservedToken.add(EOL);
         reservedToken.add("(");
         reservedToken.add(")");
+        reservedToken.add("&&");
+        reservedToken.add("true");
 
         operators.add("+", 4, LEFT, PlusOp.class);
         operators.add("==", 7, LEFT, EqualOp.class);

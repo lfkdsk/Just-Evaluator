@@ -54,6 +54,12 @@ public interface JustParser {
         return factory.make(expr.getChildren());
     }
 
+    /**
+     * reset Function Expr
+     *
+     * @param expr Primary Expr
+     * @return change primary expr => FuncExpr
+     */
     default AstNode resetFuncExpr(AstPrimaryExpr expr) {
         return new AstFuncExpr(expr.getChildren());
     }

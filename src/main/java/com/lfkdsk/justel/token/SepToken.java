@@ -1,7 +1,13 @@
 package com.lfkdsk.justel.token;
 
 /**
- * Created by liufengkai on 2017/7/24.
+ * Token the lexer will skip & reuse.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/24.
+ * @see com.lfkdsk.justel.token.Token
+ * @see com.lfkdsk.justel.lexer.JustLexerImpl
+ * @see com.lfkdsk.justel.parser.JustParserImpl
  */
 public class SepToken extends Token {
 
@@ -35,6 +41,11 @@ public class SepToken extends Token {
     public static SepToken COLLECT_GET_LEFT_TOKEN = new SepToken(Token.COLLECT_GET_LEFT, "[");
     public static SepToken COLLECT_GET_RIGHT_TOKEN = new SepToken(Token.COLLECT_GET_RIGHT, "]");
 
+    public static SepToken EOL_TOKEN = new SepToken(Token.EOL_TAG, Token.EOL);
+
+    /**
+     * Skip text.
+     */
     private String text;
 
     public SepToken(int tag, String text) {

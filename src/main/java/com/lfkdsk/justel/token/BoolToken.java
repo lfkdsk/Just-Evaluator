@@ -11,7 +11,13 @@ package com.lfkdsk.justel.token;
 import com.lfkdsk.justel.exception.UnSupportMethodException;
 
 /**
- * Created by liufengkai on 2017/7/26.
+ * Boolean Token
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
+ * @see com.lfkdsk.justel.token.Token
+ * @see com.lfkdsk.justel.token.ReservedToken
+ * @see com.lfkdsk.justel.literal.BoolLiteral
  */
 public class BoolToken extends ReservedToken {
 
@@ -35,7 +41,13 @@ public class BoolToken extends ReservedToken {
         super(lineNumber, booleanEnum.toString());
     }
 
-    public static BooleanEnum getBoolean(String token) {
+    /**
+     * Judge token => Boolean Value
+     *
+     * @param token tokenString
+     * @return BooleanEnum
+     */
+    public static BooleanEnum booleanValue(String token) {
         for (BooleanEnum booleanEnum : BooleanEnum.values()) {
             if (booleanEnum.booleanToken.equals(token)) {
                 return booleanEnum;
@@ -48,5 +60,14 @@ public class BoolToken extends ReservedToken {
     @Override
     public boolean isBool() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "BoolToken{" +
+                "token='" + token + '\'' +
+                ", lineNumber=" + lineNumber +
+                ", tag=" + tag +
+                '}';
     }
 }

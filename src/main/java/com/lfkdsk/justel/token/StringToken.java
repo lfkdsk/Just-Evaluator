@@ -1,7 +1,14 @@
 package com.lfkdsk.justel.token;
 
 /**
- * Created by liufengkai on 2017/7/24.
+ * String Token.
+ * used in lexer => will be add to spec Literal.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/24.
+ * @see com.lfkdsk.justel.token.Token
+ * @see com.lfkdsk.justel.lexer.Lexer
+ * @see com.lfkdsk.justel.literal.StringLiteral
  */
 public class StringToken extends Token {
     private String text;

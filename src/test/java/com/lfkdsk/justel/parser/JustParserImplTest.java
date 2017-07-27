@@ -18,12 +18,16 @@ import org.junit.jupiter.api.Test;
 import java.io.StringReader;
 
 /**
- * Created by liufengkai on 2017/7/26.
+ * Just Parser Impl Test
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
+ * @see JustParserImpl
  */
 class JustParserImplTest {
     @Test
     void parser() throws ParseException {
-        String lfkdsk = "lfkdsk.LFKDSK[11111 + 12222](1111,2222,\"LFKDSK\")";
+        String lfkdsk = "lfkdsk.LFKDSK[11111 + 12222](1111,2222,\"LFKDSK\") == true";
         Lexer lexer = new JustLexerImpl(new StringReader(lfkdsk));
         JustParser parser = new JustParserImpl();
         Logger.init("test parser");

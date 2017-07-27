@@ -5,14 +5,22 @@ import java.util.Set;
 
 /**
  * Reserved Token
+ * Language reserved word
  *
  * @author liufengkai
  *         Created by liufengkai on 2017/7/26.
+ * @see BoolToken
  */
 public class ReservedToken extends Token {
 
-    private String token;
+    /**
+     * reserved token str
+     */
+    protected String token;
 
+    /**
+     * reserved token in this set
+     */
     public final static Set<String> reservedToken = new HashSet<>();
 
     public ReservedToken(int lineNumber, String token) {
@@ -30,11 +38,4 @@ public class ReservedToken extends Token {
         return true;
     }
 
-    public static boolean addReservedToken(String token) {
-        return reservedToken.add(token);
-    }
-
-    public static boolean containsReservedToken(String token) {
-        return reservedToken.contains(token);
-    }
 }

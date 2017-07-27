@@ -94,17 +94,20 @@ public class JustLexerImpl implements Lexer {
             return;
         }
 
-        int lineNum = reader.getLineNumber();
 
         // init base message
         start = -1;
         end = line.length();
         currentReadString = line;
+        lineNumber = reader.getLineNumber();
+
         if (end == 0) return;
 
         while (start < end) {
             scanToken();
         }
+
+        addToken(SepToken.EOL_TOKEN);
     }
 
     private char peekChar = ' ';
@@ -375,7 +378,7 @@ public class JustLexerImpl implements Lexer {
 
                 case "true":
                 case "false": {
-                    addToken(new BoolToken(lineNumber, BoolToken.getBoolean(token)));
+                    addToken(new BoolToken(lineNumber, BoolToken.booleanValue(token)));
                     break;
                 }
 

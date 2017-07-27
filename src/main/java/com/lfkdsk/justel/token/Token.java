@@ -1,23 +1,18 @@
 package com.lfkdsk.justel.token;
 
 /**
- * Created by liufengkai on 2017/7/18.
+ * Basic Token && Token Tag
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/18.
+ * @see com.lfkdsk.justel.lexer.JustLexerImpl
+ * @see com.lfkdsk.justel.parser.JustParserImpl
  */
 public class Token {
 
-    public final static int
-            BASIC = 257, BREAK = 258, DO = 259, ELSE = 260,
-            EQ = 261, FALSE = 262, GE = 263, IF = 265,
-            INDEX = 266, LE = 267, NE = 269, NUM = 270,
-            REAL = 272, TEMP = 273, TRUE = 274, WHILE = 275,
-            LIST = 277, BLOCK = 278, BINARY = 279,
-            FUNCTION = 280, NEGATIVE = 281, NULL = 282, PARALIST = 283,
-            POSTFIX = 284, PRIMARY = 285, FOR = 286, CLOSURE = 287,
-            CLASS_TOKEN = 288, CLASS_BODY_TOKEN = 289, ARRAY = 290,
-            CREATE_ARRAY = 291, OPTION = 292, IMPORT = 293, BOOL = 294,
-            VAR = 295, INT = 296, TYPE = 298, NEGATIVEBOOL = 295,
-            RETURN = 296,
-            EOF_TAG = -1, EOL_TAG = -2;
+    public final static int EOF_TAG = -1, EOL_TAG = -2;
+
+    public final static int LIST = 277;
 
     public final static int BOOLEAN = 293;
 

@@ -13,27 +13,32 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 /**
- * BnfCom 巴克斯范式解析引擎
+ * BnfCom Engine
  *
- * @author liufengkai Created by liufengkai on 16/7/11.
+ * @author liufengkai
+ *         Created by liufengkai on 16/7/11.
+ * @see AToken
+ * @see Expr
+ * @see Element
+ * @see Tree
  */
 public class BnfCom {
 
     protected static abstract class Element {
         /**
-         * 语法分析
+         * Grammar Analyze
          *
-         * @param lexer 语法分析器
-         * @param nodes 节点
+         * @param lexer Lexer
+         * @param nodes Ast-List
          * @throws ParseException
          */
         protected abstract void parse(Lexer lexer, List<AstNode> nodes)
                 throws ParseException;
 
         /**
-         * 匹配
+         * Match Elements
          *
-         * @param lexer 语法分析器
+         * @param lexer Lexer
          * @return tof?
          * @throws ParseException
          */
@@ -41,9 +46,7 @@ public class BnfCom {
     }
 
     /**
-     * 开一棵子树
-     * Tree中并没有对处理细节的描述
-     * 只是个构造基类
+     * Create Basic Tree
      */
     protected static class Tree extends Element {
         private BnfCom parser;
@@ -64,7 +67,7 @@ public class BnfCom {
     }
 
     /**
-     * BNF 产生式中的 或节点
+     * Or Tree
      * [] | []
      */
     protected static class OrTree extends Element {
@@ -99,7 +102,7 @@ public class BnfCom {
         }
 
         /**
-         * 插入节点 插在了0
+         * insert to zero node.
          *
          * @param parser BNF
          */
@@ -112,9 +115,7 @@ public class BnfCom {
     }
 
     /**
-     * 重复出现的语句节点
-     * 比如block中会出现多次的simple
-     * 还有Option
+     * Repeat Node
      */
     protected static class Repeat extends Element {
         protected BnfCom parser;
@@ -123,7 +124,7 @@ public class BnfCom {
 
         /**
          * @param parser  BNF
-         * @param onlyOne 节点出现次数
+         * @param onlyOne onlyOne?
          */
         public Repeat(BnfCom parser, boolean onlyOne) {
             this.parser = parser;
@@ -153,7 +154,7 @@ public class BnfCom {
     }
 
     /**
-     * Token 基类
+     * Token Basic
      */
     protected static abstract class AToken extends Element {
 
@@ -186,8 +187,7 @@ public class BnfCom {
         }
 
         /**
-         * 判断是否符合该类Token
-         * 标准的抽象方法
+         * Token could pass test?
          *
          * @param token com.lfkdsk.justel.token
          * @return tof?
@@ -196,7 +196,7 @@ public class BnfCom {
     }
 
     /**
-     * ID 类型的Token
+     * ID Token
      */
     protected static class IdToken extends AToken {
         Set<String> reserved;
@@ -213,7 +213,7 @@ public class BnfCom {
     }
 
     /**
-     * 数字类型Token
+     * Number Token
      */
     protected static class NumToken extends AToken {
 
@@ -228,7 +228,7 @@ public class BnfCom {
     }
 
     /**
-     * 字符串类型Token
+     * String Token
      */
     protected static class StrToken extends AToken {
 
@@ -279,7 +279,7 @@ public class BnfCom {
     }
 
     /**
-     * 叶节点
+     * Leaf Node.
      */
     protected static class Leaf extends Element {
         protected String[] tokens;
@@ -309,10 +309,10 @@ public class BnfCom {
         }
 
         /**
-         * 添加终结符
+         * add final node
          *
          * @param list  list
-         * @param token 终结符对应token
+         * @param token Token
          */
         protected void find(List<AstNode> list, Token token) {
             list.add(new AstLeaf(token));
@@ -341,11 +341,10 @@ public class BnfCom {
         }
 
         /**
-         * 所谓Skip 不添加节点
-         * 比如一些格式控制符号是不算做节点的
+         * Skip Node
          *
          * @param list  list
-         * @param token com.lfkdsk.justel.token
+         * @param token Token
          */
         @Override
         protected void find(List<AstNode> list, Token token) {
@@ -369,7 +368,7 @@ public class BnfCom {
     }
 
     /**
-     * 标志符
+     * Operator Node
      */
     public static class Operators extends HashMap<String, Precedence> {
         // 结合性
@@ -378,11 +377,12 @@ public class BnfCom {
         public static boolean RIGHT = false;
 
         /**
-         * 添加保留字
+         * add Operators
          *
-         * @param name      保留字Token
-         * @param pres      优先级
-         * @param leftAssoc 结合性
+         * @param name      Token String
+         * @param pres      Priority
+         * @param leftAssoc left or right
+         * @param clazz     create node class file
          */
         public void add(String name, int pres,
                         boolean leftAssoc, Class<? extends AstNode> clazz) {
@@ -391,7 +391,7 @@ public class BnfCom {
     }
 
     /**
-     * 表达式子树
+     * Expr Tree
      */
     protected static class Expr extends Element {
         Factory factory;
@@ -462,17 +462,17 @@ public class BnfCom {
         }
 
         /**
-         * 那取下一个符号
+         * get next operator
          *
-         * @param lexer 词法
-         * @return 符号
+         * @param lexer Lexer
+         * @return Symbol Operator
          * @throws ParseException
          */
         private Precedence nextOperator(Lexer lexer) throws ParseException {
             Token token = lexer.peek(0);
 
             if (token.isIdentifier()) {
-                // 从符号表里找对应的符号
+                // get symbol
                 return ops.get(token.getText());
             } else {
                 return null;
@@ -480,10 +480,10 @@ public class BnfCom {
         }
 
         /**
-         * 比较和右侧符号的结合性
+         * compare left's priority and right's priority
          *
-         * @param prec     优先级
-         * @param nextPrec 下一个符号的优先级
+         * @param prec     priority
+         * @param nextPrec next symbol
          * @return tof?
          */
         private static boolean rightIsExpr(int prec, Precedence nextPrec) {
@@ -501,7 +501,7 @@ public class BnfCom {
     }
 
     /**
-     * 创建方法的方法名
+     * default factory function name
      */
     private static final String factoryName = "create";
 
@@ -520,10 +520,10 @@ public class BnfCom {
         }
 
         /**
-         * 直接创建一个AstList
+         * create ast list
          *
-         * @param clazz 创建类
-         * @return 工厂
+         * @param clazz class file
+         * @return reflect factory
          */
 
         private static Factory getForAstList(Class<? extends AstNode> clazz) {
@@ -560,7 +560,7 @@ public class BnfCom {
                 return null;
             }
 
-            // 这是调用了对象的create函数
+            // call create function
             try {
                 final Method m = clazz.getMethod(factoryName, new Class<?>[]{argType});
 
@@ -574,7 +574,7 @@ public class BnfCom {
 
             }
 
-            // 调用对象的构造
+            // call constructor
             try {
                 final Constructor<? extends AstNode> c = clazz.getConstructor(argType);
 
@@ -591,12 +591,12 @@ public class BnfCom {
     }
 
     /**
-     * 存储全部的BNF表达式
+     * elements set
      */
     private List<Element> elements;
 
     /**
-     * 构建工厂类
+     * reflect factory
      */
     private Factory factory;
 
@@ -610,10 +610,10 @@ public class BnfCom {
     }
 
     /**
-     * 分析处理
+     * parser
      *
-     * @param lexer 词法分析
-     * @return 节点
+     * @param lexer lexer => node
+     * @return AstNode
      * @throws ParseException
      */
     public AstNode parse(Lexer lexer) throws ParseException {
@@ -634,7 +634,7 @@ public class BnfCom {
     }
 
     /**
-     * 初始化 / 新定义一个一条产生式
+     * reset => expr
      *
      * @return Ast
      */
@@ -643,9 +643,9 @@ public class BnfCom {
     }
 
     /**
-     * 初始化 / 新定义一个一条产生式
+     * reset => expr
      *
-     * @param clazz 类
+     * @param clazz class file
      * @return Ast
      */
     public static BnfCom rule(Class<? extends AstNode> clazz) {
@@ -664,7 +664,7 @@ public class BnfCom {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // 添加识别各种Token的方法
+    // add token combinators
     ///////////////////////////////////////////////////////////////////////////
 
     public BnfCom number() {
@@ -723,7 +723,7 @@ public class BnfCom {
     }
 
     /**
-     * 添加非终结符
+     * add final token
      */
     public BnfCom token(String... pat) {
         elements.add(new Leaf(pat));
@@ -731,10 +731,10 @@ public class BnfCom {
     }
 
     /**
-     * 插入符号
+     * insert skip symbol
      *
-     * @param pat 符号
-     * @return 这种格式的符号(跳
+     * @param pat str
+     * @return bnf
      */
     public BnfCom sep(String... pat) {
         elements.add(new Skip(pat));
@@ -742,7 +742,7 @@ public class BnfCom {
     }
 
     /**
-     * 插入一棵子树
+     * insert sub tree
      *
      * @param parser BNF
      * @return BNF
@@ -753,7 +753,7 @@ public class BnfCom {
     }
 
     /**
-     * 多个对象传入or树
+     * insert sub-multi tree
      *
      * @param parsers BNF
      * @return BNF

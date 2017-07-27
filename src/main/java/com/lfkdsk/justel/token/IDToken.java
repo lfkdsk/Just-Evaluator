@@ -1,12 +1,27 @@
 package com.lfkdsk.justel.token;
 
 /**
- * Created by liufengkai on 2017/7/24.
+ * ID Token.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/24.
+ * @see com.lfkdsk.justel.token.Token
+ * @see com.lfkdsk.justel.lexer.JustLexerImpl
+ * @see com.lfkdsk.justel.literal.IDLiteral
  */
 public class IDToken extends Token {
 
+    /**
+     * Token String.
+     */
     private String text;
 
+    /**
+     * ID Token
+     *
+     * @param lineNumber local number.
+     * @param text       text token
+     */
     public IDToken(int lineNumber, String text) {
         super(lineNumber, Token.ID);
         this.text = text;
