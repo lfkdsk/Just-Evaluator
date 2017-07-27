@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
 
+import static com.lfkdsk.justel.token.ReservedToken.reservedToken;
+
 /**
  * Lexer - Language Token Lexer
  * Just catch token this Engine supported.
@@ -71,12 +73,9 @@ public class JustLexerImpl implements Lexer {
         return true;
     }
 
-    private void addToken(Token token) {
-        queue.add(token);
-    }
 
     /**
-     * 成行读取
+     * read one line
      *
      * @throws ParseException
      */
@@ -110,44 +109,77 @@ public class JustLexerImpl implements Lexer {
         addToken(SepToken.EOL_TOKEN);
     }
 
+    /**
+     * current peek char.
+     */
     private char peekChar = ' ';
+
+    /**
+     * start : current index.
+     * end   : end of line.
+     * lineNumber: line number.
+     */
     private int start = 0, end = 0, lineNumber = 0;
+
+    /**
+     * current read string.
+     */
     private String currentReadString = "";
 
+    /**
+     * read next char => peekChar
+     *
+     * @return peekChar value
+     */
     private char readChar() {
         start++;
         if (start >= end) {
             peekChar = ' ';
+            // end of file
             return peekChar;
         }
 
+        // read string
         peekChar = currentReadString.charAt(start);
+
         return peekChar;
     }
 
+    /**
+     * next char is equal this char?
+     *
+     * @param ch this char
+     * @return next char is equal this char?
+     */
     private boolean readChar(char ch) {
         return start <= end && currentReadString.charAt(start + 1) == ch;
     }
 
     private void scanToken() {
         // jump all blank chars
-        jumpBlank();
+        skipBlank();
 
         // resolve symbols & operators
         if (resolveSymbol()) return;
+
         // resolve number
         if (resolveNumber()) return;
+
         // resolve string
         if (resolveString()) return;
 
         // resolve id
         if (resolveIDToken()) return;
 
+        // add other symbol
         addToken(new SepToken(lineNumber, String.valueOf(peekChar)));
         readChar();
     }
 
-    private void jumpBlank() {
+    /**
+     * Skip Blank
+     */
+    private void skipBlank() {
         for (; ; readChar()) {
             if (peekChar == ' ' || peekChar == '\t') {
                 continue;
@@ -157,6 +189,11 @@ public class JustLexerImpl implements Lexer {
         }
     }
 
+    /**
+     * resolve symbol token
+     *
+     * @return is symbol token?
+     */
     private boolean resolveSymbol() {
         // current peek char
         switch (peekChar) {
@@ -276,6 +313,11 @@ public class JustLexerImpl implements Lexer {
         return true;
     }
 
+    /**
+     * resolve number token
+     *
+     * @return is number token?
+     */
     private boolean resolveNumber() {
         if (Character.isDigit(peekChar)) {
             // int value parser
@@ -334,6 +376,11 @@ public class JustLexerImpl implements Lexer {
         return false;
     }
 
+    /**
+     * resolve string
+     *
+     * @return is string token?
+     */
     private boolean resolveString() {
         if (peekChar == '\"') {
             boolean returnFlag = false;
@@ -362,6 +409,11 @@ public class JustLexerImpl implements Lexer {
         return false;
     }
 
+    /**
+     * resolve id token
+     *
+     * @return is id token?
+     */
     private boolean resolveIDToken() {
         if (Character.isLetterOrDigit(peekChar) || peekChar == '_') {
             StringBuilder buffer = new StringBuilder();
@@ -383,7 +435,7 @@ public class JustLexerImpl implements Lexer {
                 }
 
                 default: {
-                    addToken(ReservedToken.containsReservedToken(token) ?
+                    addToken(reservedToken.contains(token) ?
                             new ReservedToken(lineNumber, token) :
                             new IDToken(lineNumber, token));
                     break;
@@ -394,5 +446,14 @@ public class JustLexerImpl implements Lexer {
         }
 
         return false;
+    }
+
+    /**
+     * Add Token => Queue
+     *
+     * @param token Token
+     */
+    private void addToken(Token token) {
+        queue.add(token);
     }
 }

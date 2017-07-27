@@ -4,15 +4,35 @@ import com.lfkdsk.justel.compile.generate.JavaSource;
 import com.lfkdsk.justel.expr.Expression;
 
 /**
- * Created by liufengkai on 2017/7/20.
+ * Just Compiler Class
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/20.
  */
-public interface JustCompiler<T> {
+public interface JustCompiler {
 
-  Expression compile(JavaSource code);
+    /**
+     * Compile JavaSource Code
+     *
+     * @param code source code
+     * @return Expression
+     * @see Expression
+     * @see JavaSource
+     */
+    Expression compile(JavaSource code);
 
-  @SuppressWarnings("unchecked")
-  default Class<T> loadClass(ClassLoader loader, String classQualifiedName)
-      throws ClassNotFoundException {
-    return (Class<T>) loader.loadClass(classQualifiedName);
-  }
+    /**
+     * Load Class => ClassLoader
+     *
+     * @param loader             loader
+     * @param classQualifiedName class's qualified name
+     * @param <T>                spec clazz
+     * @return object
+     * @throws ClassNotFoundException
+     */
+    @SuppressWarnings("unchecked")
+    default <T> Class<T> loadClass(ClassLoader loader, String classQualifiedName)
+            throws ClassNotFoundException {
+        return (Class<T>) loader.loadClass(classQualifiedName);
+    }
 }

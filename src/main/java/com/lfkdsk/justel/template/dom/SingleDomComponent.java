@@ -8,7 +8,9 @@ import com.lfkdsk.justel.context.JustContext;
  * DomCom.bind("${localVars}")
  * We bind a var block in com.lfkdsk.justel.template file and it will
  * be replace in structure in generateCode code.
- * Created by liufengkai on 2017/7/18.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/18.
  */
 public class SingleDomComponent implements DomComponent {
 

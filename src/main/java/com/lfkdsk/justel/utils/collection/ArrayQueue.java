@@ -1,10 +1,12 @@
 package com.lfkdsk.justel.utils.collection;
 
 import java.util.ArrayList;
-import java.util.Queue;
 
 /**
- * Created by liufengkai on 2017/7/24.
+ * ArrayQueue => use Array to build Queue.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/24.
  */
 public class ArrayQueue<E> {
 

@@ -3,6 +3,8 @@ package com.lfkdsk.justel.template;
 import com.lfkdsk.justel.template.dom.DomCom;
 import com.lfkdsk.justel.template.dom.Template;
 
+import static com.lfkdsk.justel.compile.generate.JavaSource.GENERATE_DEFAULT_PACKAGE;
+
 
 /**
  * Simple Template Impl
@@ -14,7 +16,7 @@ public class TemplateImpl implements Template {
 
     private static final DomCom packageGen = DomCom.rule()
             .sep("package")
-            .sep("com.lfkdsk.justel.generatecode;");
+            .sep(GENERATE_DEFAULT_PACKAGE);
 
     private static final DomCom importGen = DomCom.rule()
             .sep("import com.lfkdsk.justel.context.JustContext;")

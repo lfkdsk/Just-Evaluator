@@ -112,7 +112,7 @@ public class DomCom {
     }
 
     public DomCom randomVal() {
-        components.add(new RandomValComonent());
+        components.add(new RandomValComponent());
         return this;
     }
 

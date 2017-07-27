@@ -8,7 +8,9 @@ import java.util.List;
 /**
  * Sequence Component
  * We could bind a set of components in one Sequence.
- * Created by liufengkai on 2017/7/18.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/18.
  */
 public class SequenceDomComponent implements DomComponent {
 

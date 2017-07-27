@@ -1,10 +1,16 @@
 package com.lfkdsk.justel.utils;
 
 /**
- * Created by liufengkai on 2017/7/24.
+ * Parser Number.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/24.
  */
 public class NumberUtils {
+
     /**
+     * parser number: int / long
+     *
      * @param l long number
      */
     public static Number parseNumber(long l) {
@@ -16,6 +22,8 @@ public class NumberUtils {
     }
 
     /**
+     * parser number: float / double
+     *
      * @param d double number
      */
     public static Number parseNumber(double d) {

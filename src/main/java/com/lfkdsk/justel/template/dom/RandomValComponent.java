@@ -4,10 +4,14 @@ import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.utils.GeneratedId;
 
 /**
- * Created by liufengkai on 2017/7/20.
+ * Random Value.
+ * use generate id to create node.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/20.
  */
-public class RandomValComonent implements DomComponent {
-    
+public class RandomValComponent implements DomComponent {
+
     @Override
     public StringBuilder generateCode(JustContext context, StringBuilder builder) {
         return builder.append("val").append(GeneratedId.generateAtomId());

@@ -3,7 +3,10 @@ package com.lfkdsk.justel.utils;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by liufengkai on 16/7/14.
+ * Generate spec id : use atomic integer => id
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 16/7/14.
  */
 public class GeneratedId {
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(20000);

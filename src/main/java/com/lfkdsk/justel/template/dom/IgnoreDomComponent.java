@@ -5,7 +5,9 @@ import com.lfkdsk.justel.context.JustContext;
 /**
  * Ignore Component.
  * just control generateCode code not about exchange Vars
- * Created by liufengkai on 2017/7/18.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/18.
  */
 public class IgnoreDomComponent implements DomComponent {
 

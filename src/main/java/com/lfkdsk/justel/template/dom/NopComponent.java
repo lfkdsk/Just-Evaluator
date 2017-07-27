@@ -3,7 +3,11 @@ package com.lfkdsk.justel.template.dom;
 import com.lfkdsk.justel.context.JustContext;
 
 /**
- * Created by liufengkai on 2017/7/19.
+ * Nop Component.
+ * nopString will not be added to builder.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/19.
  */
 public class NopComponent implements DomComponent {
 

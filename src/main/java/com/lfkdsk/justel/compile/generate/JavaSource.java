@@ -3,44 +3,73 @@ package com.lfkdsk.justel.compile.generate;
 import java.nio.CharBuffer;
 
 /**
- * Created by liufengkai on 2017/7/20.
+ * Java Source :
+ * - package name
+ * - class name
+ * - source code
+ * - code => char (cache)
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/20.
  */
 public final class JavaSource {
-  public static final String GENERATE_DEFALUT_PACKAGE = "com.lfkdsk.justel.generatecode";
 
-  public final String packageName;
+    /**
+     * default generate package
+     */
+    public static final String GENERATE_DEFAULT_PACKAGE = "com.lfkdsk.justel.generatecode;";
 
-  public final String className;
+    public final String packageName;
 
-  public final String sourceCode;
+    public final String className;
 
-  private CharSequence sourceCodeChar;
+    public final String sourceCode;
 
-  public JavaSource(String packageName,
-      String className,
-      String sourceCode) {
-    this.className = className;
-    this.sourceCode = sourceCode;
-    this.packageName = packageName;
-  }
+    /**
+     * source code => code char
+     */
+    private CharSequence sourceCodeChar;
 
-  public String getClassQualifiedName() {
-    return packageName + "." + className;
-  }
+    public JavaSource(String packageName,
+                      String className,
+                      String sourceCode) {
+        this.className = className;
+        this.sourceCode = sourceCode;
+        this.packageName = packageName;
+    }
 
-  public String getFileName() {
-    return className + ".java";
-  }
+    /**
+     * class qualified name
+     *
+     * @return package name + class name.
+     */
+    public String getClassQualifiedName() {
+        return packageName + "." + className;
+    }
 
-  public CharSequence getSourceCodeCharSequence() {
-    return sourceCodeChar == null ? sourceCodeChar = CharBuffer.wrap(sourceCode) : sourceCodeChar;
-  }
+    /**
+     * file name
+     *
+     * @return xxx.java
+     */
+    public String getFileName() {
+        return className + ".java";
+    }
 
-  @Override
-  public String toString() {
-    return "<Java Source Code> : \n" +
-        "PackageName : " + packageName + "\n" +
-        "ClassName   : " + className + "\n" +
-        "SourceCode  : " + sourceCode + "\n";
-  }
+    /**
+     * return char sequence
+     *
+     * @return char sequence.
+     */
+    public CharSequence getSourceCodeCharSequence() {
+        return sourceCodeChar == null ? sourceCodeChar = CharBuffer.wrap(sourceCode) : sourceCodeChar;
+    }
+
+    @Override
+    public String toString() {
+        return "<Java Source Code> : \n" +
+                "PackageName : " + packageName + "\n" +
+                "ClassName   : " + className + "\n" +
+                "SourceCode  : " + sourceCode + "\n";
+    }
 }

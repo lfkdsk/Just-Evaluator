@@ -4,7 +4,9 @@ import com.lfkdsk.justel.context.JustContext;
 
 /**
  * Basic DomComponent.
- * Created by liufengkai on 2017/7/18.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/18.
  */
 public interface DomComponent {
 

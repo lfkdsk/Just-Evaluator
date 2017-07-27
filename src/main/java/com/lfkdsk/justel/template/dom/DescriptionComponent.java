@@ -3,7 +3,11 @@ package com.lfkdsk.justel.template.dom;
 import com.lfkdsk.justel.context.JustContext;
 
 /**
- * Created by liufengkai on 2017/7/19.
+ * Description Component.
+ * des will be skip.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/19.
  */
 public class DescriptionComponent implements DomComponent {
 
@@ -15,7 +19,6 @@ public class DescriptionComponent implements DomComponent {
 
     @Override
     public StringBuilder generateCode(JustContext context, StringBuilder builder) {
-//        Arrays.stream(desString).map(string -> "//" + string + "\n").forEach(builder::append);
         for (String des : desString) {
             builder.append("//").append(des).append("\n");
         }

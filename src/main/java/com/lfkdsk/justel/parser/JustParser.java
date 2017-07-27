@@ -65,8 +65,11 @@ public interface JustParser {
     }
 
     /**
-     * @param parent
-     * @param operators
+     * transform binary expr to spec expr
+     *
+     * @param parent    parent node
+     * @param operators Operators
+     * @see JustParserImpl
      */
     default AstNode transformBinaryExpr(AstNode parent, BnfCom.Operators operators) {
         for (int i = 0; i < parent.childCount(); i++) {
@@ -76,6 +79,7 @@ public interface JustParser {
             if (child instanceof AstBinaryExpr) {
                 child = resetAstExpr((AstBinaryExpr) child, operators);
                 parent.replaceChild(i, child);
+
             } else if (child instanceof AstPrimaryExpr) {
                 // fix primary => function expr
                 if (child.childCount() >= 2 &&
