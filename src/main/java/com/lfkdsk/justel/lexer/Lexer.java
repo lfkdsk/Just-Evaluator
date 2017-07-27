@@ -25,4 +25,13 @@ public interface Lexer {
      * @return Token
      */
     Token read();
+
+    /**
+     * has more tokens in Lexer
+     *
+     * @return has more?
+     */
+    default boolean hasMore() {
+        return peek(0) != Token.EOF;
+    }
 }

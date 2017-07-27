@@ -10,8 +10,6 @@ package com.lfkdsk.justel.token;
 
 import com.lfkdsk.justel.exception.UnSupportMethodException;
 
-import java.util.Objects;
-
 /**
  * Created by liufengkai on 2017/7/26.
  */
@@ -38,18 +36,13 @@ public class BoolToken extends ReservedToken {
     }
 
     public static BooleanEnum getBoolean(String token) {
-        if (Objects.equals(token, "true")) {
-            return BooleanEnum.TRUE;
-        } else if (Objects.equals(token, "false")) {
-            return BooleanEnum.FALSE;
+        for (BooleanEnum booleanEnum : BooleanEnum.values()) {
+            if (booleanEnum.booleanToken.equals(token)) {
+                return booleanEnum;
+            }
         }
 
         throw new UnSupportMethodException("use wrong boolean token " + token);
-    }
-
-    @Override
-    public String getText() {
-        return super.getText();
     }
 
     @Override

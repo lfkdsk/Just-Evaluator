@@ -46,9 +46,9 @@ public class BnfCom {
      * 只是个构造基类
      */
     protected static class Tree extends Element {
-        protected BnfCom parser;
+        private BnfCom parser;
 
-        public Tree(BnfCom parser) {
+        Tree(BnfCom parser) {
             this.parser = parser;
         }
 
@@ -68,9 +68,9 @@ public class BnfCom {
      * [] | []
      */
     protected static class OrTree extends Element {
-        protected BnfCom[] parsers;
+        private BnfCom[] parsers;
 
-        public OrTree(BnfCom[] parsers) {
+        OrTree(BnfCom[] parsers) {
             this.parsers = parsers;
         }
 
@@ -89,7 +89,7 @@ public class BnfCom {
             return choose(lexer) != null;
         }
 
-        protected BnfCom choose(Lexer lexer) throws ParseException {
+        private BnfCom choose(Lexer lexer) throws ParseException {
             for (BnfCom parser : parsers) {
                 if (parser.match(lexer)) {
                     return parser;
@@ -103,7 +103,7 @@ public class BnfCom {
          *
          * @param parser BNF
          */
-        protected void insert(BnfCom parser) {
+        private void insert(BnfCom parser) {
             BnfCom[] newParsers = new BnfCom[parsers.length + 1];
             newParsers[0] = parser;
             System.arraycopy(parsers, 0, newParsers, 1, parsers.length);
@@ -400,7 +400,7 @@ public class BnfCom {
 
         BnfCom factor;
 
-        public Expr(Class<? extends AstNode> clazz, BnfCom factor, Operators ops) {
+        Expr(Class<? extends AstNode> clazz, BnfCom factor, Operators ops) {
 
             this.factory = Factory.getForAstList(clazz);
             this.factor = factor;
@@ -503,7 +503,7 @@ public class BnfCom {
     /**
      * 创建方法的方法名
      */
-    public static final String factoryName = "create";
+    private static final String factoryName = "create";
 
     protected abstract static class Factory {
 
@@ -526,7 +526,7 @@ public class BnfCom {
          * @return 工厂
          */
 
-        protected static Factory getForAstList(Class<? extends AstNode> clazz) {
+        private static Factory getForAstList(Class<? extends AstNode> clazz) {
             Factory f = get(clazz, List.class);
 
             if (f == null) {
@@ -593,18 +593,18 @@ public class BnfCom {
     /**
      * 存储全部的BNF表达式
      */
-    protected List<Element> elements;
+    private List<Element> elements;
 
     /**
      * 构建工厂类
      */
-    protected Factory factory;
+    private Factory factory;
 
-    public BnfCom(Class<? extends AstNode> clazz) {
+    private BnfCom(Class<? extends AstNode> clazz) {
         reset(clazz);
     }
 
-    protected BnfCom(BnfCom parser) {
+    private BnfCom(BnfCom parser) {
         elements = parser.elements;
         factory = parser.factory;
     }
@@ -624,7 +624,7 @@ public class BnfCom {
         return factory.make(results);
     }
 
-    protected boolean match(Lexer lexer) throws ParseException {
+    private boolean match(Lexer lexer) throws ParseException {
         if (elements.size() == 0) {
             return true;
         } else {

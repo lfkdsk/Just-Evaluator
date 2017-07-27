@@ -14,6 +14,10 @@ public abstract class Literal extends AstLeaf {
         super(token);
     }
 
+    public String value() {
+        return token.getText();
+    }
+
     @Override
     public Object eval(JustContext env) {
         throw new UnSupportMethodException("Cannot eval abstract literal " + token.toString());

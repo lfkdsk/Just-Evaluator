@@ -8,15 +8,20 @@
 
 package com.lfkdsk.justel.literal;
 
+import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.token.Token;
 
 /**
  * Created by liufengkai on 2017/7/26.
  */
 public class BoolLiteral extends Literal {
+
     public BoolLiteral(Token token) {
         super(token);
     }
 
-
+    @Override
+    public Object eval(JustContext env) {
+        return super.eval(env);
+    }
 }
