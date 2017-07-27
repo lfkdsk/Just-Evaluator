@@ -28,7 +28,7 @@ public class NumberLiteral extends Literal {
         if (token instanceof NumberToken) {
             this.number = ((NumberToken) token).getNumberValue();
         } else {
-            throw new ParseException("UnSupport number value where token " +
+            throw new ParseException("UnSupport number name where token " +
                     "type is not NumberToken");
         }
     }

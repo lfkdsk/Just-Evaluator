@@ -18,7 +18,7 @@ import com.lfkdsk.justel.exception.TransferNumberException;
 public class NumberToken extends Token {
 
     /**
-     * value => string
+     * name => string
      * ep: 1000 => "1000" \ 111.22 => "111.22"
      */
     private String tokenString;
@@ -33,8 +33,8 @@ public class NumberToken extends Token {
      *
      * @param lineNumber  location
      * @param tag         token.tag
-     * @param tokenString value => string
-     * @param value       number value
+     * @param tokenString name => string
+     * @param value       number name
      */
     public NumberToken(int lineNumber, int tag,
                        String tokenString, Number value) {
@@ -48,7 +48,7 @@ public class NumberToken extends Token {
             return numberValue.longValue();
         }
 
-        throw new TransferNumberException("wrong value check " +
+        throw new TransferNumberException("wrong name check " +
                 "| numberValue's Type isn't long Value " + numberValue.toString());
     }
 
@@ -57,7 +57,7 @@ public class NumberToken extends Token {
             return numberValue.intValue();
         }
 
-        throw new TransferNumberException("wrong value check " +
+        throw new TransferNumberException("wrong name check " +
                 "| numberValue's Type isn't integer Value " + numberValue.toString());
     }
 
@@ -66,7 +66,7 @@ public class NumberToken extends Token {
             return numberValue.floatValue();
         }
 
-        throw new TransferNumberException("wrong value check " +
+        throw new TransferNumberException("wrong name check " +
                 "| numberValue's Type isn't float Value " + numberValue.toString());
     }
 
@@ -75,7 +75,7 @@ public class NumberToken extends Token {
             return numberValue.doubleValue();
         }
 
-        throw new TransferNumberException("wrong value check " +
+        throw new TransferNumberException("wrong name check " +
                 "| numberValue's Type isn't double Value " + numberValue.toString());
     }
 

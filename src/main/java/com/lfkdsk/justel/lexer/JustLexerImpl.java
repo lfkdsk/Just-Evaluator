@@ -129,7 +129,7 @@ public class JustLexerImpl implements Lexer {
     /**
      * read next char => peekChar
      *
-     * @return peekChar value
+     * @return peekChar name
      */
     private char readChar() {
         start++;
@@ -320,7 +320,7 @@ public class JustLexerImpl implements Lexer {
      */
     private boolean resolveNumber() {
         if (Character.isDigit(peekChar)) {
-            // int value parser
+            // int name parser
             long v = 0;
 
             do {
@@ -329,8 +329,8 @@ public class JustLexerImpl implements Lexer {
             } while (Character.isDigit(peekChar));
 
             if (peekChar != '.') {
-                // int value
-                // check value type is long or integer.
+                // int name
+                // check name type is long or integer.
                 Number checkedNum = NumberUtils.parseNumber(v);
                 int checkedType = Token.INTEGER;
 
@@ -358,7 +358,7 @@ public class JustLexerImpl implements Lexer {
                     d = d * 10;
                 }
 
-                // float or double value
+                // float or double name
                 Number checkedNum = NumberUtils.parseNumber(x);
                 int checkedType = Token.FLOAT;
 

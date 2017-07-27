@@ -47,9 +47,9 @@ package com.lfkdsk.justel.utils.json;
  * <li>Octal integers prefixed with {@code 0}.
  * <li>Array elements separated by {@code ;}.
  * <li>Unnecessary array separators. These are interpreted as if null was the
- * omitted value.
- * <li>Key-value pairs separated by {@code =} or {@code =>}.
- * <li>Key-value pairs separated by {@code ;}.
+ * omitted name.
+ * <li>Key-name pairs separated by {@code =} or {@code =>}.
+ * <li>Key-name pairs separated by {@code ;}.
  * </ul>
  * <p>
  * <p>Each tokener may be used to parse a single JSON string. Instances of this
@@ -86,7 +86,7 @@ public class JSONTokener {
     }
 
     /**
-     * Returns the next value from the input.
+     * Returns the next name from the input.
      *
      * @return a {@link JSONObject}, {@link JSONArray}, String, Boolean,
      * Integer, Long, Double or {@link JSONObject#NULL}.
@@ -275,7 +275,7 @@ public class JSONTokener {
     }
 
     /**
-     * Reads a null, boolean, numeric or unquoted string literal value. Numeric
+     * Reads a null, boolean, numeric or unquoted string literal name. Numeric
      * values will be returned as an Integer, Long, or Double, in that order of
      * preference.
      */
@@ -283,7 +283,7 @@ public class JSONTokener {
         String literal = nextToInternal("{}[]/\\:,=;# \t\f");
 
         if (literal.length() == 0) {
-            throw syntaxError("Expected literal value");
+            throw syntaxError("Expected literal name");
         } else if ("null".equalsIgnoreCase(literal)) {
             return JSONObject.NULL;
         } else if ("true".equalsIgnoreCase(literal)) {
@@ -345,7 +345,7 @@ public class JSONTokener {
     }
 
     /**
-     * Reads a sequence of key/value pairs and the trailing closing brace '}' of
+     * Reads a sequence of key/name pairs and the trailing closing brace '}' of
      * an object. The opening brace '{' should have already been read.
      */
     private JSONObject readObject() throws JSONException {
@@ -371,7 +371,7 @@ public class JSONTokener {
             }
 
             /*
-             * Expect the name/value separator to be either a colon ':', an
+             * Expect the name/name separator to be either a colon ':', an
              * equals sign '=', or an arrow "=>". The last two are bogus but we
              * include them because that's what the original implementation did.
              */
@@ -420,7 +420,7 @@ public class JSONTokener {
                     return result;
                 case ',':
                 case ';':
-                    /* A separator without a value first means "null". */
+                    /* A separator without a name first means "null". */
                     result.put(null);
                     hasTrailingSeparator = true;
                     continue;
@@ -477,7 +477,7 @@ public class JSONTokener {
 
     /**
      * Returns the next available character, or the null character '\0' if all
-     * input has been exhausted. The return value of this method is ambiguous
+     * input has been exhausted. The return name of this method is ambiguous
      * for JSON strings that contain the character '\0'.
      */
     public char next() {
@@ -499,7 +499,7 @@ public class JSONTokener {
     /**
      * Returns the next character that is not whitespace and does not belong to
      * a comment. If the input is exhausted before such a character can be
-     * found, the null character '\0' is returned. The return value of this
+     * found, the null character '\0' is returned. The return name of this
      * method is ambiguous for JSON strings that contain the character '\0'.
      */
     public char nextClean() throws JSONException {
@@ -593,7 +593,7 @@ public class JSONTokener {
     }
 
     /**
-     * Returns the integer [0..15] value for the given hex character, or -1
+     * Returns the integer [0..15] name for the given hex character, or -1
      * for non-hex input.
      *
      * @param hex a character in the ranges [0-9], [A-F] or [a-f]. Any other

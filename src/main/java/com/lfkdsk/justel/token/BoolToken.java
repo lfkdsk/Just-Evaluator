@@ -21,7 +21,7 @@ import com.lfkdsk.justel.exception.UnSupportMethodException;
  */
 public class BoolToken extends ReservedToken {
 
-    enum BooleanEnum {
+    public enum BooleanEnum {
         TRUE("true"),
         FALSE("false");
 

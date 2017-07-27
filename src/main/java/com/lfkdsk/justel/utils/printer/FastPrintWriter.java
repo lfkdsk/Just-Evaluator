@@ -211,7 +211,7 @@ public class FastPrintWriter extends PrintWriter {
     }
 
     /**
-     * Flushes this writer and returns the value of the error flag.
+     * Flushes this writer and returns the name of the error flag.
      *
      * @return {@code true} if either an {@code IOException} has been thrown
      * previously or if {@code setError()} has been called;

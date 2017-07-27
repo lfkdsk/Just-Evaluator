@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.tree;
 
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.context.JustContext;
 
 import java.util.List;
 
@@ -19,5 +20,10 @@ import java.util.List;
 public class AstProgram extends AstList {
     public AstProgram(List<AstNode> children) {
         super(children, PROGRAM);
+    }
+
+    @Override
+    public Object eval(JustContext env) {
+        return child(0).eval(env);
     }
 }

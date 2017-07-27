@@ -18,11 +18,11 @@ package com.lfkdsk.justel.utils.json;
 
 class JSON {
     /**
-     * Returns the input if it is a JSON-permissible value; throws otherwise.
+     * Returns the input if it is a JSON-permissible name; throws otherwise.
      */
     static double checkDouble(double d) throws JSONException {
         if (Double.isInfinite(d) || Double.isNaN(d)) {
-            throw new JSONException("Forbidden numeric value: " + d);
+            throw new JSONException("Forbidden numeric name: " + d);
         }
         return d;
     }

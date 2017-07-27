@@ -28,7 +28,7 @@ public interface AstPostfixExpr {
      * Evaluate Postfix Expr
      *
      * @param env   env
-     * @param value value
+     * @param value name
      * @return eval result
      */
     Object eval(JustContext env, Object value);

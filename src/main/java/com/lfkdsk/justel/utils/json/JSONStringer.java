@@ -37,7 +37,7 @@ import java.util.List;
  * #object} must have a matching call to {@link #endObject}.
  * <li>Arrays may not contain keys (property names).
  * <li>Objects must alternate keys (property names) and values.
- * <li>Values are inserted with either literal {@link #value(Object) value}
+ * <li>Values are inserted with either literal {@link #value(Object) name}
  * calls, or by nesting arrays or objects.
  * </ul>
  * Calls that would result in a malformed JSON string will fail with a
@@ -51,7 +51,7 @@ import java.util.List;
  * Attempts to create more than 20 levels of nesting may fail with a {@link
  * JSONException}.
  * <p>
- * <p>Each stringer may be used to encode a single top level value. Instances of
+ * <p>Each stringer may be used to encode a single top level name. Instances of
  * this class are not thread safe. Although this class is nonfinal, it was not
  * designed for inheritance and should not be subclassed. In particular,
  * self-use by overrideable methods is not specified. See <i>Effective Java</i>
@@ -79,7 +79,7 @@ public class JSONStringer {
         EMPTY_ARRAY,
 
         /**
-         * A array with at least one value requires a comma and newline before
+         * A array with at least one name requires a comma and newline before
          * the next element.
          */
         NONEMPTY_ARRAY,
@@ -92,12 +92,12 @@ public class JSONStringer {
 
         /**
          * An object whose most recent element is a key. The next element must
-         * be a value.
+         * be a name.
          */
         DANGLING_KEY,
 
         /**
-         * An object with at least one name/value pair requires a comma and
+         * An object with at least one name/name pair requires a comma and
          * newline before the next element.
          */
         NONEMPTY_OBJECT,
@@ -202,7 +202,7 @@ public class JSONStringer {
     }
 
     /**
-     * Returns the value on the top of the stack.
+     * Returns the name on the top of the stack.
      */
     private Scope peek() throws JSONException {
         if (stack.isEmpty()) {
@@ -212,14 +212,14 @@ public class JSONStringer {
     }
 
     /**
-     * Replace the value on the top of the stack with the given value.
+     * Replace the name on the top of the stack with the given name.
      */
     private void replaceTop(Scope topOfStack) {
         stack.set(stack.size() - 1, topOfStack);
     }
 
     /**
-     * Encodes {@code value}.
+     * Encodes {@code name}.
      *
      * @param value a {@link JSONObject}, {@link JSONArray}, String, Boolean,
      *              Integer, Long, Double or null. May not be {@link Double#isNaN() NaNs}
@@ -258,7 +258,7 @@ public class JSONStringer {
     }
 
     /**
-     * Encodes {@code value} to this stringer.
+     * Encodes {@code name} to this stringer.
      *
      * @return this stringer.
      */
@@ -272,9 +272,9 @@ public class JSONStringer {
     }
 
     /**
-     * Encodes {@code value} to this stringer.
+     * Encodes {@code name} to this stringer.
      *
-     * @param value a finite value. May not be {@link Double#isNaN() NaNs} or
+     * @param value a finite name. May not be {@link Double#isNaN() NaNs} or
      *              {@link Double#isInfinite() infinities}.
      * @return this stringer.
      */
@@ -288,7 +288,7 @@ public class JSONStringer {
     }
 
     /**
-     * Encodes {@code value} to this stringer.
+     * Encodes {@code name} to this stringer.
      *
      * @return this stringer.
      */
@@ -366,7 +366,7 @@ public class JSONStringer {
     /**
      * Encodes the key (property name) to this stringer.
      *
-     * @param name the name of the forthcoming value. May not be null.
+     * @param name the name of the forthcoming name. May not be null.
      * @return this stringer.
      */
     public JSONStringer key(String name) throws JSONException {
@@ -380,7 +380,7 @@ public class JSONStringer {
 
     /**
      * Inserts any necessary separators and whitespace before a name. Also
-     * adjusts the stack to expect the key's value.
+     * adjusts the stack to expect the key's name.
      */
     private void beforeKey() throws JSONException {
         Scope context = peek();
@@ -394,7 +394,7 @@ public class JSONStringer {
     }
 
     /**
-     * Inserts any necessary separators and whitespace before a literal value,
+     * Inserts any necessary separators and whitespace before a literal name,
      * inline array, or inline object. Also adjusts the stack to expect either a
      * closing bracket or another element.
      */
@@ -410,7 +410,7 @@ public class JSONStringer {
         } else if (context == Scope.NONEMPTY_ARRAY) { // another in array
             out.append(',');
             newline();
-        } else if (context == Scope.DANGLING_KEY) { // value for key
+        } else if (context == Scope.DANGLING_KEY) { // name for key
             out.append(indent == null ? ":" : ": ");
             replaceTop(Scope.NONEMPTY_OBJECT);
         } else if (context != Scope.NULL) {
@@ -422,7 +422,7 @@ public class JSONStringer {
      * Returns the encoded JSON string.
      * <p>
      * <p>If invoked with unterminated arrays or unclosed objects, this method's
-     * return value is undefined.
+     * return name is undefined.
      * <p>
      * <p><strong>Warning:</strong> although it contradicts the general contract
      * of {@link Object#toString}, this method returns null if the stringer

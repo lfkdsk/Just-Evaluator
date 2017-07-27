@@ -18,7 +18,7 @@ public abstract class Literal extends AstLeaf {
         super(token);
     }
 
-    public String value() {
+    public String name() {
         return token.getText();
     }
 

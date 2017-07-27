@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.tree;
 
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.context.JustContext;
 
 import java.util.List;
 
@@ -20,5 +21,14 @@ public class AstPrimaryExpr extends AstList {
 
     public AstPrimaryExpr(List<AstNode> children) {
         super(children, AstNode.PRIMARY_EXPR);
+    }
+
+    public static AstNode create(List<AstNode> c) {
+        return c.size() == 1 ? c.get(0) : new AstPrimaryExpr(c);
+    }
+
+    @Override
+    public Object eval(JustContext env) {
+        return super.eval(env);
     }
 }

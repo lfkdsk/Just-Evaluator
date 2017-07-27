@@ -11,6 +11,9 @@ package com.lfkdsk.justel.literal;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.token.Token;
 
+import static com.lfkdsk.justel.token.BoolToken.BooleanEnum.TRUE;
+import static com.lfkdsk.justel.token.BoolToken.booleanValue;
+
 /**
  * Boolean Literal => Support two Boolean Value.
  * - true
@@ -25,8 +28,12 @@ public class BoolLiteral extends Literal {
         super(token);
     }
 
+    public boolean value() {
+        return booleanValue(token.getText()) == TRUE;
+    }
+
     @Override
     public Object eval(JustContext env) {
-        return super.eval(env);
+        return value() ? Boolean.TRUE : Boolean.FALSE;
     }
 }

@@ -9,6 +9,7 @@
 package com.lfkdsk.justel.parser;
 
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.lexer.Lexer;
@@ -24,18 +25,29 @@ import java.io.StringReader;
  *         Created by liufengkai on 2017/7/26.
  * @see JustParserImpl
  */
-class JustParserImplTest {
+public class JustParserImplTest {
     @Test
     void parser() throws ParseException {
         String lfkdsk = "lfkdsk.LFKDSK[11111 + 12222](1111,2222,\"LFKDSK\") == true";
-        Lexer lexer = new JustLexerImpl(new StringReader(lfkdsk));
+        runExpr(lfkdsk);
+    }
+
+    @Test
+    void testThreeExpr() {
+        runExpr("lfkdsk ? 1111 : ddddd");
+    }
+
+    public static void runExpr(String expr) {
+        Lexer lexer = new JustLexerImpl(new StringReader(expr));
         JustParser parser = new JustParserImpl();
         Logger.init("test parser");
         long start = System.currentTimeMillis();
         while (lexer.hasMore()) {
             AstNode node = parser.parser(lexer);
+            node.eval(new JustMapContext());
             Logger.v(" => " + node.toString() + "  ");
         }
         System.out.println(System.currentTimeMillis() - start);
+
     }
 }

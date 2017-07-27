@@ -14,7 +14,7 @@ public interface Evaluable {
      * eval this node
      *
      * @param context context =>
-     * @return the result value
+     * @return the result name
      */
     Object eval(JustContext context);
 }

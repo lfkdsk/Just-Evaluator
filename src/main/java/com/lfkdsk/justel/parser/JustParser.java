@@ -38,14 +38,14 @@ public interface JustParser {
     /**
      * Reset AstBinaryExpr to Particular Expr
      * We use BinaryExpr to handle priority of Operator.
-     * So we should change it to particular Expr to compute the value.
+     * So we should change it to particular Expr to compute the name.
      *
      * @param expr      Origin AstBinaryExpr
      * @param operators Support Operators
      * @return New Particular Expr
      */
     default AstNode resetAstExpr(AstBinaryExpr expr, BnfCom.Operators operators) {
-        // midOp is Operator
+        // operator is Operator
         Operator operator = (Operator) expr.midOp();
         // get the factory of sub-node
         BnfCom.Factory factory = operators.get(operator.getText()).factory;

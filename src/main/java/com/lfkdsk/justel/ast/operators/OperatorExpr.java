@@ -37,7 +37,7 @@ public abstract class OperatorExpr extends AstList implements Function {
         return child(2);
     }
 
-    public AstLeaf midOp() {
+    public AstLeaf operator() {
         return (AstLeaf) child(1);
     }
 

@@ -103,6 +103,7 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom postfix = rule().or(
             rule().sep("(").maybe(args).sep(")"),
+            rule().sep("?").ast(expr).sep(":").ast(expr),
             rule(DotExpr.class).sep(".").identifier(reservedToken),
             rule(ArrayIndexExpr.class).sep("[").ast(expr).sep("]")
     );
@@ -112,7 +113,6 @@ public class JustParserImpl implements JustParser {
     ///////////////////////////////////////////////////////////////////////////
 
     private BnfCom program = rule(AstProgram.class).ast(expr).sep(EOL);
-
 
     JustParserImpl() {
 
@@ -124,10 +124,12 @@ public class JustParserImpl implements JustParser {
         reservedToken.add(")");
         reservedToken.add("&&");
         reservedToken.add("true");
+        reservedToken.add("false");
 
         operators.add("+", 4, LEFT, PlusOp.class);
         operators.add("==", 7, LEFT, EqualOp.class);
         operators.add("!=", 7, LEFT, UnEqualOp.class);
+        operators.add("&&", 11, LEFT, AndOp.class);
     }
 
 

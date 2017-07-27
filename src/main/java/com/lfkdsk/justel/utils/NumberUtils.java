@@ -33,4 +33,12 @@ public class NumberUtils {
         }
         return d;
     }
+
+    public static boolean isNumber(Object obj) {
+        return obj instanceof Number;
+    }
+
+    public static boolean isBoolean(Object obj) {
+        return obj instanceof Boolean;
+    }
 }

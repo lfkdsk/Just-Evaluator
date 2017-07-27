@@ -1,7 +1,7 @@
 package com.lfkdsk.justel.context;
 
 /**
- * Context => { key : value }
+ * Context => { key : name }
  *
  * @author liufengkai
  *         Created by liufengkai on 2017/7/18.
