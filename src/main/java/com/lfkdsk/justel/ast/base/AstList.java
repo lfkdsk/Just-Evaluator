@@ -15,9 +15,10 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * AST 抽象语法树的枝干
+ * AST List
  *
- * @author liufengkai Created by liufengkai on 16/7/11.
+ * @author liufengkai
+ *         Created by liufengkai on 16/7/11.
  */
 public class AstList extends AstNode {
 
@@ -80,7 +81,8 @@ public class AstList extends AstNode {
         return children.set(index, node);
     }
 
+
     public Object eval(JustContext env) {
-        throw new EvalException("can not com.lfkdsk.justel.eval : " + toString(), this);
+        throw new EvalException("can not eval : " + toString(), this);
     }
 }

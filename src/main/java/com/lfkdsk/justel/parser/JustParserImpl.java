@@ -27,10 +27,20 @@ import static com.lfkdsk.justel.token.ReservedToken.reservedToken;
 import static com.lfkdsk.justel.token.Token.EOL;
 
 /**
- * Just Parser Implementation, Support Follow Grammars:
+ * Just Parser Implementation, Support Follow BNF Grammars:
  * - number: int, long, double
- * -
- * Created by liufengkai on 2017/7/26.
+ * - id:
+ * - string: "lfkdsk"
+ * - bool: true | false
+ * - primary: (expr) | number | id | string | bool { postfix }
+ * - factor: !primary | -primary | primary
+ * - expr: factor { OP  factor }
+ * - args: expr, expr, expr
+ * - postfix: ( args | null ) | .id | [ expr ]
+ * - program: expr EOL
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
  */
 public class JustParserImpl implements JustParser {
 

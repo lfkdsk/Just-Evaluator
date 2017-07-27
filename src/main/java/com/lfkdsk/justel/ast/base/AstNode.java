@@ -14,11 +14,14 @@ import com.lfkdsk.justel.eval.Evaluable;
 import java.util.Iterator;
 
 /**
- * AST TREE NODE 抽象语法树的通用接口
+ * AST Tree Basic Node
  * Created by liufengkai on 16/7/11.
  */
 public abstract class AstNode implements Iterable<AstNode>, Evaluable {
 
+    /**
+     * Spec Tag for Ast Node
+     */
     private final int tag;
 
     public static final int AMPERSAND_OP = 600;
@@ -44,6 +47,8 @@ public abstract class AstNode implements Iterable<AstNode>, Evaluable {
     public static final int UN_EQUAL_OP = 610;
 
     public static final int FUNCTION_EXPR = 611;
+
+    public static final int POSTFIX = 612;
 
     public static final int PROGRAM = 700;
 
@@ -82,6 +87,10 @@ public abstract class AstNode implements Iterable<AstNode>, Evaluable {
 
     public Iterator<AstNode> iterator() {
         return children();
+    }
+
+    public int tag() {
+        return tag;
     }
 
     public abstract AstNode replaceChild(int index, AstNode node);

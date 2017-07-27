@@ -6,18 +6,18 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.lfkdsk.justel.ast.operators;
-
-import com.lfkdsk.justel.ast.base.AstNode;
-
-import java.util.List;
+package com.lfkdsk.justel.ast.function;
 
 /**
- * Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/27.
  */
-public class BitwiseExpr extends OperatorExpr {
+public interface Function {
 
-    public BitwiseExpr(List<AstNode> children) {
-        super(children, AstNode.BIT_WISE_OP);
+    enum FunctionType {
+
     }
+
+    String functionName();
+
+    FunctionType functionType();
 }

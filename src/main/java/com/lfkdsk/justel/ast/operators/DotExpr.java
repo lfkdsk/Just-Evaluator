@@ -8,16 +8,22 @@
 
 package com.lfkdsk.justel.ast.operators;
 
-import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.ast.tree.AstPostfixExpr;
+import com.lfkdsk.justel.context.JustContext;
 
 import java.util.List;
 
 /**
  * Created by liufengkai on 2017/7/26.
  */
-public class DotExpr extends AstList {
+public class DotExpr extends OperatorExpr implements AstPostfixExpr {
     public DotExpr(List<AstNode> children) {
         super(children, AstNode.DOT_OP);
+    }
+
+    @Override
+    public Object eval(JustContext env, Object value) {
+        return null;
     }
 }

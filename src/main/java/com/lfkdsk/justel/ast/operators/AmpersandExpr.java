@@ -17,6 +17,7 @@ import java.util.List;
  * Created by liufengkai on 2017/7/26.
  */
 public class AmpersandExpr extends AstList {
+
     public AmpersandExpr(List<AstNode> children) {
         super(children, AstNode.AMPERSAND_OP);
     }

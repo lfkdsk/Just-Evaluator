@@ -8,8 +8,11 @@
 
 package com.lfkdsk.justel.ast.operators;
 
+import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.ast.function.Function;
+import com.lfkdsk.justel.exception.EvalException;
 import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
@@ -17,7 +20,7 @@ import java.util.List;
 /**
  * Created by liufengkai on 2017/7/26.
  */
-public class OperatorExpr extends AstList {
+public abstract class OperatorExpr extends AstList implements Function {
     public OperatorExpr(List<AstNode> children) {
         super(children, Token.OPERATOR);
     }
@@ -26,5 +29,25 @@ public class OperatorExpr extends AstList {
         super(children, tag);
     }
 
+    public AstNode leftChild() {
+        return child(0);
+    }
 
+    public AstNode rightChild() {
+        return child(2);
+    }
+
+    public AstLeaf midOp() {
+        return (AstLeaf) child(1);
+    }
+
+    @Override
+    public FunctionType functionType() {
+        throw new EvalException("Use default eval in operator");
+    }
+
+    @Override
+    public String functionName() {
+        throw new EvalException("Use default eval in operator");
+    }
 }
