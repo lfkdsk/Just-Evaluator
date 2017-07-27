@@ -5,14 +5,24 @@ import com.lfkdsk.justel.token.NumberToken;
 import com.lfkdsk.justel.token.Token;
 
 /**
- * Created by liufengkai on 2017/7/24.
+ * Number Literal.
+ * We support two kinds of Number Value :
+ * - Long Value
+ * - Integer Value
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/24.
  */
 public class NumberLiteral extends Literal {
 
+    /**
+     * Inner number
+     */
     private Number number;
 
     public NumberLiteral(Token token) {
         super(token);
+
         if (token instanceof NumberToken) {
             this.number = ((NumberToken) token).getNumberValue();
         } else {

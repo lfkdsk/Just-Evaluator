@@ -9,7 +9,7 @@
 package com.lfkdsk.justel.ast.base;
 
 import com.lfkdsk.justel.context.JustContext;
-import com.lfkdsk.justel.eval.Evalable;
+import com.lfkdsk.justel.eval.Evaluable;
 
 import java.util.Iterator;
 
@@ -17,7 +17,7 @@ import java.util.Iterator;
  * AST TREE NODE 抽象语法树的通用接口
  * Created by liufengkai on 16/7/11.
  */
-public abstract class AstNode implements Iterable<AstNode>, Evalable {
+public abstract class AstNode implements Iterable<AstNode>, Evaluable {
 
     private final int tag;
 

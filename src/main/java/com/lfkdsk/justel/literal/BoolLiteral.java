@@ -12,7 +12,12 @@ import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.token.Token;
 
 /**
- * Created by liufengkai on 2017/7/26.
+ * Boolean Literal => Support two Boolean Value.
+ * - true
+ * - false
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
  */
 public class BoolLiteral extends Literal {
 

@@ -6,7 +6,11 @@ import com.lfkdsk.justel.exception.UnSupportMethodException;
 import com.lfkdsk.justel.token.Token;
 
 /**
- * Created by liufengkai on 2017/7/22.
+ * Literal is an AstLeaf.
+ * Literal is an wrapper of LiterToken.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/22.
  */
 public abstract class Literal extends AstLeaf {
 
