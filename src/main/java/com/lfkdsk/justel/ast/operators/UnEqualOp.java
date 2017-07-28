@@ -9,8 +9,14 @@
 package com.lfkdsk.justel.ast.operators;
 
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.literal.NumberLiteral;
+import com.lfkdsk.justel.token.NumberToken;
 
 import java.util.List;
+
+import static com.lfkdsk.justel.utils.NumberUtils.computeValue;
+import static com.lfkdsk.justel.utils.TypeUtils.*;
 
 /**
  * Created by liufengkai on 2017/7/26.
@@ -18,5 +24,31 @@ import java.util.List;
 public class UnEqualOp extends OperatorExpr {
     public UnEqualOp(List<AstNode> children) {
         super(children, AstNode.UN_EQUAL_OP);
+    }
+
+    @Override
+    public Object eval(JustContext env) {
+        Object left = leftChild().eval(env);
+        Object right = rightChild().eval(env);
+
+        if (isBoolean(left) && isBoolean(right)) {
+
+            return !left.equals(right);
+        } else if (isNumber(left) && isNumber(right)) {
+
+            return !left.equals(right);
+        } else if (isString(left) && isString(right)) {
+
+            return !left.equals(right);
+        } else if (isNumberLiteral(left) && isNumberLiteral(right)) {
+            NumberToken leftToken = ((NumberLiteral) left).numberToken();
+            NumberToken rightToken = ((NumberLiteral) right).numberToken();
+            Object leftValue = computeValue(leftToken);
+            Object rightValue = computeValue(rightToken);
+
+            return !leftValue.equals(rightValue);
+        }
+
+        return super.eval(env);
     }
 }

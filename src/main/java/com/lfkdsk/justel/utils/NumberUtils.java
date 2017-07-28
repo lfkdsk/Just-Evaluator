@@ -1,5 +1,7 @@
 package com.lfkdsk.justel.utils;
 
+import com.lfkdsk.justel.token.NumberToken;
+
 /**
  * Parser Number.
  *
@@ -67,10 +69,27 @@ public class NumberUtils {
         return v instanceof Double ? (double) v : 0;
     }
 
-    public static Object computeValue(Object l, Object r) {
+    public static Object computePlusValue(Object l, Object r) {
         return (computeIntValue(l) + computeLongValue(l)
                 + computeFloatValue(l) + computeDoubleValue(l))
                 + (computeIntValue(r) + computeLongValue(r)
                 + computeFloatValue(r) + computeDoubleValue(r));
+    }
+
+    public static Object computeValue(Object l) {
+        return computeIntValue(l) + computeLongValue(l)
+                + computeFloatValue(l) + computeDoubleValue(l);
+    }
+
+    public static Object computePlus(NumberToken leftToken, NumberToken rightToken) {
+        return (leftToken.integerValue() + leftToken.longValue()
+                + leftToken.floatValue() + leftToken.doubleValue())
+                + (rightToken.integerValue() + leftToken.longValue()
+                + rightToken.floatValue() + rightToken.doubleValue());
+    }
+
+    public static Object computeValue(NumberToken token) {
+        return token.integerValue() + token.longValue()
+                + token.floatValue() + token.doubleValue();
     }
 }

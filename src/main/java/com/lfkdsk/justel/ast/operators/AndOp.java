@@ -21,6 +21,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isBoolean;
 /**
  * && Operator
  * expr && expr
+ *
  * @author liufengkai
  *         Created by liufengkai on 2017/7/27.
  */
@@ -44,12 +45,21 @@ public class AndOp extends OperatorExpr {
         Object leftValue = leftChild().eval(env);
         Object rightValue = rightChild().eval(env);
 
+        // check null
+//        Object returnVal = checkNull(
+//                leftValue,
+//                rightValue,
+//                (left -> left == Boolean.TRUE),
+//                (right -> right == Boolean.TRUE));
+//
+//        if (returnVal != Boolean.FALSE) return returnVal;
+
         // is boolean
         if (isBoolean(leftValue) && isBoolean(rightValue)) {
             return leftValue == Boolean.TRUE
                     && rightValue == Boolean.TRUE;
         }
 
-        throw new EvalException("cannot eval && function ", this);
+        return super.eval(env);
     }
 }

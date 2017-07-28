@@ -339,6 +339,11 @@ public class JustLexerImpl implements Lexer {
                     checkedType = Token.LONG;
                 }
 
+                if (peekChar == 'l' || peekChar == 'L') {
+                    checkedType = Token.LONG;
+                    readChar();
+                }
+
                 addToken(new NumberToken(lineNumber, checkedType,
                         String.valueOf(checkedNum),
                         checkedNum));
@@ -365,6 +370,14 @@ public class JustLexerImpl implements Lexer {
 
                 if (checkedNum instanceof Double) {
                     checkedType = Token.DOUBLE;
+                }
+
+                if (peekChar == 'd' || peekChar == 'D') {
+                    checkedType = Token.DOUBLE;
+                    readChar();
+                } else if (peekChar == 'f' || peekChar == 'F') {
+                    checkedType = Token.FLOAT;
+                    readChar();
                 }
 
                 addToken(new NumberToken(lineNumber, checkedType,

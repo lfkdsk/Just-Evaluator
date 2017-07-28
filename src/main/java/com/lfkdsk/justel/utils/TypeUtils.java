@@ -10,6 +10,8 @@ package com.lfkdsk.justel.utils;
 
 import com.lfkdsk.justel.literal.NumberLiteral;
 
+import java.util.function.Function;
+
 /**
  * Created by liufengkai on 2017/7/28.
  */
@@ -35,5 +37,21 @@ public class TypeUtils {
         return obj instanceof NumberLiteral;
     }
 
+    public static boolean isNull(Object obj) {
+        return obj == null;
+    }
 
+    public static Object checkNull(Object leftObj, Object rightObj,
+                                   Function<Object, Object> leftFunc,
+                                   Function<Object, Object> rightFunc) {
+        if (isNull(leftObj) && isNull(rightObj)) {
+            return null;
+        } else if (isNull(leftObj)) {
+            return leftFunc.apply(leftFunc);
+        } else if (isNull(rightObj)) {
+            return rightFunc.apply(leftFunc);
+        }
+
+        return Boolean.FALSE;
+    }
 }

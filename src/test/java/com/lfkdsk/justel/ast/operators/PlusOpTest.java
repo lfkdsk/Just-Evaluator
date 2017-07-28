@@ -41,4 +41,20 @@ class PlusOpTest {
     void testPlusInteger() {
         runExpr("111 + 222", true, null);
     }
+
+    @Test
+    void testPlusIntegerFloat() {
+        runExpr("111 + 222.222", true, null);
+    }
+
+    @Test
+    void testPlusFloatFloat() {
+        runExpr("111.11f + 222.222f", true, null);
+    }
+
+    @Test
+    void testPlusDoubleDouble() {
+        runExpr("111.111111d + 222.222d", true, null);
+    }
+
 }
