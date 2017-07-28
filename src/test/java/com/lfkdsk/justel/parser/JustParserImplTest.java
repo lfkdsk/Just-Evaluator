@@ -41,20 +41,30 @@ public class JustParserImplTest {
         runExpr("lfkdsk ? 1111 : ddddd", false, null);
     }
 
+    @Test
+    void testParser() {
+        for (int i = 0; i < 20; i++) {
+            long start = System.currentTimeMillis();
+            for (int j = 0; j < 100; j++) {
+                runExpr("lfkdsk.lfkdsk(1111,2222,\"LFKDSK\") == true", false, null);
+            }
+            System.out.println(System.currentTimeMillis() - start);
+        }
+    }
+
     public static void runExpr(String expr, boolean eval, JustContext context) {
         Lexer lexer = new JustLexerImpl(new StringReader(expr));
         JustParser parser = new JustParserImpl();
         Logger.init("test parser");
-        long start = System.currentTimeMillis();
+
         while (lexer.hasMore()) {
             AstNode node = parser.parser(lexer);
 
-            Logger.v(" => " + node.toString() + "  ");
+//            Logger.v(" => " + node.toString() + "  ");
             if (eval) {
                 Logger.v(" => " + node.eval(context) + "  ");
             }
         }
-        System.out.println(System.currentTimeMillis() - start);
 
     }
 }

@@ -11,25 +11,17 @@ class JustLexerImplTest {
 
     @Test
     void testLexer() {
-        String lfkdsk = " 12 13.2222 \"lfkdsk\" lfkdsk 1200000000000 || &&";
-//        String lfkdsk = "|| &&";
-        long startTime = System.currentTimeMillis();
-        JustLexerImpl lexer = new JustLexerImpl(new StringReader(lfkdsk));
+        for (int j = 0; j < 20; j++) {
+            String lfkdsk = String.valueOf(" \"" + RandomUtils.RandomString(10) + "\""
+                    + " " + RandomUtils.RandomFloat(2, 20) + " " +
+                    RandomUtils.RandomInt(10, 200) + " " + "|| && *");
 
-        lexer.read();
-        lexer.read();
-        lexer.read();
-        lexer.read();
-        lexer.read();
-        lexer.read();
-//        Logger.init("logger test");
-//        Logger.d(lexer.read().toString());
-//        Logger.d(lexer.read().toString());
-//        Logger.d(lexer.read().toString());
-//        Logger.d(lexer.read().toString());
-//        Logger.d(lexer.read().toString());
-//        Logger.d(lexer.read().toString());
-//        Logger.d(lexer.read().toString());
-        System.out.println(System.currentTimeMillis() - startTime);
+            long startTime = System.currentTimeMillis();
+            for (int i = 0; i < 1000; i++) {
+                JustLexerImpl lexer = new JustLexerImpl(new StringReader(lfkdsk));
+                lexer.hasMore();
+            }
+            System.out.println(System.currentTimeMillis() - startTime);
+        }
     }
 }
