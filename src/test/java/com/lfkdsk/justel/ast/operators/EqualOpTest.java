@@ -15,25 +15,26 @@ import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 /**
  * Created by liufengkai on 2017/7/28.
  */
-class UnEqualOpTest {
+class EqualOpTest {
 
     @Test
     void testUnEqualIntegerValue() {
-        runExpr("1222 != 1222", true, null);
+        runExpr("1222 == 1222", true, null);
     }
 
     @Test
     void testUnEqualBoolean() {
-        runExpr("true != true", true, null);
+        runExpr("true == true", true, null);
     }
 
     @Test
     void testUnEqualFloat() {
-        runExpr("111.222f != 111.222f", true, null);
+        runExpr("111.222f == 111.222f", true, null);
     }
 
     @Test
     void testUnEqualDouble() {
-        runExpr("11111.22222222d != 11111.22222222d", true, null);
+        runExpr("11111.22222222d == 11111.22222222d", true, null);
     }
+
 }

@@ -31,11 +31,13 @@ public class UnEqualOp extends OperatorExpr {
         Object left = leftChild().eval(env);
         Object right = rightChild().eval(env);
 
+        // boolean != boolean
         if (isBoolean(left) && isBoolean(right)) {
 
             return !left.equals(right);
         } else if (isNumber(left) && isNumber(right)) {
 
+            // num != num
             return !left.equals(right);
         } else if (isString(left) && isString(right)) {
 
@@ -46,6 +48,7 @@ public class UnEqualOp extends OperatorExpr {
             Object leftValue = computeValue(leftToken);
             Object rightValue = computeValue(rightToken);
 
+            // id(num) != id(num)
             return !leftValue.equals(rightValue);
         }
 
