@@ -9,6 +9,7 @@
 package com.lfkdsk.justel.literal;
 
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.exception.EvalException;
 import com.lfkdsk.justel.token.Token;
 
 /**
@@ -26,6 +27,12 @@ public class IDLiteral extends Literal {
 
     @Override
     public Object eval(JustContext env) {
-        return super.eval(env);
+        Object value = env.get(name());
+
+        if (value == null) {
+            throw new EvalException("undefined name: " + name(), this);
+        } else {
+            return value;
+        }
     }
 }

@@ -10,10 +10,16 @@ import java.io.OutputStream;
 import java.net.URI;
 
 /**
- * Created by liufengkai on 2017/7/20.
+ * Just Memory FileManager
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/20.
  */
 public class JustMemFileManager extends ForwardingJavaFileManager<JavaFileManager> {
 
+    /**
+     * bind to memory class-loader
+     */
     private final JustMemClassLoader classLoader;
 
     public JustMemFileManager(JavaFileManager fileManager, JustMemClassLoader memClassLoader) {

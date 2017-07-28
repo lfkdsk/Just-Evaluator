@@ -19,7 +19,10 @@ import java.util.List;
 import static com.lfkdsk.justel.utils.NumberUtils.isBoolean;
 
 /**
- * Created by liufengkai on 2017/7/27.
+ * && Operator
+ * expr && expr
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/27.
  */
 public class AndOp extends OperatorExpr {
 
@@ -34,6 +37,10 @@ public class AndOp extends OperatorExpr {
 
     @Override
     public Object eval(JustContext env) {
+        if (operator().tag() != Token.AND) {
+            throw new EvalException("cannot invalidate operator && ", this);
+        }
+
         Object leftValue = leftChild().eval(env);
         Object rightValue = rightChild().eval(env);
 

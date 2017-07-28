@@ -8,6 +8,8 @@
 
 package com.lfkdsk.justel.ast.operators;
 
+import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.context.JustMapContext;
 import org.junit.jupiter.api.Test;
 
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
@@ -18,6 +20,13 @@ import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 class AndOpTest {
     @Test
     void eval() {
-        runExpr("true && true");
+        runExpr("true && true", true, new JustMapContext());
+    }
+
+    @Test
+    void idAndEval() {
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", Boolean.TRUE);
+        runExpr("lfkdsk && lfkdsk", true, context);
     }
 }

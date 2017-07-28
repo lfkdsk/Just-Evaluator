@@ -9,7 +9,7 @@
 package com.lfkdsk.justel.parser;
 
 import com.lfkdsk.justel.ast.base.AstNode;
-import com.lfkdsk.justel.context.JustMapContext;
+import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.lexer.Lexer;
@@ -29,23 +29,30 @@ public class JustParserImplTest {
     @Test
     void parser() throws ParseException {
         String lfkdsk = "lfkdsk.LFKDSK[11111 + 12222](1111,2222,\"LFKDSK\") == true";
-        runExpr(lfkdsk);
+        String lfkdsk0 = "lfkdsk() == false && lfkdsk";
+        String lfkdsk1 = "(lfkdsk() ? lfkdsk : lfkdsk) ? true : false";
+        runExpr(lfkdsk, false, null);
+        runExpr(lfkdsk0, false, null);
+        runExpr(lfkdsk1, false, null);
     }
 
     @Test
     void testThreeExpr() {
-        runExpr("lfkdsk ? 1111 : ddddd");
+        runExpr("lfkdsk ? 1111 : ddddd", false, null);
     }
 
-    public static void runExpr(String expr) {
+    public static void runExpr(String expr, boolean eval, JustContext context) {
         Lexer lexer = new JustLexerImpl(new StringReader(expr));
         JustParser parser = new JustParserImpl();
         Logger.init("test parser");
         long start = System.currentTimeMillis();
         while (lexer.hasMore()) {
             AstNode node = parser.parser(lexer);
-            node.eval(new JustMapContext());
+
             Logger.v(" => " + node.toString() + "  ");
+            if (eval) {
+                Logger.v(" => " + node.eval(context) + "  ");
+            }
         }
         System.out.println(System.currentTimeMillis() - start);
 

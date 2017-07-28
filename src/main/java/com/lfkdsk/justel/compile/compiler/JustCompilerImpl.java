@@ -12,20 +12,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by liufengkai on 2017/7/20.
+ * Just Compiler Implementation
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/20.
  */
 public class JustCompilerImpl implements JustCompiler {
 
+    /**
+     * Java compiler
+     */
     private final JavaCompiler compiler;
 
-    private final StandardJavaFileManager stdFileManager;
-
+    /**
+     * memory class loader
+     */
     private final JustMemClassLoader memClassLoader;
 
-    private DiagnosticCollector<JavaFileObject> diagnosticsReport;
+    /**
+     * diagnostic report
+     */
+    private final DiagnosticCollector<JavaFileObject> diagnosticsReport;
 
+    /**
+     * memory manager
+     */
     private final JustMemFileManager manager;
 
+    /**
+     * class-qualified-name => Expression
+     */
     private final Map<String, Expression> memCompilerCache;
 
     public JustCompilerImpl() {
@@ -35,9 +51,9 @@ public class JustCompilerImpl implements JustCompiler {
             throw new IllegalStateException("Can not bind to system java compiler");
         }
         this.diagnosticsReport = new DiagnosticCollector<>();
-        this.stdFileManager = compiler.getStandardFileManager(diagnosticsReport, null, null);
         this.memClassLoader = new JustMemClassLoader(this.getClass().getClassLoader());
-        this.manager = new JustMemFileManager(stdFileManager, memClassLoader);
+        this.manager = new JustMemFileManager(compiler.getStandardFileManager(diagnosticsReport, null, null)
+                , memClassLoader);
         this.memCompilerCache = new HashMap<>();
     }
 
