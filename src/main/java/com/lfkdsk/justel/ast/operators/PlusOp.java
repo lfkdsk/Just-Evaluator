@@ -10,11 +10,16 @@ package com.lfkdsk.justel.ast.operators;
 
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.literal.NumberLiteral;
+import com.lfkdsk.justel.token.NumberToken;
 import com.lfkdsk.justel.token.SepToken;
 import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
 
+import static com.lfkdsk.justel.utils.NumberUtils.computeValue;
+import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
+import static com.lfkdsk.justel.utils.TypeUtils.isNumberLiteral;
 import static com.lfkdsk.justel.utils.TypeUtils.isString;
 
 /**
@@ -34,6 +39,13 @@ public class PlusOp extends OperatorExpr {
         return SepToken.PLUS_TOKEN.getText();
     }
 
+    private Object computePlus(NumberToken leftToken, NumberToken rightToken) {
+        return (leftToken.integerValue() + leftToken.longValue()
+                + leftToken.floatValue() + leftToken.doubleValue())
+                + (rightToken.integerValue() + leftToken.longValue()
+                + rightToken.floatValue() + rightToken.doubleValue());
+    }
+
     @Override
     public Object eval(JustContext env) {
         Object left = leftChild().eval(env);
@@ -41,6 +53,14 @@ public class PlusOp extends OperatorExpr {
 
         if (isString(left) && isString(right)) {
             return String.valueOf(left) + String.valueOf(right);
+        } else if (isNumberLiteral(left) && isNumberLiteral(right)) {
+            NumberToken leftToken = ((NumberLiteral) left).numberToken();
+            NumberToken rightToken = ((NumberLiteral) right).numberToken();
+
+            return computePlus(leftToken, rightToken);
+        } else if (isNumber(left) && isNumber(right)) {
+
+            return computeValue(left, right);
         }
 
         return super.eval(env);

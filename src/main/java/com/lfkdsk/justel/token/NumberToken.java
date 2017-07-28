@@ -1,7 +1,5 @@
 package com.lfkdsk.justel.token;
 
-import com.lfkdsk.justel.exception.TransferNumberException;
-
 /**
  * Number Token.
  * - Integer
@@ -48,8 +46,9 @@ public class NumberToken extends Token {
             return numberValue.longValue();
         }
 
-        throw new TransferNumberException("wrong name check " +
-                "| numberValue's Type isn't long Value " + numberValue.toString());
+        return 0;
+//        throw new TransferNumberException("wrong name check " +
+//                "| numberValue's Type isn't long Value " + numberValue.toString());
     }
 
     public int integerValue() {
@@ -57,8 +56,9 @@ public class NumberToken extends Token {
             return numberValue.intValue();
         }
 
-        throw new TransferNumberException("wrong name check " +
-                "| numberValue's Type isn't integer Value " + numberValue.toString());
+        return 0;
+//        throw new TransferNumberException("wrong name check " +
+//                "| numberValue's Type isn't integer Value " + numberValue.toString());
     }
 
     public float floatValue() {
@@ -66,8 +66,9 @@ public class NumberToken extends Token {
             return numberValue.floatValue();
         }
 
-        throw new TransferNumberException("wrong name check " +
-                "| numberValue's Type isn't float Value " + numberValue.toString());
+        return 0;
+//        throw new TransferNumberException("wrong name check " +
+//                "| numberValue's Type isn't float Value " + numberValue.toString());
     }
 
     public double doubleValue() {
@@ -75,8 +76,9 @@ public class NumberToken extends Token {
             return numberValue.doubleValue();
         }
 
-        throw new TransferNumberException("wrong name check " +
-                "| numberValue's Type isn't double Value " + numberValue.toString());
+        return 0;
+//        throw new TransferNumberException("wrong name check " +
+//                "| numberValue's Type isn't double Value " + numberValue.toString());
     }
 
     public Number getNumberValue() {

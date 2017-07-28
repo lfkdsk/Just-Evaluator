@@ -1,5 +1,6 @@
 package com.lfkdsk.justel.literal;
 
+import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.token.NumberToken;
 import com.lfkdsk.justel.token.Token;
@@ -40,8 +41,21 @@ public class NumberLiteral extends Literal {
                 return String.valueOf(number.intValue());
             case Token.LONG:
                 return String.valueOf(number.longValue());
+            case Token.FLOAT:
+                return String.valueOf(number.floatValue());
+            case Token.DOUBLE:
+                return String.valueOf(number.doubleValue());
             default:
                 return "undefine number literal";
         }
+    }
+
+    public NumberToken numberToken() {
+        return (NumberToken) token;
+    }
+
+    @Override
+    public Object eval(JustContext env) {
+        return this;
     }
 }

@@ -27,4 +27,18 @@ class PlusOpTest {
 
         runExpr("lfkdsk + lfk", true, context);
     }
+
+    @Test
+    void testPlusIDInteger() {
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", 111);
+        context.put("lfk", 222);
+
+        runExpr("lfkdsk + lfk", true, context);
+    }
+
+    @Test
+    void testPlusInteger() {
+        runExpr("111 + 222", true, null);
+    }
 }

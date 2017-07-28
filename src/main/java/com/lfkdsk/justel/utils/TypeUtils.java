@@ -8,6 +8,8 @@
 
 package com.lfkdsk.justel.utils;
 
+import com.lfkdsk.justel.literal.NumberLiteral;
+
 /**
  * Created by liufengkai on 2017/7/28.
  */
@@ -24,4 +26,14 @@ public class TypeUtils {
     public static boolean isString(Object obj) {
         return obj instanceof String;
     }
+
+    public static boolean isInteger(Object obj) {
+        return obj instanceof Integer;
+    }
+
+    public static boolean isNumberLiteral(Object obj) {
+        return obj instanceof NumberLiteral;
+    }
+
+
 }
