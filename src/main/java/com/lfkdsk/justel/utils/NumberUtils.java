@@ -137,4 +137,9 @@ public class NumberUtils {
             return Token.DOUBLE;
         }
     }
+
+    public static Object computeAmpersandValue(Number num1, Number num2) {
+        return castTokenValue((long) computeValue(num1) & (long) computeValue(num2),
+                Math.min(numberValue(num1), numberValue(num2)));
+    }
 }

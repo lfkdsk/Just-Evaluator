@@ -14,38 +14,31 @@ import com.lfkdsk.justel.token.SepToken;
 
 import java.util.List;
 
-import static com.lfkdsk.justel.utils.TypeUtils.*;
+import static com.lfkdsk.justel.utils.NumberUtils.computeAmpersandValue;
+import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 
 /**
- * ==
+ * &
  * Created by liufengkai on 2017/7/26.
  */
-public class EqualOp extends OperatorExpr {
-    public EqualOp(List<AstNode> children) {
-        super(children, AstNode.EQUAL_OP);
+public class AmpersandOp extends OperatorExpr {
+
+    public AmpersandOp(List<AstNode> children) {
+        super(children, AstNode.AMPERSAND_OP);
     }
 
     @Override
     public String functionName() {
-        return SepToken.EQUAL_TOKEN.getText();
+        return SepToken.AMPERSAND_TOKEN.getText();
     }
 
     @Override
     public Object eval(JustContext env) {
-        Object left = leftChild().eval(env);
-        Object right = rightChild().eval(env);
+        Object leftValue = leftChild().eval(env);
+        Object rightValue = rightChild().eval(env);
 
-        // boolean == boolean
-        if (isBoolean(left) && isBoolean(right)) {
-
-            return left.equals(right);
-        } else if (isNumber(left) && isNumber(right)) {
-
-            // num == num
-            return left.equals(right);
-        } else if (isString(left) && isString(right)) {
-
-            return left.equals(right);
+        if (isNumber(leftValue) && isNumber(rightValue)) {
+            return computeAmpersandValue((Number) leftValue, (Number) rightValue);
         }
 
         return super.eval(env);

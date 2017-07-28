@@ -10,15 +10,14 @@ package com.lfkdsk.justel.ast.operators;
 
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
-import com.lfkdsk.justel.literal.NumberLiteral;
-import com.lfkdsk.justel.token.NumberToken;
 import com.lfkdsk.justel.token.SepToken;
 import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
 
-import static com.lfkdsk.justel.utils.NumberUtils.*;
-import static com.lfkdsk.justel.utils.TypeUtils.*;
+import static com.lfkdsk.justel.utils.NumberUtils.computePlusValue;
+import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
+import static com.lfkdsk.justel.utils.TypeUtils.isString;
 
 /**
  * + Operator:
@@ -46,12 +45,6 @@ public class PlusOp extends OperatorExpr {
 
             // "" + ""
             return String.valueOf(left) + String.valueOf(right);
-        } else if (isNumberLiteral(left) && isNumberLiteral(right)) {
-            NumberToken leftToken = ((NumberLiteral) left).numberToken();
-            NumberToken rightToken = ((NumberLiteral) right).numberToken();
-
-            // num + num
-            return computePlusToken(leftToken, rightToken);
         } else if (isNumber(left) && isNumber(right)) {
 
             // id(num) + id(num)

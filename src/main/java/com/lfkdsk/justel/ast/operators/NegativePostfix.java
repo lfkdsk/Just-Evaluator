@@ -11,22 +11,18 @@ package com.lfkdsk.justel.ast.operators;
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
-import com.lfkdsk.justel.literal.NumberLiteral;
-import com.lfkdsk.justel.token.NumberToken;
 
 import java.util.List;
 
 import static com.lfkdsk.justel.utils.NumberUtils.computeNegative;
-import static com.lfkdsk.justel.utils.NumberUtils.computeNegativeToken;
 import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
-import static com.lfkdsk.justel.utils.TypeUtils.isNumberLiteral;
 
 /**
  * -
  * Created by liufengkai on 2017/7/26.
  */
-public class NegativeExpr extends AstList {
-    public NegativeExpr(List<AstNode> children) {
+public class NegativePostfix extends AstList {
+    public NegativePostfix(List<AstNode> children) {
         super(children, AstNode.NEGATIVE_OP);
     }
 
@@ -46,10 +42,6 @@ public class NegativeExpr extends AstList {
         if (isNumber(value)) {
 
             return computeNegative((Number) value);
-        } else if (isNumberLiteral(value)) {
-            NumberToken token = ((NumberLiteral) value).numberToken();
-
-            return computeNegativeToken(token);
         }
 
         return super.eval(env);

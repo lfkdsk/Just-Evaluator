@@ -10,9 +10,7 @@ package com.lfkdsk.justel.ast.operators;
 
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
-import com.lfkdsk.justel.literal.NumberLiteral;
-import com.lfkdsk.justel.token.NumberToken;
-import com.lfkdsk.justel.utils.NumberUtils;
+import com.lfkdsk.justel.token.SepToken;
 
 import java.util.List;
 
@@ -24,6 +22,11 @@ import static com.lfkdsk.justel.utils.TypeUtils.*;
 public class UnEqualOp extends OperatorExpr {
     public UnEqualOp(List<AstNode> children) {
         super(children, AstNode.UN_EQUAL_OP);
+    }
+
+    @Override
+    public String functionName() {
+        return SepToken.NOT_EQUAL_TOKEN.getText();
     }
 
     @Override
@@ -42,14 +45,6 @@ public class UnEqualOp extends OperatorExpr {
         } else if (isString(left) && isString(right)) {
 
             return !left.equals(right);
-        } else if (isNumberLiteral(left) && isNumberLiteral(right)) {
-            NumberToken leftToken = ((NumberLiteral) left).numberToken();
-            NumberToken rightToken = ((NumberLiteral) right).numberToken();
-            Object leftValue = NumberUtils.computeValueToken(leftToken);
-            Object rightValue = NumberUtils.computeValueToken(rightToken);
-
-            // id(num) != id(num)
-            return !leftValue.equals(rightValue);
         }
 
         return super.eval(env);

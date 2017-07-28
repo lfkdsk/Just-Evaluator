@@ -5,6 +5,8 @@ import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.token.NumberToken;
 import com.lfkdsk.justel.token.Token;
 
+import static com.lfkdsk.justel.utils.NumberUtils.castTokenValue;
+
 /**
  * Number Literal.
  * We support two kinds of Number Value :
@@ -56,6 +58,6 @@ public class NumberLiteral extends Literal {
 
     @Override
     public Object eval(JustContext env) {
-        return this;
+        return castTokenValue(numberToken());
     }
 }
