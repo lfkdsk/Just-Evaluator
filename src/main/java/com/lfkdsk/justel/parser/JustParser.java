@@ -23,7 +23,6 @@ import com.lfkdsk.justel.lexer.Lexer;
  * @author liufengkai
  *         Created by liufengkai on 2017/7/26.
  */
-@FunctionalInterface
 public interface JustParser {
 
     /**
