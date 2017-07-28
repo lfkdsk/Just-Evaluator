@@ -1,6 +1,8 @@
 package com.lfkdsk.justel.utils;
 
+
 import com.lfkdsk.justel.token.NumberToken;
+import com.lfkdsk.justel.token.Token;
 
 /**
  * Parser Number.
@@ -69,27 +71,70 @@ public class NumberUtils {
         return v instanceof Double ? (double) v : 0;
     }
 
-    public static Object computePlusValue(Object l, Object r) {
-        return (computeIntValue(l) + computeLongValue(l)
-                + computeFloatValue(l) + computeDoubleValue(l))
-                + (computeIntValue(r) + computeLongValue(r)
-                + computeFloatValue(r) + computeDoubleValue(r));
+    public static double computePlusValue(Object l, Object r) {
+        return computeValue(l) + computeValue(r);
     }
 
-    public static Object computeValue(Object l) {
+    public static double computeValue(Object l) {
         return computeIntValue(l) + computeLongValue(l)
                 + computeFloatValue(l) + computeDoubleValue(l);
     }
 
-    public static Object computePlus(NumberToken leftToken, NumberToken rightToken) {
-        return (leftToken.integerValue() + leftToken.longValue()
-                + leftToken.floatValue() + leftToken.doubleValue())
-                + (rightToken.integerValue() + leftToken.longValue()
-                + rightToken.floatValue() + rightToken.doubleValue());
+    public static Object computePlusToken(NumberToken leftToken, NumberToken rightToken) {
+        return castTokenValue(computeValueToken(leftToken) + computeValueToken(rightToken),
+                Math.max(leftToken.getTag(), rightToken.getTag()));
     }
 
-    public static Object computeValue(NumberToken token) {
-        return token.integerValue() + token.longValue()
-                + token.floatValue() + token.doubleValue();
+    public static Object computeNegative(Number l) {
+        return castTokenValue(-computeValue(l), numberValue(l));
+    }
+
+    public static Object computeNegativeToken(NumberToken token) {
+        return castTokenValue(-computeValueToken(token), token.getTag());
+    }
+
+    public static double computeValueToken(NumberToken token) {
+        return (token.integerValue() + token.longValue()
+                + token.floatValue() + token.doubleValue());
+    }
+
+    public static Number castTokenValue(Number number, final int flag) {
+        switch (flag) {
+            case Token.INTEGER:
+                return number.intValue();
+            case Token.LONG:
+                return number.longValue();
+            case Token.FLOAT:
+                return number.floatValue();
+            case Token.DOUBLE:
+            default:
+                return number.doubleValue();
+        }
+    }
+
+    public static Number castTokenValue(NumberToken token) {
+        switch (token.getTag()) {
+            case Token.INTEGER:
+                return token.integerValue();
+            case Token.LONG:
+                return token.longValue();
+            case Token.FLOAT:
+                return token.floatValue();
+            case Token.DOUBLE:
+            default:
+                return token.doubleValue();
+        }
+    }
+
+    public static <T extends Number> int numberValue(T obj) {
+        if (obj instanceof Integer) {
+            return Token.INTEGER;
+        } else if (obj instanceof Long) {
+            return Token.LONG;
+        } else if (obj instanceof Float) {
+            return Token.FLOAT;
+        } else {
+            return Token.DOUBLE;
+        }
     }
 }

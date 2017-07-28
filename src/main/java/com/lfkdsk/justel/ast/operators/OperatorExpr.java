@@ -29,15 +29,15 @@ public abstract class OperatorExpr extends AstList implements Function {
         super(children, tag);
     }
 
-    public AstNode leftChild() {
+    protected AstNode leftChild() {
         return child(0);
     }
 
-    public AstNode rightChild() {
+    protected AstNode rightChild() {
         return child(2);
     }
 
-    public AstLeaf operator() {
+    protected AstLeaf operator() {
         return (AstLeaf) child(1);
     }
 

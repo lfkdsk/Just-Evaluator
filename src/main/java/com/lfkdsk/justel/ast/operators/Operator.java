@@ -20,6 +20,10 @@ public class Operator extends AstLeaf {
         super(token);
     }
 
+    public String operator() {
+        return getText();
+    }
+
     public String getText() {
         return token.getText();
     }

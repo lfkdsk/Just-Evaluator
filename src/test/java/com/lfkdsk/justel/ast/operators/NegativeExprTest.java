@@ -8,16 +8,27 @@
 
 package com.lfkdsk.justel.ast.operators;
 
-import com.lfkdsk.justel.ast.base.AstList;
-import com.lfkdsk.justel.ast.base.AstNode;
+import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
- * Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/28.
  */
-public class NotExpr extends AstList {
-    public NotExpr(List<AstNode> children) {
-        super(children, AstNode.NOT_OP);
+class NegativeExprTest {
+
+    @Test
+    void testInteger() {
+        runExpr("-11111", true, null);
+    }
+
+    @Test
+    void testFloat() {
+        runExpr("-1111.000111f", true, null);
+    }
+
+    @Test
+    void testDouble() {
+        runExpr("-1111.00110111d", true, null);
     }
 }

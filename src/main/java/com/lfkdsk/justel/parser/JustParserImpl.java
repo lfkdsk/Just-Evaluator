@@ -74,13 +74,13 @@ public class JustParserImpl implements JustParser {
             );
 
     ///////////////////////////////////////////////////////////////////////////
-    // factor expr = - primary | ! primary | primary
+    // factor = - primary | ! primary | primary
     ///////////////////////////////////////////////////////////////////////////
 
     private BnfCom factor = rule()
             .or(
                     rule(NegativeExpr.class).sep(SUB).ast(primary),
-                    rule(NotExpr.class).sep(LOGICAL_F_TOKEN).ast(primary),
+                    rule(NotOp.class).sep(LOGICAL_F_TOKEN).ast(primary),
                     primary
             );
 
@@ -124,7 +124,7 @@ public class JustParserImpl implements JustParser {
         operators.add(EQ_TOKEN, 7, LEFT, EqualOp.class);
         operators.add(UQ_TOKEN, 7, LEFT, UnEqualOp.class);
         operators.add(LOGICAL_AND_TOKEN, 11, LEFT, AndOp.class);
-
+        operators.add(LOGICAL_F_TOKEN, 2, LEFT, NotOp.class);
     }
 
 

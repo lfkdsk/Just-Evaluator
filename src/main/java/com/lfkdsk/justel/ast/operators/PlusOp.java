@@ -17,8 +17,7 @@ import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
 
-import static com.lfkdsk.justel.utils.NumberUtils.computePlus;
-import static com.lfkdsk.justel.utils.NumberUtils.computePlusValue;
+import static com.lfkdsk.justel.utils.NumberUtils.*;
 import static com.lfkdsk.justel.utils.TypeUtils.*;
 
 /**
@@ -52,7 +51,7 @@ public class PlusOp extends OperatorExpr {
             NumberToken rightToken = ((NumberLiteral) right).numberToken();
 
             // num + num
-            return computePlus(leftToken, rightToken);
+            return computePlusToken(leftToken, rightToken);
         } else if (isNumber(left) && isNumber(right)) {
 
             // id(num) + id(num)

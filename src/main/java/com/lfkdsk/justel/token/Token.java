@@ -18,13 +18,13 @@ public class Token {
 
     public final static int STRING = 294;
 
-    public final static int FLOAT = 295;
+    public final static int INTEGER = 295;
 
-    public final static int DOUBLE = 296;
+    public final static int LONG = 296;
 
-    public final static int INTEGER = 297;
+    public final static int FLOAT = 297;
 
-    public final static int LONG = 298;
+    public final static int DOUBLE = 298;
 
 
     /**

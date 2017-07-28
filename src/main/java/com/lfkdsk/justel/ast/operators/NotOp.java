@@ -11,48 +11,37 @@ package com.lfkdsk.justel.ast.operators;
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
-import com.lfkdsk.justel.literal.NumberLiteral;
-import com.lfkdsk.justel.token.NumberToken;
 
 import java.util.List;
 
-import static com.lfkdsk.justel.utils.NumberUtils.computeNegative;
-import static com.lfkdsk.justel.utils.NumberUtils.computeNegativeToken;
-import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
-import static com.lfkdsk.justel.utils.TypeUtils.isNumberLiteral;
+import static com.lfkdsk.justel.utils.TypeUtils.isBoolean;
 
 /**
- * -
+ * !
  * Created by liufengkai on 2017/7/26.
  */
-public class NegativeExpr extends AstList {
-    public NegativeExpr(List<AstNode> children) {
-        super(children, AstNode.NEGATIVE_OP);
+public class NotOp extends AstList {
+    public NotOp(List<AstNode> children) {
+        super(children, AstNode.NOT_OP);
     }
 
-    public AstNode operand() {
+    private AstNode operand() {
         return child(0);
     }
 
     @Override
     public String toString() {
-        return "-" + operand();
+        return "!" + operand();
     }
 
     @Override
     public Object eval(JustContext env) {
         Object value = this.operand().eval(env);
 
-        if (isNumber(value)) {
-
-            return computeNegative((Number) value);
-        } else if (isNumberLiteral(value)) {
-            NumberToken token = ((NumberLiteral) value).numberToken();
-
-            return computeNegativeToken(token);
+        if (isBoolean(value)) {
+            return !(Boolean) value;
         }
 
         return super.eval(env);
     }
-
 }
