@@ -21,10 +21,10 @@ import com.lfkdsk.justel.literal.IDLiteral;
 import com.lfkdsk.justel.literal.NumberLiteral;
 import com.lfkdsk.justel.literal.StringLiteral;
 
+import static com.lfkdsk.justel.token.ReservedToken.*;
+import static com.lfkdsk.justel.token.Token.EOL;
 import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
 import static com.lfkdsk.justel.parser.BnfCom.rule;
-import static com.lfkdsk.justel.token.ReservedToken.reservedToken;
-import static com.lfkdsk.justel.token.Token.EOL;
 
 /**
  * Just Parser Implementation, Support Follow BNF Grammars:
@@ -66,7 +66,7 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom primary = rule(AstPrimaryExpr.class)
             .or(
-                    rule().sep("(").ast(expr0).sep(")"),
+                    rule().sep(LP_TOKEN).ast(expr0).sep(RP_TOKEN),
                     number,
                     id,
                     string,
@@ -79,8 +79,8 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom factor = rule()
             .or(
-                    rule(NegativeExpr.class).sep("-").ast(primary),
-                    rule(NotExpr.class).sep("!").ast(primary),
+                    rule(NegativeExpr.class).sep(SUB).ast(primary),
+                    rule(NotExpr.class).sep(LOGICAL_F_TOKEN).ast(primary),
                     primary
             );
 
@@ -95,17 +95,17 @@ public class JustParserImpl implements JustParser {
     ///////////////////////////////////////////////////////////////////////////
 
     private BnfCom args = rule(AstFuncArguments.class)
-            .ast(expr).repeat(rule().sep(",").ast(expr));
+            .ast(expr).repeat(rule().sep(COMMA).ast(expr));
 
     ///////////////////////////////////////////////////////////////////////////
     // postfix = ( args | null ) | . id | [ expr ]
     ///////////////////////////////////////////////////////////////////////////
 
     private BnfCom postfix = rule().or(
-            rule().sep("(").maybe(args).sep(")"),
-            rule().sep("?").ast(expr).sep(":").ast(expr),
-            rule(DotExpr.class).sep(".").identifier(reservedToken),
-            rule(ArrayIndexExpr.class).sep("[").ast(expr).sep("]")
+            rule().sep(LP_TOKEN).maybe(args).sep(RP_TOKEN),
+            rule().sep(QUESTION_TOKEN).ast(expr).sep(COLON_TOKEN).ast(expr),
+            rule(DotExpr.class).sep(DOT_TOKEN).identifier(reservedToken),
+            rule(ArrayIndexExpr.class).sep(LM_TOKEN).ast(expr).sep(RM_TOKEN)
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -120,16 +120,11 @@ public class JustParserImpl implements JustParser {
         primary.repeat(postfix);
 
         reservedToken.add(EOL);
-        reservedToken.add("(");
-        reservedToken.add(")");
-        reservedToken.add("&&");
-        reservedToken.add("true");
-        reservedToken.add("false");
+        operators.add(PLUS, 4, LEFT, PlusOp.class);
+        operators.add(EQ_TOKEN, 7, LEFT, EqualOp.class);
+        operators.add(UQ_TOKEN, 7, LEFT, UnEqualOp.class);
+        operators.add(LOGICAL_AND_TOKEN, 11, LEFT, AndOp.class);
 
-        operators.add("+", 4, LEFT, PlusOp.class);
-        operators.add("==", 7, LEFT, EqualOp.class);
-        operators.add("!=", 7, LEFT, UnEqualOp.class);
-        operators.add("&&", 11, LEFT, AndOp.class);
     }
 
 

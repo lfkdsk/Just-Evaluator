@@ -9,15 +9,40 @@
 package com.lfkdsk.justel.ast.operators;
 
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.token.SepToken;
 import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
 
+import static com.lfkdsk.justel.utils.TypeUtils.isString;
+
 /**
- * Created by liufengkai on 2017/7/26.
+ * + Operator:
+ * left + operator
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
  */
 public class PlusOp extends OperatorExpr {
     public PlusOp(List<AstNode> children) {
         super(children, Token.PLUS_OP);
+    }
+
+    @Override
+    public String functionName() {
+        return SepToken.PLUS_TOKEN.getText();
+    }
+
+    @Override
+    public Object eval(JustContext env) {
+        Object left = leftChild().eval(env);
+        Object right = rightChild().eval(env);
+
+        if (isString(left) && isString(right)) {
+            return String.valueOf(left) + String.valueOf(right);
+        }
+
+        return super.eval(env);
     }
 }

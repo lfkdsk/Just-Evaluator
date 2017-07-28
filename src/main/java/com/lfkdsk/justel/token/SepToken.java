@@ -11,35 +11,36 @@ package com.lfkdsk.justel.token;
  */
 public class SepToken extends Token {
 
-    public static SepToken AMPERSAND_TOKEN = new SepToken(Token.AMPERSAND, "&");
-    public static SepToken AND_TOKEN = new SepToken(Token.AND, "&&");
+    public static SepToken AMPERSAND_TOKEN = new SepToken(Token.AMPERSAND, ReservedToken.AMPERSAND_TOKEN);
+    public static SepToken AND_TOKEN = new SepToken(Token.AND, ReservedToken.LOGICAL_AND_TOKEN);
 
-    public static SepToken BAR_TOKEN = new SepToken(Token.BAR, "|");
-    public static SepToken OR_TOKEN = new SepToken(Token.OR, "||");
+    public static SepToken BAR_TOKEN = new SepToken(Token.BAR, ReservedToken.BAR_TOKEN);
+    public static SepToken OR_TOKEN = new SepToken(Token.OR, ReservedToken.LOGICAL_OR_TOKEN);
 
-    public static SepToken LESS_TOKEN = new SepToken(Token.LESS, "<");
-    public static SepToken LTE_TOKEN = new SepToken(Token.LESS_THAN, "<=");
+    public static SepToken LESS_TOKEN = new SepToken(Token.LESS, ReservedToken.GT_TOKEN);
+    public static SepToken LTE_TOKEN = new SepToken(Token.LESS_THAN, ReservedToken.LE_TOKEN);
 
-    public static SepToken GREAT_TOKEN = new SepToken(Token.GREAT, ">");
-    public static SepToken GTE_TOKEN = new SepToken(Token.GREAT_THAN, ">=");
+    public static SepToken GREAT_TOKEN = new SepToken(Token.GREAT, ReservedToken.GE_TOKEN);
+    public static SepToken GTE_TOKEN = new SepToken(Token.GREAT_THAN, ReservedToken.GEQ_TOKEN);
 
-    public static SepToken QUESTION_TOKEN = new SepToken(Token.QUESTION, "?");
-    public static SepToken COLON_TOKEN = new SepToken(Token.COLON, ":");
+    public static SepToken QUESTION_TOKEN = new SepToken(Token.QUESTION, ReservedToken.QUESTION_TOKEN);
+    public static SepToken COLON_TOKEN = new SepToken(Token.COLON, ReservedToken.COLON_TOKEN);
 
-    public static SepToken PLUS_TOKEN = new SepToken(Token.PLUS, "+");
-    public static SepToken MINUS_TOKEN = new SepToken(Token.MINUS, "-");
-    public static SepToken MULTIPLY_TOKEN = new SepToken(Token.MULTIPLY, "*");
-    public static SepToken DIVIDE_TOKEN = new SepToken(Token.DIVIDE, "/");
+    public static SepToken PLUS_TOKEN = new SepToken(Token.PLUS, ReservedToken.PLUS);
+    public static SepToken MINUS_TOKEN = new SepToken(Token.MINUS, ReservedToken.SUB);
 
-    public static SepToken MOD_TOKEN = new SepToken(Token.MOD, "%");
+    public static SepToken MULTIPLY_TOKEN = new SepToken(Token.MULTIPLY, ReservedToken.MUL);
+    public static SepToken DIVIDE_TOKEN = new SepToken(Token.DIVIDE, ReservedToken.DIV);
 
-    public static SepToken EXCLAM_TOKEN = new SepToken(Token.EXCLAM, "!");
-    public static SepToken NOT_EQUAL_TOKEN = new SepToken(Token.NOT_EQUAL, "!=");
-    public static SepToken EQUAL_TOKEN = new SepToken(Token.EQUAL, "==");
+    public static SepToken MOD_TOKEN = new SepToken(Token.MOD, ReservedToken.MOD);
 
-    public static SepToken DOT_TOKEN = new SepToken(Token.DOT, ".");
-    public static SepToken COLLECT_GET_LEFT_TOKEN = new SepToken(Token.COLLECT_GET_LEFT, "[");
-    public static SepToken COLLECT_GET_RIGHT_TOKEN = new SepToken(Token.COLLECT_GET_RIGHT, "]");
+    public static SepToken EXCLAM_TOKEN = new SepToken(Token.EXCLAM, ReservedToken.LOGICAL_F_TOKEN);
+    public static SepToken NOT_EQUAL_TOKEN = new SepToken(Token.NOT_EQUAL, ReservedToken.UQ_TOKEN);
+    public static SepToken EQUAL_TOKEN = new SepToken(Token.EQUAL, ReservedToken.EQ_TOKEN);
+
+    public static SepToken DOT_TOKEN = new SepToken(Token.DOT, ReservedToken.DOT_TOKEN);
+    public static SepToken COLLECT_GET_LEFT_TOKEN = new SepToken(Token.COLLECT_GET_LEFT, ReservedToken.LM_TOKEN);
+    public static SepToken COLLECT_GET_RIGHT_TOKEN = new SepToken(Token.COLLECT_GET_RIGHT, ReservedToken.RM_TOKEN);
 
     public static SepToken EOL_TOKEN = new SepToken(Token.EOL_TAG, Token.EOL);
 

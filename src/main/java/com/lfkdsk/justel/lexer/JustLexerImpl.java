@@ -11,6 +11,7 @@ import java.io.Reader;
 
 import static com.lfkdsk.justel.token.ReservedToken.reservedToken;
 
+
 /**
  * Lexer - Language Token Lexer
  * Just catch token this Engine supported.

@@ -16,7 +16,7 @@ import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
 
-import static com.lfkdsk.justel.utils.NumberUtils.isBoolean;
+import static com.lfkdsk.justel.utils.TypeUtils.isBoolean;
 
 /**
  * && Operator
