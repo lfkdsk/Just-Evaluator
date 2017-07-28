@@ -8,29 +8,27 @@
 
 package com.lfkdsk.justel.ast.operators;
 
-import com.lfkdsk.justel.context.JustContext;
-import com.lfkdsk.justel.context.JustMapContext;
-import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
 
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
- * Created by liufengkai on 2017/7/28.
+ * Created by liufengkai on 2017/7/29.
  */
-class AmpersandOpTest {
+class MulOpTest {
 
     @Test
-    void testAmpersandInteger() {
-        runExpr("1111 & 1111", true, null);
+    void testMulInteger() {
+        runExpr("2 * 2000", true, null);
     }
 
     @Test
-    void testAmpersandID() {
-        JustContext context = new JustMapContext();
-        context.put("lfkdsk", 1111);
-        runExpr("lfkdsk & 1211", true, context);
+    void testMulFloat() {
+        runExpr("2.1111f * 2000.1111f", true, null);
+    }
 
-        Logger.i(String.valueOf(1111 & 1211));
+    @Test
+    void testMulDouble() {
+        runExpr("2.11111d * 2000.222222d", true, null);
     }
 }

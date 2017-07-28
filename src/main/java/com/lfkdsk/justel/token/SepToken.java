@@ -27,7 +27,7 @@ public class SepToken extends Token {
     public static SepToken COLON_TOKEN = new SepToken(Token.COLON, ReservedToken.COLON_TOKEN);
 
     public static SepToken PLUS_TOKEN = new SepToken(Token.PLUS, ReservedToken.PLUS);
-    public static SepToken MINUS_TOKEN = new SepToken(Token.MINUS, ReservedToken.SUB);
+    public static SepToken MINUS_TOKEN = new SepToken(Token.MINUS, ReservedToken.MINUS);
 
     public static SepToken MULTIPLY_TOKEN = new SepToken(Token.MULTIPLY, ReservedToken.MUL);
     public static SepToken DIVIDE_TOKEN = new SepToken(Token.DIVIDE, ReservedToken.DIV);

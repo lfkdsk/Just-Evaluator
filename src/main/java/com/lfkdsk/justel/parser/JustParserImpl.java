@@ -20,6 +20,7 @@ import com.lfkdsk.justel.literal.BoolLiteral;
 import com.lfkdsk.justel.literal.IDLiteral;
 import com.lfkdsk.justel.literal.NumberLiteral;
 import com.lfkdsk.justel.literal.StringLiteral;
+import com.lfkdsk.justel.token.ReservedToken;
 
 import static com.lfkdsk.justel.token.ReservedToken.*;
 import static com.lfkdsk.justel.token.Token.EOL;
@@ -79,8 +80,8 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom factor = rule()
             .or(
-                    rule(NegativePostfix.class).sep(SUB).ast(primary),
-                    rule(NotPostfix.class).sep(LOGICAL_F_TOKEN).ast(primary),
+                    rule(NegativePostfix.class).sep(ReservedToken.MINUS).ast(primary),
+                    rule(NotPostfix.class).repeat(rule().sep(LOGICAL_F_TOKEN)).ast(primary),
                     primary
             );
 
@@ -126,6 +127,11 @@ public class JustParserImpl implements JustParser {
         operators.add(AMPERSAND_TOKEN, 8, LEFT, AmpersandOp.class);
         operators.add(LOGICAL_AND_TOKEN, 11, LEFT, AndOp.class);
         operators.add(LOGICAL_F_TOKEN, 2, LEFT, NotPostfix.class);
+        operators.add(LOGICAL_OR_TOKEN, 12, LEFT, OrOp.class);
+        operators.add(MINUS, 4, LEFT, MinusOp.class);
+        operators.add(DIV, 3, LEFT, DivOp.class);
+        operators.add(MUL, 3, LEFT, MulOp.class);
+
     }
 
 

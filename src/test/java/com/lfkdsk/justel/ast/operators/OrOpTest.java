@@ -10,27 +10,25 @@ package com.lfkdsk.justel.ast.operators;
 
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
-import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
 
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
- * Created by liufengkai on 2017/7/28.
+ * Created by liufengkai on 2017/7/29.
  */
-class AmpersandOpTest {
+class OrOpTest {
 
     @Test
-    void testAmpersandInteger() {
-        runExpr("1111 & 1111", true, null);
+    void testOrBoolean() {
+        runExpr("true || false", true, null);
     }
 
     @Test
-    void testAmpersandID() {
+    void testOrIDToken() {
         JustContext context = new JustMapContext();
-        context.put("lfkdsk", 1111);
-        runExpr("lfkdsk & 1211", true, context);
-
-        Logger.i(String.valueOf(1111 & 1211));
+        context.put("lfkdsk", true);
+        context.put("lfk", true);
+        runExpr("lfkdsk || lfk", true, context);
     }
 }

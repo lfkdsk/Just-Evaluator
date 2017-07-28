@@ -116,6 +116,8 @@ public class Token {
 
     public final static int OPERATOR = 325;
 
+    public final static int COND = 326;
+
     /**
      * End of file
      */

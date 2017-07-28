@@ -127,6 +127,8 @@ public class JustLexerImpl implements Lexer {
      */
     private String currentReadString = "";
 
+    private boolean endOfLine = false;
+
     /**
      * read next char => peekChar
      *
@@ -137,6 +139,7 @@ public class JustLexerImpl implements Lexer {
         if (start >= end) {
             peekChar = ' ';
             // end of file
+            endOfLine = true;
             return peekChar;
         }
 
@@ -158,7 +161,7 @@ public class JustLexerImpl implements Lexer {
 
     private void scanToken() {
         // jump all blank chars
-        skipBlank();
+        if (skipBlank()) return;
 
         // resolve symbols & operators
         if (resolveSymbol()) return;
@@ -180,14 +183,18 @@ public class JustLexerImpl implements Lexer {
     /**
      * Skip Blank
      */
-    private void skipBlank() {
+    private boolean skipBlank() {
         for (; ; readChar()) {
+            if (endOfLine) return true;
+
             if (peekChar == ' ' || peekChar == '\t') {
                 continue;
-            } else if (peekChar == '\n')
+            } else if (peekChar == '\n') {
                 lineNumber = lineNumber + 1;
-            else break;
+            } else break;
         }
+
+        return false;
     }
 
     /**

@@ -26,7 +26,7 @@ public class ReservedToken extends Token {
 
     public static final String GT_TOKEN = "<", GE_TOKEN = ">";
 
-    public static final String PLUS = "+", SUB = "-",
+    public static final String PLUS = "+", MINUS = "-",
             MUL = "*", DIV = "/", MOD = "%";
 
     public static final String COMMA = ",";
@@ -67,9 +67,9 @@ public class ReservedToken extends Token {
         // GT_TOKEN = "<", GE_TOKEN = ">"
         reservedToken.add(GT_TOKEN);
         reservedToken.add(GE_TOKEN);
-        // PLUS = "+", SUB = "-", MUL = "*", DIV = "/", MOD = "%"
+        // PLUS = "+", MINUS = "-", MUL = "*", DIV = "/", MOD = "%"
         reservedToken.add(PLUS);
-        reservedToken.add(SUB);
+        reservedToken.add(MINUS);
         reservedToken.add(DIV);
         reservedToken.add(MOD);
         // COMMA = "," , DOT_TOKEN = ".", LM_TOKEN = "[", RM_TOKEN = "]"

@@ -75,6 +75,21 @@ public class NumberUtils {
         return computeValue(l) + computeValue(r);
     }
 
+    public static Object computeMinusValue(Number l, Number r) {
+        return castTokenValue(computeValue(l) - computeValue(r),
+                Math.max(numberValue(l), numberValue(r)));
+    }
+
+    public static Object computeDivValue(Number l, Number r) {
+        return castTokenValue(computeValue(l) / computeValue(r),
+                Math.max(numberValue(l), numberValue(r)));
+    }
+
+    public static Object computeMulValue(Number l, Number r) {
+        return castTokenValue(computeValue(l) * computeValue(r),
+                Math.max(numberValue(l), numberValue(r)));
+    }
+
     public static double computeValue(Object l) {
         return computeIntValue(l) + computeLongValue(l)
                 + computeFloatValue(l) + computeDoubleValue(l);
@@ -140,6 +155,6 @@ public class NumberUtils {
 
     public static Object computeAmpersandValue(Number num1, Number num2) {
         return castTokenValue((long) computeValue(num1) & (long) computeValue(num2),
-                Math.min(numberValue(num1), numberValue(num2)));
+                Math.max(numberValue(num1), numberValue(num2)));
     }
 }
