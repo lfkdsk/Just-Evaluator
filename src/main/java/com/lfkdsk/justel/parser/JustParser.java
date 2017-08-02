@@ -47,7 +47,7 @@ public interface JustParser {
         // operator is Operator
         Operator operator = (Operator) expr.midOp();
         // get the factory of sub-node
-        BnfCom.Factory factory = operators.get(operator.getText()).factory;
+        BnfCom.Factory factory = operators.get(operator.operator()).factory;
         // use list to make new node
 
         return factory.make(expr.getChildren());

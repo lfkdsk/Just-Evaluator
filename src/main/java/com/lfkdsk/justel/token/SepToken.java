@@ -18,10 +18,10 @@ public class SepToken extends Token {
     public static SepToken OR_TOKEN = new SepToken(Token.OR, ReservedToken.LOGICAL_OR_TOKEN);
 
     public static SepToken LESS_TOKEN = new SepToken(Token.LESS_THAN, ReservedToken.LT_TOKEN);
-    public static SepToken LTE_TOKEN = new SepToken(Token.LESS_EQUAL_THAN, ReservedToken.LE_TOKEN);
+    public static SepToken LTE_TOKEN = new SepToken(Token.LESS_EQUAL_THAN, ReservedToken.LTE_TOKEN);
 
     public static SepToken GREAT_TOKEN = new SepToken(Token.GREAT_THAN, ReservedToken.GT_TOKEN);
-    public static SepToken GTE_TOKEN = new SepToken(Token.GREAT_EQUAL_THAN, ReservedToken.GEQ_TOKEN);
+    public static SepToken GTE_TOKEN = new SepToken(Token.GREAT_EQUAL_THAN, ReservedToken.GTE_TOKEN);
 
     public static SepToken QUESTION_TOKEN = new SepToken(Token.QUESTION, ReservedToken.QUESTION_TOKEN);
     public static SepToken COLON_TOKEN = new SepToken(Token.COLON, ReservedToken.COLON_TOKEN);

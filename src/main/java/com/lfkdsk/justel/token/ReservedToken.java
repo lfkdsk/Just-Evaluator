@@ -18,8 +18,7 @@ public class ReservedToken extends Token {
 
     public static final String LP_TOKEN = "(", RP_TOKEN = ")";
 
-    public static final String EQ_TOKEN = "==",
-            UQ_TOKEN = "!=", GEQ_TOKEN = ">=", LE_TOKEN = "<=";
+    public static final String EQ_TOKEN = "==", UQ_TOKEN = "!=";
 
     public static final String LOGICAL_AND_TOKEN = "&&",
             LOGICAL_OR_TOKEN = "||", LOGICAL_F_TOKEN = "!";
@@ -57,11 +56,9 @@ public class ReservedToken extends Token {
         // LP_TOKEN = "(", RP_TOKEN = ")"
         reservedToken.add(LP_TOKEN);
         reservedToken.add(RP_TOKEN);
-        // EQ_TOKEN = "==", UQ_TOKEN = "!=", GEQ_TOKEN = ">=", LE_TOKEN = "<="
+        // EQ_TOKEN = "==", UQ_TOKEN = "!="
         reservedToken.add(EQ_TOKEN);
         reservedToken.add(UQ_TOKEN);
-        reservedToken.add(GEQ_TOKEN);
-        reservedToken.add(LE_TOKEN);
         // LOGICAL_AND_TOKEN = "&&", LOGICAL_OR_TOKEN = "||", LOGICAL_F_TOKEN = "!"
         reservedToken.add(LOGICAL_AND_TOKEN);
         reservedToken.add(LOGICAL_OR_TOKEN);

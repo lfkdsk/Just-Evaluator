@@ -133,6 +133,8 @@ public class JustParserImpl implements JustParser {
         operators.add(MUL, 3, LEFT, MulOp.class);
         operators.add(GT_TOKEN, 6, LEFT, GreaterThanOp.class);
         operators.add(GTE_TOKEN, 6, LEFT, GreaterThanEqualOp.class);
+        operators.add(LT_TOKEN, 6, LEFT, LessThanOp.class);
+        operators.add(LTE_TOKEN, 6, LEFT, LessThanEqualOp.class);
     }
 
 
