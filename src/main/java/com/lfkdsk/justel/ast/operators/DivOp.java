@@ -19,6 +19,7 @@ import static com.lfkdsk.justel.utils.NumberUtils.computeDivValue;
 import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 
 /**
+ * /
  * Created by liufengkai on 2017/7/29.
  */
 public class DivOp extends OperatorExpr {
@@ -42,7 +43,6 @@ public class DivOp extends OperatorExpr {
             // id(num) / id(num)
             return computeDivValue((Number) left, (Number) right);
         }
-
 
         return super.eval(env);
     }

@@ -15,21 +15,21 @@ import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
 
-import static com.lfkdsk.justel.utils.NumberUtils.computeMulValue;
+import static com.lfkdsk.justel.utils.NumberUtils.computeModValue;
 import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 
 /**
- * *
- * Created by liufengkai on 2017/7/29.
+ * %
+ * Created by liufengkai on 2017/8/2.
  */
-public class MulOp extends OperatorExpr {
-    public MulOp(List<AstNode> children) {
-        super(children, Token.MULTIPLY);
+public class Mod extends OperatorExpr {
+    public Mod(List<AstNode> children) {
+        super(children, Token.MOD);
     }
 
     @Override
     public String functionName() {
-        return SepToken.MULTIPLY_TOKEN.getText();
+        return SepToken.MOD_TOKEN.getText();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class MulOp extends OperatorExpr {
         Object right = rightChild().eval(env);
 
         if (isNumber(left) && isNumber(right)) {
-            return computeMulValue((Number) left, (Number) right);
+            return computeModValue((Number) left, (Number) right);
         }
 
         return super.eval(env);

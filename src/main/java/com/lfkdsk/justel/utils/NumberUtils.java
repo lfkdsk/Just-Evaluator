@@ -161,4 +161,9 @@ public class NumberUtils {
         return castTokenValue((long) computeValue(num1) & (long) computeValue(num2),
                 Math.max(numberValue(num1), numberValue(num2)));
     }
+
+    public static Object computeModValue(Number num1, Number num2) {
+        return castTokenValue(computeValue(num1) % computeValue(num2),
+                Math.max(numberValue(num1), numberValue(num2)));
+    }
 }
