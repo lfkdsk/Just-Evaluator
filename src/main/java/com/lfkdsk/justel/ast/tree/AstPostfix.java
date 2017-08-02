@@ -15,22 +15,14 @@ import com.lfkdsk.justel.context.JustContext;
 import java.util.List;
 
 /**
- * Ast Program
- *
- * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Postfix
+ * Created by liufengkai on 2017/8/2.
  */
-public class AstProgram extends AstList {
-    public AstProgram(List<AstNode> children) {
-        super(children, PROGRAM);
+public abstract class AstPostfix extends AstList {
+    public AstPostfix(List<AstNode> children) {
+        super(children, AstNode.POSTFIX);
     }
 
-    private AstNode program() {
-        return child(0);
-    }
-
-    @Override
-    public Object eval(JustContext env) {
-        return program().eval(env);
-    }
+    public abstract Object eval(JustContext env, Object value);
 }
+

@@ -108,6 +108,10 @@ public class JustParserImpl implements JustParser {
             rule(ArrayIndexExpr.class).sep(LM_TOKEN).ast(expr).sep(RM_TOKEN)
     );
 
+    ///////////////////////////////////////////////////////////////////////////
+    // cond = ? expr : expr
+    ///////////////////////////////////////////////////////////////////////////
+
     private BnfCom cond = rule(CondOp.class).sep(QUESTION_TOKEN).ast(expr).sep(COLON_TOKEN).ast(expr);
 
 

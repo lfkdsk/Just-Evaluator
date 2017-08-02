@@ -29,8 +29,6 @@ public class AstPrimaryExpr extends AstList {
 
     @Override
     public Object eval(JustContext env) {
-
-
         return super.eval(env);
     }
 }

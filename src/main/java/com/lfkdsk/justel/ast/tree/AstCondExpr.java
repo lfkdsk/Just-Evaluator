@@ -18,7 +18,12 @@ import java.util.List;
 import static com.lfkdsk.justel.utils.TypeUtils.isBoolean;
 
 /**
- * Created by liufengkai on 2017/8/2.
+ * Ast Cond Expr
+ * conExpr - conOp
+ * conExpr - ? trueExpr : falseExpr
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/8/2.
  */
 public class AstCondExpr extends AstList {
     public AstCondExpr(List<AstNode> children) {
@@ -29,11 +34,11 @@ public class AstCondExpr extends AstList {
         return child.childCount() == 2 && child.child(1) instanceof CondOp;
     }
 
-    public AstNode condExpr() {
+    private AstNode condExpr() {
         return child(0);
     }
 
-    public CondOp condOp() {
+    private CondOp condOp() {
         return (CondOp) child(1);
     }
 
