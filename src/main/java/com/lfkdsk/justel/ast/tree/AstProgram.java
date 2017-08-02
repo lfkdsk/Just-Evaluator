@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * Ast Program
+ * Program is just a wrapper of Ast.
  *
  * @author liufengkai
  *         Created by liufengkai on 2017/7/26.

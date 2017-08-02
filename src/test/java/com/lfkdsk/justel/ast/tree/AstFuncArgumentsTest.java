@@ -8,21 +8,17 @@
 
 package com.lfkdsk.justel.ast.tree;
 
-import com.lfkdsk.justel.ast.base.AstList;
-import com.lfkdsk.justel.ast.base.AstNode;
-import com.lfkdsk.justel.context.JustContext;
+import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
- * Postfix
  * Created by liufengkai on 2017/8/2.
  */
-public abstract class AstPostfix extends AstList {
-    public AstPostfix(List<AstNode> children) {
-        super(children, AstNode.POSTFIX);
+class AstFuncArgumentsTest {
+    @Test
+    void testParserFuncArgs() {
+        // parser
+        runExpr("lfkdsk(lfkdsk,lfkdsk,lfkdsk)", false, null);
     }
-
-    public abstract Object eval(JustContext env, Object value);
 }
-

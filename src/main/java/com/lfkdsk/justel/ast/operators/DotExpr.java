@@ -8,22 +8,61 @@
 
 package com.lfkdsk.justel.ast.operators;
 
+import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.tree.AstPostfixExpr;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.utils.ReflectUtils;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
  * Created by liufengkai on 2017/7/26.
  */
 public class DotExpr extends OperatorExpr implements AstPostfixExpr {
+
     public DotExpr(List<AstNode> children) {
         super(children, AstNode.DOT_OP);
     }
 
+    public String name() {
+        return ((AstLeaf) child(0)).token().getText();
+    }
+
+    public static class InnerReflect {
+        public Method method;
+        public Object originObj;
+
+        public InnerReflect(Method method, Object originObj) {
+            this.method = method;
+            this.originObj = originObj;
+        }
+    }
+
     @Override
     public Object eval(JustContext env, Object value) {
-        return null;
+        // multi obj
+        Class<?> cls = value instanceof Class<?> ? (Class<?>) value : value.getClass();
+
+        // get field => field value
+        Field field = ReflectUtils.getField(cls, name());
+        if (field != null) {
+            field.setAccessible(true);
+            try {
+                return field.get(value);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Method method = ReflectUtils.getMethod(cls, name());
+        if (method != null) {
+            method.setAccessible(true);
+            return new InnerReflect(method, value);
+        }
+
+        return this.eval(env);
     }
 }

@@ -27,8 +27,31 @@ public class AstPrimaryExpr extends AstList {
         return c.size() == 1 ? c.get(0) : new AstPrimaryExpr(c);
     }
 
+    private Object operand(AstPrimaryExpr expr) {
+        return expr.child(0);
+    }
+
+    private AstPostfixExpr postfix(AstPrimaryExpr expr, int nest) {
+        return (AstPostfixExpr) expr.child(expr.childCount() - nest - 1);
+    }
+
+    private boolean hasPostfix(AstPrimaryExpr expr, int nest) {
+        return expr.childCount() - nest > 1;
+    }
+
+    private Object evalSubExpr(JustContext env,
+                               AstPrimaryExpr expr,
+                               int nest) {
+        if (hasPostfix(expr, nest)) {
+            Object target = evalSubExpr(env, expr, nest + 1);
+            return postfix(expr, nest).eval(env, target);
+        } else {
+            return ((AstNode) operand(expr)).eval(env);
+        }
+    }
+
     @Override
     public Object eval(JustContext env) {
-        return super.eval(env);
+        return evalSubExpr(env, this, 0);
     }
 }

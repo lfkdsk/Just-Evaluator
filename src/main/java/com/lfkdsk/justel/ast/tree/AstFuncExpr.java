@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.tree;
 
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.context.JustContext;
 
 import java.util.List;
 
@@ -24,5 +25,12 @@ public class AstFuncExpr extends AstList {
     public static boolean isAstFuncExpr(AstNode child) {
         return child.childCount() >= 2 &&
                 child.child(1) instanceof AstFuncArguments;
+    }
+
+    @Override
+    public Object eval(JustContext env) {
+
+
+        return super.eval(env);
     }
 }
