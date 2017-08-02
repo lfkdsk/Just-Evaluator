@@ -15,10 +15,10 @@ import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.utils.ReflectUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**
+ * primary.field | (lfkdsk)
  * Created by liufengkai on 2017/7/26.
  */
 public class DotExpr extends OperatorExpr implements AstPostfixExpr {
@@ -32,11 +32,11 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
     }
 
     public static class InnerReflect {
-        public Method method;
+        public String name;
         public Object originObj;
 
-        public InnerReflect(Method method, Object originObj) {
-            this.method = method;
+        public InnerReflect(String name, Object originObj) {
+            this.name = name;
             this.originObj = originObj;
         }
     }
@@ -57,12 +57,7 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
             }
         }
 
-        Method method = ReflectUtils.getMethod(cls, name());
-        if (method != null) {
-            method.setAccessible(true);
-            return new InnerReflect(method, value);
-        }
-
-        return this.eval(env);
+        // get method => method value
+        return new InnerReflect(name(), value);
     }
 }

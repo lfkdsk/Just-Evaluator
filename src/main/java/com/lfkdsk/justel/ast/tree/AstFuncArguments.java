@@ -12,8 +12,10 @@ import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.operators.DotExpr;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.utils.ReflectUtils;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -29,6 +31,7 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
     public Object eval(JustContext env, Object value) {
         DotExpr.InnerReflect reflect = (DotExpr.InnerReflect) value;
         int count = this.childCount();
+        Class<?> cls = ((DotExpr.InnerReflect) value).originObj.getClass();
 
         Object[] newArgs = new Object[count];
         for (int i = 0; i < count; i++) {
@@ -36,10 +39,22 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
             newArgs[i] = this.child(i).eval(env);
         }
 
-        try {
-            return reflect.method.invoke(reflect.originObj, newArgs);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+        Class<?>[] args = new Class[newArgs.length];
+        for (int i = 0; i < newArgs.length; i++) {
+            args[i] = newArgs[i].getClass();
+        }
+
+        Method method = ReflectUtils.getMethod(cls, reflect.name, args);
+
+        if (method != null) {
+            method.setAccessible(true);
+
+            try {
+                return method.invoke(reflect.originObj, newArgs);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
         }
 
         return this.eval(env);

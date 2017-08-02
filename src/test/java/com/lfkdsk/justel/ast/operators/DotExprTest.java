@@ -25,6 +25,10 @@ class DotExprTest {
         public String lfk() {
             return "fffffff";
         }
+
+        public String lfkdsk(String val) {
+            return val;
+        }
     }
 
     @Test
@@ -40,4 +44,12 @@ class DotExprTest {
         context.put("lfkdsk", new O());
         runExpr("lfkdsk.ffff", true, context);
     }
+
+    @Test
+    void testDotManyExpr() {
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", new O());
+        runExpr("lfkdsk.lfkdsk(\"1111111\")", true, context);
+    }
+
 }
