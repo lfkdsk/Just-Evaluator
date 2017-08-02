@@ -20,4 +20,9 @@ public class AstFuncExpr extends AstList {
     public AstFuncExpr(List<AstNode> children) {
         super(children, AstNode.FUNCTION_EXPR);
     }
+
+    public static boolean isAstFuncExpr(AstNode child) {
+        return child.childCount() >= 2 &&
+                child.child(1) instanceof AstFuncArguments;
+    }
 }

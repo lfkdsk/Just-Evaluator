@@ -8,14 +8,18 @@
 
 package com.lfkdsk.justel.parser;
 
+import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.operators.Operator;
 import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
-import com.lfkdsk.justel.ast.tree.AstFuncArguments;
+import com.lfkdsk.justel.ast.tree.AstCondExpr;
 import com.lfkdsk.justel.ast.tree.AstFuncExpr;
 import com.lfkdsk.justel.ast.tree.AstPrimaryExpr;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.Lexer;
+
+import static com.lfkdsk.justel.ast.tree.AstCondExpr.isAstCondExpr;
+import static com.lfkdsk.justel.ast.tree.AstFuncExpr.isAstFuncExpr;
 
 /**
  * Just Parser Interface
@@ -54,23 +58,13 @@ public interface JustParser {
     }
 
     /**
-     * reset Function Expr
-     *
-     * @param expr Primary Expr
-     * @return change primary expr => FuncExpr
-     */
-    default AstNode resetFuncExpr(AstPrimaryExpr expr) {
-        return new AstFuncExpr(expr.getChildren());
-    }
-
-    /**
      * transform binary expr to spec expr
      *
      * @param parent    parent node
      * @param operators Operators
      * @see JustParserImpl
      */
-    default AstNode transformBinaryExpr(AstNode parent, BnfCom.Operators operators) {
+    default AstNode transformAst(AstNode parent, BnfCom.Operators operators) {
         for (int i = 0; i < parent.childCount(); i++) {
             AstNode child = parent.child(i);
 
@@ -80,17 +74,21 @@ public interface JustParser {
                 parent.replaceChild(i, child);
 
             } else if (child instanceof AstPrimaryExpr) {
-                // fix primary => function expr
-                if (child.childCount() >= 2 &&
-                        child.child(1) instanceof AstFuncArguments) {
-                    child = resetFuncExpr((AstPrimaryExpr) child);
+                // fix primary(func) => function expr
+                if (isAstFuncExpr(child)) {
+                    child = new AstFuncExpr(((AstPrimaryExpr) child).getChildren());
                     parent.replaceChild(i, child);
                 }
+            } else if (isAstCondExpr(child)) {
+                // fix primary(cond) => cond expr
+                child = new AstCondExpr(((AstList) child).getChildren());
+                parent.replaceChild(i, child);
             }
 
-            transformBinaryExpr(child, operators);
+            transformAst(child, operators);
         }
 
         return parent;
     }
+
 }

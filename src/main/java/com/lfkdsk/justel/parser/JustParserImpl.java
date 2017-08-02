@@ -104,10 +104,12 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom postfix = rule().or(
             rule().sep(LP_TOKEN).maybe(args).sep(RP_TOKEN),
-            rule().sep(QUESTION_TOKEN).ast(expr).sep(COLON_TOKEN).ast(expr),
             rule(DotExpr.class).sep(DOT_TOKEN).identifier(reservedToken),
             rule(ArrayIndexExpr.class).sep(LM_TOKEN).ast(expr).sep(RM_TOKEN)
     );
+
+    private BnfCom cond = rule(CondOp.class).sep(QUESTION_TOKEN).ast(expr).sep(COLON_TOKEN).ast(expr);
+
 
     ///////////////////////////////////////////////////////////////////////////
     // program = expr EOL (end of line)
@@ -119,28 +121,35 @@ public class JustParserImpl implements JustParser {
 
         // primary { postfix }
         primary.repeat(postfix);
+        expr.repeat(cond);
 
         reservedToken.add(EOL);
-        operators.add(PLUS, 4, LEFT, PlusOp.class);
+
+        operators.add(LOGICAL_OR_TOKEN, 12, LEFT, OrOp.class);
+        operators.add(LOGICAL_AND_TOKEN, 11, LEFT, AndOp.class);
+
+        operators.add(AMPERSAND_TOKEN, 8, LEFT, AmpersandOp.class);
         operators.add(EQ_TOKEN, 7, LEFT, EqualOp.class);
         operators.add(UQ_TOKEN, 7, LEFT, UnEqualOp.class);
-        operators.add(AMPERSAND_TOKEN, 8, LEFT, AmpersandOp.class);
-        operators.add(LOGICAL_AND_TOKEN, 11, LEFT, AndOp.class);
-        operators.add(LOGICAL_F_TOKEN, 2, LEFT, NotPostfix.class);
-        operators.add(LOGICAL_OR_TOKEN, 12, LEFT, OrOp.class);
-        operators.add(MINUS, 4, LEFT, MinusOp.class);
-        operators.add(DIV, 3, LEFT, DivOp.class);
-        operators.add(MUL, 3, LEFT, MulOp.class);
-        operators.add(MOD, 3, LEFT, Mod.class);
+
         operators.add(GT_TOKEN, 6, LEFT, GreaterThanOp.class);
         operators.add(GTE_TOKEN, 6, LEFT, GreaterThanEqualOp.class);
         operators.add(LT_TOKEN, 6, LEFT, LessThanOp.class);
         operators.add(LTE_TOKEN, 6, LEFT, LessThanEqualOp.class);
+
+        operators.add(PLUS, 4, LEFT, PlusOp.class);
+        operators.add(MINUS, 4, LEFT, MinusOp.class);
+
+        operators.add(DIV, 3, LEFT, DivOp.class);
+        operators.add(MUL, 3, LEFT, MulOp.class);
+        operators.add(MOD, 3, LEFT, Mod.class);
+
+        operators.add(LOGICAL_F_TOKEN, 2, LEFT, NotPostfix.class);
     }
 
 
     @Override
     public AstNode parser(Lexer lexer) throws ParseException {
-        return transformBinaryExpr(program.parse(lexer), operators);
+        return transformAst(program.parse(lexer), operators);
     }
 }

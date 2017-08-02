@@ -9,14 +9,19 @@
 package com.lfkdsk.justel.ast.operators;
 
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
 
 /**
+ * expr ? expr : expr
  * Created by liufengkai on 2017/7/29.
  */
 public class CondOp extends OperatorExpr {
+
+    private Boolean isCond = null;
+
     public CondOp(List<AstNode> children) {
         super(children, Token.COND);
     }
@@ -26,5 +31,28 @@ public class CondOp extends OperatorExpr {
         return "? :";
     }
 
+    public void setCond(boolean cond) {
+        isCond = cond;
+    }
 
+    private AstNode trueExpr() {
+        return child(0);
+    }
+
+    private AstNode falseExpr() {
+        return child(1);
+    }
+
+    @Override
+    public Object eval(JustContext env) {
+        if (isCond != null) {
+            if (isCond) {
+                return trueExpr().eval(env);
+            } else {
+                return falseExpr().eval(env);
+            }
+        }
+
+        return super.eval(env);
+    }
 }
