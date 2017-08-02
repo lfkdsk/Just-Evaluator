@@ -54,8 +54,9 @@ public class NumberUtils {
         return v instanceof Double ? (double) v : 0;
     }
 
-    public static double computePlusValue(Object l, Object r) {
-        return computeValue(l) + computeValue(r);
+    public static Object computePlusValue(Number l, Number r) {
+        return castTokenValue(computeValue(l) + computeValue(r),
+                Math.max(numberValue(l), numberValue(r)));
     }
 
     public static Object computeMinusValue(Number l, Number r) {

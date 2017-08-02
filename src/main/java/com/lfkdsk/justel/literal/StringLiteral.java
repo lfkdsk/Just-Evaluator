@@ -3,6 +3,8 @@ package com.lfkdsk.justel.literal;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.token.Token;
 
+import static com.lfkdsk.justel.utils.TypeUtils.isNull;
+
 /**
  * String Literal =>
  * - "lfkdsk"
@@ -17,8 +19,16 @@ public class StringLiteral extends Literal {
         super(token);
     }
 
+    public String value() {
+        return token.getText();
+    }
+
     @Override
     public Object eval(JustContext env) {
+        if (!isNull(value())) {
+            return value();
+        }
+
         return super.eval(env);
     }
 }

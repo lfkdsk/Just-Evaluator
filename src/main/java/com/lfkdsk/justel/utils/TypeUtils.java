@@ -41,6 +41,10 @@ public class TypeUtils {
         return obj == null;
     }
 
+    public static boolean isComparable(Object obj) {
+        return obj instanceof Comparable;
+    }
+
     public static Object checkNull(Object leftObj, Object rightObj,
                                    Function<Object, Object> leftFunc,
                                    Function<Object, Object> rightFunc) {

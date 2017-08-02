@@ -68,16 +68,16 @@ public class Token {
     /**
      * < Symbol
      */
-    public final static int LESS = 306;
+    public final static int LESS_THAN = 306;
 
     /**
      * <= Symbol
      */
-    public final static int LESS_THAN = 307;
+    public final static int LESS_EQUAL_THAN = 307;
 
-    public final static int GREAT = 308;
+    public final static int GREAT_THAN = 308;
 
-    public final static int GREAT_THAN = 309;
+    public final static int GREAT_EQUAL_THAN = 309;
 
     /**
      * ? Symbol

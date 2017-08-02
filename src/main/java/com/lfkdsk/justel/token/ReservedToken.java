@@ -24,7 +24,9 @@ public class ReservedToken extends Token {
     public static final String LOGICAL_AND_TOKEN = "&&",
             LOGICAL_OR_TOKEN = "||", LOGICAL_F_TOKEN = "!";
 
-    public static final String GT_TOKEN = "<", GE_TOKEN = ">";
+    public static final String LT_TOKEN = "<", GT_TOKEN = ">";
+
+    public static final String GTE_TOKEN = ">=", LTE_TOKEN = "<=";
 
     public static final String PLUS = "+", MINUS = "-",
             MUL = "*", DIV = "/", MOD = "%";
@@ -64,9 +66,9 @@ public class ReservedToken extends Token {
         reservedToken.add(LOGICAL_AND_TOKEN);
         reservedToken.add(LOGICAL_OR_TOKEN);
         reservedToken.add(LOGICAL_F_TOKEN);
-        // GT_TOKEN = "<", GE_TOKEN = ">"
+        // LT_TOKEN = "<", GT_TOKEN = ">"
+        reservedToken.add(LT_TOKEN);
         reservedToken.add(GT_TOKEN);
-        reservedToken.add(GE_TOKEN);
         // PLUS = "+", MINUS = "-", MUL = "*", DIV = "/", MOD = "%"
         reservedToken.add(PLUS);
         reservedToken.add(MINUS);

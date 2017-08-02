@@ -10,7 +10,7 @@ package com.lfkdsk.justel.token;
  * @see com.lfkdsk.justel.lexer.Lexer
  * @see com.lfkdsk.justel.literal.StringLiteral
  */
-public class StringToken extends Token {
+public class StringToken extends Token implements Comparable<StringToken> {
     private String text;
 
     public StringToken(int lineNumber, String text) {
@@ -35,5 +35,10 @@ public class StringToken extends Token {
                 ", lineNumber=" + lineNumber +
                 ", tag=" + tag +
                 '}';
+    }
+
+    @Override
+    public int compareTo(StringToken o) {
+        return getText().compareTo(o.getText());
     }
 }

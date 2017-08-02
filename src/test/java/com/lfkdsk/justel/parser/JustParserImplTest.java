@@ -52,19 +52,20 @@ public class JustParserImplTest {
         }
     }
 
-    public static void runExpr(String expr, boolean eval, JustContext context) {
+    public static String runExpr(String expr, boolean eval, JustContext context) {
         Lexer lexer = new JustLexerImpl(new StringReader(expr));
         JustParser parser = new JustParserImpl();
         Logger.init("test parser");
-
+        String returnString = "";
         while (lexer.hasMore()) {
             AstNode node = parser.parser(lexer);
 
 //            Logger.v(" => " + node.toString() + "  ");
             if (eval) {
-                Logger.v(" => " + node.eval(context) + "  ");
+                returnString = node.eval(context).toString();
+                Logger.v(" => " + returnString + "  ");
             }
         }
-
+        return returnString;
     }
 }
