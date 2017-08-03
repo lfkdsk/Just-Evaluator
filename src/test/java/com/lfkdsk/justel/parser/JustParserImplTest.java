@@ -10,6 +10,7 @@ package com.lfkdsk.justel.parser;
 
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.lexer.Lexer;
@@ -52,6 +53,32 @@ public class JustParserImplTest {
         }
     }
 
+    @Test
+    void testEval() {
+        JustContext context = new JustMapContext();
+        context.put("i", 10e2);
+        context.put("pi", 3.14f);
+
+        String expr = "pi*i*i*pi";
+        Logger.init("test parser");
+        JustParser parser = new JustParserImpl();
+
+        for (int i = 0; i < 20; i++) {
+            long start = System.currentTimeMillis();
+            for (int j = 0; j < 1000; j++) {
+
+                Lexer lexer = new JustLexerImpl(new StringReader(expr));
+                while (lexer.hasMore()) {
+                    AstNode node = parser.parser(lexer);
+                    node.eval(context);
+//                    Logger.v(" => " + node.eval(context).toString() + "  ");
+                }
+            }
+            System.out.println(System.currentTimeMillis() - start);
+        }
+    }
+
+
     public static String runExpr(String expr, boolean eval, JustContext context) {
         Lexer lexer = new JustLexerImpl(new StringReader(expr));
         JustParser parser = new JustParserImpl();
@@ -60,7 +87,7 @@ public class JustParserImplTest {
         while (lexer.hasMore()) {
             AstNode node = parser.parser(lexer);
 
-//            Logger.v(" => " + node.toString() + "  ");
+            Logger.v(" => " + node.toString() + "  ");
             if (eval) {
                 returnString = node.eval(context).toString();
                 Logger.v(" => " + returnString + "  ");

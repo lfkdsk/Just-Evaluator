@@ -20,7 +20,7 @@ public class TemplateImpl implements Template {
 
     private static final DomCom importGen = DomCom.rule()
             .sep("import com.lfkdsk.justel.context.JustContext;")
-            .sep("import com.lfkdsk.justel.expr.Expression;");
+            .sep("import com.lfkdsk.justel.eval.Expression;");
 
     private static final DomCom functionGen = DomCom.rule()
             .bind("${attrs}")

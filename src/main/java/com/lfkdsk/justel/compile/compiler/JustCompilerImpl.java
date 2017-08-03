@@ -4,7 +4,7 @@ import com.lfkdsk.justel.compile.generate.JavaSource;
 import com.lfkdsk.justel.compile.memory.JustMemClassLoader;
 import com.lfkdsk.justel.compile.memory.JustMemFileManager;
 import com.lfkdsk.justel.exception.CompilerException;
-import com.lfkdsk.justel.expr.Expression;
+import com.lfkdsk.justel.eval.Expression;
 
 import javax.tools.*;
 import java.util.Collections;

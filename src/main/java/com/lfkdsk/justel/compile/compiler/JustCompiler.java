@@ -1,7 +1,7 @@
 package com.lfkdsk.justel.compile.compiler;
 
 import com.lfkdsk.justel.compile.generate.JavaSource;
-import com.lfkdsk.justel.expr.Expression;
+import com.lfkdsk.justel.eval.Expression;
 
 /**
  * Just Compiler Class

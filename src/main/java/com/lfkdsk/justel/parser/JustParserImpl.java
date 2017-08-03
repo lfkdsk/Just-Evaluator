@@ -49,7 +49,7 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom expr0 = rule();
 
-    private BnfCom.Operators operators = new BnfCom.Operators();
+    protected BnfCom.Operators operators = new BnfCom.Operators();
 
     ///////////////////////////////////////////////////////////////////////////
     // base language type

@@ -2,7 +2,7 @@ package com.lfkdsk.justel.compile.compiler;
 
 import com.lfkdsk.justel.compile.generate.JavaSource;
 import com.lfkdsk.justel.context.JustMapContext;
-import com.lfkdsk.justel.expr.Expression;
+import com.lfkdsk.justel.eval.Expression;
 import org.junit.jupiter.api.Test;
 import com.lfkdsk.justel.template.TemplateImpl;
 import com.lfkdsk.justel.template.dom.DomCom;
