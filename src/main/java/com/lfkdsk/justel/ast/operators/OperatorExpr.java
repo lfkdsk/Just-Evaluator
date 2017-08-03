@@ -42,11 +42,6 @@ public abstract class OperatorExpr extends AstList implements Function {
     }
 
     @Override
-    public FunctionType functionType() {
-        throw new EvalException("Use default eval in operator");
-    }
-
-    @Override
     public String functionName() {
         throw new EvalException("Use default eval in operator");
     }

@@ -13,11 +13,5 @@ package com.lfkdsk.justel.ast.function;
  */
 public interface Function {
 
-    enum FunctionType {
-
-    }
-
     String functionName();
-
-    FunctionType functionType();
 }

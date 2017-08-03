@@ -48,7 +48,9 @@ public class AstCondExpr extends AstList {
         CondOp condOp = condOp();
 
         if (isBoolean(boolValue)) {
+            // set cond value
             condOp.setCond((Boolean) boolValue);
+
             return condOp.eval(env);
         }
 

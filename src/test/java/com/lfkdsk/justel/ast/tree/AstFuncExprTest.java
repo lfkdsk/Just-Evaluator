@@ -21,4 +21,9 @@ class AstFuncExprTest {
     void testAstFunc() {
         runExpr("lfkdsk.function(1111,2222)", false, null);
     }
+
+    @Test
+    void testAstFuncParser() {
+        runExpr("function(1111,2222)", false, null);
+    }
 }

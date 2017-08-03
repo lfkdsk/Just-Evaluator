@@ -25,10 +25,10 @@ import java.util.List;
  *         Created by liufengkai on 2017/7/26.
  */
 public class AstFuncArguments extends AstList implements AstPostfixExpr {
+
     public AstFuncArguments(List<AstNode> children) {
         super(children, AstNode.FUNC_ARGUMENT_EXPR);
     }
-
 
     @Override
     public Object eval(JustContext env, Object value) {

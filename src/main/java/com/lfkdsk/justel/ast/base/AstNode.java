@@ -52,6 +52,8 @@ public abstract class AstNode implements Iterable<AstNode>, Evaluable {
 
     public static final int COND_EXPR = 613;
 
+    public static final int EXTEND_FUNC = 614;
+
     public static final int PROGRAM = 700;
 
     public AstNode(int tag) {

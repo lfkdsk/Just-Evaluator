@@ -35,4 +35,9 @@ public class IDLiteral extends Literal {
             return value;
         }
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }
