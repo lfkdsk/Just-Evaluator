@@ -97,6 +97,7 @@ public abstract class AstNode implements Iterable<AstNode>, Evaluable {
 
     public abstract AstNode replaceChild(int index, AstNode node);
 
+    @Override
     public Object eval(JustContext context) {
         return this;
     }

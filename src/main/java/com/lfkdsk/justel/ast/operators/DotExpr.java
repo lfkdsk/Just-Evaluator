@@ -18,7 +18,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 /**
- * primary.field | (lfkdsk)
+ * primary.field
  * Created by liufengkai on 2017/7/26.
  */
 public class DotExpr extends OperatorExpr implements AstPostfixExpr {
@@ -35,7 +35,7 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
         public String name;
         public Object originObj;
 
-        public InnerReflect(String name, Object originObj) {
+        InnerReflect(String name, Object originObj) {
             this.name = name;
             this.originObj = originObj;
         }

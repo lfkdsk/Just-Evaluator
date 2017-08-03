@@ -19,7 +19,10 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * Created by liufengkai on 2017/7/26.
+ * Func Arguments
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
  */
 public class AstFuncArguments extends AstList implements AstPostfixExpr {
     public AstFuncArguments(List<AstNode> children) {
@@ -29,16 +32,20 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
 
     @Override
     public Object eval(JustContext env, Object value) {
+
         DotExpr.InnerReflect reflect = (DotExpr.InnerReflect) value;
+        // count of children
         int count = this.childCount();
+        // cls obj
         Class<?> cls = ((DotExpr.InnerReflect) value).originObj.getClass();
 
+        // compute new args
         Object[] newArgs = new Object[count];
         for (int i = 0; i < count; i++) {
-            // 对参数表达式进行计算
             newArgs[i] = this.child(i).eval(env);
         }
 
+        // class type to get-method
         Class<?>[] args = new Class[newArgs.length];
         for (int i = 0; i < newArgs.length; i++) {
             args[i] = newArgs[i].getClass();
@@ -54,7 +61,6 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
-
         }
 
         return this.eval(env);

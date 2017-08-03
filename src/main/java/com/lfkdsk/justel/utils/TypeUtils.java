@@ -10,6 +10,7 @@ package com.lfkdsk.justel.utils;
 
 import com.lfkdsk.justel.literal.NumberLiteral;
 
+import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -31,6 +32,18 @@ public class TypeUtils {
 
     public static boolean isInteger(Object obj) {
         return obj instanceof Integer;
+    }
+
+    public static boolean isObjectArray(Object obj) {
+        return obj instanceof Object[];
+    }
+
+    public static boolean isList(Object obj) {
+        return obj instanceof List<?>;
+    }
+
+    public static boolean isArray(Object obj) {
+        return obj.getClass().isArray();
     }
 
     public static boolean isNumberLiteral(Object obj) {
