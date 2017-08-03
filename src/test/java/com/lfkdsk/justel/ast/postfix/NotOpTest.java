@@ -6,8 +6,10 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.lfkdsk.justel.ast.operators;
+package com.lfkdsk.justel.ast.postfix;
 
+import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.context.JustMapContext;
 import org.junit.jupiter.api.Test;
 
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
@@ -15,20 +17,17 @@ import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 /**
  * Created by liufengkai on 2017/7/28.
  */
-class NegativeExprTest {
+class NotOpTest {
 
     @Test
-    void testInteger() {
-        runExpr("-11111", true, null);
+    void testBoolean() {
+        runExpr("!true", true, null);
     }
 
     @Test
-    void testFloat() {
-        runExpr("-1111.000111f", true, null);
-    }
-
-    @Test
-    void testDouble() {
-        runExpr("-1111.00110111d", true, null);
+    void testID() {
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", true);
+        runExpr("!lfkdsk", true, context);
     }
 }
