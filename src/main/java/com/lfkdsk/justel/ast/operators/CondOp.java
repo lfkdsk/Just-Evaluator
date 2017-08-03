@@ -9,6 +9,7 @@
 package com.lfkdsk.justel.ast.operators;
 
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.ast.function.OperatorExpr;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.token.Token;
 

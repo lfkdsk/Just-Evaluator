@@ -6,7 +6,7 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.lfkdsk.justel.ast.operators;
+package com.lfkdsk.justel.ast.function;
 
 import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.ast.base.AstList;

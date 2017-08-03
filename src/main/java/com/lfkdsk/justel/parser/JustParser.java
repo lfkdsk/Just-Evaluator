@@ -10,7 +10,7 @@ package com.lfkdsk.justel.parser;
 
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
-import com.lfkdsk.justel.ast.operators.Operator;
+import com.lfkdsk.justel.ast.function.Operator;
 import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
 import com.lfkdsk.justel.ast.tree.AstCondExpr;
 import com.lfkdsk.justel.ast.tree.AstFuncExpr;

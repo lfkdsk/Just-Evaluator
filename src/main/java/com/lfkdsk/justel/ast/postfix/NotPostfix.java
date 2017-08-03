@@ -6,7 +6,7 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.lfkdsk.justel.ast.operators;
+package com.lfkdsk.justel.ast.postfix;
 
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
@@ -14,37 +14,34 @@ import com.lfkdsk.justel.context.JustContext;
 
 import java.util.List;
 
-import static com.lfkdsk.justel.utils.NumberUtils.computeNegative;
-import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
+import static com.lfkdsk.justel.utils.TypeUtils.isBoolean;
 
 /**
- * -
+ * !
  * Created by liufengkai on 2017/7/26.
  */
-public class NegativePostfix extends AstList {
-    public NegativePostfix(List<AstNode> children) {
-        super(children, AstNode.NEGATIVE_OP);
+public class NotPostfix extends AstList {
+    public NotPostfix(List<AstNode> children) {
+        super(children, AstNode.NOT_OP);
     }
 
-    public AstNode operand() {
+    private AstNode operand() {
         return child(0);
     }
 
     @Override
     public String toString() {
-        return "-" + operand();
+        return "!" + operand();
     }
 
     @Override
     public Object eval(JustContext env) {
         Object value = this.operand().eval(env);
 
-        if (isNumber(value)) {
-
-            return computeNegative((Number) value);
+        if (isBoolean(value)) {
+            return !(Boolean) value;
         }
 
         return super.eval(env);
     }
-
 }
