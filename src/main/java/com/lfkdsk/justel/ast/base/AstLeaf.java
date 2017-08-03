@@ -68,6 +68,6 @@ public class AstLeaf extends AstNode {
     }
 
     public Object eval(JustContext env) {
-        throw new EvalException("can not com.lfkdsk.justel.eval : " + toString(), this);
+        throw new EvalException("can not eval : " + toString(), this);
     }
 }

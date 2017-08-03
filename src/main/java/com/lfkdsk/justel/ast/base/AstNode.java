@@ -8,8 +8,11 @@
 
 package com.lfkdsk.justel.ast.base;
 
+import com.lfkdsk.justel.compile.Compilable;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.eval.Evaluable;
+import com.lfkdsk.justel.exception.CompilerException;
+import com.lfkdsk.justel.exception.EvalException;
 
 import java.util.Iterator;
 
@@ -17,7 +20,8 @@ import java.util.Iterator;
  * AST Tree Basic Node
  * Created by liufengkai on 16/7/11.
  */
-public abstract class AstNode implements Iterable<AstNode>, Evaluable {
+public abstract class AstNode implements Iterable<AstNode>
+        , Evaluable, Compilable {
 
     /**
      * Spec Tag for Ast Node
@@ -101,6 +105,11 @@ public abstract class AstNode implements Iterable<AstNode>, Evaluable {
 
     @Override
     public Object eval(JustContext context) {
-        return this;
+        throw new EvalException("can not eval : " + toString(), this);
+    }
+
+    @Override
+    public StringBuilder compile(JustContext context) {
+        throw new CompilerException("can not compile : " + toString(), this);
     }
 }

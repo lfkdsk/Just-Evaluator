@@ -10,11 +10,11 @@ import com.lfkdsk.justel.ast.base.AstNode;
 
 public class EvalException extends RuntimeException {
 
-  public EvalException(String msg) {
-    super(msg);
-  }
+    public EvalException(String msg) {
+        super(msg);
+    }
 
-  public EvalException(String msg, AstNode tree) {
-    super(msg + " " + tree.location());
-  }
+    public EvalException(String msg, AstNode tree) {
+        super(msg + " " + tree.location());
+    }
 }
