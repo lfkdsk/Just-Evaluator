@@ -109,7 +109,7 @@ public abstract class AstNode implements Iterable<AstNode>
     }
 
     @Override
-    public StringBuilder compile(JustContext context) {
+    public StringBuilder compile(JustContext env, StringBuilder builder) {
         throw new CompilerException("can not compile : " + toString(), this);
     }
 }

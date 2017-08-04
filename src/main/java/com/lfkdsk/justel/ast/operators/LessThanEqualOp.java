@@ -21,7 +21,12 @@ import static com.lfkdsk.justel.utils.TypeUtils.isComparable;
 import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 
 /**
- * Created by liufengkai on 2017/8/2.
+ * <= Operator
+ * eq: expr <= expr.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/8/2.
+ * @see OperatorExpr
  */
 public class LessThanEqualOp extends OperatorExpr {
     public LessThanEqualOp(List<AstNode> children) {

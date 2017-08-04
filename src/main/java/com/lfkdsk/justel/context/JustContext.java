@@ -1,5 +1,7 @@
 package com.lfkdsk.justel.context;
 
+import java.util.Collection;
+
 /**
  * Context => { key : name }
  *
@@ -13,4 +15,6 @@ public interface JustContext {
     Object get(String objName);
 
     Object put(String key, Object val);
+
+    Collection<String> keySet();
 }

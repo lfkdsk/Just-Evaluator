@@ -21,10 +21,11 @@ import static com.lfkdsk.justel.utils.TypeUtils.isBoolean;
 
 /**
  * && Operator
- * expr && expr
+ * eq: expr && expr
  *
  * @author liufengkai
  *         Created by liufengkai on 2017/7/27.
+ * @see OperatorExpr
  */
 public class AndOp extends OperatorExpr {
 

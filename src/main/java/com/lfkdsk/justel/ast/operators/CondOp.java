@@ -16,8 +16,12 @@ import com.lfkdsk.justel.token.Token;
 import java.util.List;
 
 /**
+ * Cond Operator
  * expr ? expr : expr
- * Created by liufengkai on 2017/7/29.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/29.
+ * @see OperatorExpr
  */
 public class CondOp extends OperatorExpr {
 

@@ -20,8 +20,12 @@ import static com.lfkdsk.justel.utils.NumberUtils.computeDivValue;
 import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 
 /**
- * /
- * Created by liufengkai on 2017/7/29.
+ * / Operator
+ * eq: num / num
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/29.
+ * @see OperatorExpr
  */
 public class DivOp extends OperatorExpr {
     public DivOp(List<AstNode> children) {

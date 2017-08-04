@@ -116,7 +116,6 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom cond = rule(CondOp.class).sep(QUESTION_TOKEN).ast(expr).sep(COLON_TOKEN).ast(expr);
 
-
     ///////////////////////////////////////////////////////////////////////////
     // program = expr EOL (end of line)
     ///////////////////////////////////////////////////////////////////////////

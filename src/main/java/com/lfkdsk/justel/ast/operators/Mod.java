@@ -20,8 +20,12 @@ import static com.lfkdsk.justel.utils.NumberUtils.computeModValue;
 import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 
 /**
- * %
- * Created by liufengkai on 2017/8/2.
+ * % Operator
+ * eq: num % num
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/8/2.
+ * @see OperatorExpr
  */
 public class Mod extends OperatorExpr {
     public Mod(List<AstNode> children) {

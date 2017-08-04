@@ -22,10 +22,11 @@ import static com.lfkdsk.justel.utils.TypeUtils.isString;
 
 /**
  * + Operator:
- * left + operator
+ * eq:left + operator
  *
  * @author liufengkai
  *         Created by liufengkai on 2017/7/26.
+ * @see OperatorExpr
  */
 public class PlusOp extends OperatorExpr {
     public PlusOp(List<AstNode> children) {

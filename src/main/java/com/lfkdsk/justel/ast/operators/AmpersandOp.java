@@ -19,8 +19,12 @@ import static com.lfkdsk.justel.utils.NumberUtils.computeAmpersandValue;
 import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 
 /**
- * &
- * Created by liufengkai on 2017/7/26.
+ * & Operator
+ * eq: left & right
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
+ * @see OperatorExpr
  */
 public class AmpersandOp extends OperatorExpr {
 

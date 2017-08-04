@@ -18,9 +18,15 @@ import java.util.List;
 import static com.lfkdsk.justel.utils.TypeUtils.*;
 
 /**
- * Created by liufengkai on 2017/7/26.
+ * != Operator
+ * eq: expr != expr
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
+ * @see OperatorExpr
  */
 public class UnEqualOp extends OperatorExpr {
+
     public UnEqualOp(List<AstNode> children) {
         super(children, AstNode.UN_EQUAL_OP);
     }

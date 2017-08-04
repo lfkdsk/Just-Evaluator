@@ -20,8 +20,12 @@ import static com.lfkdsk.justel.utils.NumberUtils.computeMulValue;
 import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 
 /**
- * *
- * Created by liufengkai on 2017/7/29.
+ * * Operator
+ * eq: expr * expr.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/29.
+ * @see OperatorExpr
  */
 public class MulOp extends OperatorExpr {
     public MulOp(List<AstNode> children) {

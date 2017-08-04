@@ -1,5 +1,6 @@
 package com.lfkdsk.justel.context;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,5 +27,10 @@ public class JustMapContext implements JustContext {
     @Override
     public Object put(String key, Object val) {
         return map.put(key, val);
+    }
+
+    @Override
+    public Collection<String> keySet() {
+        return map.keySet();
     }
 }

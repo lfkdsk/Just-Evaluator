@@ -19,8 +19,12 @@ import java.util.List;
 import static com.lfkdsk.justel.utils.TypeUtils.isBoolean;
 
 /**
- * ||
- * Created by liufengkai on 2017/7/28.
+ * || Operator
+ * eq: bool_expr || bool_expr
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/28.
+ * @see OperatorExpr
  */
 public class OrOp extends OperatorExpr {
     public OrOp(List<AstNode> children) {

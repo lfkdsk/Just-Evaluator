@@ -19,8 +19,15 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 /**
- * primary.field
- * Created by liufengkai on 2017/7/26.
+ * Dot Operator
+ * eq:
+ * 1. primary.field
+ * 2. primary.method( expr, expr | null )
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
+ * @see AstPostfixExpr
+ * @see OperatorExpr
  */
 public class DotExpr extends OperatorExpr implements AstPostfixExpr {
 
@@ -55,6 +62,9 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
                 return field.get(value);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
+
+                // throw eval exception
+                return this.eval(env);
             }
         }
 

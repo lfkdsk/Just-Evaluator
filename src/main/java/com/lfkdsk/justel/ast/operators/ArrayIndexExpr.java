@@ -22,9 +22,12 @@ import static com.lfkdsk.justel.utils.TypeUtils.isObjectArray;
 
 /**
  * [] Array Index
+ * eq: Object[] \ int[] \ float[]
  *
  * @author liufengkai
  *         Created by liufengkai on 2017/7/26.
+ * @see OperatorExpr
+ * @see AstPostfixExpr
  */
 public class ArrayIndexExpr extends OperatorExpr implements AstPostfixExpr {
     public ArrayIndexExpr(List<AstNode> children) {
