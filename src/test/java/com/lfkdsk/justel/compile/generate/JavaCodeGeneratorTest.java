@@ -45,6 +45,7 @@ class JavaCodeGeneratorTest {
         context.put("pi", 3.14);
 
         Lexer lexer = new JustLexerImpl(new StringReader("lfkdsk * pi * lfkdsk * pi"));
+//        Lexer lexer = new JustLexerImpl(new StringReader("lfkdsk * pi"));
         JustParser parser = new JustParserImpl();
         AstNode rootNode = null;
         while (lexer.hasMore()) {
@@ -60,6 +61,7 @@ class JavaCodeGeneratorTest {
         Logger.i(javaSource.toString());
         Expression expr = compiler.compile(javaSource);
         Logger.i(expr.eval(context).toString());
+        Logger.v(rootNode.eval(context).toString());
         Logger.i(expr.toString());
     }
 }
