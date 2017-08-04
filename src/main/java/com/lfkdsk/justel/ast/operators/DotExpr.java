@@ -71,4 +71,9 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
         // get method => method value
         return new InnerReflect(name(), value);
     }
+
+    @Override
+    public String compile(JustContext env) {
+        return "." + name();
+    }
 }

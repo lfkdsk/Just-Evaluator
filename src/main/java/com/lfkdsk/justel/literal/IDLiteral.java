@@ -36,8 +36,4 @@ public class IDLiteral extends Literal {
         }
     }
 
-    @Override
-    public StringBuilder compile(JustContext env, StringBuilder builder) {
-        return super.compile(env, builder);
-    }
 }

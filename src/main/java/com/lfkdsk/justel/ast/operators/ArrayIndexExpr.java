@@ -55,4 +55,9 @@ public class ArrayIndexExpr extends OperatorExpr implements AstPostfixExpr {
 
         return this.eval(env);
     }
+
+    @Override
+    public String compile(JustContext env) {
+        return "[" + index().toString() + "]";
+    }
 }

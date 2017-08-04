@@ -12,14 +12,15 @@ import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
  * Created by liufengkai on 2017/8/2.
  */
-class DotExprTest {
+public class DotExprTest {
 
-    class O {
+    public class O {
         String ffff = "sss";
 
         public String lfk() {
@@ -52,4 +53,10 @@ class DotExprTest {
         runExpr("lfkdsk.lfkdsk(\"1111111\")", true, context);
     }
 
+    @Test
+    void testDotExprCompiler() {
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", new O());
+        compiler("lfkdsk.lfkdsk(\"1111111\")", context);
+    }
 }

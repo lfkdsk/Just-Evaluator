@@ -31,4 +31,9 @@ public class StringLiteral extends Literal {
 
         return super.eval(env);
     }
+
+    @Override
+    public String compile(JustContext env) {
+        return "\"" + value() + "\"";
+    }
 }

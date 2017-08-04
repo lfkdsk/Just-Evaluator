@@ -70,4 +70,9 @@ public class AstLeaf extends AstNode {
     public Object eval(JustContext env) {
         throw new EvalException("can not eval : " + toString(), this);
     }
+
+    @Override
+    public String compile(JustContext env) {
+        return toString();
+    }
 }

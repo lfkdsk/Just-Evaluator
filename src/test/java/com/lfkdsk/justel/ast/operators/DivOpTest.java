@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.operators;
 
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -35,5 +36,10 @@ class DivOpTest {
     @Test
     void testDivIntDouble() {
         runExpr("1 / 0.111111d", true, null);
+    }
+
+    @Test
+    void testDivCompiler() {
+        compiler("1 / 0.1111111d", null);
     }
 }

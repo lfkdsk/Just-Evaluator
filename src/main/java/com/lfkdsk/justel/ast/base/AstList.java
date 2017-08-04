@@ -85,4 +85,22 @@ public class AstList extends AstNode {
     public Object eval(JustContext env) {
         throw new EvalException("can not eval : " + toString(), this);
     }
+
+    @Override
+    public String compile(JustContext env) {
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append('(');
+
+        String sep = "";
+
+        for (AstNode node : children) {
+            builder.append(sep);
+            sep = " ";
+            builder.append(node.compile(env));
+        }
+
+        return builder.append(')').toString();
+    }
 }

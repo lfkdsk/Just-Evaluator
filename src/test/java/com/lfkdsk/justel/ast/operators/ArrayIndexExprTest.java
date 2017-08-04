@@ -13,6 +13,7 @@ import com.lfkdsk.justel.context.JustMapContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -42,5 +43,12 @@ class ArrayIndexExprTest {
         context.put("lfkdsk", lfkdsk);
         String returnStr = runExpr("lfkdsk[2][1]", true, context);
         Assertions.assertEquals((int) Integer.valueOf(returnStr), 10);
+    }
+
+    @Test
+    void testArrayCompiler() {
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", new Object[]{1, 2, 2});
+        compiler("lfkdsk[2]", context);
     }
 }

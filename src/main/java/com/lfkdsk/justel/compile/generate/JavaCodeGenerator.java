@@ -35,6 +35,9 @@ public class JavaCodeGenerator extends Generator {
 
     private String generateLocalVars() {
         varSet.clear();
+
+        if (context == null) return "";
+
         Collection<String> keySet = context.keySet();
         StringBuilder builder = new StringBuilder();
         for (String key : keySet) {
@@ -53,7 +56,7 @@ public class JavaCodeGenerator extends Generator {
         templateContext.put("${attrs}", "@Override");
         templateContext.put("${className}", className);
         templateContext.put("${localVars}", generateLocalVars());
-        templateContext.put("${expression}", rootNode.toString());
+        templateContext.put("${expression}", rootNode.compile(context));
 
         return new JavaSource(JavaSource.GENERATE_DEFAULT_PACKAGE,
                 className, mTemplate.fakeGenerateString(templateContext));
