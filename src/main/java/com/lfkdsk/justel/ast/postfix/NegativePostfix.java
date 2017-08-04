@@ -18,8 +18,10 @@ import static com.lfkdsk.justel.utils.NumberUtils.computeNegative;
 import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 
 /**
- * -
- * Created by liufengkai on 2017/7/26.
+ * - Postfix
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
  */
 public class NegativePostfix extends AstList {
     public NegativePostfix(List<AstNode> children) {

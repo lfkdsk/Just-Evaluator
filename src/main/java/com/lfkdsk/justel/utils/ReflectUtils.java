@@ -12,15 +12,102 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * 反射工具类，提供一些Java基本的反射功能
  */
 public class ReflectUtils {
+
+    /**
+     * key为基本类型及其包装类型，value为包装类型
+     */
+    static final Map<Class<?>, Class<?>> wrapperCls;
+    /**
+     * key为基本类型及其包装类型，value为基本类型
+     */
+    static final Map<Class<?>, Class<?>> primitiveCls;
+
+    static final Map<Class<?>, Class<?>> numberClassMap;
+
+    static {
+        numberClassMap = wrapperNumberCls();
+        primitiveCls = new HashMap<>(primitiveNumberCls());
+        primitiveCls.put(boolean.class, boolean.class);
+        primitiveCls.put(Boolean.class, boolean.class);
+
+        wrapperCls = new HashMap<>(wrapperNumberCls());
+        wrapperCls.put(boolean.class, Boolean.class);
+        wrapperCls.put(Boolean.class, Boolean.class);
+    }
+
+    private static Map<Class<?>, Class<?>> primitiveNumberCls() {
+        Map<Class<?>, Class<?>> map = new HashMap<>();
+        map.put(byte.class, byte.class);
+        map.put(Byte.class, byte.class);
+
+        map.put(short.class, short.class);
+        map.put(Short.class, short.class);
+
+        map.put(int.class, int.class);
+        map.put(Integer.class, int.class);
+
+        map.put(long.class, long.class);
+        map.put(Long.class, long.class);
+
+        map.put(float.class, float.class);
+        map.put(Float.class, float.class);
+
+        map.put(double.class, double.class);
+        map.put(Double.class, double.class);
+
+        map.put(char.class, char.class);
+        map.put(Character.class, char.class);
+        return map;
+    }
+
+    private static Map<Class<?>, Class<?>> wrapperNumberCls() {
+        Map<Class<?>, Class<?>> map = new HashMap<Class<?>, Class<?>>();
+        map.put(byte.class, Byte.class);
+        map.put(Byte.class, Byte.class);
+
+        map.put(short.class, Short.class);
+        map.put(Short.class, Short.class);
+
+        map.put(int.class, Integer.class);
+        map.put(Integer.class, Integer.class);
+
+        map.put(long.class, Long.class);
+        map.put(Long.class, Long.class);
+
+        map.put(float.class, Float.class);
+        map.put(Float.class, Float.class);
+
+        map.put(double.class, Double.class);
+        map.put(Double.class, Double.class);
+
+        map.put(char.class, Character.class);
+        map.put(Character.class, Character.class);
+        return map;
+    }
+
+    public static boolean isPrimitiveOrWrapNumber(Class<?> c) {
+        return numberClassMap.containsKey(c);
+    }
+
+    public static boolean isPrimitiveNumber(Class<?> c) {
+        return c != null && c.isPrimitive() && (c != boolean.class);
+    }
+
+    public static Class<?> toWrapperClass(Class<?> c) {
+        return wrapperCls.get(c);
+    }
+
+    public static Class<?> toPrimitiveClass(Class<?> c) {
+        return primitiveCls.get(c);
+    }
+
+
     public static final Class<?>[] EMPTY_PARAM_TYPES = new Class<?>[0];
     public static final Object[] EMPTY_PARAMS = new Object[0];
 

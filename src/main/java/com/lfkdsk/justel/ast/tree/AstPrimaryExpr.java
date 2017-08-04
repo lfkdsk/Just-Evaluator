@@ -15,6 +15,7 @@ import com.lfkdsk.justel.context.JustContext;
 import java.util.List;
 
 /**
+ * Primary Expr
  * Created by liufengkai on 2017/7/26.
  */
 public class AstPrimaryExpr extends AstList {

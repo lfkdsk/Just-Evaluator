@@ -8,11 +8,54 @@
 
 package com.lfkdsk.justel.compile.generate;
 
+import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.context.JustMapContext;
+import com.lfkdsk.justel.template.TemplateImpl;
+import com.lfkdsk.justel.template.dom.DomCom;
+import com.lfkdsk.justel.utils.GeneratedId;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by liufengkai on 2017/7/20.
  */
-public interface JavaCodeGenerator {
-    String generateCode(JustContext context);
+public class JavaCodeGenerator extends Generator {
+
+    private Set<Var> varSet = new HashSet<>();
+
+    private static final DomCom mTemplate = new TemplateImpl().generateTemplate();
+
+    public JavaCodeGenerator(JustContext context, AstNode rootNode) {
+        super(context, rootNode);
+    }
+
+
+    private String generateLocalVars() {
+        varSet.clear();
+        Collection<String> keySet = context.keySet();
+        StringBuilder builder = new StringBuilder();
+        for (String key : keySet) {
+            Var var = new Var(key, context.get(key));
+            varSet.add(var);
+            builder.append(var.generateVarAssignCode());
+        }
+
+        return builder.toString();
+    }
+
+    @Override
+    public JavaSource generate() {
+        JustContext templateContext = new JustMapContext();
+        String className = "JustEL" + GeneratedId.generateAtomId();
+        templateContext.put("${attrs}", "@Override");
+        templateContext.put("${className}", className);
+        templateContext.put("${localVars}", generateLocalVars());
+        templateContext.put("${expression}", rootNode.toString());
+
+        return new JavaSource(JavaSource.GENERATE_DEFAULT_PACKAGE,
+                className, mTemplate.fakeGenerateString(templateContext));
+    }
 }

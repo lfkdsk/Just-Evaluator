@@ -16,7 +16,7 @@ public class TemplateImpl implements Template {
 
     private static final DomCom packageGen = DomCom.rule()
             .sep("package")
-            .sep(GENERATE_DEFAULT_PACKAGE);
+            .sep(GENERATE_DEFAULT_PACKAGE + ";");
 
     private static final DomCom importGen = DomCom.rule()
             .sep("import com.lfkdsk.justel.context.JustContext;")
@@ -28,7 +28,7 @@ public class TemplateImpl implements Template {
             .bind("${localVars}")
             .sep("return")
             .bind("${expression}")
-            .sep("}");
+            .sep(";}");
 
     private static final DomCom classGen = DomCom.rule()
             .sep("public class")

@@ -54,6 +54,7 @@ public class JustMemClassLoader extends ClassLoader {
                 return defineClass(qualifiedClassName, bytes, 0, bytes.length);
             }
         }
+
         return super.findClass(qualifiedClassName);
     }
 }

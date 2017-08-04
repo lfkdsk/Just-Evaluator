@@ -122,7 +122,7 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom program = rule(AstProgram.class).ast(expr).sep(EOL);
 
-    JustParserImpl() {
+    public JustParserImpl() {
 
         // primary { postfix }
         primary.repeat(postfix);

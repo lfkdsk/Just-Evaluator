@@ -15,12 +15,23 @@ import com.lfkdsk.justel.eval.Evaluable;
 import com.lfkdsk.justel.exception.EvalException;
 
 /**
- * Created by liufengkai on 2017/8/3.
+ * ExtendFunction Basic Expr
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/8/3.
  */
 public abstract class ExtendFunctionExpr implements Function, Evaluable {
 
+    /**
+     * FuncExpr Node
+     */
     private AstFuncExpr astFuncNode;
 
+    /**
+     * bind this to AstFuncNode
+     *
+     * @param astFuncNode FuncExpr Node
+     */
     public void bindToAstFunc(AstFuncExpr astFuncNode) {
         this.astFuncNode = astFuncNode;
     }
@@ -51,8 +62,20 @@ public abstract class ExtendFunctionExpr implements Function, Evaluable {
         throw new EvalException("Undefined function name", astFuncNode);
     }
 
+    /**
+     * eval the function value
+     *
+     * @param params params
+     * @return is valid?
+     */
     public abstract Object eval(Object[] params);
 
+    /**
+     * check params value and type
+     *
+     * @param params params
+     * @return is valid?
+     */
     public boolean paramsCheck(Object[] params) {
         return true;
     }

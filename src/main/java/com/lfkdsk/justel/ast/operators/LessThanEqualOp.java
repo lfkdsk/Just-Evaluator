@@ -29,6 +29,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
  * @see OperatorExpr
  */
 public class LessThanEqualOp extends OperatorExpr {
+
     public LessThanEqualOp(List<AstNode> children) {
         super(children, Token.LESS_EQUAL_THAN);
     }

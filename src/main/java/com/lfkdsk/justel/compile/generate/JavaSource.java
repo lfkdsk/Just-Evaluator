@@ -17,7 +17,7 @@ public final class JavaSource {
     /**
      * default generate package
      */
-    public static final String GENERATE_DEFAULT_PACKAGE = "com.lfkdsk.justel.generatecode;";
+    public static final String GENERATE_DEFAULT_PACKAGE = "com.lfkdsk.justel.generatecode";
 
     public final String packageName;
 

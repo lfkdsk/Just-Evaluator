@@ -8,20 +8,22 @@
 
 package com.lfkdsk.justel.compile.generate;
 
+import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
 
 /**
- * Created by liufengkai on 2017/8/3.
+ * Created by liufengkai on 2017/8/4.
  */
-public class CodeGeneratorImpl implements JavaCodeGenerator {
+public abstract class Generator {
 
-//    private String generateLocalVars(JustContext context) {
-//        Collection<String> localVars = context.keySet();
-//
-//    }
+    protected JustContext context;
 
-    @Override
-    public String generateCode(JustContext context) {
-        return null;
+    protected AstNode rootNode;
+
+    public Generator(JustContext context, AstNode rootNode) {
+        this.context = context;
+        this.rootNode = rootNode;
     }
+
+    public abstract JavaSource generate();
 }

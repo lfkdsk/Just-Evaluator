@@ -17,10 +17,13 @@ import java.util.List;
 import static com.lfkdsk.justel.utils.TypeUtils.isBoolean;
 
 /**
- * !
- * Created by liufengkai on 2017/7/26.
+ * ! Postfix
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
  */
 public class NotPostfix extends AstList {
+
     public NotPostfix(List<AstNode> children) {
         super(children, AstNode.NOT_OP);
     }

@@ -26,6 +26,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isBoolean;
  *         Created by liufengkai on 2017/8/2.
  */
 public class AstCondExpr extends AstList {
+
     public AstCondExpr(List<AstNode> children) {
         super(children, AstNode.COND_EXPR);
     }

@@ -18,7 +18,9 @@ import java.util.Iterator;
 
 /**
  * AST Tree Basic Node
- * Created by liufengkai on 16/7/11.
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 17/7/11.
  */
 public abstract class AstNode implements Iterable<AstNode>
         , Evaluable, Compilable {

@@ -21,7 +21,7 @@ class JustCompilerImplTest {
         context.put("${attrs}", "@Override");
         context.put("${className}", className);
         context.put("${localVars}", "int i = 10;");
-        context.put("${expression}", "0;");
+        context.put("${expression}", "0");
         String sourceCode = templateGen.fakeGenerateString(context);
         JavaSource source = new JavaSource("com.lfkdsk.justel.generatecode", className, sourceCode);
 
