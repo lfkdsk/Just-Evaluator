@@ -13,6 +13,7 @@ import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -32,5 +33,13 @@ class AmpersandOpTest {
         runExpr("lfkdsk & 1211", true, context);
 
         Logger.i(String.valueOf(1111 & 1211));
+    }
+
+    @Test
+    void testAmpersandCompiler() {
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", 1111);
+
+        compiler("lfkdsk & 1211", context);
     }
 }

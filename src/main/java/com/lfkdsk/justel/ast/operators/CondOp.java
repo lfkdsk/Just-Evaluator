@@ -60,4 +60,9 @@ public class CondOp extends OperatorExpr {
 
         return super.eval(env);
     }
+
+    @Override
+    public String toString() {
+        return "?" + trueExpr().toString() + ":" + falseExpr().toString();
+    }
 }

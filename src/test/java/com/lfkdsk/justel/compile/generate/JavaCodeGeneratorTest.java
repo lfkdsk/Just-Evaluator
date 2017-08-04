@@ -8,6 +8,7 @@
 
 package com.lfkdsk.justel.compile.generate;
 
+import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.compile.compiler.JustCompiler;
 import com.lfkdsk.justel.compile.compiler.JustCompilerImpl;
@@ -18,6 +19,7 @@ import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.parser.JustParser;
 import com.lfkdsk.justel.parser.JustParserImpl;
+import com.lfkdsk.justel.token.SepToken;
 import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
 
@@ -26,14 +28,14 @@ import java.io.StringReader;
 /**
  * Created by liufengkai on 2017/8/4.
  */
-class JavaCodeGeneratorTest {
+public class JavaCodeGeneratorTest {
 
     @Test
     void testJavaCodeGenerator() {
         JustContext context = new JustMapContext();
         context.put("lfkdsk", 10e2);
         context.put("pi", 3.14);
-        Generator generator = new JavaCodeGenerator(context, null);
+        Generator generator = new JavaCodeGenerator(context, new AstLeaf(SepToken.AND_TOKEN));
         Logger.init("gen-code");
         Logger.i(generator.generate().toString());
     }
@@ -63,5 +65,20 @@ class JavaCodeGeneratorTest {
         Logger.i(expr.eval(context).toString());
         Logger.v(rootNode.eval(context).toString());
         Logger.i(expr.toString());
+    }
+
+    public static void compiler(String exprStr, JustContext context) {
+        Logger.init("gen-code");
+        Lexer lexer = new JustLexerImpl(new StringReader(exprStr));
+        JustParser parser = new JustParserImpl();
+        AstNode rootNode = null;
+        while (lexer.hasMore()) {
+            rootNode = parser.parser(lexer);
+        }
+        Generator generator = new JavaCodeGenerator(context, rootNode);
+        JustCompiler compiler = new JustCompilerImpl();
+        JavaSource javaSource = generator.generate();
+        Expression expr = compiler.compile(javaSource);
+        Logger.i(expr.eval(context).toString());
     }
 }

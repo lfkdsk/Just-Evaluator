@@ -13,6 +13,7 @@ import com.lfkdsk.justel.context.JustMapContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -32,5 +33,12 @@ class CondOpTest {
         context.put("lfkdsk", 101);
         String returnStr = runExpr("lfkdsk > 100 ? lfkdsk + 1 : lfkdsk + 2", true, context);
         Assertions.assertEquals((int) Integer.valueOf(returnStr), 102);
+    }
+
+    @Test
+    void testExprCompileCond() {
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", true);
+        compiler("lfkdsk ? 123 : 123.123f", context);
     }
 }
