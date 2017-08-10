@@ -20,7 +20,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by liufengkai on 2017/7/20.
+ * Java Code => Generator
+ * AST + Template Tree => Java Source Code
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/20.
  */
 public class JavaCodeGenerator extends Generator {
 

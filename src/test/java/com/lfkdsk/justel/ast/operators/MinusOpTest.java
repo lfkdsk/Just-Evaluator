@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.operators;
 
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -34,5 +35,13 @@ class MinusOpTest {
     @Test
     void testMinusDouble() {
         runExpr("111.00000001111d - 100", true, null);
+    }
+
+    @Test
+    void testMinusCompiler() {
+        compiler("111 - 100", null);
+        compiler("111.1 - 10", null);
+        compiler("111 - 100.111111f", null);
+        compiler("111.00000001111d - 100", null);
     }
 }

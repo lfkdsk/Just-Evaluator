@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.operators;
 
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -35,5 +36,13 @@ class UnEqualOpTest {
     @Test
     void testUnEqualDouble() {
         runExpr("11111.22222222d != 11111.22222222d", true, null);
+    }
+
+    @Test
+    void testUnEqualCompiler() {
+        compiler("1222 != 1222",null);
+        compiler("true != true",null);
+        compiler("111.222f != 111.222f",null);
+        compiler("11111.22222222d != 11111.22222222d",null);
     }
 }

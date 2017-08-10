@@ -14,7 +14,10 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * Created by liufengkai on 2017/7/28.
+ * Type Utils
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/28.
  */
 public class TypeUtils {
 

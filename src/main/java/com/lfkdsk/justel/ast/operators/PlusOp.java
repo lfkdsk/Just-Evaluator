@@ -29,6 +29,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isString;
  * @see OperatorExpr
  */
 public class PlusOp extends OperatorExpr {
+
     public PlusOp(List<AstNode> children) {
         super(children, Token.PLUS_OP);
     }

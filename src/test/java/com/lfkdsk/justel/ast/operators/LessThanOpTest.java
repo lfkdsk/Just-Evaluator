@@ -11,6 +11,7 @@ package com.lfkdsk.justel.ast.operators;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -30,8 +31,17 @@ class LessThanOpTest {
     }
 
     @Test
-    void testComparableLesshan() {
+    void testComparableLessThan() {
         String result = runExpr(" \"lfkdsk\" < \"lfk\" ", true, null);
+        Assertions.assertFalse(Boolean.valueOf(result));
+    }
+
+    @Test
+    void testLTCompiler() {
+        String result = compiler("123 < 123 ", null);
+        Assertions.assertFalse(Boolean.valueOf(result));
+
+        result = compiler("123.111111d < 111.111111d", null);
         Assertions.assertFalse(Boolean.valueOf(result));
     }
 }

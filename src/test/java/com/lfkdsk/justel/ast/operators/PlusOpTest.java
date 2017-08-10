@@ -12,6 +12,7 @@ import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -57,4 +58,16 @@ class PlusOpTest {
         runExpr("111.111111d + 222.222d", true, null);
     }
 
+    @Test
+    void testPlusCompiler() {
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", "1222");
+        context.put("lfk", "1&&22");
+        compiler("lfkdsk + lfk", context);
+
+        compiler("111 + 222", null);
+        compiler("111 + 222.222", null);
+        compiler("111.11f+222.222f", null);
+        compiler("111.111111d + 222.222d", null);
+    }
 }

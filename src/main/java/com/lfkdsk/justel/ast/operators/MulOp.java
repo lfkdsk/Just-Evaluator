@@ -28,6 +28,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
  * @see OperatorExpr
  */
 public class MulOp extends OperatorExpr {
+
     public MulOp(List<AstNode> children) {
         super(children, Token.MULTIPLY);
     }

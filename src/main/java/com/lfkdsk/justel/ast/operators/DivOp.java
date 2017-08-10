@@ -28,6 +28,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
  * @see OperatorExpr
  */
 public class DivOp extends OperatorExpr {
+
     public DivOp(List<AstNode> children) {
         super(children, Token.DIVIDE);
     }

@@ -12,6 +12,7 @@ import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -30,5 +31,15 @@ class OrOpTest {
         context.put("lfkdsk", true);
         context.put("lfk", true);
         runExpr("lfkdsk || lfk", true, context);
+    }
+
+    @Test
+    void testOrCompiler() {
+        compiler("true || false", null);
+
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", true);
+        context.put("lfk", true);
+        compiler("lfkdsk || lfk", context);
     }
 }

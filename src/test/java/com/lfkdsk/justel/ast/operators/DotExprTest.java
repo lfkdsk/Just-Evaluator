@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.operators;
 
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
+import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
 
 import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
@@ -57,6 +58,7 @@ public class DotExprTest {
     void testDotExprCompiler() {
         JustContext context = new JustMapContext();
         context.put("lfkdsk", new O());
-        compiler("lfkdsk.lfkdsk(\"1111111\")", context);
+        Logger.init();
+        Logger.i(compiler("lfkdsk.lfkdsk(\"1111111\")", context));
     }
 }

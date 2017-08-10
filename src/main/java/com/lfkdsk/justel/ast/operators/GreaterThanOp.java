@@ -29,6 +29,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
  * @see OperatorExpr
  */
 public class GreaterThanOp extends OperatorExpr {
+
     public GreaterThanOp(List<AstNode> children) {
         super(children, Token.GREAT_THAN);
     }

@@ -72,6 +72,7 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
     @Override
     public String compile(JustContext env) {
         StringBuilder builder = new StringBuilder();
+        builder.append("(");
 
         for (int i = 0; i < childCount(); i++) {
             AstNode child = child(i);
@@ -79,6 +80,8 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
 
             if (i != childCount() - 1) builder.append(ReservedToken.COMMA);
         }
+
+        builder.append(")");
 
         return builder.toString();
     }

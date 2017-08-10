@@ -39,7 +39,6 @@ class AmpersandOpTest {
     void testAmpersandCompiler() {
         JustContext context = new JustMapContext();
         context.put("lfkdsk", 1111);
-
         compiler("lfkdsk & 1211", context);
     }
 }

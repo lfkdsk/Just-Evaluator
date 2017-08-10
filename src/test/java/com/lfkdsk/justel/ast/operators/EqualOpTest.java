@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.operators;
 
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -18,23 +19,27 @@ import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 class EqualOpTest {
 
     @Test
-    void testUnEqualIntegerValue() {
+    void testEqualIntegerValue() {
         runExpr("1222 == 1222", true, null);
     }
 
     @Test
-    void testUnEqualBoolean() {
+    void testEqualBoolean() {
         runExpr("true == true", true, null);
     }
 
     @Test
-    void testUnEqualFloat() {
+    void testEqualFloat() {
         runExpr("111.222f == 111.222f", true, null);
     }
 
     @Test
-    void testUnEqualDouble() {
+    void testEqualDouble() {
         runExpr("11111.22222222d == 11111.22222222d", true, null);
     }
 
+    @Test
+    void testEqualCompiler() {
+        compiler("11111.22222222d == 11111.22222222d", null);
+    }
 }

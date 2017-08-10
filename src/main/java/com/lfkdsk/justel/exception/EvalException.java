@@ -3,9 +3,10 @@ package com.lfkdsk.justel.exception;
 import com.lfkdsk.justel.ast.base.AstNode;
 
 /**
- * Runtime com.lfkdsk.justel.eval in
+ * Eval Exception
  *
- * @author liufengkai Created by liufengkai on 17/7/18.
+ * @author liufengkai
+ *         Created by liufengkai on 17/7/18.
  */
 
 public class EvalException extends RuntimeException {

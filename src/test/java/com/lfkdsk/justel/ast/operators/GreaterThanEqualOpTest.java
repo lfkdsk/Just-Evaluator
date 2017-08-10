@@ -11,6 +11,7 @@ package com.lfkdsk.justel.ast.operators;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -32,6 +33,12 @@ class GreaterThanEqualOpTest {
     @Test
     void testDoubleGTE() {
         String returnStr = runExpr("1111.000100d >= 1000.11111d", true, null);
+        Assertions.assertTrue(Boolean.valueOf(returnStr));
+    }
+
+    @Test
+    void testGTECompiler() {
+        String returnStr = compiler("1111.000100d >= 1000.11111d", null);
         Assertions.assertTrue(Boolean.valueOf(returnStr));
     }
 }

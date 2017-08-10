@@ -10,21 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Created by liufengkai on 2017/8/10.
  */
-class NumberLiteralTest {
+class StringLiteralTest {
 
     @Test
-    void numberEval() {
-        runExpr("123333333L", true, null);
-        runExpr("123333333.100000", true, null);
-        runExpr("0.22222222", true, null);
+    void stringEval() {
+        runExpr("\"lfkdsk\"", true, null);
     }
 
     @Test
-    void numberCompile() {
+    void stringCompile() {
         Logger.init();
-
-        Logger.i(compiler("123333333L",null));
-        Logger.i(compiler("123333333.100000",null));
-        Logger.i(compiler("0.22222222",null));
+        Logger.i(compiler("\"lfkdsk\"", null));
     }
 }

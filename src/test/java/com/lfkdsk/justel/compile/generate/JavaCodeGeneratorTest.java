@@ -80,6 +80,10 @@ public class JavaCodeGeneratorTest {
         JavaSource javaSource = generator.generate();
         Expression expr = compiler.compile(javaSource);
 
-        return expr.eval(context).toString();
+        String result = expr.eval(context).toString();
+
+        Logger.i(result);
+
+        return result;
     }
 }

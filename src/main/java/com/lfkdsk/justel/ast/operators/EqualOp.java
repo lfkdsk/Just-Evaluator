@@ -26,6 +26,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.*;
  * @see OperatorExpr
  */
 public class EqualOp extends OperatorExpr {
+
     public EqualOp(List<AstNode> children) {
         super(children, AstNode.EQUAL_OP);
     }

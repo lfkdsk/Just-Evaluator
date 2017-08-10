@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.operators;
 
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -30,5 +31,14 @@ class MulOpTest {
     @Test
     void testMulDouble() {
         runExpr("2.11111d * 2000.222222d", true, null);
+    }
+
+    @Test
+    void testMulCompiler() {
+        compiler("2 * 2000", null);
+
+        compiler("2.1111f * 2000.1111f", null);
+
+        compiler("2.11111d * 2000.222222d", null);
     }
 }

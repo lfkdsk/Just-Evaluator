@@ -28,6 +28,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
  * @see OperatorExpr
  */
 public class MinusOp extends OperatorExpr {
+
     public MinusOp(List<AstNode> children) {
         super(children, Token.MINUS);
     }

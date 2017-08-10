@@ -28,6 +28,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
  * @see OperatorExpr
  */
 public class GreaterThanEqualOp extends OperatorExpr {
+
     public GreaterThanEqualOp(List<AstNode> children) {
         super(children);
     }

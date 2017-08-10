@@ -27,6 +27,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isBoolean;
  * @see OperatorExpr
  */
 public class OrOp extends OperatorExpr {
+
     public OrOp(List<AstNode> children) {
         super(children, Token.OR);
     }
