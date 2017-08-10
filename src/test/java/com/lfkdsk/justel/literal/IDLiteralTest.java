@@ -8,7 +8,14 @@
 
 package com.lfkdsk.justel.literal;
 
+import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.context.JustMapContext;
+import com.lfkdsk.justel.utils.logger.Logger;
+import com.lfkdsk.justel.utils.printer.Log;
 import org.junit.jupiter.api.Test;
+
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
+import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
  * Created by liufengkai on 2017/8/3.
@@ -17,6 +24,16 @@ class IDLiteralTest {
 
     @Test
     void testLocalVar() {
+        JustContext context = new JustMapContext();
+        context.put("id","SSSSSS");
+        runExpr("id", false, context);
+    }
 
+    @Test
+    void testLocalVarCompiler() {
+        JustContext context = new JustMapContext();
+        context.put("id","SSSSSS");
+        Logger.init();
+        Logger.i(compiler("id", context));
     }
 }

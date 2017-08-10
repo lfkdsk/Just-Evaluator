@@ -70,6 +70,6 @@ public final class JavaSource {
         return "<Java Source Code> : \n" +
                 "PackageName : " + packageName + "\n" +
                 "ClassName   : " + className + "\n" +
-                "SourceCode  : " + sourceCode + "\n";
+                "SourceCode  : \n" + sourceCode;
     }
 }

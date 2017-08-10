@@ -67,7 +67,7 @@ public class JavaCodeGeneratorTest {
         Logger.i(expr.toString());
     }
 
-    public static void compiler(String exprStr, JustContext context) {
+    public static String compiler(String exprStr, JustContext context) {
         Logger.init("gen-code");
         Lexer lexer = new JustLexerImpl(new StringReader(exprStr));
         JustParser parser = new JustParserImpl();
@@ -79,6 +79,7 @@ public class JavaCodeGeneratorTest {
         JustCompiler compiler = new JustCompilerImpl();
         JavaSource javaSource = generator.generate();
         Expression expr = compiler.compile(javaSource);
-        Logger.i(expr.eval(context).toString());
+
+        return expr.eval(context).toString();
     }
 }

@@ -9,9 +9,14 @@
 package com.lfkdsk.justel.ast.function;
 
 import com.lfkdsk.justel.ast.tree.AstFuncExpr;
+import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.context.JustMapContext;
+import com.lfkdsk.justel.utils.logger.Logger;
+import com.lfkdsk.justel.utils.printer.Log;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
@@ -48,4 +53,15 @@ class ExtendFunctionExprTest {
         Assertions.assertEquals((int) Integer.valueOf(returnStr), 3333);
     }
 
+
+    @Test
+    void testExtendFuncCompiler() {
+        Logger.init();
+        ExtendFunc func = new ExtendFunc();
+        AstFuncExpr.extFunc.put(func.functionName(), func);
+        JustContext context = new JustMapContext();
+        String returnStr = compiler("add(1111,2222)", context);
+        Logger.i(returnStr);
+        Assertions.assertEquals((int) Integer.valueOf(returnStr), 3333);
+    }
 }

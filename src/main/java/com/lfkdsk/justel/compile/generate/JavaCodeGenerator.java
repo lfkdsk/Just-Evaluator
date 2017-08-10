@@ -55,8 +55,10 @@ public class JavaCodeGenerator extends Generator {
         String className = "JustEL" + GeneratedId.generateAtomId();
         templateContext.put("${attrs}", "@Override");
         templateContext.put("${className}", className);
-        templateContext.put("${localVars}", generateLocalVars());
         templateContext.put("${expression}", rootNode.compile(context));
+        // after generate Ast -> generate local vars
+        // some vars maybe latter than AST Compile
+        templateContext.put("${localVars}", generateLocalVars());
 
         return new JavaSource(JavaSource.GENERATE_DEFAULT_PACKAGE,
                 className, mTemplate.fakeGenerateString(templateContext));

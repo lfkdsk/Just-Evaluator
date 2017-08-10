@@ -57,11 +57,6 @@ public abstract class ExtendFunctionExpr implements Function, Evaluable {
         throw new EvalException("Undefined eval func");
     }
 
-    @Override
-    public String functionName() {
-        throw new EvalException("Undefined function name", astFuncNode);
-    }
-
     /**
      * eval the function value
      *

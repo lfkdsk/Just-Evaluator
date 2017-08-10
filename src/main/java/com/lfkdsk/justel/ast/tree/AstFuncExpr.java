@@ -11,7 +11,9 @@ package com.lfkdsk.justel.ast.tree;
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
+import com.lfkdsk.justel.compile.generate.Var;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.utils.GeneratedId;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,5 +57,17 @@ public class AstFuncExpr extends AstList {
         }
 
         return super.eval(env);
+    }
+
+    @Override
+    public String compile(JustContext env) {
+        // eval obj
+        Object obj = eval(env);
+        // generate var
+        String varStr = "var" + GeneratedId.generateAtomId();
+        // put to env to generate local var
+        env.put(varStr, obj);
+
+        return varStr;
     }
 }

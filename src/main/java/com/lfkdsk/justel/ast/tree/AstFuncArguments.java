@@ -12,7 +12,10 @@ import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.operators.DotExpr;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.token.ReservedToken;
+import com.lfkdsk.justel.token.SepToken;
 import com.lfkdsk.justel.utils.ReflectUtils;
+import com.sun.org.apache.regexp.internal.RE;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -64,5 +67,19 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
         }
 
         return this.eval(env);
+    }
+
+    @Override
+    public String compile(JustContext env) {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < childCount(); i++) {
+            AstNode child = child(i);
+            builder.append(child.compile(env));
+
+            if (i != childCount() - 1) builder.append(ReservedToken.COMMA);
+        }
+
+        return builder.toString();
     }
 }
