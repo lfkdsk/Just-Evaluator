@@ -65,4 +65,14 @@ public class CondOp extends OperatorExpr {
     public String compile(JustContext env) {
         return "?" + trueExpr().toString() + ":" + falseExpr().toString();
     }
+
+    @Override
+    protected boolean isShouldSplit() {
+        return false;
+    }
+
+    @Override
+    public boolean isConstNode() {
+        return false;
+    }
 }

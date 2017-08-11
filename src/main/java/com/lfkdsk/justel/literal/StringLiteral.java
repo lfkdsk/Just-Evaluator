@@ -34,6 +34,6 @@ public class StringLiteral extends Literal {
 
     @Override
     public String compile(JustContext env) {
-        return "\"" + value() + "\"";
+        return "(\"" + value() + "\")";
     }
 }

@@ -80,7 +80,7 @@ public class JavaCodeGeneratorTest {
         if (rootNode != null && rootNode.isProgramConst()) {
             Object result = rootNode.program().eval(context);
             Logger.i(result.toString());
-            return "";
+            return result.toString();
         }
 
         Generator generator = new JavaCodeGenerator(context, rootNode);

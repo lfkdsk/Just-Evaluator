@@ -66,4 +66,14 @@ public class ArrayIndexExpr extends OperatorExpr implements AstPostfixExpr {
     public String functionName() {
         return "[]";
     }
+
+    @Override
+    public boolean isConstNode() {
+        return false;
+    }
+
+    @Override
+    protected boolean isShouldSplit() {
+        return false;
+    }
 }
