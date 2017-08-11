@@ -62,6 +62,8 @@ public abstract class AstNode implements Iterable<AstNode>
 
     public static final int PROGRAM = 700;
 
+    protected int astLevel = 1;
+
     public AstNode(int tag) {
         this.tag = tag;
     }
@@ -104,6 +106,8 @@ public abstract class AstNode implements Iterable<AstNode>
     }
 
     public abstract AstNode replaceChild(int index, AstNode node);
+
+    public abstract int computeAstLevel();
 
     @Override
     public Object eval(JustContext context) {

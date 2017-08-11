@@ -22,26 +22,13 @@ public class ReflectUtils {
     /**
      * key为基本类型及其包装类型，value为包装类型
      */
-    static final Map<Class<?>, Class<?>> wrapperCls;
-    /**
-     * key为基本类型及其包装类型，value为基本类型
-     */
-    static final Map<Class<?>, Class<?>> primitiveCls;
-
-    static final Map<Class<?>, Class<?>> numberClassMap;
+    static final Map<Class<?>, Class<?>> wrapperToPrimary;
 
     static {
-        numberClassMap = wrapperNumberCls();
-        primitiveCls = new HashMap<>(primitiveNumberCls());
-        primitiveCls.put(boolean.class, boolean.class);
-        primitiveCls.put(Boolean.class, boolean.class);
-
-        wrapperCls = new HashMap<>(wrapperNumberCls());
-        wrapperCls.put(boolean.class, Boolean.class);
-        wrapperCls.put(Boolean.class, Boolean.class);
+        wrapperToPrimary = new HashMap<>(wrapperToPrimaryMap());
     }
 
-    private static Map<Class<?>, Class<?>> primitiveNumberCls() {
+    private static Map<Class<?>, Class<?>> wrapperToPrimaryMap() {
         Map<Class<?>, Class<?>> map = new HashMap<>();
         map.put(byte.class, byte.class);
         map.put(Byte.class, byte.class);
@@ -63,48 +50,23 @@ public class ReflectUtils {
 
         map.put(char.class, char.class);
         map.put(Character.class, char.class);
+
+        map.put(boolean.class, boolean.class);
+        map.put(Boolean.class, boolean.class);
         return map;
     }
 
-    private static Map<Class<?>, Class<?>> wrapperNumberCls() {
-        Map<Class<?>, Class<?>> map = new HashMap<Class<?>, Class<?>>();
-        map.put(byte.class, Byte.class);
-        map.put(Byte.class, Byte.class);
-
-        map.put(short.class, Short.class);
-        map.put(Short.class, Short.class);
-
-        map.put(int.class, Integer.class);
-        map.put(Integer.class, Integer.class);
-
-        map.put(long.class, Long.class);
-        map.put(Long.class, Long.class);
-
-        map.put(float.class, Float.class);
-        map.put(Float.class, Float.class);
-
-        map.put(double.class, Double.class);
-        map.put(Double.class, Double.class);
-
-        map.put(char.class, Character.class);
-        map.put(Character.class, Character.class);
-        return map;
-    }
 
     public static boolean isPrimitiveOrWrapNumber(Class<?> c) {
-        return numberClassMap.containsKey(c);
+        return wrapperToPrimary.containsKey(c);
     }
 
     public static boolean isPrimitiveNumber(Class<?> c) {
         return c != null && c.isPrimitive() && (c != boolean.class);
     }
 
-    public static Class<?> toWrapperClass(Class<?> c) {
-        return wrapperCls.get(c);
-    }
-
     public static Class<?> toPrimitiveClass(Class<?> c) {
-        return primitiveCls.get(c);
+        return wrapperToPrimary.get(c);
     }
 
 

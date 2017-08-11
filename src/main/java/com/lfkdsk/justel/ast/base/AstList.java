@@ -27,6 +27,7 @@ public class AstList extends AstNode {
     public AstList(List<AstNode> children, int tag) {
         super(tag);
         this.children = children;
+        this.computeAstLevel();
     }
 
     @Override
@@ -81,6 +82,16 @@ public class AstList extends AstNode {
         return children.set(index, node);
     }
 
+    @Override
+    public int computeAstLevel() {
+        int maxLevel = 1;
+        for (int i = 0; i < childCount(); i++) {
+            AstNode child = child(i);
+            maxLevel = Math.max(child.computeAstLevel(), maxLevel);
+        }
+
+        return astLevel = maxLevel + 1;
+    }
 
     public Object eval(JustContext env) {
         throw new EvalException("can not eval : " + toString(), this);

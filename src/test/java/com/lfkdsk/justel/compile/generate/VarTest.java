@@ -28,4 +28,11 @@ class VarTest {
 
         Assertions.assertEquals(var.generateVarAssignCode(), "float lfkdsk=((java.lang.Float)context.get(\"lfkdsk\"));");
     }
+
+    @Test
+    void testBoolVar() {
+        Var var = new Var("lfkdsk", true);
+        Logger.init("var bool test");
+        Logger.i(var.generateVarAssignCode());
+    }
 }

@@ -58,6 +58,11 @@ public class AstLeaf extends AstNode {
         throw new ParseException("Didn't support this method in Leaf");
     }
 
+    @Override
+    public int computeAstLevel() {
+        return astLevel = 1;
+    }
+
     public Token token() {
         return token;
     }

@@ -81,4 +81,9 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
     public String compile(JustContext env) {
         return "." + name();
     }
+
+    @Override
+    public boolean isConstNode() {
+        return false;
+    }
 }
