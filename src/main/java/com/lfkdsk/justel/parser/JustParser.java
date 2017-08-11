@@ -11,10 +11,8 @@ package com.lfkdsk.justel.parser;
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.function.Operator;
-import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
-import com.lfkdsk.justel.ast.tree.AstCondExpr;
-import com.lfkdsk.justel.ast.tree.AstFuncExpr;
-import com.lfkdsk.justel.ast.tree.AstPrimaryExpr;
+import com.lfkdsk.justel.ast.function.OperatorExpr;
+import com.lfkdsk.justel.ast.tree.*;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.Lexer;
 
@@ -91,4 +89,27 @@ public interface JustParser {
         return parent;
     }
 
+    default AstNode foldConstAst(AstNode parent) {
+        for (int i = 0; i < parent.childCount(); i++) {
+            AstNode child = parent.child(i);
+
+            if (child instanceof OperatorExpr) {
+                ((OperatorExpr) child).checkConstNode();
+            }
+
+            foldConstAst(child);
+        }
+
+        return parent;
+    }
+
+    default AstNode generateAst(AstNode parent, BnfCom.Operators operators) {
+        AstProgram root = (AstProgram) transformAst(parent, operators);
+
+        root = (AstProgram) foldConstAst(root);
+
+        root.checkConst();
+
+        return root;
+    }
 }

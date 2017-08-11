@@ -8,7 +8,11 @@
 
 package com.lfkdsk.justel.utils;
 
+import com.lfkdsk.justel.ast.function.OperatorExpr;
+import com.lfkdsk.justel.literal.IDLiteral;
+import com.lfkdsk.justel.literal.Literal;
 import com.lfkdsk.justel.literal.NumberLiteral;
+import com.lfkdsk.justel.literal.StringLiteral;
 
 import java.util.List;
 import java.util.function.Function;
@@ -49,8 +53,24 @@ public class TypeUtils {
         return obj.getClass().isArray();
     }
 
+    public static boolean isLiteral(Object obj) {
+        return obj instanceof Literal;
+    }
+
     public static boolean isNumberLiteral(Object obj) {
         return obj instanceof NumberLiteral;
+    }
+
+    public static boolean isStringLiteral(Object obj) {
+        return obj instanceof StringLiteral;
+    }
+
+    public static boolean isIDLiteral(Object obj) {
+        return obj instanceof IDLiteral;
+    }
+
+    public static boolean isOperatorExpr(Object obj) {
+        return obj instanceof OperatorExpr;
     }
 
     public static boolean isNull(Object obj) {

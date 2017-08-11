@@ -71,7 +71,7 @@ public class JustParserImplTest {
                 while (lexer.hasMore()) {
                     AstNode node = parser.parser(lexer);
                     node.eval(context);
-//                    Logger.v(" => " + node.eval(context).toString() + "  ");
+//                    Logger.v(" => " + node.call(context).toString() + "  ");
                 }
             }
             System.out.println(System.currentTimeMillis() - start);

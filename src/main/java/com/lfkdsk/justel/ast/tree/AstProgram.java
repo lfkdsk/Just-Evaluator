@@ -10,9 +10,13 @@ package com.lfkdsk.justel.ast.tree;
 
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.ast.function.OperatorExpr;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.eval.ConstExpression;
 
 import java.util.List;
+
+import static com.lfkdsk.justel.utils.TypeUtils.isOperatorExpr;
 
 /**
  * Ast Program
@@ -22,16 +26,44 @@ import java.util.List;
  *         Created by liufengkai on 2017/7/26.
  */
 public class AstProgram extends AstList {
+
+    private boolean isProgramConst = false;
+
+    private ConstExpression constExpression = null;
+
     public AstProgram(List<AstNode> children) {
         super(children, PROGRAM);
     }
 
-    private AstNode program() {
+    public AstNode program() {
         return child(0);
+    }
+
+    public boolean checkConst() {
+        AstNode program = program();
+
+        if (isOperatorExpr(program)) {
+            this.isProgramConst = ((OperatorExpr) program).isConstNode();
+        }
+
+        return isProgramConst;
     }
 
     @Override
     public Object eval(JustContext env) {
+        if (isProgramConst) {
+            if (constExpression == null) {
+                constExpression = new ConstExpression(program().eval(env));
+            }
+
+            return constExpression.eval(env);
+        }
+
+
         return program().eval(env);
+    }
+
+    public boolean isProgramConst() {
+        return isProgramConst;
     }
 }

@@ -30,6 +30,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isObjectArray;
  * @see AstPostfixExpr
  */
 public class ArrayIndexExpr extends OperatorExpr implements AstPostfixExpr {
+
     public ArrayIndexExpr(List<AstNode> children) {
         super(children, AstNode.ARRAY_INDEX_OP);
     }
@@ -59,5 +60,10 @@ public class ArrayIndexExpr extends OperatorExpr implements AstPostfixExpr {
     @Override
     public String compile(JustContext env) {
         return "[" + index().toString() + "]";
+    }
+
+    @Override
+    public String functionName() {
+        return "[]";
     }
 }

@@ -40,7 +40,7 @@ class TemplateImplTest {
                 "\n" +
                 "public class ${classname} implements Expression {\n" +
                 "    ${attrs}\n" +
-                "    public Object eval(FelContext context) {\n" +
+                "    public Object call(FelContext context) {\n" +
                 "        ${localVars}\n" +
                 "        return ${expression};\n" +
                 "    }\n" +

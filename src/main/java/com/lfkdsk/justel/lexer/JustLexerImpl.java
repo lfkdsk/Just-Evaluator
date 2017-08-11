@@ -8,6 +8,8 @@ import com.lfkdsk.justel.utils.collection.ArrayQueue;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.lfkdsk.justel.token.ReservedToken.reservedToken;
 
@@ -27,10 +29,18 @@ public class JustLexerImpl implements Lexer {
     private ArrayQueue<Token> queue = new ArrayQueue<>();
 
     /**
+     * Insert Symbol to Lexer
+     */
+    private Map<String, Token> insertSymbol = new HashMap<>();
+
+    /**
      * has more tokens in Lexer
      */
     private boolean hasMore;
 
+    /**
+     * Line Number Reader
+     */
     private LineNumberReader reader;
 
     public JustLexerImpl(Reader reader) {
@@ -477,4 +487,16 @@ public class JustLexerImpl implements Lexer {
     private void addToken(Token token) {
         queue.add(token);
     }
+
+    public void insertSymbol(String symbol, Token token) {
+        insertSymbol.put(symbol, token);
+    }
+
+//    public Token containsSymbol(Character peekChar) {
+//        if (insertSymbol.containsKey(peekChar.toString())) {
+//            return insertSymbol.get(peekChar.toString());
+//        }
+//
+//
+//    }
 }

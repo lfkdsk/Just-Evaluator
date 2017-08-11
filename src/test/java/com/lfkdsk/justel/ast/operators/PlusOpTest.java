@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.operators;
 
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
+import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
 
 import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
@@ -69,5 +70,11 @@ class PlusOpTest {
         compiler("111 + 222.222", null);
         compiler("111.11f+222.222f", null);
         compiler("111.111111d + 222.222d", null);
+    }
+
+    @Test
+    void testForConst() {
+        Logger.init();
+        compiler("1000+100.0*99-(600-3*15)%(((68-9)-3)*2-100)+10000%7*71", null);
     }
 }

@@ -12,7 +12,6 @@ import com.lfkdsk.justel.ast.tree.AstFuncExpr;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.utils.logger.Logger;
-import com.lfkdsk.justel.utils.printer.Log;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +31,7 @@ public class ExtendFunctionExprTest {
         }
 
         @Override
-        public Object eval(Object... params) {
+        public Object call(Object... params) {
             Integer left = (Integer) params[0];
             Integer right = (Integer) params[1];
 
@@ -40,7 +39,7 @@ public class ExtendFunctionExprTest {
                 return left + right;
             }
 
-            return this.eval(params);
+            return this.call(params);
         }
     }
 

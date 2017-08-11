@@ -11,7 +11,6 @@ package com.lfkdsk.justel.ast.tree;
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
-import com.lfkdsk.justel.compile.generate.Var;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.exception.UnSupportMethodException;
 import com.lfkdsk.justel.utils.GeneratedId;
@@ -34,6 +33,12 @@ public class AstFuncExpr extends AstList {
         super(children, AstNode.FUNCTION_EXPR);
     }
 
+    /**
+     * has func expr
+     *
+     * @param child this child
+     * @return is AstFuncExpr
+     */
     public static boolean isAstFuncExpr(AstNode child) {
         return child.childCount() >= 2 &&
                 child.child(1) instanceof AstFuncArguments;
@@ -65,6 +70,7 @@ public class AstFuncExpr extends AstList {
 
         // generate code by one time
 
+        // get func obj
         ExtendFunctionExpr extendFunc = extFunc.get(funcName().toString());
 
         if (extendFunc == null) {
@@ -75,13 +81,17 @@ public class AstFuncExpr extends AstList {
 
         // generate var
         String funcVar = "func" + GeneratedId.generateAtomId();
+
         // put to env to generate local var
+        // insert local func obj
         env.put(funcVar, extendFunc);
 
         builder.append(funcVar)
-                .append(".eval")
+                .append(".call")
                 .append("(")
+                .append("new Object[]{")
                 .append(funcArgs().compile(env))
+                .append("}")
                 .append(")");
 
         return builder.toString();

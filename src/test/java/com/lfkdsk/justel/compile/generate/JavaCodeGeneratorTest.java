@@ -10,6 +10,7 @@ package com.lfkdsk.justel.compile.generate;
 
 import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.ast.tree.AstProgram;
 import com.lfkdsk.justel.compile.compiler.JustCompiler;
 import com.lfkdsk.justel.compile.compiler.JustCompilerImpl;
 import com.lfkdsk.justel.context.JustContext;
@@ -71,10 +72,17 @@ public class JavaCodeGeneratorTest {
         Logger.init("gen-code");
         Lexer lexer = new JustLexerImpl(new StringReader(exprStr));
         JustParser parser = new JustParserImpl();
-        AstNode rootNode = null;
+        AstProgram rootNode = null;
         while (lexer.hasMore()) {
-            rootNode = parser.parser(lexer);
+            rootNode = (AstProgram) parser.parser(lexer);
         }
+
+        if (rootNode != null && rootNode.isProgramConst()) {
+            Object result = rootNode.program().eval(context);
+            Logger.i(result.toString());
+            return "";
+        }
+
         Generator generator = new JavaCodeGenerator(context, rootNode);
         JustCompiler compiler = new JustCompilerImpl();
         JavaSource javaSource = generator.generate();

@@ -21,6 +21,6 @@ public interface Expression extends Evaluable {
 
     @Override
     default Object eval(JustContext context) {
-        throw new EvalException("Use default eval in expression");
+        throw new EvalException("Use default call in expression");
     }
 }

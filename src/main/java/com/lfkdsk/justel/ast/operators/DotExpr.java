@@ -39,6 +39,11 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
         return ((AstLeaf) child(0)).token().getText();
     }
 
+    @Override
+    public String functionName() {
+        return ".";
+    }
+
     public static class InnerReflect {
         public String name;
         public Object originObj;
@@ -63,7 +68,7 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
 
-                // throw eval exception
+                // throw call exception
                 return this.eval(env);
             }
         }

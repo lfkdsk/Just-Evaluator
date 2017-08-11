@@ -17,8 +17,7 @@ import com.lfkdsk.justel.token.Token;
 import java.util.List;
 
 import static com.lfkdsk.justel.utils.NumberUtils.computePlusValue;
-import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
-import static com.lfkdsk.justel.utils.TypeUtils.isString;
+import static com.lfkdsk.justel.utils.TypeUtils.*;
 
 /**
  * + Operator:

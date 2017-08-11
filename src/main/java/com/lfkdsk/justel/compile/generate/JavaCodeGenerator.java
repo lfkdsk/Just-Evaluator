@@ -37,7 +37,7 @@ public class JavaCodeGenerator extends Generator {
     }
 
 
-    private String generateLocalVars() {
+    protected String generateLocalVars() {
         varSet.clear();
 
         if (context == null) return "";

@@ -11,7 +11,7 @@ import com.lfkdsk.justel.context.JustContext;
 public interface Evaluable {
 
     /**
-     * eval this node
+     * call this node
      *
      * @param context context =>
      * @return the result name

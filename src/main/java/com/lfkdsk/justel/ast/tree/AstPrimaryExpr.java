@@ -16,7 +16,11 @@ import java.util.List;
 
 /**
  * Primary Expr
- * Created by liufengkai on 2017/7/26.
+ * primary expr = ( expr ) | number | id | string | boolean
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
+ * @see com.lfkdsk.justel.compile.compiler.JustCompilerImpl
  */
 public class AstPrimaryExpr extends AstList {
 
@@ -24,22 +28,58 @@ public class AstPrimaryExpr extends AstList {
         super(children, AstNode.PRIMARY_EXPR);
     }
 
+    /**
+     * Default Create Node
+     * Check create Method in `BnfCom.Factory.get` Method
+     *
+     * @param c list of AstNode
+     * @return single node or primary
+     * @see com.lfkdsk.justel.parser.BnfCom.Factory
+     */
     public static AstNode create(List<AstNode> c) {
         return c.size() == 1 ? c.get(0) : new AstPrimaryExpr(c);
     }
 
+    /**
+     * Operand Object
+     *
+     * @param expr Primary Expr
+     * @return prefix Node
+     */
     private Object operand(AstPrimaryExpr expr) {
         return expr.child(0);
     }
 
+    /**
+     * return last postfix
+     *
+     * @param expr expr
+     * @param nest nest index
+     * @return postfix expr
+     */
     private AstPostfixExpr postfix(AstPrimaryExpr expr, int nest) {
         return (AstPostfixExpr) expr.child(expr.childCount() - nest - 1);
     }
 
+    /**
+     * check has postfix?
+     *
+     * @param expr expr
+     * @param nest nest index
+     * @return has postfix?
+     */
     private boolean hasPostfix(AstPrimaryExpr expr, int nest) {
         return expr.childCount() - nest > 1;
     }
 
+    /**
+     * Recursion Method : Check Sub Expr
+     *
+     * @param env  context
+     * @param expr this expr
+     * @param nest nest index
+     * @return return obj / sub expr
+     */
     private Object evalSubExpr(JustContext env,
                                AstPrimaryExpr expr,
                                int nest) {

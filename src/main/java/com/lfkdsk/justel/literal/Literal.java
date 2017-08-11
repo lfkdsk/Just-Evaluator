@@ -25,7 +25,7 @@ public abstract class Literal extends AstLeaf {
 
     @Override
     public Object eval(JustContext env) {
-        throw new UnSupportMethodException("Cannot eval abstract literal " + token.toString());
+        throw new UnSupportMethodException("Cannot call abstract literal " + token.toString());
     }
 
     /**

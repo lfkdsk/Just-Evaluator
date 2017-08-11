@@ -12,6 +12,7 @@ import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.function.OperatorExpr;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.token.SepToken;
+import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 public class GreaterThanEqualOp extends OperatorExpr {
 
     public GreaterThanEqualOp(List<AstNode> children) {
-        super(children);
+        super(children, Token.GREAT_EQUAL_THAN);
     }
 
     @Override

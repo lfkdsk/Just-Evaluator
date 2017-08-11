@@ -51,19 +51,19 @@ public abstract class ExtendFunctionExpr implements Function, Evaluable {
                 throw new EvalException("didn't pass params check.");
             }
 
-            return eval(newArgs);
+            return call(newArgs);
         }
 
         throw new EvalException("Undefined eval func");
     }
 
     /**
-     * eval the function value
+     * call the function value
      *
      * @param params params
      * @return is valid?
      */
-    public abstract Object eval(Object... params);
+    public abstract Object call(Object... params);
 
     /**
      * check params value and type

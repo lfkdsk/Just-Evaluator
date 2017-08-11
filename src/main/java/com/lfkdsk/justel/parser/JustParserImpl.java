@@ -152,9 +152,22 @@ public class JustParserImpl implements JustParser {
         operators.add(LOGICAL_F_TOKEN, 2, LEFT, NotPostfix.class);
     }
 
+    /**
+     * insert new operator
+     *
+     * @param funName   function name
+     * @param pres      pres level
+     * @param leftAssoc left / right
+     * @param operator  operator clazz
+     * @see com.lfkdsk.justel.parser.BnfCom.Operators
+     */
+    public void insertOperators(final String funName, final int pres,
+                                final boolean leftAssoc, final Class<? extends AstNode> operator) {
+        operators.add(funName, pres, leftAssoc, operator);
+    }
 
     @Override
     public AstNode parser(Lexer lexer) throws ParseException {
-        return transformAst(program.parse(lexer), operators);
+        return generateAst(program.parse(lexer), operators);
     }
 }

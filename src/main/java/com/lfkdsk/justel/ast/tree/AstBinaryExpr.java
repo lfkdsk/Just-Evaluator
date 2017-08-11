@@ -46,7 +46,7 @@ public class AstBinaryExpr extends AstList {
 
     @Override
     public Object eval(JustContext env) {
-        throw new EvalException("can not eval basic binary expr node", this);
+        throw new EvalException("can not call basic binary expr node", this);
     }
 
     @Override

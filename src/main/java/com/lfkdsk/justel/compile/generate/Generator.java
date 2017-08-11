@@ -12,7 +12,14 @@ import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
 
 /**
- * Created by liufengkai on 2017/8/4.
+ * Basic Generator
+ * Generate Source Code -> NEED:
+ * 1. context => generate var
+ * 2. Ast node => return expr
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/8/4.
+ * @see JavaCodeGenerator
  */
 public abstract class Generator {
 
