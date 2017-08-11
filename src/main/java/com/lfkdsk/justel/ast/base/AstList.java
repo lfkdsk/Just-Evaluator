@@ -79,14 +79,18 @@ public class AstList extends AstNode {
 
     @Override
     public AstNode replaceChild(int index, AstNode node) {
+        node.setParent(this);
+
         return children.set(index, node);
     }
 
     @Override
     public int computeAstLevel() {
         int maxLevel = 1;
-        for (int i = 0; i < childCount(); i++) {
-            AstNode child = child(i);
+        for (int index = 0; index < childCount(); index++) {
+            AstNode child = child(index);
+            child.setParent(this);
+            child.setChildIndex(index);
             maxLevel = Math.max(child.computeAstLevel(), maxLevel);
         }
 

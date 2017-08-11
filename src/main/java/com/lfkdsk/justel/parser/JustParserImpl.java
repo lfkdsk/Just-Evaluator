@@ -24,6 +24,7 @@ import com.lfkdsk.justel.literal.NumberLiteral;
 import com.lfkdsk.justel.literal.StringLiteral;
 import com.lfkdsk.justel.token.ReservedToken;
 
+import static com.lfkdsk.justel.ast.function.OperatorExpr.operators;
 import static com.lfkdsk.justel.token.ReservedToken.*;
 import static com.lfkdsk.justel.token.Token.EOL;
 import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
@@ -49,7 +50,6 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom expr0 = rule();
 
-    protected BnfCom.Operators operators = new BnfCom.Operators();
 
     ///////////////////////////////////////////////////////////////////////////
     // base language type
@@ -130,26 +130,26 @@ public class JustParserImpl implements JustParser {
 
         reservedToken.add(EOL);
 
-        operators.add(LOGICAL_OR_TOKEN, 12, LEFT, OrOp.class);
-        operators.add(LOGICAL_AND_TOKEN, 11, LEFT, AndOp.class);
+        insertOperators(LOGICAL_OR_TOKEN, 12, LEFT, OrOp.class);
+        insertOperators(LOGICAL_AND_TOKEN, 11, LEFT, AndOp.class);
 
-        operators.add(AMPERSAND_TOKEN, 8, LEFT, AmpersandOp.class);
-        operators.add(EQ_TOKEN, 7, LEFT, EqualOp.class);
-        operators.add(UQ_TOKEN, 7, LEFT, UnEqualOp.class);
+        insertOperators(AMPERSAND_TOKEN, 8, LEFT, AmpersandOp.class);
+        insertOperators(EQ_TOKEN, 7, LEFT, EqualOp.class);
+        insertOperators(UQ_TOKEN, 7, LEFT, UnEqualOp.class);
 
-        operators.add(GT_TOKEN, 6, LEFT, GreaterThanOp.class);
-        operators.add(GTE_TOKEN, 6, LEFT, GreaterThanEqualOp.class);
-        operators.add(LT_TOKEN, 6, LEFT, LessThanOp.class);
-        operators.add(LTE_TOKEN, 6, LEFT, LessThanEqualOp.class);
+        insertOperators(GT_TOKEN, 6, LEFT, GreaterThanOp.class);
+        insertOperators(GTE_TOKEN, 6, LEFT, GreaterThanEqualOp.class);
+        insertOperators(LT_TOKEN, 6, LEFT, LessThanOp.class);
+        insertOperators(LTE_TOKEN, 6, LEFT, LessThanEqualOp.class);
 
-        operators.add(PLUS, 4, LEFT, PlusOp.class);
-        operators.add(MINUS, 4, LEFT, MinusOp.class);
+        insertOperators(PLUS, 4, LEFT, PlusOp.class);
+        insertOperators(MINUS, 4, LEFT, MinusOp.class);
 
-        operators.add(DIV, 3, LEFT, DivOp.class);
-        operators.add(MUL, 3, LEFT, MulOp.class);
-        operators.add(MOD, 3, LEFT, Mod.class);
+        insertOperators(DIV, 3, LEFT, DivOp.class);
+        insertOperators(MUL, 3, LEFT, MulOp.class);
+        insertOperators(MOD, 3, LEFT, Mod.class);
 
-        operators.add(LOGICAL_F_TOKEN, 2, LEFT, NotPostfix.class);
+        insertOperators(LOGICAL_F_TOKEN, 2, LEFT, NotPostfix.class);
     }
 
     /**
