@@ -24,6 +24,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
  *         Created by liufengkai on 2017/7/26.
  */
 public class NegativePostfix extends AstList {
+
     public NegativePostfix(List<AstNode> children) {
         super(children, AstNode.NEGATIVE_OP);
     }
@@ -49,4 +50,8 @@ public class NegativePostfix extends AstList {
         return super.eval(env);
     }
 
+    @Override
+    public String compile(JustContext env) {
+        return toString();
+    }
 }

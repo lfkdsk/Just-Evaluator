@@ -13,6 +13,7 @@ import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
 import com.lfkdsk.justel.compile.generate.Var;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.exception.UnSupportMethodException;
 import com.lfkdsk.justel.utils.GeneratedId;
 
 import java.util.HashMap;
@@ -61,13 +62,28 @@ public class AstFuncExpr extends AstList {
 
     @Override
     public String compile(JustContext env) {
-        // eval obj
-        Object obj = eval(env);
-        // generate var
-        String varStr = "var" + GeneratedId.generateAtomId();
-        // put to env to generate local var
-        env.put(varStr, obj);
 
-        return varStr;
+        // generate code by one time
+
+        ExtendFunctionExpr extendFunc = extFunc.get(funcName().toString());
+
+        if (extendFunc == null) {
+            throw new UnSupportMethodException("un support method functionName: " + funcName().toString());
+        }
+
+        StringBuilder builder = new StringBuilder();
+
+        // generate var
+        String funcVar = "func" + GeneratedId.generateAtomId();
+        // put to env to generate local var
+        env.put(funcVar, extendFunc);
+
+        builder.append(funcVar)
+                .append(".eval")
+                .append("(")
+                .append(funcArgs().compile(env))
+                .append(")");
+
+        return builder.toString();
     }
 }

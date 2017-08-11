@@ -47,4 +47,9 @@ public class NotPostfix extends AstList {
 
         return super.eval(env);
     }
+
+    @Override
+    public String compile(JustContext env) {
+        return toString();
+    }
 }

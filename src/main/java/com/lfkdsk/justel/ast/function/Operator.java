@@ -12,7 +12,11 @@ import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.token.Token;
 
 /**
- * Created by liufengkai on 2017/7/26.
+ * Operator
+ * eq: factor { OP factor }
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/7/26.
  */
 public class Operator extends AstLeaf {
 

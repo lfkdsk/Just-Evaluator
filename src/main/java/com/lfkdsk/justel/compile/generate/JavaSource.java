@@ -65,11 +65,45 @@ public final class JavaSource {
         return sourceCodeChar == null ? sourceCodeChar = CharBuffer.wrap(sourceCode) : sourceCodeChar;
     }
 
+    /**
+     * Re-Format SourceCode -> Formatted Source Code
+     * WARNING: JUST USED IN `toString` Method to Debug Source Code
+     *
+     * @param sourceCode no-format str
+     * @return formatted source code
+     */
+    private static String reformatToPrint(String sourceCode) {
+        StringBuilder builder = new StringBuilder(sourceCode);
+        int start = 0, end = sourceCode.length();
+        int index;
+        while (start < end) {
+            index = builder.indexOf(";", start);
+
+            if (index == -1) break;
+
+            builder.insert(index + 1, "\r\n");
+            start = index + 1;
+        }
+
+        start = 0;
+
+        while (start < end) {
+            index = builder.indexOf("{", start);
+
+            if (index == -1) break;
+
+            builder.insert(index + 1, "\r\n");
+            start = index + 1;
+        }
+
+        return builder.toString();
+    }
+
     @Override
     public String toString() {
         return "<Java Source Code> : \n" +
                 "PackageName : " + packageName + "\n" +
                 "ClassName   : " + className + "\n" +
-                "SourceCode  : \n" + sourceCode;
+                "SourceCode  : \n" + reformatToPrint(sourceCode);
     }
 }

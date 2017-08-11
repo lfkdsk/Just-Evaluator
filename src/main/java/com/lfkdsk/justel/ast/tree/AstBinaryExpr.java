@@ -12,6 +12,7 @@ import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.exception.CompilerException;
 import com.lfkdsk.justel.exception.EvalException;
 
 import java.util.List;
@@ -46,5 +47,10 @@ public class AstBinaryExpr extends AstList {
     @Override
     public Object eval(JustContext env) {
         throw new EvalException("can not eval basic binary expr node", this);
+    }
+
+    @Override
+    public String compile(JustContext env) {
+        throw new CompilerException("can not compile basic binary expr node", this);
     }
 }

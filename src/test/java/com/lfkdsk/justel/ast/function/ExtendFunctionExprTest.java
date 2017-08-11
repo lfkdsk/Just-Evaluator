@@ -22,9 +22,9 @@ import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 /**
  * Created by liufengkai on 2017/8/3.
  */
-class ExtendFunctionExprTest {
+public class ExtendFunctionExprTest {
 
-    public class ExtendFunc extends ExtendFunctionExpr {
+    public static class ExtendFunc extends ExtendFunctionExpr {
 
         @Override
         public String functionName() {
@@ -32,7 +32,7 @@ class ExtendFunctionExprTest {
         }
 
         @Override
-        public Object eval(Object[] params) {
+        public Object eval(Object... params) {
             Integer left = (Integer) params[0];
             Integer right = (Integer) params[1];
 
@@ -61,7 +61,6 @@ class ExtendFunctionExprTest {
         AstFuncExpr.extFunc.put(func.functionName(), func);
         JustContext context = new JustMapContext();
         String returnStr = compiler("add(1111,2222)", context);
-        Logger.i(returnStr);
         Assertions.assertEquals((int) Integer.valueOf(returnStr), 3333);
     }
 }

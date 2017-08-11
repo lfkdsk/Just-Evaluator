@@ -63,15 +63,15 @@ public abstract class ExtendFunctionExpr implements Function, Evaluable {
      * @param params params
      * @return is valid?
      */
-    public abstract Object eval(Object[] params);
+    public abstract Object eval(Object... params);
 
     /**
      * check params value and type
      *
-     * @param params params
+     * @param params paramsx
      * @return is valid?
      */
-    public boolean paramsCheck(Object[] params) {
+    protected boolean paramsCheck(Object[] params) {
         return true;
     }
 }

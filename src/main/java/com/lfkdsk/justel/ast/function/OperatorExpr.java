@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Operator Basic Expr
+ * eq: factor { OP factor }
  *
  * @author liufengkai
  *         Created by liufengkai on 2017/7/26.
