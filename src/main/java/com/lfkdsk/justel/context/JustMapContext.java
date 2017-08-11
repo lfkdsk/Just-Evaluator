@@ -1,8 +1,6 @@
 package com.lfkdsk.justel.context;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Just Map Context
@@ -13,6 +11,8 @@ import java.util.Map;
 public class JustMapContext implements JustContext {
 
     private Map<String, Object> map = new HashMap<>();
+
+    private List<String> commandList = new LinkedList<>();
 
     @Override
     public boolean contain(String name) {
@@ -30,7 +30,17 @@ public class JustMapContext implements JustContext {
     }
 
     @Override
-    public Collection<String> keySet() {
+    public Object command(String command) {
+        return commandList.add(command);
+    }
+
+    @Override
+    public Collection<String> varsKeySet() {
         return map.keySet();
+    }
+
+    @Override
+    public List<String> commandList() {
+        return commandList;
     }
 }

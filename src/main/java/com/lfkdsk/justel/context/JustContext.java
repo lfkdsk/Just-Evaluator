@@ -1,6 +1,7 @@
 package com.lfkdsk.justel.context;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Context => { key : name }
@@ -16,5 +17,16 @@ public interface JustContext {
 
     Object put(String key, Object val);
 
-    Collection<String> keySet();
+    /**
+     * Warning:!!!
+     * Add Code to Java Source Code Straightly
+     *
+     * @param command command line
+     * @return value
+     */
+    Object command(String command);
+
+    Collection<String> varsKeySet();
+
+    List<String> commandList();
 }

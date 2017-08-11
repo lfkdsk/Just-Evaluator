@@ -86,4 +86,9 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
     public boolean isConstNode() {
         return false;
     }
+
+    @Override
+    protected boolean isShouldSplit() {
+        return false;
+    }
 }

@@ -14,12 +14,12 @@ import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.exception.EvalException;
 import com.lfkdsk.justel.token.Token;
+import com.lfkdsk.justel.utils.GeneratedId;
 
 import java.util.List;
 
-import static com.lfkdsk.justel.utils.TypeUtils.isIDLiteral;
-import static com.lfkdsk.justel.utils.TypeUtils.isLiteral;
-import static com.lfkdsk.justel.utils.TypeUtils.isOperatorExpr;
+import static com.lfkdsk.justel.compile.generate.Var.getTypeDeclare;
+import static com.lfkdsk.justel.utils.TypeUtils.*;
 
 /**
  * Operator Basic Expr
@@ -92,9 +92,48 @@ public abstract class OperatorExpr extends AstList implements Function {
         this.isConstNode = isConstNode();
     }
 
+    protected boolean isShouldSplit() {
+        return astLevel > 3;
+    }
+
+    private String splitSubAst(JustContext env) {
+        Object leftValue = leftChild().eval(env);
+        Object rightValue = rightChild().eval(env);
+
+        String leftVar = "left" + GeneratedId.generateAtomId();
+        String rightVar = "right" + GeneratedId.generateAtomId();
+
+        String leftType = getTypeDeclare(leftValue.getClass());
+        String rightType = getTypeDeclare(rightValue.getClass());
+
+        StringBuilder leftStr = new StringBuilder();
+        StringBuilder rightStr = new StringBuilder();
+
+        leftStr.append(leftType)
+                .append(" ")
+                .append(leftVar)
+                .append("=")
+                .append(leftChild().compile(env)).append(";");
+
+        rightStr.append(rightType)
+                .append(" ")
+                .append(rightVar)
+                .append("=")
+                .append(rightChild().compile(env)).append(";");
+
+        env.command(leftStr.toString());
+        env.command(rightStr.toString());
+
+        return "(" + leftVar + operator().toString() + rightVar + ")";
+    }
+
     @Override
     public String compile(JustContext env) {
-        if (isConstNode) return eval(env).toString();
+        if (isConstNode) {
+            return eval(env).toString();
+        } else if (isShouldSplit()) {
+            return splitSubAst(env);
+        }
 
         return super.compile(env);
     }

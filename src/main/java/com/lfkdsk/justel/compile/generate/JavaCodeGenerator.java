@@ -17,6 +17,7 @@ import com.lfkdsk.justel.utils.GeneratedId;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -41,13 +42,18 @@ public class JavaCodeGenerator extends Generator {
         varSet.clear();
 
         if (context == null) return "";
-
-        Collection<String> keySet = context.keySet();
         StringBuilder builder = new StringBuilder();
+
+        Collection<String> keySet = context.varsKeySet();
         for (String key : keySet) {
             Var var = new Var(key, context.get(key));
             varSet.add(var);
             builder.append(var.generateVarAssignCode());
+        }
+
+        List<String> commandSet = context.commandList();
+        for (String command : commandSet) {
+            builder.append(command);
         }
 
         return builder.toString();

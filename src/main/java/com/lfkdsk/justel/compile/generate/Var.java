@@ -42,15 +42,21 @@ public final class Var {
         return type;
     }
 
-    public String generateVarAssignCode() {
-        StringBuilder builder = new StringBuilder();
-        Class<?> objType = getType();
+    public static String getTypeDeclare(Class<?> objType) {
         String typeDeclare = objType.getCanonicalName();
 
         if (ReflectUtils.isPrimitiveOrWrapNumber(objType)) {
             objType = ReflectUtils.toPrimitiveClass(objType);
             typeDeclare = objType.getSimpleName();
         }
+
+        return typeDeclare;
+    }
+
+    public String generateVarAssignCode() {
+        StringBuilder builder = new StringBuilder();
+
+        String typeDeclare = getTypeDeclare(getType());
 
         builder.append(typeDeclare).append(" ").append(name).append("=")
                 .append("((").append(type.getCanonicalName()).append(")")
