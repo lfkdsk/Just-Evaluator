@@ -26,7 +26,11 @@ public interface JustContext {
      */
     Object command(String command);
 
+    Object global(String command);
+
     Collection<String> varsKeySet();
 
     List<String> commandList();
+
+    List<String> globalList();
 }
