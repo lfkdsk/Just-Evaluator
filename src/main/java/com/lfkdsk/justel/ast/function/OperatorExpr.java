@@ -32,7 +32,7 @@ public abstract class OperatorExpr extends AstList implements Function {
 
     protected boolean isConstNode = false;
 
-    protected boolean isThisNodeSplite = false;
+    protected boolean isThisNodeSpited = false;
 
     public OperatorExpr(List<AstNode> children) {
         super(children, Token.OPERATOR);
@@ -95,10 +95,13 @@ public abstract class OperatorExpr extends AstList implements Function {
     }
 
     protected boolean isShouldSplit() {
-        return astLevel > 7;
+        return astLevel > 5;
     }
 
     private String splitSubAst(JustContext env) {
+        // reset this state flag
+        this.isThisNodeSpited = true;
+
         Object leftValue = leftChild().eval(env);
         Object rightValue = rightChild().eval(env);
 
@@ -133,13 +136,18 @@ public abstract class OperatorExpr extends AstList implements Function {
         return "(" + leftVar + operator().toString() + rightVar + ")";
     }
 
+    public boolean isThisNodeSpited() {
+        return isThisNodeSpited;
+    }
+
     @Override
     public String compile(JustContext env) {
         if (isConstNode) {
             return eval(env).toString();
-        } else if (isShouldSplit()) {
-            return splitSubAst(env);
         }
+//        else if (isShouldSplit()) {
+//            return splitSubAst(env);
+//        }
 
         return super.compile(env);
     }
