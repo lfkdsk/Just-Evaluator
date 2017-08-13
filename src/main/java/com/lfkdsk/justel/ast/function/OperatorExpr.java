@@ -95,7 +95,7 @@ public abstract class OperatorExpr extends AstList implements Function {
     }
 
     protected boolean isShouldSplit() {
-        return astLevel > 5;
+        return astLevel > 7;
     }
 
     private String splitSubAst(JustContext env) {

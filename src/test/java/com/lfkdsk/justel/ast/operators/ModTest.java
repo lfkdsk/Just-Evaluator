@@ -8,6 +8,7 @@
 
 package com.lfkdsk.justel.ast.operators;
 
+import com.lfkdsk.justel.utils.NumberUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -38,5 +39,10 @@ class ModTest {
 
         returnStr = compiler("1111.1111d % 10.1111d", null);
         Assertions.assertEquals((double) Double.valueOf(returnStr), 9.001199999999999);
+    }
+
+    @Test
+    void testModMethod() {
+        NumberUtils.computeDivValue(0, 0);
     }
 }
