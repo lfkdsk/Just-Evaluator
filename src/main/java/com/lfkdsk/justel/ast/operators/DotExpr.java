@@ -16,6 +16,7 @@ import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.utils.ReflectUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -47,10 +48,12 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
     public static class InnerReflect {
         public String name;
         public Object originObj;
+        public StringBuilder builder;
 
-        InnerReflect(String name, Object originObj) {
+        public InnerReflect(String name, Object originObj, StringBuilder builder) {
             this.name = name;
             this.originObj = originObj;
+            this.builder = builder;
         }
     }
 
@@ -74,7 +77,37 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
         }
 
         // get method => method value
-        return new InnerReflect(name(), value);
+        return new InnerReflect(name(), value, null);
+    }
+
+    @Override
+    public Object compile(JustContext env, Object value, StringBuilder builder) {
+        Class<?> cls = value instanceof Class<?> ? (Class<?>) value : value.getClass();
+        // get field => field value
+        Field field = ReflectUtils.getField(cls, name());
+
+        if (field != null && field.isAccessible()) return builder.append(compile(env));
+
+        // method
+        String name = name();
+        if (name.length() > 2) {
+            String firstUpper = String.valueOf(name.charAt(0)).toUpperCase() + name.substring(1);
+            String getMethodStr = "get" + firstUpper;
+            String isMethodStr = "is" + firstUpper;
+            Method getMethod = ReflectUtils.getMethod(cls, getMethodStr, new Class[]{});
+            Method isMethod = ReflectUtils.getMethod(cls, isMethodStr, new Class[]{});
+            if (getMethod != null) {
+                builder.append(".").append(getMethodStr);
+                return builder.append("()");
+            }
+
+            if (isMethod != null) {
+                builder.append(".").append(isMethodStr);
+                return builder.append("()");
+            }
+        }
+
+        return builder.append(compile(env));
     }
 
     @Override

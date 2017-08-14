@@ -86,6 +86,7 @@ public class JavaCodeGeneratorTest {
         Generator generator = new JavaCodeGenerator(context, rootNode);
         JustCompiler compiler = new JustCompilerImpl();
         JavaSource javaSource = generator.generate();
+        Logger.v(javaSource.toString());
         Expression expr = compiler.compile(javaSource);
 
         String result = expr.eval(context).toString();

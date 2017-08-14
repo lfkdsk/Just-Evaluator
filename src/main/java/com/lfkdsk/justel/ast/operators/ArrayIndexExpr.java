@@ -58,6 +58,11 @@ public class ArrayIndexExpr extends OperatorExpr implements AstPostfixExpr {
     }
 
     @Override
+    public Object compile(JustContext env, Object value, StringBuilder builder) {
+        return builder.append(compile(env));
+    }
+
+    @Override
     public String compile(JustContext env) {
         return "[" + index().toString() + "]";
     }

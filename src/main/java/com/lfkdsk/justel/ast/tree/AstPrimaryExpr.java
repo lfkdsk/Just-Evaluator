@@ -91,8 +91,32 @@ public class AstPrimaryExpr extends AstList {
         }
     }
 
+    private Object compileSubExpr(JustContext env,
+                                  AstPrimaryExpr expr,
+                                  StringBuilder builder,
+                                  int nest) {
+        if (hasPostfix(expr, nest)) {
+            Object target = compileSubExpr(env, expr, builder, nest + 1);
+
+            return postfix(expr, nest).compile(env, target, builder);
+        } else {
+            String compileVar = ((AstNode) operand(expr)).compile(env);
+            builder.append(compileVar);
+
+            return env.get(compileVar);
+        }
+    }
+
     @Override
     public Object eval(JustContext env) {
         return evalSubExpr(env, this, 0);
+    }
+
+    @Override
+    public String compile(JustContext env) {
+        StringBuilder builder = new StringBuilder();
+        compileSubExpr(env, this, builder, 0);
+
+        return builder.toString();
     }
 }

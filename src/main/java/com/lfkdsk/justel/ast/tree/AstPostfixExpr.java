@@ -32,5 +32,7 @@ public interface AstPostfixExpr {
      * @return eval result
      */
     Object eval(JustContext env, Object value);
+
+    Object compile(JustContext env, Object value, StringBuilder builder);
 }
 

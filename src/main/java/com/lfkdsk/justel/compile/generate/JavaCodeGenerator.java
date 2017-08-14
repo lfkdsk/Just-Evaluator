@@ -62,6 +62,7 @@ public class JavaCodeGenerator extends Generator {
     protected String generateGlobalVars() {
         StringBuilder builder = new StringBuilder();
 
+        if (context == null) return "";
         List<String> list = context.globalList();
         for (String global : list) {
             builder.append(global);

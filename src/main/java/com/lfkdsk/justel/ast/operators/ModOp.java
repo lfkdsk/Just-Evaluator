@@ -27,9 +27,9 @@ import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
  *         Created by liufengkai on 2017/8/2.
  * @see OperatorExpr
  */
-public class Mod extends OperatorExpr {
+public class ModOp extends OperatorExpr {
 
-    public Mod(List<AstNode> children) {
+    public ModOp(List<AstNode> children) {
         super(children, Token.MOD);
     }
 

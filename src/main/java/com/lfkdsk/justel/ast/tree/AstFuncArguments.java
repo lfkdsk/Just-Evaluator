@@ -55,12 +55,18 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
         Method method = ReflectUtils.getMethod(cls, reflect.name, args);
 
         if (method != null) {
-            method.setAccessible(true);
+            return invokeMethod(method, reflect.originObj, newArgs);
+        }
 
-            try {
-                return method.invoke(reflect.originObj, newArgs);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
+        if (reflect.name.length() > 2) {
+            String firstUpper = String.valueOf(reflect.name.charAt(0)).toUpperCase() + reflect.name.substring(1);
+            Method getMethod = ReflectUtils.getMethod(cls, "get" + firstUpper, args);
+            Method isMethod = ReflectUtils.getMethod(cls, "is" + firstUpper, args);
+            if (getMethod != null) method = getMethod;
+            if (isMethod != null) method = isMethod;
+
+            if (method != null) {
+                invokeMethod(method, reflect.originObj, newArgs);
             }
         }
 
@@ -68,8 +74,26 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
     }
 
     @Override
-    public String compile(JustContext env) {
+    public Object compile(JustContext env, Object value, StringBuilder builder) {
+        return builder.append("(")
+                .append(compile(env))
+                .append(")");
+    }
 
+    private Object invokeMethod(Method method, Object obj, Object[] args) {
+        method.setAccessible(true);
+
+        try {
+            return method.invoke(obj, args);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public String compile(JustContext env) {
         // expr , expr , expr
 
         StringBuilder builder = new StringBuilder();
