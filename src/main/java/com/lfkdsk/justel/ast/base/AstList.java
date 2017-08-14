@@ -81,6 +81,8 @@ public class AstList extends AstNode {
 
     @Override
     public AstNode replaceChild(int index, AstNode node) {
+        node.setParent(this);
+
         return children.set(index, node);
     }
 

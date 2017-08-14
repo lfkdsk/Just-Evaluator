@@ -11,11 +11,15 @@ package com.lfkdsk.justel.ast.tree;
 import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.ast.function.Operator;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.exception.CompilerException;
 import com.lfkdsk.justel.exception.EvalException;
+import com.lfkdsk.justel.parser.BnfCom;
 
 import java.util.List;
+
+import static com.lfkdsk.justel.ast.function.OperatorExpr.operators;
 
 /**
  * Ast Binary Expr
@@ -42,6 +46,31 @@ public class AstBinaryExpr extends AstList {
 
     public AstLeaf midOp() {
         return (AstLeaf) child(1);
+    }
+
+    /**
+     * Reset AstBinaryExpr to Particular Expr
+     * We use BinaryExpr to handle priority of Operator.
+     * So we should change it to particular Expr to compute the name.
+     *
+     * @param expr      Origin AstBinaryExpr
+     * @param operators Support Operators
+     * @return New Particular Expr
+     */
+    private AstNode resetAstExpr(AstBinaryExpr expr, BnfCom.Operators operators) {
+        // operator is Operator
+        Operator operator = (Operator) expr.midOp();
+        // get the factory of sub-node
+        BnfCom.Factory factory = operators.get(operator.operator()).factory;
+        // use list to make new node
+
+        return factory.make(expr.getChildren());
+    }
+
+    @Override
+    protected void setParent(AstNode parent) {
+        super.setParent(parent);
+        parent.replaceChild(childIndex, resetAstExpr(this, operators));
     }
 
     @Override

@@ -78,6 +78,11 @@ public class JustParserImplTest {
         }
     }
 
+    @Test
+    void testOp() {
+        Logger.init("test op");
+        runExpr("1 + 1", true, null);
+    }
 
     public static String runExpr(String expr, boolean eval, JustContext context) {
         Lexer lexer = new JustLexerImpl(new StringReader(expr));

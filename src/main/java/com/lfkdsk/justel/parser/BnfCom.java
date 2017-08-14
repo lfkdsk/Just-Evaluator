@@ -352,11 +352,11 @@ public class BnfCom {
         }
     }
 
-    protected static class Precedence {
-        int value;
-        boolean leftAssoc;
-        Class<? extends AstNode> clazz;
-        Factory factory;
+    public static class Precedence {
+        public final int value;
+        public final boolean leftAssoc;
+        public final Class<? extends AstNode> clazz;
+        public final Factory factory;
 
         public Precedence(int value, boolean leftAssoc,
                           Class<? extends AstNode> clazz) {
@@ -505,11 +505,11 @@ public class BnfCom {
      */
     private static final String factoryName = "create";
 
-    protected abstract static class Factory {
+    public abstract static class Factory {
 
         protected abstract AstNode make0(Object arg) throws Exception;
 
-        protected AstNode make(Object arg) {
+        public AstNode make(Object arg) {
             try {
                 return make0(arg);
             } catch (IllegalArgumentException e1) {
@@ -621,6 +621,7 @@ public class BnfCom {
         for (Element e : elements) {
             e.parse(lexer, results);
         }
+
         return factory.make(results);
     }
 

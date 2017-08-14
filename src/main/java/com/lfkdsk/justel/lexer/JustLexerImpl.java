@@ -487,16 +487,4 @@ public class JustLexerImpl implements Lexer {
     private void addToken(Token token) {
         queue.add(token);
     }
-
-    public void insertSymbol(String symbol, Token token) {
-        insertSymbol.put(symbol, token);
-    }
-
-//    public Token containsSymbol(Character peekChar) {
-//        if (insertSymbol.containsKey(peekChar.toString())) {
-//            return insertSymbol.get(peekChar.toString());
-//        }
-//
-//
-//    }
 }

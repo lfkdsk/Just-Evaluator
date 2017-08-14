@@ -27,6 +27,7 @@ import static com.lfkdsk.justel.ast.tree.AstFuncExpr.isAstFuncExpr;
  */
 public interface JustParser {
 
+
     /**
      * Parse with Lexer(Provide Tokens)
      *

@@ -62,6 +62,10 @@ public abstract class AstNode implements Iterable<AstNode>
 
     public static final int PROGRAM = 700;
 
+    /**
+     * The level of AstNode
+     * Leaf Level = 1
+     */
     protected int astLevel = 1;
 
     protected int childIndex = 0;

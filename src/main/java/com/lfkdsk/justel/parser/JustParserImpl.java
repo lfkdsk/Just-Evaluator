@@ -9,7 +9,8 @@
 package com.lfkdsk.justel.parser;
 
 import com.lfkdsk.justel.ast.base.AstNode;
-import com.lfkdsk.justel.ast.operators.*;
+import com.lfkdsk.justel.ast.
+  .*;
 import com.lfkdsk.justel.ast.postfix.NegativePostfix;
 import com.lfkdsk.justel.ast.postfix.NotPostfix;
 import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
@@ -24,6 +25,7 @@ import com.lfkdsk.justel.literal.NumberLiteral;
 import com.lfkdsk.justel.literal.StringLiteral;
 import com.lfkdsk.justel.token.ReservedToken;
 
+import static com.lfkdsk.justel.ast.function.OperatorExpr.operators;
 import static com.lfkdsk.justel.token.ReservedToken.*;
 import static com.lfkdsk.justel.token.Token.EOL;
 import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
@@ -49,7 +51,6 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom expr0 = rule();
 
-    protected BnfCom.Operators operators = new BnfCom.Operators();
 
     ///////////////////////////////////////////////////////////////////////////
     // base language type
