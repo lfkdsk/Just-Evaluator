@@ -24,6 +24,8 @@ public class AstList extends AstNode {
 
     protected List<AstNode> children;
 
+    protected boolean hasComputeAstLevel = false;
+
     public AstList(List<AstNode> children, int tag) {
         super(tag);
         this.children = children;
@@ -86,13 +88,17 @@ public class AstList extends AstNode {
 
     @Override
     public int computeAstLevel() {
+        if (hasComputeAstLevel) return astLevel;
+
         int maxLevel = 1;
         for (int index = 0; index < childCount(); index++) {
             AstNode child = child(index);
-            child.setParent(this);
+            child.setParentNode(this);
             child.setChildIndex(index);
             maxLevel = Math.max(child.computeAstLevel(), maxLevel);
         }
+
+        this.hasComputeAstLevel = true;
 
         return astLevel = maxLevel + 1;
     }

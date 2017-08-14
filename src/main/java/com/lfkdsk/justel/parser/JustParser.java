@@ -78,7 +78,8 @@ public interface JustParser {
                     child = new AstFuncExpr(((AstPrimaryExpr) child).getChildren());
                     parent.replaceChild(i, child);
                 }
-            } else if (isAstCondExpr(child)) {
+            } else
+            if (isAstCondExpr(child)) {
                 // fix primary(cond) => cond expr
                 child = new AstCondExpr(((AstList) child).getChildren());
                 parent.replaceChild(i, child);

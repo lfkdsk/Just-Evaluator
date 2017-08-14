@@ -63,8 +63,10 @@ public class CornerTest {
         com.lfkdsk.justel.eval.Expression expr = compiler.compile(javaSource);
 
         long startTime = System.currentTimeMillis();
-        for (int i = 0; i < 1_0000_0000; i++) {
-            expr.eval(context);
+        for (int j = 0; j < 20; j++) {
+            for (int i = 0; i < 1_0000_0000; i++) {
+                expr.eval(context);
+            }
         }
         System.out.println(System.currentTimeMillis() - startTime);
     }

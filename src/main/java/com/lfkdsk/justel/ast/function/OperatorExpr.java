@@ -33,6 +33,8 @@ public abstract class OperatorExpr extends AstList implements Function {
 
     protected boolean isConstNode = false;
 
+    protected boolean isThisNodeSpited = false;
+  
     public static final BnfCom.Operators operators = new BnfCom.Operators();
 
     public OperatorExpr(List<AstNode> children) {
@@ -96,10 +98,13 @@ public abstract class OperatorExpr extends AstList implements Function {
     }
 
     protected boolean isShouldSplit() {
-        return astLevel > 3;
+        return astLevel > 7;
     }
 
     private String splitSubAst(JustContext env) {
+        // reset this state flag
+        this.isThisNodeSpited = true;
+
         Object leftValue = leftChild().eval(env);
         Object rightValue = rightChild().eval(env);
 
@@ -112,31 +117,40 @@ public abstract class OperatorExpr extends AstList implements Function {
         StringBuilder leftStr = new StringBuilder();
         StringBuilder rightStr = new StringBuilder();
 
-        leftStr.append(leftType)
+        leftStr
+                .append(leftType)
                 .append(" ")
                 .append(leftVar)
                 .append("=")
                 .append(leftChild().compile(env)).append(";");
 
-        rightStr.append(rightType)
+        rightStr
+                .append(rightType)
                 .append(" ")
                 .append(rightVar)
                 .append("=")
                 .append(rightChild().compile(env)).append(";");
 
+//        env.global("static " + leftType + " " + leftVar + ";");
+//        env.global("static " + rightType + " " + rightVar + ";");
         env.command(leftStr.toString());
         env.command(rightStr.toString());
 
         return "(" + leftVar + operator().toString() + rightVar + ")";
     }
 
+    public boolean isThisNodeSpited() {
+        return isThisNodeSpited;
+    }
+
     @Override
     public String compile(JustContext env) {
         if (isConstNode) {
             return eval(env).toString();
-        } else if (isShouldSplit()) {
-            return splitSubAst(env);
         }
+//        else if (isShouldSplit()) {
+//            return splitSubAst(env);
+//        }
 
         return super.compile(env);
     }

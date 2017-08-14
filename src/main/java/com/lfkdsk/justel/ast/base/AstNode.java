@@ -68,15 +68,9 @@ public abstract class AstNode implements Iterable<AstNode>
      */
     protected int astLevel = 1;
 
-    /**
-     * Parent Node in AST
-     */
-    protected AstNode parent;
+    protected int childIndex = 0;
 
-    /**
-     * Index of Child in its parent.
-     */
-    protected int childIndex;
+    protected AstNode parentNode;
 
     public AstNode(int tag) {
         this.tag = tag;
@@ -123,12 +117,16 @@ public abstract class AstNode implements Iterable<AstNode>
 
     public abstract int computeAstLevel();
 
-    protected void setParent(AstNode parent) {
-        this.parent = parent;
+    public AstNode getParentNode() {
+        return parentNode;
     }
 
-    protected void setChildIndex(int index) {
-        this.childIndex = index;
+    public void setParentNode(AstNode parentNode) {
+        this.parentNode = parentNode;
+    }
+
+    public void setChildIndex(int childIndex) {
+        this.childIndex = childIndex;
     }
 
     @Override

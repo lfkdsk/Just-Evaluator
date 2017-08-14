@@ -14,6 +14,8 @@ public class JustMapContext implements JustContext {
 
     private List<String> commandList = new LinkedList<>();
 
+    private List<String> globalList = new LinkedList<>();
+
     @Override
     public boolean contain(String name) {
         return map.containsKey(name);
@@ -35,6 +37,11 @@ public class JustMapContext implements JustContext {
     }
 
     @Override
+    public Object global(String command) {
+        return globalList.add(command);
+    }
+
+    @Override
     public Collection<String> varsKeySet() {
         return map.keySet();
     }
@@ -42,5 +49,10 @@ public class JustMapContext implements JustContext {
     @Override
     public List<String> commandList() {
         return commandList;
+    }
+
+    @Override
+    public List<String> globalList() {
+        return globalList;
     }
 }

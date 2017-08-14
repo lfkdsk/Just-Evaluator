@@ -9,7 +9,8 @@
 package com.lfkdsk.justel.parser;
 
 import com.lfkdsk.justel.ast.base.AstNode;
-import com.lfkdsk.justel.ast.operators.*;
+import com.lfkdsk.justel.ast.
+  .*;
 import com.lfkdsk.justel.ast.postfix.NegativePostfix;
 import com.lfkdsk.justel.ast.postfix.NotPostfix;
 import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
@@ -147,7 +148,7 @@ public class JustParserImpl implements JustParser {
 
         insertOperators(DIV, 3, LEFT, DivOp.class);
         insertOperators(MUL, 3, LEFT, MulOp.class);
-        insertOperators(MOD, 3, LEFT, Mod.class);
+        insertOperators(MOD, 3, LEFT, ModOp.class);
 
         insertOperators(LOGICAL_F_TOKEN, 2, LEFT, NotPostfix.class);
     }

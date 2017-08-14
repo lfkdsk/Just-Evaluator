@@ -59,16 +59,29 @@ public class JavaCodeGenerator extends Generator {
         return builder.toString();
     }
 
+    protected String generateGlobalVars() {
+        StringBuilder builder = new StringBuilder();
+
+        if (context == null) return "";
+        List<String> list = context.globalList();
+        for (String global : list) {
+            builder.append(global);
+        }
+
+        return builder.toString();
+    }
+
     @Override
     public JavaSource generate() {
         JustContext templateContext = new JustMapContext();
         String className = "JustEL" + GeneratedId.generateAtomId();
-        templateContext.put("${attrs}", "@Override");
+
         templateContext.put("${className}", className);
         templateContext.put("${expression}", rootNode.compile(context));
         // after generate Ast -> generate local vars
         // some vars maybe latter than AST Compile
         templateContext.put("${localVars}", generateLocalVars());
+        templateContext.put("${attrs}", generateGlobalVars());
 
         return new JavaSource(JavaSource.GENERATE_DEFAULT_PACKAGE,
                 className, mTemplate.fakeGenerateString(templateContext));

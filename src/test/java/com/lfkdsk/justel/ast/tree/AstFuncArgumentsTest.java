@@ -8,17 +8,51 @@
 
 package com.lfkdsk.justel.ast.tree;
 
+import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.context.JustMapContext;
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 
 /**
  * Created by liufengkai on 2017/8/2.
  */
-class AstFuncArgumentsTest {
+public class AstFuncArgumentsTest {
     @Test
     void testParserFuncArgs() {
         // parser
         runExpr("lfkdsk(lfkdsk,lfkdsk,lfkdsk)", false, null);
+    }
+
+    public static class O {
+        private int lfkdsk = 100;
+
+        private int[] lllll = new int[]{111, 111, 11222};
+
+        public int[] getLllll() {
+            return lllll;
+        }
+
+        public int getLfkdsk() {
+            return lfkdsk;
+        }
+    }
+
+
+    @Test
+    void testGetter() {
+        JustContext context = new JustMapContext();
+        context.put("O", new O());
+        runExpr("O.lfkdsk", true, context);
+    }
+
+    @Test
+    void testCompilerGetter() {
+        JustContext context = new JustMapContext();
+        context.put("O", new O());
+        compiler("O.lfkdsk", context);
+        compiler("O.lllll[2]", context);
+        compiler("O.getLllll()[2]", context);
     }
 }

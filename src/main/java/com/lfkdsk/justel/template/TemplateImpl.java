@@ -24,7 +24,7 @@ public class TemplateImpl implements Template {
 
     private static final DomCom functionGen = DomCom.rule()
             .bind("${attrs}")
-            .sep("public Object eval(JustContext context) {")
+            .sep("@Override public Object eval(JustContext context) {")
             .bind("${localVars}")
             .sep("return")
             .bind("${expression}")

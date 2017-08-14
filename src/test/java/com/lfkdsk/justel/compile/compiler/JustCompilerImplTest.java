@@ -18,7 +18,7 @@ class JustCompilerImplTest {
         JustCompilerImpl compiler = new JustCompilerImpl();
         JustMapContext context = new JustMapContext();
         String className = "JustEL" + GeneratedId.generateAtomId();
-        context.put("${attrs}", "@Override");
+        context.put("${attrs}", "");
         context.put("${className}", className);
         context.put("${localVars}", "int i = 10;");
         context.put("${expression}", "0");
