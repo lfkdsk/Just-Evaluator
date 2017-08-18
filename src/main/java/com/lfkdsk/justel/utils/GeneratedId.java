@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *         Created by liufengkai on 16/7/14.
  */
 public class GeneratedId {
-    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(20000);
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
     /**
      * Generate a value suitable for use in setId
