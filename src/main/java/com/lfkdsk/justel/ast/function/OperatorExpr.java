@@ -39,6 +39,7 @@ public abstract class OperatorExpr extends AstList implements Function {
 
     public OperatorExpr(List<AstNode> children) {
         super(children, Token.OPERATOR);
+        this.checkConstNode();
     }
 
     public OperatorExpr(List<AstNode> children, int tag) {

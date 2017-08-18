@@ -2,6 +2,7 @@ package com.lfkdsk.justel.lexer;
 
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.token.*;
+import com.lfkdsk.justel.utils.GeneratedId;
 import com.lfkdsk.justel.utils.NumberUtils;
 import com.lfkdsk.justel.utils.collection.ArrayQueue;
 
@@ -9,7 +10,9 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static com.lfkdsk.justel.token.ReservedToken.reservedToken;
 
@@ -33,6 +36,8 @@ public class JustLexerImpl implements Lexer {
      */
     private Map<String, Token> insertSymbol = new HashMap<>();
 
+    private Set<Character> avoidChar = new HashSet<>();
+
     /**
      * has more tokens in Lexer
      */
@@ -46,6 +51,7 @@ public class JustLexerImpl implements Lexer {
     public JustLexerImpl(Reader reader) {
         this.reader = new LineNumberReader(reader);
         this.hasMore = true;
+        this.initialSymbols();
     }
 
     @Override
@@ -207,129 +213,103 @@ public class JustLexerImpl implements Lexer {
         return false;
     }
 
+    private boolean notLetterOrDigit(char peek) {
+        return !Character.isLetterOrDigit(peek)
+                && !avoidChar.contains(peek);
+    }
+
     /**
      * resolve symbol token
      *
      * @return is symbol token?
      */
     private boolean resolveSymbol() {
-        // current peek char
-        switch (peekChar) {
-            case '?': {
-                addToken(SepToken.QUESTION_TOKEN);
-                break;
-            }
+        if (!notLetterOrDigit(peekChar)) return false;
 
-            case ':': {
-                addToken(SepToken.COLON_TOKEN);
-                break;
-            }
+        StringBuilder symbol = new StringBuilder();
+        symbol.append(peekChar);
 
-            case '+': {
-                addToken(SepToken.PLUS_TOKEN);
+        char itemSymbol;
+        while (notLetterOrDigit(itemSymbol = readChar())) {
+            if (!insertSymbol.containsKey(symbol.toString() + itemSymbol))
                 break;
-            }
 
-            case '-': {
-                addToken(SepToken.MINUS_TOKEN);
-                break;
-            }
-
-            case '*': {
-                addToken(SepToken.MULTIPLY_TOKEN);
-                break;
-            }
-
-            case '/': {
-                addToken(SepToken.DIVIDE_TOKEN);
-                break;
-            }
-
-            case '%': {
-                addToken(SepToken.MOD_TOKEN);
-                break;
-            }
-
-            case '&': {
-                if (readChar('&')) {
-                    readChar();
-                    addToken(SepToken.AND_TOKEN);
-                } else {
-                    addToken(SepToken.AMPERSAND_TOKEN);
-                }
-                break;
-            }
-
-            case '|': {
-                if (readChar('|')) {
-                    readChar();
-                    addToken(SepToken.OR_TOKEN);
-                } else {
-                    addToken(SepToken.BAR_TOKEN);
-                }
-                break;
-            }
-
-            case '<': {
-                if (readChar('=')) {
-                    readChar();
-                    addToken(SepToken.LTE_TOKEN);
-                } else {
-                    addToken(SepToken.LESS_TOKEN);
-                }
-                break;
-            }
-
-            case '>': {
-                if (readChar('=')) {
-                    readChar();
-                    addToken(SepToken.GTE_TOKEN);
-                } else {
-                    addToken(SepToken.GREAT_TOKEN);
-                }
-                break;
-            }
-
-            case '!': {
-                if (readChar('=')) {
-                    readChar();
-                    addToken(SepToken.NOT_EQUAL_TOKEN);
-                } else {
-                    addToken(SepToken.EXCLAM_TOKEN);
-                }
-                break;
-            }
-
-            case '.': {
-                addToken(SepToken.DOT_TOKEN);
-                break;
-            }
-
-            case '[': {
-                addToken(SepToken.COLLECT_GET_LEFT_TOKEN);
-                break;
-            }
-
-            case ']': {
-                addToken(SepToken.COLLECT_GET_RIGHT_TOKEN);
-                break;
-            }
-
-            case '=': {
-                if (readChar('=')) {
-                    readChar();
-                    addToken(SepToken.EQUAL_TOKEN);
-                }
-                break;
-            }
-
-            default:
-                return false;
+            symbol.append(itemSymbol);
         }
 
-        readChar();
-        return true;
+        if (insertSymbol.containsKey(symbol.toString())) {
+            addToken(insertSymbol.get(symbol.toString()));
+            // read next line
+
+            return true;
+        } else {
+
+            return false;
+        }
     }
+
+    private void initialSymbols() {
+        // addToken(SepToken.QUESTION_TOKEN);
+        insertSymbol("?", SepToken.QUESTION_TOKEN);
+        // addToken(SepToken.COLON_TOKEN);
+        insertSymbol(":", SepToken.COLON_TOKEN);
+        // addToken(SepToken.PLUS_TOKEN);
+        insertSymbol("+", SepToken.PLUS_TOKEN);
+        // addToken(SepToken.MINUS_TOKEN);
+        insertSymbol("-", SepToken.MINUS_TOKEN);
+        // addToken(SepToken.MULTIPLY_TOKEN);
+        insertSymbol("*", SepToken.MULTIPLY_TOKEN);
+        // addToken(SepToken.DIVIDE_TOKEN);
+        insertSymbol("/", SepToken.DIVIDE_TOKEN);
+        // addToken(SepToken.MOD_TOKEN);
+        insertSymbol("%", SepToken.MOD_TOKEN);
+        // addToken(SepToken.AND_TOKEN);
+        insertSymbol("&", SepToken.AMPERSAND_TOKEN);
+        // addToken(SepToken.AMPERSAND_TOKEN);
+        insertSymbol("&&", SepToken.AND_TOKEN);
+        // addToken(SepToken.BAR_TOKEN);
+        insertSymbol("|", SepToken.BAR_TOKEN);
+        // addToken(SepToken.OR_TOKEN);
+        insertSymbol("||", SepToken.OR_TOKEN);
+        // addToken(SepToken.EQUAL_TOKEN);
+        insertSymbol("==", SepToken.EQUAL_TOKEN);
+        // addToken(SepToken.COLLECT_GET_LEFT_TOKEN);
+        insertSymbol("[", SepToken.COLLECT_GET_LEFT_TOKEN);
+        // addToken(SepToken.COLLECT_GET_RIGHT_TOKEN);
+        insertSymbol("]", SepToken.COLLECT_GET_RIGHT_TOKEN);
+        // addToken(SepToken.DOT_TOKEN);
+        insertSymbol(".", SepToken.DOT_TOKEN);
+        // addToken(SepToken.NOT_EQUAL_TOKEN);
+        insertSymbol("!=", SepToken.NOT_EQUAL_TOKEN);
+        // addToken(SepToken.EXCLAM_TOKEN);
+        insertSymbol("!", SepToken.EXCLAM_TOKEN);
+        // addToken(SepToken.GREAT_TOKEN);
+        insertSymbol(">", SepToken.GREAT_TOKEN);
+        // addToken(SepToken.GTE_TOKEN);
+        insertSymbol(">=", SepToken.GTE_TOKEN);
+        // addToken(SepToken.LESS_TOKEN);
+        insertSymbol("<", SepToken.LESS_TOKEN);
+        // addToken(SepToken.LTE_TOKEN);
+        insertSymbol("<=", SepToken.LTE_TOKEN);
+
+        avoidChar.add('(');
+        avoidChar.add(')');
+        avoidChar.add(' ');
+        avoidChar.add(',');
+        avoidChar.add('\"');
+    }
+
+    public void insertSymbol(final String symbol) {
+        if (symbol.length() <= 0) return;
+
+        SepToken token = new SepToken(GeneratedId.generateAtomId(), symbol);
+        insertSymbol(symbol, token);
+    }
+
+    public void insertSymbol(final String symbol, final Token token) {
+        insertSymbol.put(symbol, token);
+    }
+
 
     /**
      * resolve number token

@@ -32,8 +32,8 @@ public class JustParserImplTest {
         String lfkdsk = "lfkdsk.LFKDSK[11111 + 12222](1111,2222,\"LFKDSK\") == true";
         String lfkdsk0 = "lfkdsk() == false && lfkdsk";
         String lfkdsk1 = "(lfkdsk() ? lfkdsk : lfkdsk) ? true : false";
-        runExpr(lfkdsk, false, null);
-        runExpr(lfkdsk0, false, null);
+//        runExpr(lfkdsk, false, null);
+//        runExpr(lfkdsk0, false, null);
         runExpr(lfkdsk1, false, null);
     }
 

@@ -10,11 +10,9 @@ import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
-import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.parser.JustParserImpl;
 import com.lfkdsk.justel.utils.NumberUtils;
 import com.lfkdsk.justel.utils.logger.Logger;
-import com.sun.tools.javac.resources.compiler;
 import org.junit.jupiter.api.Test;
 
 import java.io.StringReader;
@@ -68,17 +66,17 @@ class OperatorExprTest {
 
         @Override
         public String functionName() {
-            return ":";
+            return "**";
         }
     }
 
     private String insertRunExpr(String expr, JustContext context) {
         JustParserImpl parser = new JustParserImpl();
-        parser.insertOperators(":", 2, LEFT, NewOperator.class);
+        parser.insertOperators("**", 2, LEFT, NewOperator.class);
 
         Logger.init("test parser");
-        Lexer lexer = new JustLexerImpl(new StringReader(expr));
-
+        JustLexerImpl lexer = new JustLexerImpl(new StringReader(expr));
+        lexer.insertSymbol("**");
         String returnString = "";
         while (lexer.hasMore()) {
             AstNode node = parser.parser(lexer);
@@ -93,9 +91,10 @@ class OperatorExprTest {
 
     private String insertCompiler(String exprStr, JustContext context) {
         Logger.init("gen-code");
-        Lexer lexer = new JustLexerImpl(new StringReader(exprStr));
+        JustLexerImpl lexer = new JustLexerImpl(new StringReader(exprStr));
+        lexer.insertSymbol("**");
         JustParserImpl parser = new JustParserImpl();
-        parser.insertOperators(":", 2, LEFT, NewOperator.class);
+        parser.insertOperators("**", 2, LEFT, NewOperator.class);
 
         AstNode rootNode = null;
         while (lexer.hasMore()) {
@@ -114,12 +113,12 @@ class OperatorExprTest {
 
     @Test
     void insertOperatorEval() {
-        insertRunExpr("1111 : 121", null);
+        insertRunExpr("1111 ** 121", null);
     }
 
     @Test
     void insertCompiler() {
-        insertCompiler("1111 : 121", null);
+        insertCompiler("1111 ** 121", null);
     }
 
     @Test
@@ -127,6 +126,12 @@ class OperatorExprTest {
         JustContext context = new JustMapContext();
         context.put("f", 1111);
         compiler("1111 * 22222.0 + f", context);
+    }
+
+    @Test
+    void testChar() {
+        Logger.init();
+        Logger.i(Character.isLetterOrDigit('=') + " ");
     }
 
 }

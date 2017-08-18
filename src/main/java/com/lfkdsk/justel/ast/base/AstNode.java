@@ -25,6 +25,7 @@ import java.util.Iterator;
 public abstract class AstNode implements Iterable<AstNode>
         , Evaluable, Compilable {
 
+//    public static Map<String, AstNode> parserNode = new HashMap<>();
     /**
      * Spec Tag for Ast Node
      */

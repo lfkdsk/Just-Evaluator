@@ -24,4 +24,10 @@ class JustLexerImplTest {
             System.out.println(System.currentTimeMillis() - startTime);
         }
     }
+
+    @Test
+    void testNewSymbol() {
+        JustLexerImpl lexer = new JustLexerImpl(new StringReader("== !== #= != "));
+        lexer.hasMore();
+    }
 }
