@@ -105,26 +105,51 @@ public abstract class AstNode implements Iterable<AstNode>
      */
     public abstract String location();
 
-    public Iterator<AstNode> iterator() {
-        return children();
-    }
-
-    public int tag() {
-        return tag;
-    }
-
     public abstract AstNode replaceChild(int index, AstNode node);
 
     public abstract int computeAstLevel();
 
+    /**
+     * iterator of list
+     *
+     * @return list of node
+     */
+    public Iterator<AstNode> iterator() {
+        return children();
+    }
+
+    /**
+     * get tag integer
+     *
+     * @return tag
+     */
+    public int tag() {
+        return tag;
+    }
+
+    /**
+     * get parent node
+     *
+     * @return parent node
+     */
     public AstNode getParentNode() {
         return parentNode;
     }
 
+    /**
+     * set parent node
+     *
+     * @param parentNode parent node
+     */
     public void setParentNode(AstNode parentNode) {
         this.parentNode = parentNode;
     }
 
+    /**
+     * index of child point
+     *
+     * @param childIndex child index
+     */
     public void setChildIndex(int childIndex) {
         this.childIndex = childIndex;
     }

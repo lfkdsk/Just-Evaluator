@@ -9,8 +9,7 @@
 package com.lfkdsk.justel.parser;
 
 import com.lfkdsk.justel.ast.base.AstNode;
-import com.lfkdsk.justel.ast.
-  .*;
+import com.lfkdsk.justel.ast.operators.*;
 import com.lfkdsk.justel.ast.postfix.NegativePostfix;
 import com.lfkdsk.justel.ast.postfix.NotPostfix;
 import com.lfkdsk.justel.ast.tree.AstBinaryExpr;

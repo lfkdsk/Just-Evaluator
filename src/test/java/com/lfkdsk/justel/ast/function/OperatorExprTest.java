@@ -7,17 +7,20 @@ import com.lfkdsk.justel.compile.generate.Generator;
 import com.lfkdsk.justel.compile.generate.JavaCodeGenerator;
 import com.lfkdsk.justel.compile.generate.JavaSource;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.parser.JustParserImpl;
 import com.lfkdsk.justel.utils.NumberUtils;
 import com.lfkdsk.justel.utils.logger.Logger;
+import com.sun.tools.javac.resources.compiler;
 import org.junit.jupiter.api.Test;
 
 import java.io.StringReader;
 import java.util.List;
 
+import static com.lfkdsk.justel.compile.compiler.CornerTest.compiler;
 import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
 import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 
@@ -117,6 +120,13 @@ class OperatorExprTest {
     @Test
     void insertCompiler() {
         insertCompiler("1111 : 121", null);
+    }
+
+    @Test
+    void insertCompiler1() {
+        JustContext context = new JustMapContext();
+        context.put("f", 1111);
+        compiler("1111 * 22222.0 + f", context);
     }
 
 }

@@ -22,9 +22,15 @@ import java.util.List;
  */
 public class AstList extends AstNode {
 
+    /**
+     * List of Child Node
+     */
     protected List<AstNode> children;
 
-    protected boolean hasComputeAstLevel = false;
+    /**
+     * had Compute Ast Depth
+     */
+    protected boolean hadComputeAstLevel = false;
 
     public AstList(List<AstNode> children, int tag) {
         super(tag);
@@ -81,14 +87,13 @@ public class AstList extends AstNode {
 
     @Override
     public AstNode replaceChild(int index, AstNode node) {
-        node.setParent(this);
-
+        node.setParentNode(this);
         return children.set(index, node);
     }
 
     @Override
     public int computeAstLevel() {
-        if (hasComputeAstLevel) return astLevel;
+        if (hadComputeAstLevel) return astLevel;
 
         int maxLevel = 1;
         for (int index = 0; index < childCount(); index++) {
@@ -98,7 +103,7 @@ public class AstList extends AstNode {
             maxLevel = Math.max(child.computeAstLevel(), maxLevel);
         }
 
-        this.hasComputeAstLevel = true;
+        this.hadComputeAstLevel = true;
 
         return astLevel = maxLevel + 1;
     }

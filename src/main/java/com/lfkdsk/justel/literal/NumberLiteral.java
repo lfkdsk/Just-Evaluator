@@ -60,4 +60,18 @@ public class NumberLiteral extends Literal {
     public Object eval(JustContext env) {
         return castTokenValue(numberToken());
     }
+
+    @Override
+    public String compile(JustContext env) {
+        switch (token.getTag()) {
+            case Token.LONG:
+                return number.longValue() + "L";
+            case Token.FLOAT:
+                return number.floatValue() + "F";
+            case Token.DOUBLE:
+                return number.doubleValue() + "D";
+        }
+
+        return super.compile(env);
+    }
 }

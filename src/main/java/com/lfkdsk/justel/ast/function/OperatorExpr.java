@@ -34,7 +34,7 @@ public abstract class OperatorExpr extends AstList implements Function {
     protected boolean isConstNode = false;
 
     protected boolean isThisNodeSpited = false;
-  
+
     public static final BnfCom.Operators operators = new BnfCom.Operators();
 
     public OperatorExpr(List<AstNode> children) {
@@ -122,7 +122,8 @@ public abstract class OperatorExpr extends AstList implements Function {
                 .append(" ")
                 .append(leftVar)
                 .append("=")
-                .append(leftChild().compile(env)).append(";");
+                .append(leftChild().compile(env))
+                .append(";");
 
         rightStr
                 .append(rightType)
@@ -146,7 +147,11 @@ public abstract class OperatorExpr extends AstList implements Function {
     @Override
     public String compile(JustContext env) {
         if (isConstNode) {
-            return eval(env).toString();
+            Object obj = eval(env);
+            if (obj instanceof Float) return obj.toString() + "F";
+            else if (obj instanceof Long) return obj.toString() + "L";
+
+            return obj.toString();
         }
 //        else if (isShouldSplit()) {
 //            return splitSubAst(env);

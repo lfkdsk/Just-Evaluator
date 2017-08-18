@@ -19,8 +19,6 @@ import com.lfkdsk.justel.parser.BnfCom;
 
 import java.util.List;
 
-import static com.lfkdsk.justel.ast.function.OperatorExpr.operators;
-
 /**
  * Ast Binary Expr
  * Binary Expr will be replace by Operator Expr
@@ -65,12 +63,6 @@ public class AstBinaryExpr extends AstList {
         // use list to make new node
 
         return factory.make(expr.getChildren());
-    }
-
-    @Override
-    protected void setParent(AstNode parent) {
-        super.setParent(parent);
-        parent.replaceChild(childIndex, resetAstExpr(this, operators));
     }
 
     @Override
