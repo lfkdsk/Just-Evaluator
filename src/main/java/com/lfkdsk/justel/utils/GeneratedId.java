@@ -21,7 +21,7 @@ public class GeneratedId {
         for (; ; ) {
             final int result = sNextGeneratedId.get();
             int newValue = result + 1;
-            if (sNextGeneratedId.compareAndSet(result, newValue)) {
+             if (sNextGeneratedId.compareAndSet(result, newValue)) {
                 return result;
             }
         }
