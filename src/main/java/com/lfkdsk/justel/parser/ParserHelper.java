@@ -14,7 +14,7 @@ import static com.lfkdsk.justel.ast.tree.AstFuncExpr.isAstFuncExpr;
  * @author liufengkai
  *         Created by liufengkai on 2017/8/18.
  */
-public class ParserHelper {
+class ParserHelper {
 
 
     /**
