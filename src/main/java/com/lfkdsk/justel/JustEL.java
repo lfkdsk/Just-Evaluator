@@ -41,6 +41,11 @@ public class JustEL {
      */
     private final Generator generator;
 
+    /**
+     * default EL
+     */
+    private static JustEL defaultEL;
+
     private JustEL(JustParser parser, Lexer lexer, JustCompiler compiler, Generator generator) {
         this.parser = parser;
         this.lexer = lexer;
@@ -101,8 +106,9 @@ public class JustEL {
      * @return Value
      */
     public static Object runEval(String expr, JustContext env) {
-        return new JustELBuilder()
-                .create()
+        return (defaultEL == null
+                ? new JustELBuilder().create()
+                : defaultEL)
                 .eval(expr, env);
     }
 
@@ -114,8 +120,9 @@ public class JustEL {
      * @return Value
      */
     public static Expression runCompile(String expr, JustContext env) {
-        return new JustELBuilder()
-                .create()
+        return (defaultEL == null
+                ? new JustELBuilder().create()
+                : defaultEL)
                 .compile(expr, env);
     }
 
