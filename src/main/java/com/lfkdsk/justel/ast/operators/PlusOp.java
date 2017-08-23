@@ -43,7 +43,7 @@ public class PlusOp extends OperatorExpr {
         Object left = leftChild().eval(env);
         Object right = rightChild().eval(env);
 
-        if (isString(left) && isString(right)) {
+        if (isString(left) || isString(right)) {
 
             // "" + ""
             return String.valueOf(left) + String.valueOf(right);

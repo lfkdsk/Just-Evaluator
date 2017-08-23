@@ -35,4 +35,8 @@ public class ArrayQueue<E> {
     public int size() {
         return arrayList.size();
     }
+
+    public void clear() {
+        arrayList.clear();
+    }
 }

@@ -33,6 +33,10 @@ public class JavaCodeGenerator extends Generator {
 
     private static final DomCom mTemplate = new TemplateImpl().generateTemplate();
 
+    public JavaCodeGenerator() {
+        this(null, null);
+    }
+
     public JavaCodeGenerator(JustContext context, AstNode rootNode) {
         super(context, rootNode);
     }
@@ -85,5 +89,12 @@ public class JavaCodeGenerator extends Generator {
 
         return new JavaSource(JavaSource.GENERATE_DEFAULT_PACKAGE,
                 className, mTemplate.fakeGenerateString(templateContext));
+    }
+
+    @Override
+    public Generator reset(JustContext context, AstNode rootNode) {
+        this.varSet.clear();
+
+        return super.reset(context, rootNode);
     }
 }

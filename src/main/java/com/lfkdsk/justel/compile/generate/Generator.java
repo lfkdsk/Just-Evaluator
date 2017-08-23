@@ -33,4 +33,11 @@ public abstract class Generator {
     }
 
     public abstract JavaSource generate();
+
+    public Generator reset(JustContext context, AstNode rootNode) {
+        this.context = context;
+        this.rootNode = rootNode;
+
+        return this;
+    }
 }

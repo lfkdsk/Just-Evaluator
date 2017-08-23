@@ -66,4 +66,8 @@ public class AstProgram extends AstList {
     public boolean isProgramConst() {
         return isProgramConst;
     }
+
+    public ConstExpression getConstExpression() {
+        return constExpression;
+    }
 }

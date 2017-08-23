@@ -26,6 +26,9 @@ public interface Lexer {
      */
     Token read();
 
+
+    void reset(String expr);
+
     /**
      * has more tokens in Lexer
      *

@@ -23,4 +23,8 @@ public interface Expression extends Evaluable {
     default Object eval(JustContext context) {
         throw new EvalException("Use default call in expression");
     }
+
+    default Object eval() {
+        return eval(null);
+    }
 }

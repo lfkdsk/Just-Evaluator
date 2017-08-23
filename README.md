@@ -2,16 +2,18 @@
 
 JVM 平台的高性能、轻量级的表达式求值引擎，提供解释执行和编译执行等多种求值方式。
 
+## Dependency
 
+* with gradle：
+* with maven：
 
 ## Capacity
 
 
 
-## Dependency
+## Feature
 
-* with gradle：
-* with maven：
+
 
 ## Feedback    
 Please send your feedback as long as there occurs any inconvenience or problem. You can contact me with:

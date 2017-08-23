@@ -9,6 +9,7 @@ import com.lfkdsk.justel.utils.collection.ArrayQueue;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -48,10 +49,47 @@ public class JustLexerImpl implements Lexer {
      */
     private LineNumberReader reader;
 
+
+    /**
+     * current peek char.
+     */
+    private char peekChar = ' ';
+
+    /**
+     * start : current index.
+     * end   : end of line.
+     * lineNumber: line number.
+     */
+    private int start = 0, end = 0, lineNumber = 0;
+
+    /**
+     * current read string.
+     */
+    private String currentReadString = "";
+
+    private boolean endOfLine = false;
+
+    public JustLexerImpl() {
+        this(new StringReader(""));
+    }
+
     public JustLexerImpl(Reader reader) {
         this.reader = new LineNumberReader(reader);
         this.hasMore = true;
         this.initialSymbols();
+    }
+
+    @Override
+    public void reset(String expr) {
+        this.start = 0;
+        this.end = 0;
+        this.lineNumber = 0;
+        this.currentReadString = "";
+        this.peekChar = ' ';
+        this.endOfLine = false;
+        this.hasMore = true;
+        this.queue.clear();
+        this.reader = new LineNumberReader(new StringReader(expr));
     }
 
     @Override
@@ -87,6 +125,7 @@ public class JustLexerImpl implements Lexer {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -125,25 +164,6 @@ public class JustLexerImpl implements Lexer {
 
         addToken(SepToken.EOL_TOKEN);
     }
-
-    /**
-     * current peek char.
-     */
-    private char peekChar = ' ';
-
-    /**
-     * start : current index.
-     * end   : end of line.
-     * lineNumber: line number.
-     */
-    private int start = 0, end = 0, lineNumber = 0;
-
-    /**
-     * current read string.
-     */
-    private String currentReadString = "";
-
-    private boolean endOfLine = false;
 
     /**
      * read next char => peekChar
