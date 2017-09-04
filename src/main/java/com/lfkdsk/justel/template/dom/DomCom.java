@@ -55,6 +55,7 @@ public class DomCom {
      */
     public DomCom sep(String... comString) {
         components.add(new IgnoreDomComponent(comString));
+
         return this;
     }
 
@@ -66,6 +67,7 @@ public class DomCom {
      */
     public DomCom bind(String bindVar) {
         components.add(new SingleDomComponent(bindVar));
+
         return this;
     }
 
@@ -77,6 +79,7 @@ public class DomCom {
      */
     public DomCom ast(DomComponent component) {
         components.add(component);
+
         return this;
     }
 
@@ -88,6 +91,7 @@ public class DomCom {
      */
     public DomCom seq(DomComponent... component) {
         components.add(new SequenceDomComponent(component));
+
         return this;
     }
 
@@ -99,20 +103,25 @@ public class DomCom {
      */
     public DomCom append(DomCom domCom) {
         components.addAll(domCom.getComponents());
+
         return this;
     }
 
     public DomCom nop(String... nopStrings) {
+        components.add(new NopComponent(nopStrings));
+
         return this;
     }
 
     public DomCom des(String... desStrings) {
         components.add(new DescriptionComponent(desStrings));
+
         return this;
     }
 
     public DomCom randomVal() {
         components.add(new RandomValComponent());
+
         return this;
     }
 

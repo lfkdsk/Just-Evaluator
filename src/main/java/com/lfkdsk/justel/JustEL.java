@@ -19,7 +19,7 @@ import com.lfkdsk.justel.parser.JustParserImpl;
  * @author liufengkai
  *         Created by liufengkai on 2017/8/22.
  */
-public class JustEL {
+public final class JustEL {
 
     /**
      * just-parse
@@ -45,6 +45,7 @@ public class JustEL {
      * default EL
      */
     private static JustEL defaultEL;
+
 
     private JustEL(JustParser parser, Lexer lexer, JustCompiler compiler, Generator generator) {
         this.parser = parser;
@@ -107,7 +108,7 @@ public class JustEL {
      */
     public static Object runEval(String expr, JustContext env) {
         return (defaultEL == null
-                ? new JustELBuilder().create()
+                ? defaultEL = new Builder().create()
                 : defaultEL)
                 .eval(expr, env);
     }
@@ -121,7 +122,7 @@ public class JustEL {
      */
     public static Expression runCompile(String expr, JustContext env) {
         return (defaultEL == null
-                ? new JustELBuilder().create()
+                ? defaultEL = new Builder().create()
                 : defaultEL)
                 .compile(expr, env);
     }
@@ -134,7 +135,7 @@ public class JustEL {
      * @see JustCompiler
      * @see Generator
      */
-    public static class JustELBuilder {
+    public static class Builder {
         /**
          * just-parse
          */
@@ -155,25 +156,25 @@ public class JustEL {
          */
         Generator generator = new JavaCodeGenerator();
 
-        public JustELBuilder lexer(Lexer lexer) {
+        public Builder lexer(Lexer lexer) {
             this.lexer = lexer;
 
             return this;
         }
 
-        public JustELBuilder parser(JustParser parser) {
+        public Builder parser(JustParser parser) {
             this.parser = parser;
 
             return this;
         }
 
-        public JustELBuilder compiler(JustCompiler justCompiler) {
+        public Builder compiler(JustCompiler justCompiler) {
             this.compiler = justCompiler;
 
             return this;
         }
 
-        public JustELBuilder generator(Generator generator) {
+        public Builder generator(Generator generator) {
             this.generator = generator;
 
             return this;

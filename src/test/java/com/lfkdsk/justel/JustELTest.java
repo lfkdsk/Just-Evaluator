@@ -4,6 +4,7 @@ import com.lfkdsk.justel.compile.compiler.JustCompilerImpl;
 import com.lfkdsk.justel.compile.generate.JavaCodeGenerator;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
+import com.lfkdsk.justel.eval.ConstExpression;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.parser.JustParserImpl;
 import com.lfkdsk.justel.utils.logger.Logger;
@@ -21,7 +22,7 @@ class JustELTest {
             put("lfkdsk", "sss");
         }};
 
-        Logger.i(String.valueOf(new JustEL.JustELBuilder()
+        Logger.i(String.valueOf(new JustEL.Builder()
                 .lexer(new JustLexerImpl())
                 .parser(new JustParserImpl())
                 .compiler(new JustCompilerImpl())
@@ -39,7 +40,7 @@ class JustELTest {
             put("lfkdsk", "sss");
         }};
 
-        Logger.i(String.valueOf(new JustEL.JustELBuilder()
+        Logger.i(String.valueOf(new JustEL.Builder()
                 .lexer(new JustLexerImpl())
                 .parser(new JustParserImpl())
                 .compiler(new JustCompilerImpl())
@@ -69,4 +70,16 @@ class JustELTest {
         Logger.i(String.valueOf(JustEL.runCompile("1111 + lfkdsk + sss", context).eval(context)));
     }
 
+
+    @Test
+    void testJustELBuilder() {
+        Logger.init();
+        Logger.i(new JustEL.Builder()
+                .compiler(code -> new ConstExpression("lfkdsk"))
+                .create()
+                .eval("lfkdsk", new JustMapContext() {{
+                    put("lfkdsk", 1000);
+                }})
+                .toString());
+    }
 }

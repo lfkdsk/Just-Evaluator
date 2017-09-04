@@ -15,7 +15,6 @@ import com.lfkdsk.justel.literal.NumberLiteral;
 import com.lfkdsk.justel.literal.StringLiteral;
 
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Type Utils
@@ -79,19 +78,5 @@ public class TypeUtils {
 
     public static boolean isComparable(Object obj) {
         return obj instanceof Comparable;
-    }
-
-    public static Object checkNull(Object leftObj, Object rightObj,
-                                   Function<Object, Object> leftFunc,
-                                   Function<Object, Object> rightFunc) {
-        if (isNull(leftObj) && isNull(rightObj)) {
-            return null;
-        } else if (isNull(leftObj)) {
-            return leftFunc.apply(leftFunc);
-        } else if (isNull(rightObj)) {
-            return rightFunc.apply(leftFunc);
-        }
-
-        return Boolean.FALSE;
     }
 }

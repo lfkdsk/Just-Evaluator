@@ -3,7 +3,10 @@ package com.lfkdsk.justel.eval;
 import com.lfkdsk.justel.context.JustContext;
 
 /**
- * Created by liufengkai on 2017/8/11.
+ * Constant Expression
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/8/11.
  */
 public final class ConstExpression implements Expression {
 
@@ -15,6 +18,11 @@ public final class ConstExpression implements Expression {
 
     @Override
     public Object eval(JustContext context) {
+        return eval();
+    }
+
+    @Override
+    public Object eval() {
         return constVal;
     }
 }

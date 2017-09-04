@@ -15,7 +15,9 @@ import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
 /**
- * 反射工具类，提供一些Java基本的反射功能
+ * Reflect Utils
+ *
+ * @author liufengkai
  */
 public class ReflectUtils {
 
