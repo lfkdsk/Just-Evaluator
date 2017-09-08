@@ -11,6 +11,8 @@ package com.lfkdsk.justel.ast.base;
 import com.lfkdsk.justel.compile.Compilable;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.eval.Evaluable;
+import com.lfkdsk.justel.eval.Expressible;
+import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.exception.CompilerException;
 import com.lfkdsk.justel.exception.EvalException;
 
@@ -23,9 +25,8 @@ import java.util.Iterator;
  *         Created by liufengkai on 17/7/11.
  */
 public abstract class AstNode implements Iterable<AstNode>
-        , Evaluable, Compilable {
+        , Evaluable, Compilable, Expressible {
 
-//    public static Map<String, AstNode> parserNode = new HashMap<>();
     /**
      * Spec Tag for Ast Node
      */
@@ -163,5 +164,16 @@ public abstract class AstNode implements Iterable<AstNode>
     @Override
     public String compile(JustContext env) {
         throw new CompilerException("can not compile : " + toString(), this);
+    }
+
+    @Override
+    public Expression expr() {
+
+        return new Expression() {
+            @Override
+            public Object eval(JustContext context) {
+                return AstNode.this.eval(context);
+            }
+        };
     }
 }

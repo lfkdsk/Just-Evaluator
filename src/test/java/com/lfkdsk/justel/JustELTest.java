@@ -33,6 +33,26 @@ class JustELTest {
     }
 
     @Test
+    void evalExpr() {
+        Logger.init();
+        JustContext context = new JustMapContext() {{
+            put("sss", 1111);
+            put("lfkdsk", "sss");
+        }};
+
+        Logger.i(String.valueOf(
+                new JustEL.Builder()
+                .lexer(new JustLexerImpl())
+                .parser(new JustParserImpl())
+                .compiler(new JustCompilerImpl())
+                .generator(new JavaCodeGenerator())
+                .create()
+                .expr("1111 + lfkdsk + sss")
+                .eval(context)
+        ));
+    }
+
+    @Test
     void compile() {
         Logger.init();
         JustContext context = new JustMapContext() {{

@@ -73,9 +73,21 @@ public final class JustEL {
      */
     public Object eval(String expr, JustContext env) {
 
+        return expr(expr)
+                .eval(env);
+    }
+
+    /**
+     * Ast to Expression
+     *
+     * @param expr string-expr
+     * @return Expression Node
+     */
+    public Expression expr(String expr) {
+
         return parse(expr)
                 .program()
-                .eval(env);
+                .expr();
     }
 
     /**
