@@ -70,8 +70,14 @@ public abstract class AstNode implements Iterable<AstNode>
      */
     protected int astLevel = 1;
 
+    /**
+     * index of child
+     */
     protected int childIndex = 0;
 
+    /**
+     * parent - node
+     */
     protected AstNode parentNode;
 
     public AstNode(int tag) {
@@ -79,17 +85,17 @@ public abstract class AstNode implements Iterable<AstNode>
     }
 
     /**
-     * 获取指定子节点
+     * Get Spec Child AstNode
      *
-     * @param index 索引
-     * @return 子节点
+     * @param index index number
+     * @return Child Node
      */
     public abstract AstNode child(int index);
 
     /**
-     * 返回子节点迭代器
+     * Return Iterator of Node
      *
-     * @return 迭代器
+     * @return Iterator
      */
     public abstract Iterator<AstNode> children();
 
@@ -101,14 +107,26 @@ public abstract class AstNode implements Iterable<AstNode>
     public abstract int childCount();
 
     /**
-     * 位置描述
+     * pos
      *
      * @return location
      */
     public abstract String location();
 
+    /**
+     * replace child spec index
+     *
+     * @param index index num
+     * @param node  replace node
+     * @return node
+     */
     public abstract AstNode replaceChild(int index, AstNode node);
 
+    /**
+     * compute ast level
+     *
+     * @return local value
+     */
     public abstract int computeAstLevel();
 
     /**
