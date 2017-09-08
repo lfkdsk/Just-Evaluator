@@ -98,7 +98,7 @@ public final class JustEL {
      * @return Expression Bean
      */
     public Expression compile(String expr, JustContext env) {
-        AstProgram rootNode = parse(expr);
+        final AstProgram rootNode = parse(expr);
 
         // const value
         if (rootNode.isProgramConst()) {
@@ -106,7 +106,7 @@ public final class JustEL {
         }
 
         // generate java source
-        JavaSource javaSource = generator.reset(env, rootNode).generate();
+        final JavaSource javaSource = generator.reset(env, rootNode).generate();
 
         return compiler.compile(javaSource);
     }

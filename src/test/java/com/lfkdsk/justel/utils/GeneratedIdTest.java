@@ -25,6 +25,7 @@ class GeneratedIdTest {
         // need curr - table
 
         for (int j = 0; j < 20; j++) {
+            // hash-table current-control is needed
             Hashtable<Integer, Integer> set = new Hashtable<>();
 
             for (int i = 0; i < 100; i++) {
@@ -44,7 +45,7 @@ class GeneratedIdTest {
 
 
             // just wait thread completed
-            Thread.sleep(500);
+            Thread.sleep(1000);
             Assertions.assertEquals(set.size(), 100);
         }
 
