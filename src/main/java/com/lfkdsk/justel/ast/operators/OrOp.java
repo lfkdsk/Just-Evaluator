@@ -33,7 +33,7 @@ public class OrOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.OR_TOKEN.getText();
     }
 

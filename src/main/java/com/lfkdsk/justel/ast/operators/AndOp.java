@@ -34,7 +34,7 @@ public class AndOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.AND_TOKEN.getText();
     }
 

@@ -34,7 +34,7 @@ public class MulOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.MULTIPLY_TOKEN.getText();
     }
 

@@ -34,7 +34,7 @@ public class PlusOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.PLUS_TOKEN.getText();
     }
 

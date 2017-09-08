@@ -32,7 +32,7 @@ public class UnEqualOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.NOT_EQUAL_TOKEN.getText();
     }
 

@@ -34,7 +34,7 @@ public class DivOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.DIVIDE_TOKEN.getText();
     }
 

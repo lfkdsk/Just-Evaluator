@@ -34,7 +34,7 @@ public class ModOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.MOD_TOKEN.getText();
     }
 

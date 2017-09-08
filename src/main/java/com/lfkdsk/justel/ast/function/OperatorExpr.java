@@ -63,7 +63,7 @@ public abstract class OperatorExpr extends AstList implements Function {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         throw new EvalException("Use default eval in operator");
     }
 

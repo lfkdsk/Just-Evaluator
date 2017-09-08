@@ -35,7 +35,7 @@ public class LessThanOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.LESS_TOKEN.getText();
     }
 

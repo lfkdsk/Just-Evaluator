@@ -13,5 +13,5 @@ package com.lfkdsk.justel.ast.function;
  */
 public interface Function {
 
-    String functionName();
+    String funcName();
 }

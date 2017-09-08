@@ -97,9 +97,13 @@ public class AstList extends AstNode {
 
         int maxLevel = 1;
         for (int index = 0; index < childCount(); index++) {
+
+            // index-child
             AstNode child = child(index);
             child.setParentNode(this);
             child.setChildIndex(index);
+
+            // max-compute-level
             maxLevel = Math.max(child.computeAstLevel(), maxLevel);
         }
 

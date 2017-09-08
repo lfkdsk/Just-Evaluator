@@ -41,7 +41,7 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return ".";
     }
 

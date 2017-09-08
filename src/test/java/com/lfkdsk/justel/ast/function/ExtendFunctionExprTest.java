@@ -26,7 +26,7 @@ public class ExtendFunctionExprTest {
     public static class ExtendFunc extends ExtendFunctionExpr {
 
         @Override
-        public String functionName() {
+        public String funcName() {
             return "add";
         }
 
@@ -47,7 +47,7 @@ public class ExtendFunctionExprTest {
     @Test
     void testExtendFunc() {
         ExtendFunc func = new ExtendFunc();
-        AstFuncExpr.extFunc.put(func.functionName(), func);
+        AstFuncExpr.extFunc.put(func.funcName(), func);
         String returnStr = runExpr("add(1111,2222)", true, null);
         Assertions.assertEquals((int) Integer.valueOf(returnStr), 3333);
     }
@@ -57,7 +57,7 @@ public class ExtendFunctionExprTest {
     void testExtendFuncCompiler() {
         Logger.init();
         ExtendFunc func = new ExtendFunc();
-        AstFuncExpr.extFunc.put(func.functionName(), func);
+        AstFuncExpr.extFunc.put(func.funcName(), func);
         JustContext context = new JustMapContext();
         String returnStr = compiler("add(1111,2222)", context);
         Assertions.assertEquals((int) Integer.valueOf(returnStr), 3333);

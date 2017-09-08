@@ -65,7 +65,7 @@ class OperatorExprTest {
         }
 
         @Override
-        public String functionName() {
+        public String funcName() {
             return "**";
         }
     }

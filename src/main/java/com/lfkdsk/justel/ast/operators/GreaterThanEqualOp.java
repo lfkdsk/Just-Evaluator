@@ -35,7 +35,7 @@ public class GreaterThanEqualOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.GTE_TOKEN.getText();
     }
 

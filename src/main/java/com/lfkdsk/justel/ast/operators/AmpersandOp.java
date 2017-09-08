@@ -33,7 +33,7 @@ public class AmpersandOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.AMPERSAND_TOKEN.getText();
     }
 

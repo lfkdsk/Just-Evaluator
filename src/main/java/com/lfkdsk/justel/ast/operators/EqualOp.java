@@ -32,7 +32,7 @@ public class EqualOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.EQUAL_TOKEN.getText();
     }
 

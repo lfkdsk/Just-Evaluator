@@ -14,8 +14,11 @@ import static com.lfkdsk.justel.ast.tree.AstFuncExpr.isAstFuncExpr;
  * @author liufengkai
  *         Created by liufengkai on 2017/8/18.
  */
-class ParserHelper {
+final class ParserHelper {
 
+    private ParserHelper() {
+
+    }
 
     /**
      * Reset AstBinaryExpr to Particular Expr
@@ -27,6 +30,7 @@ class ParserHelper {
      * @return New Particular Expr
      */
     static AstNode resetAstExpr(AstBinaryExpr expr, BnfCom.Operators operators) {
+
         // operator is Operator
         Operator operator = (Operator) expr.midOp();
         // get the factory of sub-node

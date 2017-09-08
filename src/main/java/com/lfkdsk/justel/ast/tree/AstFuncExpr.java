@@ -74,7 +74,7 @@ public class AstFuncExpr extends AstList {
         ExtendFunctionExpr extendFunc = extFunc.get(funcName().toString());
 
         if (extendFunc == null) {
-            throw new UnSupportMethodException("un support method functionName: " + funcName().toString());
+            throw new UnSupportMethodException("un support method funcName: " + funcName().toString());
         }
 
         StringBuilder builder = new StringBuilder();

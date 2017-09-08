@@ -25,11 +25,11 @@ import com.lfkdsk.justel.literal.StringLiteral;
 import com.lfkdsk.justel.token.ReservedToken;
 
 import static com.lfkdsk.justel.ast.function.OperatorExpr.operators;
+import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
+import static com.lfkdsk.justel.parser.BnfCom.rule;
 import static com.lfkdsk.justel.parser.ParserHelper.generateAst;
 import static com.lfkdsk.justel.token.ReservedToken.*;
 import static com.lfkdsk.justel.token.Token.EOL;
-import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
-import static com.lfkdsk.justel.parser.BnfCom.rule;
 
 /**
  * Just Parser Implementation, Support Follow BNF Grammars:

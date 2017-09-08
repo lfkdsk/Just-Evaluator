@@ -34,7 +34,7 @@ public class MinusOp extends OperatorExpr {
     }
 
     @Override
-    public String functionName() {
+    public String funcName() {
         return SepToken.MINUS_TOKEN.getText();
     }
 
