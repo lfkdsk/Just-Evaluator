@@ -7,6 +7,9 @@ import com.lfkdsk.justel.context.JustContext;
  *
  * @author liufengkai
  *         Created by liufengkai on 2017/7/18.
+ * @see Expression
+ * @see ConstExpression
+ * @see com.lfkdsk.justel.ast.base.AstNode
  */
 public interface Evaluable {
 

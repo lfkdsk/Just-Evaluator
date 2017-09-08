@@ -7,6 +7,8 @@ import com.lfkdsk.justel.context.JustContext;
  *
  * @author liufengkai
  *         Created by liufengkai on 2017/8/11.
+ * @see com.lfkdsk.justel.ast.tree.AstProgram
+ * @see com.lfkdsk.justel.JustEL
  */
 public final class ConstExpression implements Expression {
 

@@ -16,14 +16,27 @@ import com.lfkdsk.justel.exception.EvalException;
  *
  * @author liufengkai
  *         Created by liufengkai on 2017/7/20.
+ * @see Evaluable
+ * @see com.lfkdsk.justel.JustEL
  */
 public interface Expression extends Evaluable {
 
+    /**
+     * Eval value with context
+     *
+     * @param context context =>
+     * @return value
+     */
     @Override
     default Object eval(JustContext context) {
         throw new EvalException("Use default call in expression");
     }
 
+    /**
+     * Eval Const Value
+     *
+     * @return value
+     */
     default Object eval() {
         return eval(null);
     }
