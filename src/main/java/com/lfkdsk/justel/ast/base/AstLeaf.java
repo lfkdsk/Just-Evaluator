@@ -31,8 +31,6 @@ public class AstLeaf extends AstNode {
     public AstLeaf(Token token) {
         super(token.getTag());
         this.token = token;
-
-
     }
 
     @Override

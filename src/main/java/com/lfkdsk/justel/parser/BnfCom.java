@@ -622,37 +622,6 @@ public class BnfCom {
             e.parse(lexer, results);
         }
 
-//        List<AstNode> results = elements.stream().collect(new Collector<Element, List<AstNode>, List<AstNode>>() {
-//            @Override
-//            public Supplier<List<AstNode>> supplier() {
-//                return ArrayList::new;
-//            }
-//
-//            @Override
-//            public BiConsumer<List<AstNode>, Element> accumulator() {
-//                return (results, element) -> element.parse(lexer, results);
-//            }
-//
-//            @Override
-//            public BinaryOperator<List<AstNode>> combiner() {
-//                return (list1, list2) -> {
-//                    list1.addAll(list2);
-//                    return list1;
-//                };
-//            }
-//
-//            @Override
-//            public Function<List<AstNode>, List<AstNode>> finisher() {
-//                return Function.identity();
-//            }
-//
-//            @Override
-//            public Set<Characteristics> characteristics() {
-//                return Collections.unmodifiableSet(EnumSet.of(Characteristics.IDENTITY_FINISH));
-//            }
-//        });
-
-
         return factory.make(results);
     }
 
