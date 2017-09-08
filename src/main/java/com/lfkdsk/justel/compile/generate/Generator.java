@@ -23,8 +23,14 @@ import com.lfkdsk.justel.context.JustContext;
  */
 public abstract class Generator {
 
+    /**
+     * binder - context
+     */
     protected JustContext context;
 
+    /**
+     * binder - root node
+     */
     protected AstNode rootNode;
 
     public Generator(JustContext context, AstNode rootNode) {

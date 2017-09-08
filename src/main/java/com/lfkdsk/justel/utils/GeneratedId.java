@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *         Created by liufengkai on 16/7/14.
  */
 public class GeneratedId {
+
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
     /**
@@ -20,8 +21,9 @@ public class GeneratedId {
     public static int generateAtomId() {
         for (; ; ) {
             final int result = sNextGeneratedId.get();
-            int newValue = result + 1;
-             if (sNextGeneratedId.compareAndSet(result, newValue)) {
+            final int newValue = result + 1;
+            if (sNextGeneratedId.compareAndSet(result, newValue)) {
+
                 return result;
             }
         }
