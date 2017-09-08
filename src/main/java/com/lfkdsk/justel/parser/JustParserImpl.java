@@ -23,6 +23,7 @@ import com.lfkdsk.justel.literal.IDLiteral;
 import com.lfkdsk.justel.literal.NumberLiteral;
 import com.lfkdsk.justel.literal.StringLiteral;
 import com.lfkdsk.justel.token.ReservedToken;
+import org.jetbrains.annotations.NotNull;
 
 import static com.lfkdsk.justel.ast.function.OperatorExpr.operators;
 import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
@@ -162,8 +163,11 @@ public class JustParserImpl implements JustParser {
      * @param operator  operator clazz
      * @see com.lfkdsk.justel.parser.BnfCom.Operators
      */
-    public void insertOperators(final String funName, final int pres,
-                                final boolean leftAssoc, final Class<? extends AstNode> operator) {
+    public void insertOperators(@NotNull final String funName,
+                                final int pres,
+                                final boolean leftAssoc,
+                                @NotNull final Class<? extends AstNode> operator) {
+
         operators.add(funName, pres, leftAssoc, operator);
     }
 

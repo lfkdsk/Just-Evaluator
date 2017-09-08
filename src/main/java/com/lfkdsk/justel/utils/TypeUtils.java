@@ -22,7 +22,9 @@ import java.util.List;
  * @author liufengkai
  *         Created by liufengkai on 2017/7/28.
  */
-public class TypeUtils {
+public final class TypeUtils {
+
+    private TypeUtils () {}
 
     public static boolean isNumber(Object obj) {
         return obj instanceof Number;

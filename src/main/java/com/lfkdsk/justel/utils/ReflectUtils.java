@@ -12,6 +12,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.sql.Ref;
 import java.util.*;
 
 /**
@@ -19,16 +20,14 @@ import java.util.*;
  *
  * @author liufengkai
  */
-public class ReflectUtils {
+public final class ReflectUtils {
 
     /**
      * key为基本类型及其包装类型，value为包装类型
      */
-    static final Map<Class<?>, Class<?>> wrapperToPrimary;
+    static final Map<Class<?>, Class<?>> wrapperToPrimary = new HashMap<>(wrapperToPrimaryMap());
 
-    static {
-        wrapperToPrimary = new HashMap<>(wrapperToPrimaryMap());
-    }
+    private ReflectUtils() {}
 
     private static Map<Class<?>, Class<?>> wrapperToPrimaryMap() {
         Map<Class<?>, Class<?>> map = new HashMap<>();

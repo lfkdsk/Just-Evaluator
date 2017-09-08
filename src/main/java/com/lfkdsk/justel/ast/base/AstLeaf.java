@@ -12,6 +12,8 @@ import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.exception.EvalException;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.token.Token;
+import com.lfkdsk.justel.utils.ObjectHelper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,9 +30,13 @@ public class AstLeaf extends AstNode {
 
     protected Token token;
 
-    public AstLeaf(Token token) {
+    public AstLeaf(@NotNull Token token) {
         super(token.getTag());
-        this.token = token;
+        this.token = ObjectHelper.requireNonNull(token, "token could not be null");
+    }
+
+    public Token token() {
+        return token;
     }
 
     @Override
@@ -61,10 +67,6 @@ public class AstLeaf extends AstNode {
     @Override
     public int computeAstLevel() {
         return astLevel = 1;
-    }
-
-    public Token token() {
-        return token;
     }
 
     @Override

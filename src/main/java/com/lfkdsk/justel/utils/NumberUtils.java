@@ -10,7 +10,9 @@ import com.lfkdsk.justel.token.Token;
  * @author liufengkai
  *         Created by liufengkai on 2017/7/24.
  */
-public class NumberUtils {
+public final class NumberUtils {
+
+    private NumberUtils() {}
 
     /**
      * parser number: int / long

@@ -1,6 +1,7 @@
 package com.lfkdsk.justel.eval;
 
 import com.lfkdsk.justel.context.JustContext;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Constant Expression
@@ -14,7 +15,7 @@ public final class ConstExpression implements Expression {
 
     private final Object constVal;
 
-    public ConstExpression(Object constVal) {
+    public ConstExpression(@NotNull Object constVal) {
         this.constVal = constVal;
     }
 

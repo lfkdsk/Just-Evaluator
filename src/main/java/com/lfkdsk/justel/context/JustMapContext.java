@@ -1,5 +1,7 @@
 package com.lfkdsk.justel.context;
 
+import com.lfkdsk.justel.utils.ObjectHelper;
+
 import java.util.*;
 
 /**
@@ -33,6 +35,8 @@ public class JustMapContext implements JustContext {
 
     @Override
     public Object command(String command) {
+        ObjectHelper.requireNonNull(command, "command could not null");
+
         return commandList.add(command);
     }
 

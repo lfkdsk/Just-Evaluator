@@ -1,7 +1,10 @@
 package com.lfkdsk.justel.utils.collection;
 
 /**
- * Created by liufengkai on 2017/8/18.
+ * Tuple
+ *
+ * @author liufengkai
+ *         Created by liufengkai on 2017/8/18.
  */
 public class Tuple<F, S> {
     public final F first;

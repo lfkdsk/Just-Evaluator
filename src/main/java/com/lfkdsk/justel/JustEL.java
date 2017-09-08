@@ -12,6 +12,9 @@ import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.parser.JustParser;
 import com.lfkdsk.justel.parser.JustParserImpl;
+import com.lfkdsk.justel.utils.ObjectHelper;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Just EL Wrapper
@@ -71,7 +74,8 @@ public final class JustEL {
      * @param env  context
      * @return Eval Value
      */
-    public Object eval(String expr, JustContext env) {
+    public Object eval(@NotNull String expr, @Nullable JustContext env) {
+        ObjectHelper.requireNonNull(expr, "expr is null");
 
         return expr(expr)
                 .eval(env);
@@ -83,7 +87,8 @@ public final class JustEL {
      * @param expr string-expr
      * @return Expression Node
      */
-    public Expression expr(String expr) {
+    public Expression expr(@NotNull String expr) {
+        ObjectHelper.requireNonNull(expr, "expr is null");
 
         return parse(expr)
                 .program()
@@ -97,8 +102,10 @@ public final class JustEL {
      * @param env  context
      * @return Expression Bean
      */
-    public Expression compile(String expr, JustContext env) {
-        final AstProgram rootNode = parse(expr);
+    public Expression compile(@NotNull String expr, @Nullable JustContext env) {
+        ObjectHelper.requireNonNull(expr, "expr is null");
+
+        final AstProgram rootNode = ObjectHelper.requireNonNull(parse(expr), "rootNode is null => parser error");
 
         // const value
         if (rootNode.isProgramConst()) {
@@ -118,7 +125,8 @@ public final class JustEL {
      * @param env  context
      * @return Value
      */
-    public static Object runEval(String expr, JustContext env) {
+    public static Object runEval(@NotNull String expr, @Nullable JustContext env) {
+
         return (defaultEL == null
                 ? defaultEL = new Builder().create()
                 : defaultEL)
@@ -132,7 +140,7 @@ public final class JustEL {
      * @param env  context
      * @return Value
      */
-    public static Expression runCompile(String expr, JustContext env) {
+    public static Expression runCompile(@NotNull String expr, @Nullable JustContext env) {
         return (defaultEL == null
                 ? defaultEL = new Builder().create()
                 : defaultEL)
@@ -169,26 +177,26 @@ public final class JustEL {
          */
         Generator generator = new JavaCodeGenerator();
 
-        public Builder lexer(Lexer lexer) {
-            this.lexer = lexer;
+        public Builder lexer(@NotNull Lexer lexer) {
+            this.lexer = ObjectHelper.requireNonNull(lexer, "lexer is null");
 
             return this;
         }
 
-        public Builder parser(JustParser parser) {
-            this.parser = parser;
+        public Builder parser(@NotNull JustParser parser) {
+            this.parser = ObjectHelper.requireNonNull(parser, "parser is null");
 
             return this;
         }
 
-        public Builder compiler(JustCompiler justCompiler) {
-            this.compiler = justCompiler;
+        public Builder compiler(@NotNull JustCompiler justCompiler) {
+            this.compiler = ObjectHelper.requireNonNull(justCompiler, "compiler is null");
 
             return this;
         }
 
-        public Builder generator(Generator generator) {
-            this.generator = generator;
+        public Builder generator(@NotNull Generator generator) {
+            this.generator = ObjectHelper.requireNonNull(generator, "generator is null");
 
             return this;
         }
