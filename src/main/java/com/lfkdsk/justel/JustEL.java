@@ -127,10 +127,21 @@ public final class JustEL {
      */
     public static Object runEval(@NotNull String expr, @Nullable JustContext env) {
 
+        return runExpr(expr)
+                .eval(env);
+    }
+
+    /**
+     * Return expression
+     *
+     * @param expr expr-string
+     * @return Value
+     */
+    public static Expression runExpr(@NotNull String expr) {
         return (defaultEL == null
                 ? defaultEL = new Builder().create()
                 : defaultEL)
-                .eval(expr, env);
+                .expr(expr);
     }
 
     /**
@@ -145,6 +156,15 @@ public final class JustEL {
                 ? defaultEL = new Builder().create()
                 : defaultEL)
                 .compile(expr, env);
+    }
+
+    /**
+     * Builder
+     *
+     * @return new just-el builder
+     */
+    public static Builder builder() {
+        return new Builder();
     }
 
     /**
