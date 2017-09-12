@@ -13,7 +13,6 @@ import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.exception.EvalException;
-import com.lfkdsk.justel.parser.BnfCom;
 import com.lfkdsk.justel.token.Token;
 import com.lfkdsk.justel.utils.GeneratedId;
 
@@ -34,8 +33,6 @@ public abstract class OperatorExpr extends AstList implements Function {
     protected boolean isConstNode = false;
 
     protected boolean isThisNodeSpited = false;
-
-    public static final BnfCom.Operators operators = new BnfCom.Operators();
 
     public OperatorExpr(List<AstNode> children) {
         super(children, Token.OPERATOR);

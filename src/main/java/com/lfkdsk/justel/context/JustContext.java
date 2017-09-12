@@ -1,5 +1,7 @@
 package com.lfkdsk.justel.context;
 
+import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +18,10 @@ public interface JustContext {
     Object get(String objName);
 
     Object put(String key, Object val);
+
+    ExtendFunctionExpr putExtendFunc(String name, ExtendFunctionExpr expr);
+
+    ExtendFunctionExpr getExtendFunc(String name);
 
     /**
      * Warning:!!!

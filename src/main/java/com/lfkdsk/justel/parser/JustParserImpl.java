@@ -25,7 +25,6 @@ import com.lfkdsk.justel.literal.StringLiteral;
 import com.lfkdsk.justel.token.ReservedToken;
 import org.jetbrains.annotations.NotNull;
 
-import static com.lfkdsk.justel.ast.function.OperatorExpr.operators;
 import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
 import static com.lfkdsk.justel.parser.BnfCom.rule;
 import static com.lfkdsk.justel.parser.ParserHelper.generateAst;
@@ -49,6 +48,12 @@ import static com.lfkdsk.justel.token.Token.EOL;
  *         Created by liufengkai on 2017/7/26.
  */
 public class JustParserImpl implements JustParser {
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Support Operators
+    ///////////////////////////////////////////////////////////////////////////
+
+    private BnfCom.Operators operators = new BnfCom.Operators();
 
     private BnfCom expr0 = rule();
 
@@ -123,6 +128,10 @@ public class JustParserImpl implements JustParser {
     ///////////////////////////////////////////////////////////////////////////
 
     private BnfCom program = rule(AstProgram.class).ast(expr).sep(EOL);
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Support Expr Function
+    ///////////////////////////////////////////////////////////////////////////
 
     public JustParserImpl() {
 

@@ -1,5 +1,6 @@
 package com.lfkdsk.justel.context;
 
+import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
 import com.lfkdsk.justel.utils.ObjectHelper;
 
 import java.util.*;
@@ -18,6 +19,8 @@ public class JustMapContext implements JustContext {
 
     private List<String> globalList = new LinkedList<>();
 
+    private Map<String, ExtendFunctionExpr> extFunc = new HashMap<>();
+
     @Override
     public boolean contain(String name) {
         return map.containsKey(name);
@@ -31,6 +34,16 @@ public class JustMapContext implements JustContext {
     @Override
     public Object put(String key, Object val) {
         return map.put(key, val);
+    }
+
+    @Override
+    public ExtendFunctionExpr putExtendFunc(String name, ExtendFunctionExpr expr) {
+        return extFunc.put(name, expr);
+    }
+
+    @Override
+    public ExtendFunctionExpr getExtendFunc(String name) {
+        return extFunc.get(name);
     }
 
     @Override

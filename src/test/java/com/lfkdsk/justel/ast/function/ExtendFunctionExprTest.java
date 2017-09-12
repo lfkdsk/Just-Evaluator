@@ -8,7 +8,6 @@
 
 package com.lfkdsk.justel.ast.function;
 
-import com.lfkdsk.justel.ast.tree.AstFuncExpr;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.utils.logger.Logger;
@@ -47,8 +46,11 @@ public class ExtendFunctionExprTest {
     @Test
     void testExtendFunc() {
         ExtendFunc func = new ExtendFunc();
-        AstFuncExpr.extFunc.put(func.funcName(), func);
-        String returnStr = runExpr("add(1111,2222)", true, null);
+        String returnStr = runExpr("add(1111,2222)",
+                true,
+                new JustMapContext() {{
+                    putExtendFunc("add", func);
+                }});
         Assertions.assertEquals((int) Integer.valueOf(returnStr), 3333);
     }
 
@@ -57,8 +59,8 @@ public class ExtendFunctionExprTest {
     void testExtendFuncCompiler() {
         Logger.init();
         ExtendFunc func = new ExtendFunc();
-        AstFuncExpr.extFunc.put(func.funcName(), func);
         JustContext context = new JustMapContext();
+        context.putExtendFunc(func.funcName(), func);
         String returnStr = compiler("add(1111,2222)", context);
         Assertions.assertEquals((int) Integer.valueOf(returnStr), 3333);
     }

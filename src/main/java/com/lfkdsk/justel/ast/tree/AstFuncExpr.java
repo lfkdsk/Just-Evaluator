@@ -15,9 +15,7 @@ import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.exception.UnSupportMethodException;
 import com.lfkdsk.justel.utils.GeneratedId;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * function( expr , expr , expr)
@@ -26,8 +24,6 @@ import java.util.Map;
  *         Created by liufengkai on 2017/7/27.
  */
 public class AstFuncExpr extends AstList {
-
-    public static final Map<String, ExtendFunctionExpr> extFunc = new HashMap<>();
 
     public AstFuncExpr(List<AstNode> children) {
         super(children, AstNode.FUNCTION_EXPR);
@@ -55,7 +51,7 @@ public class AstFuncExpr extends AstList {
     @Override
     public Object eval(JustContext env) {
         String funcName = funcName().toString();
-        ExtendFunctionExpr expr = extFunc.get(funcName);
+        ExtendFunctionExpr expr = env.getExtendFunc(funcName);
 
         if (expr != null) {
             expr.bindToAstFunc(this);
@@ -71,7 +67,7 @@ public class AstFuncExpr extends AstList {
         // generate code by one time
 
         // get func obj
-        ExtendFunctionExpr extendFunc = extFunc.get(funcName().toString());
+        ExtendFunctionExpr extendFunc = env.getExtendFunc(funcName().toString());
 
         if (extendFunc == null) {
             throw new UnSupportMethodException("un support method funcName: " + funcName().toString());

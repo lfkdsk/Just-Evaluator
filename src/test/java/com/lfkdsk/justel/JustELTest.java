@@ -42,13 +42,13 @@ class JustELTest {
 
         Logger.i(String.valueOf(
                 new JustEL.Builder()
-                .lexer(new JustLexerImpl())
-                .parser(new JustParserImpl())
-                .compiler(new JustCompilerImpl())
-                .generator(new JavaCodeGenerator())
-                .create()
-                .expr("1111 + lfkdsk + sss")
-                .eval(context)
+                        .lexer(new JustLexerImpl())
+                        .parser(new JustParserImpl())
+                        .compiler(new JustCompilerImpl())
+                        .generator(new JavaCodeGenerator())
+                        .create()
+                        .expr("1111 + lfkdsk + sss")
+                        .eval(context)
         ));
     }
 
@@ -60,14 +60,15 @@ class JustELTest {
             put("lfkdsk", "sss");
         }};
 
-        Logger.i(String.valueOf(new JustEL.Builder()
-                .lexer(new JustLexerImpl())
-                .parser(new JustParserImpl())
-                .compiler(new JustCompilerImpl())
-                .generator(new JavaCodeGenerator())
-                .create()
-                .compile("1111 + lfkdsk + sss", context)
-                .eval(context)
+        Logger.i(String.valueOf(
+                JustEL.builder()
+                        .lexer(new JustLexerImpl())
+                        .parser(new JustParserImpl())
+                        .compiler(new JustCompilerImpl())
+                        .generator(new JavaCodeGenerator())
+                        .create()
+                        .compile("1111 + lfkdsk + sss", context)
+                        .eval(context)
         ));
     }
 
@@ -94,7 +95,7 @@ class JustELTest {
     @Test
     void testJustELBuilder() {
         Logger.init();
-        Logger.i(new JustEL.Builder()
+        Logger.i(JustEL.builder()
                 .compiler(code -> new ConstExpression("lfkdsk"))
                 .create()
                 .eval("lfkdsk", new JustMapContext() {{

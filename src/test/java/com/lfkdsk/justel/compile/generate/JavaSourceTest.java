@@ -2,7 +2,6 @@ package com.lfkdsk.justel.compile.generate;
 
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.function.ExtendFunctionExprTest;
-import com.lfkdsk.justel.ast.tree.AstFuncExpr;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
@@ -23,9 +22,8 @@ class JavaSourceTest {
     void testReFormatSourceCode() {
         Logger.init();
         ExtendFunctionExprTest.ExtendFunc func = new ExtendFunctionExprTest.ExtendFunc();
-        AstFuncExpr.extFunc.put(func.funcName(), func);
         JustContext context = new JustMapContext();
-
+        context.putExtendFunc(func.funcName(), func);
 
         Logger.init("gen-code");
         Lexer lexer = new JustLexerImpl(new StringReader("add(111,222)"));
