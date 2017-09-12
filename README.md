@@ -198,11 +198,47 @@ parser.insertOperators("**", 2, LEFT, NewOperator.class);
 
 ### Performance
 
+Performance test compared to the other four mainstream expression calculation engine, the time is **100 million times** the pressure test of the contrast time, time unit **in milliseconds**.
 
+#### 1.Pure Const Expr Test
+
+Test usage :
+
+``` java
+1000+100.0*99-(600-3*15)%(((68-9)-3)*2-100)+10000%7*71
+```
+
+![const](art/const.png)
+
+#### 2.Simple Expr Test
+
+Test usage :
+
+``` java
+f+1000+100.0*99-(600-3*15)%(((68-9)-3)*2-100)+10000%7*71+f
+```
+
+![simple](art/simple.png)
+
+#### 3.Complex Expr Test
+
+Test usage:
+
+![complex-test](art/complex.png)
+
+Result：
+
+![complex](art/complex-result.png)
+
+QLExpress and JEXL's results cannot be drawn in the picture. QLExpress use 285000000 ms in the test, and JEXL use 27150000 ms in this test.
 
 ### Feature
 
-
+- [x] Const Folding
+- [x] ​Sub-AST Spliting
+- [x] AstNode <==> Expression
+- [ ] Balance AST Design
+- [ ] ByteCode Support 
 
 ### Feedback    
 Please send your feedback as long as there occurs any inconvenience or problem. You can contact me with:
