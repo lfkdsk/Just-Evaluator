@@ -1,24 +1,9 @@
 ## Just-Evaluator
 
-**JVM platform, high-performance, lightweight** expression evaluation engine, to provide interpretation and implementation of the implementation of a variety of evaluation methods.
+**JVM platform, high performance, lightweight** expression computing engine, providing interpretation and compilation and other methods to achieve.
+
 
 ### How to use？
-
-* with gradle：
-
-```groovy
-	// Step 1. Add the JitPack repository to your build file
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
-	// Step 2. Add the dependency
-    dependencies {
-		compile 'com.github.User:Repo:Tag'
-	}
-```
 
 * with maven：
 
