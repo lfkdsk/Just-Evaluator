@@ -33,7 +33,7 @@ public class CondOp extends OperatorExpr {
 
     @Override
     public String funcName() {
-        return "? :";
+        return "?:";
     }
 
     public void setCond(boolean cond) {
@@ -74,5 +74,10 @@ public class CondOp extends OperatorExpr {
     @Override
     public boolean isConstNode() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "(?: " + trueExpr().toString() + " " + falseExpr().toString() + ")";
     }
 }

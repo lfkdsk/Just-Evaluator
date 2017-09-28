@@ -34,7 +34,7 @@ public class NotPostfix extends AstList {
 
     @Override
     public String toString() {
-        return "!" + operand();
+        return "! " + operand();
     }
 
     @Override

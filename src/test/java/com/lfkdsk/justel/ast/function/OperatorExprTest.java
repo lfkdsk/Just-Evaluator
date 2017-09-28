@@ -54,12 +54,12 @@ class OperatorExprTest {
             String left = leftChild().compile(env);
             String right = rightChild().compile(env);
             builder.append("(")
-                    .append(left)
-                    .append("+")
-                    .append(right)
-                    .append("+")
-                    .append(right)
-                    .append(")");
+                   .append(left)
+                   .append("+")
+                   .append(right)
+                   .append("+")
+                   .append(right)
+                   .append(")");
 
             return builder.toString();
         }
@@ -133,5 +133,29 @@ class OperatorExprTest {
         Logger.init();
         Logger.i(Character.isLetterOrDigit('=') + " ");
     }
+
+    @Test
+    void testToString() {
+        Logger.init("toString");
+        String[] args = {
+                "123 + 222",
+                "123 * 222",
+                "123 - 111",
+                "123 / 222",
+                "lfkdsk[lfk]",
+                "!lfkdsk",
+                "lfkdsk ? 1 : 0",
+                "lfkdsk == 1",
+                "lfkdsk || 1"
+        };
+
+        for (String arg : args) {
+            JustLexerImpl lexer = new JustLexerImpl(new StringReader(arg));
+            JustParserImpl parser = new JustParserImpl();
+            Logger.v(parser.parser(lexer).toString());
+        }
+    }
+
+
 
 }

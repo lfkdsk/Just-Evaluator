@@ -120,7 +120,7 @@ public abstract class AstNode implements Iterable<AstNode>
      * @param node  replace node
      * @return node
      */
-    public abstract AstNode replaceChild(int index, AstNode node);
+    public abstract AstNode resetChild(int index, AstNode node);
 
     /**
      * compute ast level
@@ -193,5 +193,16 @@ public abstract class AstNode implements Iterable<AstNode>
                 return AstNode.this.eval(context);
             }
         };
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        return hashCode() == obj.hashCode();
     }
 }

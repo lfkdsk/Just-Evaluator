@@ -15,8 +15,7 @@ public final class GeneratedId {
     private GeneratedId() {}
 
     /**
-     * Generate a value suitable for use in setId
-     * This value will not collide with ID values generated at build time by aapt for R.id.
+     * Generate a value suitable for use
      *
      * @return a generated ID value
      */

@@ -54,18 +54,18 @@ final class ParserHelper {
             // fix binary => special expr
             if (child instanceof AstBinaryExpr) {
                 child = resetAstExpr((AstBinaryExpr) child, operators);
-                parent.replaceChild(i, child);
+                parent.resetChild(i, child);
 
             } else if (child instanceof AstPrimaryExpr) {
                 // fix primary(func) => function expr
                 if (isAstFuncExpr(child)) {
                     child = new AstFuncExpr(((AstPrimaryExpr) child).getChildren());
-                    parent.replaceChild(i, child);
+                    parent.resetChild(i, child);
                 }
             } else if (isAstCondExpr(child)) {
                 // fix primary(cond) => cond expr
                 child = new AstCondExpr(((AstList) child).getChildren());
-                parent.replaceChild(i, child);
+                parent.resetChild(i, child);
             }
 
             transformAst(child, operators);

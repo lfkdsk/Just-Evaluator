@@ -81,4 +81,9 @@ public class ArrayIndexExpr extends OperatorExpr implements AstPostfixExpr {
     protected boolean isShouldSplit() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "([] " + index().toString() + ")";
+    }
 }

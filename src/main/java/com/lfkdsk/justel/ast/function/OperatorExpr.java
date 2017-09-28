@@ -157,4 +157,16 @@ public abstract class OperatorExpr extends AstList implements Function {
 
         return super.compile(env);
     }
+
+    @Override
+    public String toString() {
+
+        return "(" +
+                operator().toString() +
+                " " +
+                leftChild().toString() +
+                " " +
+                rightChild().toString() +
+                ")";
+    }
 }
