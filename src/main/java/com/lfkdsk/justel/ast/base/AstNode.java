@@ -15,6 +15,7 @@ import com.lfkdsk.justel.eval.Expressible;
 import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.exception.CompilerException;
 import com.lfkdsk.justel.exception.EvalException;
+import com.lfkdsk.justel.utils.MurmurHash3;
 
 import java.util.Iterator;
 
@@ -79,6 +80,17 @@ public abstract class AstNode implements Iterable<AstNode>
      * parent - node
      */
     protected AstNode parentNode;
+
+    /**
+     * result => toString
+     */
+    protected String evalString = null;
+
+    /**
+     * hashCode => evalString
+     */
+    protected int hash = 0;
+
 
     public AstNode(int tag) {
         this.tag = tag;
@@ -197,7 +209,13 @@ public abstract class AstNode implements Iterable<AstNode>
 
     @Override
     public int hashCode() {
-        return toString().hashCode();
+        String eval = toString();
+
+        if (hash == 0 && eval.length() != 0) {
+            hash = MurmurHash3.hash(eval.getBytes());
+        }
+
+        return hash;
     }
 
     @Override

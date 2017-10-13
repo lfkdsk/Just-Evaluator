@@ -60,6 +60,7 @@ public class CornerTest {
         Generator generator = new JavaCodeGenerator(context, rootNode);
         JustCompiler compiler = new JustCompilerImpl();
         JavaSource javaSource = generator.generate();
+        Logger.v(javaSource.toString());
         com.lfkdsk.justel.eval.Expression expr = compiler.compile(javaSource);
 
         long startTime = System.currentTimeMillis();

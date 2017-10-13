@@ -19,6 +19,10 @@ public interface JustContext {
 
     Object put(String key, Object val);
 
+    Object getCache(Integer astHash);
+
+    Object putCache(Integer key, Object val);
+
     ExtendFunctionExpr putExtendFunc(String name, ExtendFunctionExpr expr);
 
     ExtendFunctionExpr getExtendFunc(String name);
@@ -32,11 +36,11 @@ public interface JustContext {
      */
     Object command(String command);
 
-    Object global(String command);
+    Object traceVar(Integer var);
 
     Collection<String> varsKeySet();
 
     List<String> commandList();
 
-    List<String> globalList();
+    List<Integer> varTraceList();
 }

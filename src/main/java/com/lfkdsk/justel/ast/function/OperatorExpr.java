@@ -96,64 +96,94 @@ public abstract class OperatorExpr extends AstList implements Function {
     }
 
     protected boolean isShouldSplit() {
-        return astLevel > 7;
+        return astLevel > 4;
     }
 
-    private String splitSubAst(JustContext env) {
+    private String splitSubAstEval(JustContext env) {
         // reset this state flag
         this.isThisNodeSpited = true;
 
-        Object leftValue = leftChild().eval(env);
-        Object rightValue = rightChild().eval(env);
+        AstNode left = leftChild();
+        AstNode right = rightChild();
 
-        String leftVar = "left" + GeneratedId.generateAtomId();
-        String rightVar = "right" + GeneratedId.generateAtomId();
+        String leftStr = left.toString();
+        String rightStr = right.toString();
 
-        String leftType = getTypeDeclare(leftValue.getClass());
-        String rightType = getTypeDeclare(rightValue.getClass());
+        String leftVar, rightVar;
 
-        StringBuilder leftStr = new StringBuilder();
-        StringBuilder rightStr = new StringBuilder();
-
-        leftStr
-                .append(leftType)
-                .append(" ")
-                .append(leftVar)
-                .append("=")
-                .append(leftChild().compile(env))
-                .append(";");
-
-        rightStr
-                .append(rightType)
-                .append(" ")
-                .append(rightVar)
-                .append("=")
-                .append(rightChild().compile(env)).append(";");
-
-//        env.global("static " + leftType + " " + leftVar + ";");
-//        env.global("static " + rightType + " " + rightVar + ";");
-        env.command(leftStr.toString());
-        env.command(rightStr.toString());
+        if (leftStr.length() < rightStr.length()) {
+            leftVar = attachCache(left, env);
+            rightVar = attachCache(right, env);
+        } else {
+            rightVar = attachCache(right, env);
+            leftVar = attachCache(left, env);
+        }
 
         return "(" + leftVar + operator().toString() + rightVar + ")";
+    }
+
+    private String attachCache(AstNode node, JustContext env) {
+        Object leftCache = env.getCache(node.hashCode());
+
+        String var;
+
+        if (leftCache == null) {
+            var = "var" + GeneratedId.generateAtomId();
+            env.putCache(node.hashCode(), var);
+            env.command(generateNewVar(var, node, env));
+        } else {
+            var = (String) leftCache;
+        }
+
+        return var;
+    }
+
+    private String generateNewVar(String var, AstNode node, JustContext env) {
+        Object value = node.eval(env);
+        String type = getTypeDeclare(value.getClass());
+
+        StringBuilder builder = new StringBuilder();
+
+        builder
+                .append(type)
+                .append(" ")
+                .append(var)
+                .append("=")
+                .append(node.compile(env))
+                .append(";");
+
+        return builder.toString();
     }
 
     public boolean isThisNodeSpited() {
         return isThisNodeSpited;
     }
 
+    protected Object evalCached(JustContext env) {
+        Object result = env.getCache(hashCode());
+
+        if (result == null) {
+            result = eval(env);
+
+            env.putCache(hashCode(), result);
+        }
+
+        return result;
+    }
+
     @Override
     public String compile(JustContext env) {
         if (isConstNode) {
             Object obj = eval(env);
+
             if (obj instanceof Float) return obj.toString() + "F";
             else if (obj instanceof Long) return obj.toString() + "L";
 
             return obj.toString();
         }
-//        else if (isShouldSplit()) {
-//            return splitSubAst(env);
-//        }
+        else if (isShouldSplit()) {
+            return splitSubAstEval(env);
+        }
 
         return super.compile(env);
     }

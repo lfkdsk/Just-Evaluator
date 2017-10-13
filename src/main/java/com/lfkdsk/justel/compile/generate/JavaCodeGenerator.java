@@ -15,10 +15,7 @@ import com.lfkdsk.justel.template.TemplateImpl;
 import com.lfkdsk.justel.template.dom.DomCom;
 import com.lfkdsk.justel.utils.GeneratedId;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Java Code => Generator
@@ -56,6 +53,16 @@ public class JavaCodeGenerator extends Generator {
         }
 
         List<String> commandSet = context.commandList();
+        List<Integer> traceList = context.varTraceList();
+
+//        for (int i = traceList.size() - 1; i >= 0; i--) {
+//            Integer varHash = traceList.get(i);
+//
+//            if (commandSet.containsKey(varHash)) {
+//                builder.append(commandSet.get(varHash));
+//            }
+//        }
+
         for (String command : commandSet) {
             builder.append(command);
         }
@@ -63,17 +70,6 @@ public class JavaCodeGenerator extends Generator {
         return builder.toString();
     }
 
-    protected String generateGlobalVars() {
-        StringBuilder builder = new StringBuilder();
-
-        if (context == null) return "";
-        List<String> list = context.globalList();
-        for (String global : list) {
-            builder.append(global);
-        }
-
-        return builder.toString();
-    }
 
     @Override
     public JavaSource generate() {
@@ -85,7 +81,7 @@ public class JavaCodeGenerator extends Generator {
         // after generate Ast -> generate local vars
         // some vars maybe latter than AST Compile
         templateContext.put("${localVars}", generateLocalVars());
-        templateContext.put("${attrs}", generateGlobalVars());
+        templateContext.put("${attrs}", "");
 
         return new JavaSource(JavaSource.GENERATE_DEFAULT_PACKAGE,
                 className, mTemplate.fakeGenerateString(templateContext));

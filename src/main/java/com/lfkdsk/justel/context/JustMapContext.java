@@ -17,9 +17,11 @@ public class JustMapContext implements JustContext {
 
     private List<String> commandList = new LinkedList<>();
 
-    private List<String> globalList = new LinkedList<>();
-
     private Map<String, ExtendFunctionExpr> extFunc = new HashMap<>();
+
+    private Map<Integer, Object> astCache = new HashMap<>();
+
+    private List<Integer> traceList = new ArrayList<>();
 
     @Override
     public boolean contain(String name) {
@@ -34,6 +36,16 @@ public class JustMapContext implements JustContext {
     @Override
     public Object put(String key, Object val) {
         return map.put(key, val);
+    }
+
+    @Override
+    public Object getCache(Integer astHash) {
+        return astCache.get(astHash);
+    }
+
+    @Override
+    public Object putCache(Integer key, Object val) {
+        return astCache.put(key, val);
     }
 
     @Override
@@ -54,8 +66,8 @@ public class JustMapContext implements JustContext {
     }
 
     @Override
-    public Object global(String command) {
-        return globalList.add(command);
+    public Object traceVar(Integer varHash) {
+        return traceList.add(varHash);
     }
 
     @Override
@@ -69,7 +81,7 @@ public class JustMapContext implements JustContext {
     }
 
     @Override
-    public List<String> globalList() {
-        return globalList;
+    public List<Integer> varTraceList() {
+        return traceList;
     }
 }

@@ -32,6 +32,7 @@ public class AstList extends AstNode {
      */
     protected boolean hadComputeAstLevel = false;
 
+
     public AstList(List<AstNode> children, int tag) {
         super(tag);
         this.children = children;
@@ -59,19 +60,24 @@ public class AstList extends AstNode {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        if (evalString == null) {
 
-        builder.append('(');
+            StringBuilder builder = new StringBuilder();
 
-        String sep = "";
+            builder.append('(');
 
-        for (AstNode node : children) {
-            builder.append(sep);
-            sep = " ";
-            builder.append(node.toString());
+            String sep = "";
+
+            for (AstNode node : children) {
+                builder.append(sep);
+                sep = " ";
+                builder.append(node.toString());
+            }
+
+            evalString = builder.append(')').toString();
         }
 
-        return builder.append(')').toString();
+        return evalString;
     }
 
     @Override
