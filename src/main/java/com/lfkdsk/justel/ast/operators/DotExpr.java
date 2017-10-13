@@ -124,4 +124,12 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
     protected boolean isShouldSplit() {
         return false;
     }
+
+    @Override
+    public String toString() {
+
+        return "(. " +
+                leftChild().toString() +
+                ")";
+    }
 }

@@ -30,4 +30,11 @@ class JustLexerImplTest {
         JustLexerImpl lexer = new JustLexerImpl(new StringReader("== !== #= != "));
         lexer.hasMore();
     }
+
+    @Test
+    void testPoint() {
+        JustLexerImpl lexer = new JustLexerImpl(new StringReader("a.c"));
+        lexer.hasMore();
+        System.out.println("complete");
+    }
 }
