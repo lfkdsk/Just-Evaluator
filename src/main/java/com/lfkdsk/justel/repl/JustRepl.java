@@ -5,15 +5,14 @@ import com.lfkdsk.justel.compile.compiler.JustCompiler;
 import com.lfkdsk.justel.compile.compiler.JustCompilerImpl;
 import com.lfkdsk.justel.compile.generate.Generator;
 import com.lfkdsk.justel.compile.generate.JavaCodeGenerator;
+import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.exception.ParseException;
-import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.parser.JustParser;
+import com.lfkdsk.justel.token.Token;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
-import static com.lfkdsk.justel.token.Token.EOF;
 
 public class JustRepl {
 
@@ -42,7 +41,7 @@ public class JustRepl {
     /**
      * just-lexer
      */
-    static Lexer lexer = new JustLexerImpl(new BufferedReader(new InputStreamReader(System.in)));
+    static Lexer lexer = new MockLexer(new BufferedReader(new InputStreamReader(System.in)));
 
 
     static JustParser parser = new MockParser();
@@ -87,10 +86,18 @@ public class JustRepl {
 
     private static void run() {
         try {
-            while (lexer.peek(0) != EOF) {
+            while (lexer.peek(0) != Token.EOF) {
                 try {
                     AstNode node = parser.parser(lexer);
                     System.out.println(cyanPrint(String.valueOf(node.getClass())));
+
+                    if (openAst) {
+                        System.out.println(cyanPrint(node.toString()));
+                    }
+
+                    if (openMockEval) {
+                        System.out.println(cyanPrint(node.eval(new JustMapContext()).toString()));
+                    }
 
                     System.out.println("");
                     System.out.print(cyanPrint(JUST_EL));
