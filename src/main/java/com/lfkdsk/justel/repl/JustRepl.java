@@ -8,6 +8,7 @@ import com.lfkdsk.justel.compile.generate.JavaCodeGenerator;
 import com.lfkdsk.justel.compile.generate.JavaSource;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
+import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.parser.JustParser;
 import jline.console.ConsoleReader;
@@ -143,7 +144,10 @@ public class JustRepl {
                     if (openMockCompile) {
                         long start = System.currentTimeMillis();
 
-                        compiler.compile(javaSource);
+                        // save
+                        Expression expr = compiler.compile(javaSource);
+                        env.put(javaSource.className.toLowerCase(), expr);
+
                         AnsiConsole.out.println("Compile Time :" + (System.currentTimeMillis() - start + " ms"));
                     }
                 }
