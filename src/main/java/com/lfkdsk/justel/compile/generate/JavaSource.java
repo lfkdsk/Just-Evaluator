@@ -2,6 +2,9 @@ package com.lfkdsk.justel.compile.generate;
 
 import java.nio.CharBuffer;
 
+import static com.lfkdsk.justel.utils.FormatUtils.beautifulPrint;
+import static com.lfkdsk.justel.utils.FormatUtils.insertNewLine;
+
 /**
  * Java Source :
  * - package name
@@ -72,61 +75,20 @@ public final class JavaSource {
      * @return formatted source code
      */
     private String reformatToPrint() {
+        StringBuilder builder = new StringBuilder(sourceCode);
 
-        final char TOP_LEFT_CORNER = '╔';
-        final char BOTTOM_LEFT_CORNER = '╚';
-        final char MIDDLE_CORNER = '╟';
-        final char HORIZONTAL_DOUBLE_LINE = '║';
-        final String DOUBLE_DIVIDER = "════════════════════════════════════════════";
-        final String SINGLE_DIVIDER = "────────────────────────────────────────────";
-        final String TOP_BORDER = TOP_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
-        final String BOTTOM_BORDER = BOTTOM_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
-        final String MIDDLE_BORDER = MIDDLE_CORNER + SINGLE_DIVIDER + SINGLE_DIVIDER;
-
-        StringBuilder parent = new StringBuilder();
-        parent.append(TOP_BORDER);
+        builder = insertNewLine(builder, "{", "\r\n║");
+        builder = insertNewLine(builder, ";", "\r\n║");
 
         String[] args = {
                 "<Java Source Code> : ",
                 "PackageName : " + packageName,
                 "ClassName   : " + className,
-                "SourceCode  : "
+                "SourceCode  : ",
+                builder.toString()
         };
 
-        for (String arg : args) {
-            parent.append("\t\n")
-                  .append(HORIZONTAL_DOUBLE_LINE)
-                  .append(arg)
-                  .append("\t\n")
-                  .append(MIDDLE_BORDER);
-        }
-
-        StringBuilder builder = new StringBuilder(sourceCode);
-        builder = insertNewLine(builder, ";");
-        builder = insertNewLine(builder, "{");
-
-        parent.append("\r\n")
-              .append(HORIZONTAL_DOUBLE_LINE)
-              .append(builder)
-              .append("\r\n")
-              .append(BOTTOM_BORDER);
-
-        return parent.toString();
-    }
-
-    private StringBuilder insertNewLine(StringBuilder builder, String symbol) {
-        int start = 0, end = builder.length();
-        int index;
-        while (start < end) {
-            index = builder.indexOf(symbol, start);
-
-            if (index == -1) break;
-
-            builder.insert(index + 1, "\r\n║");
-            start = index + 1;
-        }
-
-        return builder;
+        return beautifulPrint(args);
     }
 
     @Override

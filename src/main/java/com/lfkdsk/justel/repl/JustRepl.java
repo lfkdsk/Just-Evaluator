@@ -18,14 +18,26 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static com.lfkdsk.justel.utils.FormatUtils.beautifulPrint;
+import static com.lfkdsk.justel.utils.FormatUtils.insertNewLine;
+import static com.lfkdsk.justel.utils.FormatUtils.reformatAstPrint;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class JustRepl {
+    static String logoStr =
+            "\n" +
+                    "     ██╗██╗   ██╗███████╗████████╗███████╗██╗     \n" +
+                    "     ██║██║   ██║██╔════╝╚══██╔══╝██╔════╝██║     \n" +
+                    "     ██║██║   ██║███████╗   ██║   █████╗  ██║     \n" +
+                    "██   ██║██║   ██║╚════██║   ██║   ██╔══╝  ██║     \n" +
+                    "╚█████╔╝╚██████╔╝███████║   ██║   ███████╗███████╗\n" +
+                    " ╚════╝  ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚══════╝\n" +
+                    "                                                  \n";
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String JUST_EL = "JustEL > ";
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_PURPLE = "\u001B[35m";
+    private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String JUST_EL = "JustEL > ";
 
     /**
      * just-lexer
@@ -50,64 +62,21 @@ public class JustRepl {
     private static boolean openMockCompile = false;
     private static boolean openMockGenerate = false;
 
-    static String logoStr =
-            "\n" +
-                    "     ██╗██╗   ██╗███████╗████████╗███████╗██╗     \n" +
-                    "     ██║██║   ██║██╔════╝╚══██╔══╝██╔════╝██║     \n" +
-                    "     ██║██║   ██║███████╗   ██║   █████╗  ██║     \n" +
-                    "██   ██║██║   ██║╚════██║   ██║   ██╔══╝  ██║     \n" +
-                    "╚█████╔╝╚██████╔╝███████║   ██║   ███████╗███████╗\n" +
-                    " ╚════╝  ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚══════╝\n" +
-                    "                                                  \n";
-
     private static String cyanPrint(String msg) {
         return ANSI_CYAN + msg + ANSI_RESET;
-    }
-
-    static String reformatAstPrint(String msg) {
-        StringBuilder builder = new StringBuilder();
-        int level = 0;
-        for (Character character : msg.substring(1, msg.length() - 1)
-                                      .toCharArray()) {
-            switch (character) {
-                case '(': {
-                    builder.append('(');
-                    level++;
-                    break;
-                }
-                case ')': {
-                    level--;
-                    builder.append('\n');
-                    for (int i = 0; i < level; i++) {
-                        builder.append('\t');
-                    }
-                    builder.append(')');
-                    break;
-                }
-                case ' ': {
-                    builder.append('\n');
-                    for (int i = 0; i < level; i++) {
-                        builder.append("\t");
-                    }
-                    break;
-                }
-                default: {
-                    builder.append(character);
-                }
-            }
-        }
-
-        return builder.toString();
     }
 
     private static void run() throws IOException {
         ConsoleReader reader = new ConsoleReader();
         reader.setHistoryEnabled(true);
-        System.out.println(ansi().eraseScreen().render(logoStr));
 
         String command;
         JustContext env = new JustMapContext();
         while ((command = reader.readLine(cyanPrint(JUST_EL))) != null) {
+
+            if (command.equals("")) continue;
+            else if (command.trim().equals("-q")) break;
+
             try {
 
                 lexer.reset(command);
@@ -116,11 +85,24 @@ public class JustRepl {
                 AstNode node = parser.parser(lexer);
 
                 if (openAst) {
-                    System.out.println(cyanPrint(reformatAstPrint(node.toString())));
+                    String reformat = reformatAstPrint(node.toString());
+                    String[] args = {
+                            "AST ---- Lisp Style",
+                            insertNewLine(new StringBuilder(reformat), "\n","║").toString()
+                    };
+
+                    System.out.println(cyanPrint(beautifulPrint(args)));
                 }
 
                 if (openMockEval) {
-                    System.out.println(cyanPrint(node.eval(env).toString()));
+                    String reformat = node.eval(env).toString();
+
+                    String[] args = {
+                            "Value ---- Eval",
+                            insertNewLine(new StringBuilder(reformat), "\n","\r\n║").toString()
+                    };
+
+                    System.out.println(cyanPrint(beautifulPrint(args)));
                 }
 
                 if (openMockGenerate) {
@@ -143,12 +125,16 @@ public class JustRepl {
     }
 
     public static void main(String[] args) throws Exception {
-//        AnsiConsole.systemInstall();
+        AnsiConsole.systemInstall();
+
+        // print logo & welcome ~
+        logoStr = logoStr.replace("█", ansi().fg(Ansi.Color.GREEN).a("█").reset().toString());
+        System.out.println(ansi().eraseScreen().render(logoStr));
+        System.out.println(ANSI_PURPLE + "Welcome to JustEL Debug Tools~~" + ANSI_RESET);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("");
             System.out.println(ANSI_PURPLE + "Have a nice Day~~" + ANSI_RESET);
-            // some cleaning up code...
         }));
 
         if (args.length < 1) {
@@ -161,8 +147,6 @@ public class JustRepl {
         if (type.contains("c")) openMockCompile = true;
         if (type.contains("g")) openMockGenerate = true;
 
-        logoStr = logoStr.replace("█", ansi().fg(Ansi.Color.GREEN).a("█").reset().toString());
-        System.out.println(ANSI_PURPLE + "Welcome to JustEL Debug Tools ~~" + ANSI_RESET);
         run();
     }
 
