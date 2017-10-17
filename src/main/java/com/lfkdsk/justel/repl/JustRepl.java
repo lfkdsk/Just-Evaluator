@@ -12,6 +12,7 @@ import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.parser.JustParser;
 import jline.console.ConsoleReader;
 import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.AnsiConsole;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class JustRepl {
     private static boolean openMockCompile = false;
     private static boolean openMockGenerate = false;
 
-    private static String logoStr =
+    static String logoStr =
             "\n" +
                     "     ██╗██╗   ██╗███████╗████████╗███████╗██╗     \n" +
                     "     ██║██║   ██║██╔════╝╚══██╔══╝██╔════╝██║     \n" +
@@ -58,6 +59,88 @@ public class JustRepl {
                     "╚█████╔╝╚██████╔╝███████║   ██║   ███████╗███████╗\n" +
                     " ╚════╝  ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚══════╝\n" +
                     "                                                  \n";
+
+    private static String cyanPrint(String msg) {
+        return ANSI_CYAN + msg + ANSI_RESET;
+    }
+
+    static String reformatAstPrint(String msg) {
+        StringBuilder builder = new StringBuilder();
+        int level = 0;
+        for (Character character : msg.substring(1, msg.length() - 1)
+                                      .toCharArray()) {
+            switch (character) {
+                case '(': {
+                    builder.append('(');
+                    level++;
+                    break;
+                }
+                case ')': {
+                    level--;
+                    builder.append('\n');
+                    for (int i = 0; i < level; i++) {
+                        builder.append('\t');
+                    }
+                    builder.append(')');
+                    break;
+                }
+                case ' ': {
+                    builder.append('\n');
+                    for (int i = 0; i < level; i++) {
+                        builder.append("\t");
+                    }
+                    break;
+                }
+                default: {
+                    builder.append(character);
+                }
+            }
+        }
+
+        return builder.toString();
+    }
+
+    private static void run() throws IOException {
+        ConsoleReader reader = new ConsoleReader();
+        reader.setHistoryEnabled(true);
+        System.out.println(ansi().eraseScreen().render(logoStr));
+
+        String command;
+        JustContext env = new JustMapContext();
+        while ((command = reader.readLine(cyanPrint(JUST_EL))) != null) {
+            try {
+
+                lexer.reset(command);
+                lexer.hasMore();
+
+                AstNode node = parser.parser(lexer);
+
+                if (openAst) {
+                    System.out.println(cyanPrint(reformatAstPrint(node.toString())));
+                }
+
+                if (openMockEval) {
+                    System.out.println(cyanPrint(node.eval(env).toString()));
+                }
+
+                if (openMockGenerate) {
+                    generator.reset(env, node);
+
+                    JavaSource javaSource = generator.generate();
+                    System.out.println(cyanPrint(javaSource.toString()));
+
+                    if (openMockCompile) {
+                        long start = System.currentTimeMillis();
+                        compiler.compile(javaSource);
+                        AnsiConsole.out.println("Compile Time :" + (System.currentTimeMillis() - start + " ms"));
+                    }
+                }
+
+            } catch (Throwable e) {
+                AnsiConsole.out.println(ansi().fgRed().a(JUST_EL + e.getMessage()).reset().toString());
+            }
+        }
+    }
 
     public static void main(String[] args) throws Exception {
 //        AnsiConsole.systemInstall();
@@ -77,60 +160,10 @@ public class JustRepl {
         if (type.contains("e")) openMockEval = true;
         if (type.contains("c")) openMockCompile = true;
         if (type.contains("g")) openMockGenerate = true;
-//
+
         logoStr = logoStr.replace("█", ansi().fg(Ansi.Color.GREEN).a("█").reset().toString());
-//        logoStr = logoStr.replace("\\", ansi().fg(Ansi.Color.GREEN).a("\\").reset().toString());
-//        logoStr = logoStr.replace("/", ansi().fg(Ansi.Color.GREEN).a("/").reset().toString());
-//        logoStr = logoStr.replace("_", ansi().fg(Ansi.Color.GREEN).a("_").reset().toString());
-//        logoStr = logoStr.replace("~", ansi().fg(Ansi.Color.GREEN).a("~").reset().toString());
-
+        System.out.println(ANSI_PURPLE + "Welcome to JustEL Debug Tools ~~" + ANSI_RESET);
         run();
-    }
-
-    private static String cyanPrint(String msg) {
-        return ANSI_CYAN + msg + ANSI_RESET;
-    }
-
-    private static void run() throws IOException {
-        ConsoleReader reader = new ConsoleReader();
-        reader.setHistoryEnabled(true);
-        System.out.println(logoStr);
-
-        String command;
-        JustContext env = new JustMapContext();
-        while ((command = reader.readLine(cyanPrint(JUST_EL))) != null) {
-            try {
-
-                lexer.reset(command);
-                lexer.hasMore();
-
-                AstNode node = parser.parser(lexer);
-
-                if (openAst) {
-                    System.out.println(cyanPrint(node.toString()));
-                }
-
-                if (openMockEval) {
-                    System.out.println(cyanPrint(node.eval(env).toString()));
-                }
-
-                if (openMockGenerate) {
-                    generator.reset(env, node);
-
-                    JavaSource javaSource = generator.generate();
-                    System.out.println(cyanPrint(javaSource.toString()));
-
-                    if (openMockCompile) {
-                        long start = System.currentTimeMillis();
-                        compiler.compile(javaSource);
-                        reader.println("Compile Time :" + (System.currentTimeMillis() - start + " ms"));
-                    }
-                }
-
-            } catch (Throwable e) {
-                System.out.println(cyanPrint(JUST_EL + e.getMessage()));
-            }
-        }
     }
 
 }
