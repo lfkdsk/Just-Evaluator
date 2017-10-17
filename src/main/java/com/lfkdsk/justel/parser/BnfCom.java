@@ -554,6 +554,7 @@ public class BnfCom {
          * @param argType 参数 也是一个类
          * @return 工厂
          */
+        @SuppressWarnings("unchecked")
         protected static Factory get(Class<? extends AstNode> clazz,
                                      Class<?> argType) {
             if (clazz == null) {
@@ -570,9 +571,7 @@ public class BnfCom {
                         return (AstNode) m.invoke(null, arg);
                     }
                 };
-            } catch (NoSuchMethodException e) {
-
-            }
+            } catch (NoSuchMethodException ignored) { }
 
             // call constructor
             try {

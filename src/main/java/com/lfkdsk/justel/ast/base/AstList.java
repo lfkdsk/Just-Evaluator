@@ -74,7 +74,7 @@ public class AstList extends AstNode {
                 builder.append(node.toString());
             }
 
-            evalString = builder.append(')').toString();
+            evalString = builder.append(")").toString();
         }
 
         return evalString;

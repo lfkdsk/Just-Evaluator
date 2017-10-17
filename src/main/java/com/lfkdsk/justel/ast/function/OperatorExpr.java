@@ -26,7 +26,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.*;
  * eq: factor { OP factor }
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  */
 public abstract class OperatorExpr extends AstList implements Function {
 
@@ -88,7 +88,7 @@ public abstract class OperatorExpr extends AstList implements Function {
             rightConst = ((OperatorExpr) right).isConstNode();
         }
 
-        return leftConst && rightConst;
+        return isConstNode = (leftConst && rightConst);
     }
 
     public void checkConstNode() {
@@ -180,8 +180,7 @@ public abstract class OperatorExpr extends AstList implements Function {
             else if (obj instanceof Long) return obj.toString() + "L";
 
             return obj.toString();
-        }
-        else if (isShouldSplit()) {
+        } else if (isShouldSplit()) {
             return splitSubAstEval(env);
         }
 

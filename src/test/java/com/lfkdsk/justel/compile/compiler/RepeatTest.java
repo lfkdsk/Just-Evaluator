@@ -4,7 +4,7 @@ import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import org.junit.jupiter.api.Test;
 
-import static com.lfkdsk.justel.compile.compiler.CornerTest.compiler;
+import static com.lfkdsk.justel.compile.compiler.CompareTest.compiler;
 
 /**
  * Created by liufengkai on 2017/9/28.

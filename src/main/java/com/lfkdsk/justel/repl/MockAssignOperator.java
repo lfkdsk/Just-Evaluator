@@ -10,8 +10,6 @@ import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
 
-import static com.lfkdsk.justel.compile.generate.Var.getTypeDeclare;
-
 public class MockAssignOperator extends OperatorExpr {
 
     public MockAssignOperator(List<AstNode> children) {
@@ -25,18 +23,11 @@ public class MockAssignOperator extends OperatorExpr {
 
     @Override
     public String compile(JustContext env) {
-        Object value = rightChild().eval(env);
-        String type = getTypeDeclare(value.getClass());
-
         StringBuilder builder = new StringBuilder();
 
-        builder
-                .append(type)
-                .append(" ")
-                .append(leftChild().toString())
+        builder.append(leftChild().toString())
                 .append("=")
-                .append(rightChild().eval(env))
-                .append(";");
+                .append(rightChild().compile(env));
 
         return builder.toString();
     }

@@ -59,7 +59,6 @@ public class AstProgram extends AstList {
             return constExpression.eval(env);
         }
 
-
         return program().eval(env);
     }
 
@@ -69,5 +68,10 @@ public class AstProgram extends AstList {
 
     public ConstExpression getConstExpression() {
         return constExpression;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

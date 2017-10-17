@@ -10,7 +10,7 @@ import java.nio.CharBuffer;
  * - code => char (cache)
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/20.
+ * Created by liufengkai on 2017/7/20.
  */
 public final class JavaSource {
 
@@ -69,41 +69,69 @@ public final class JavaSource {
      * Re-Format SourceCode -> Formatted Source Code
      * WARNING: JUST USED IN `toString` Method to Debug Source Code
      *
-     * @param sourceCode no-format str
      * @return formatted source code
      */
-    private static String reformatToPrint(String sourceCode) {
+    private String reformatToPrint() {
+
+        final char TOP_LEFT_CORNER = '╔';
+        final char BOTTOM_LEFT_CORNER = '╚';
+        final char MIDDLE_CORNER = '╟';
+        final char HORIZONTAL_DOUBLE_LINE = '║';
+        final String DOUBLE_DIVIDER = "════════════════════════════════════════════";
+        final String SINGLE_DIVIDER = "────────────────────────────────────────────";
+        final String TOP_BORDER = TOP_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
+        final String BOTTOM_BORDER = BOTTOM_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
+        final String MIDDLE_BORDER = MIDDLE_CORNER + SINGLE_DIVIDER + SINGLE_DIVIDER;
+
+        StringBuilder parent = new StringBuilder();
+        parent.append(TOP_BORDER);
+
+        String[] args = {
+                "<Java Source Code> : ",
+                "PackageName : " + packageName,
+                "ClassName   : " + className,
+                "SourceCode  : "
+        };
+
+        for (String arg : args) {
+            parent.append("\t\n")
+                  .append(HORIZONTAL_DOUBLE_LINE)
+                  .append(arg)
+                  .append("\t\n")
+                  .append(MIDDLE_BORDER);
+        }
+
         StringBuilder builder = new StringBuilder(sourceCode);
-        int start = 0, end = sourceCode.length();
+        builder = insertNewLine(builder, ";");
+        builder = insertNewLine(builder, "{");
+
+        parent.append("\r\n")
+              .append(HORIZONTAL_DOUBLE_LINE)
+              .append(builder)
+              .append("\r\n")
+              .append(BOTTOM_BORDER);
+
+        return parent.toString();
+    }
+
+    private StringBuilder insertNewLine(StringBuilder builder, String symbol) {
+        int start = 0, end = builder.length();
         int index;
         while (start < end) {
-            index = builder.indexOf(";", start);
+            index = builder.indexOf(symbol, start);
 
             if (index == -1) break;
 
-            builder.insert(index + 1, "\r\n");
+            builder.insert(index + 1, "\r\n║");
             start = index + 1;
         }
 
-        start = 0;
-
-        while (start < end) {
-            index = builder.indexOf("{", start);
-
-            if (index == -1) break;
-
-            builder.insert(index + 1, "\r\n");
-            start = index + 1;
-        }
-
-        return builder.toString();
+        return builder;
     }
 
     @Override
     public String toString() {
-        return "<Java Source Code> : \n" +
-                "PackageName : " + packageName + "\n" +
-                "ClassName   : " + className + "\n" +
-                "SourceCode  : \n" + reformatToPrint(sourceCode);
+
+        return reformatToPrint();
     }
 }

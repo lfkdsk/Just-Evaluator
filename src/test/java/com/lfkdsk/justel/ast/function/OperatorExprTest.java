@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import java.io.StringReader;
 import java.util.List;
 
-import static com.lfkdsk.justel.compile.compiler.CornerTest.compiler;
+import static com.lfkdsk.justel.compile.compiler.CompareTest.compiler;
 import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
 import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
 
