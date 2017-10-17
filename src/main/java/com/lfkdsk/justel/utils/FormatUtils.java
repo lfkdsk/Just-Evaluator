@@ -47,7 +47,7 @@ public class FormatUtils {
                 case ' ': {
                     builder.append('\n');
                     for (int i = 0; i < level; i++) {
-                        builder.append("\t");
+                        builder.append('\t');
                     }
                     break;
                 }

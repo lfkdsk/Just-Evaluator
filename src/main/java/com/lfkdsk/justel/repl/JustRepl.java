@@ -26,13 +26,21 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class JustRepl {
     static String logoStr =
             "\n" +
-                    "     ██╗██╗   ██╗███████╗████████╗███████╗██╗     \n" +
-                    "     ██║██║   ██║██╔════╝╚══██╔══╝██╔════╝██║     \n" +
-                    "     ██║██║   ██║███████╗   ██║   █████╗  ██║     \n" +
-                    "██   ██║██║   ██║╚════██║   ██║   ██╔══╝  ██║     \n" +
-                    "╚█████╔╝╚██████╔╝███████║   ██║   ███████╗███████╗\n" +
-                    " ╚════╝  ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚══════╝\n" +
-                    "                                                  \n";
+                    "     ██╗██╗   ██╗███████╗████████╗   ███████╗██╗     \n" +
+                    "     ██║██║   ██║██╔════╝╚══██╔══╝   ██╔════╝██║     \n" +
+                    "     ██║██║   ██║███████╗   ██║█████╗█████╗  ██║     \n" +
+                    "██   ██║██║   ██║╚════██║   ██║╚════╝██╔══╝  ██║     \n" +
+                    "╚█████╔╝╚██████╔╝███████║   ██║      ███████╗███████╗\n" +
+                    " ╚════╝  ╚═════╝ ╚══════╝   ╚═╝      ╚══════╝╚══════╝\n" +
+                    "                                                     \n";
+
+    static final String help =
+            "-a show ast structure of this expr \n" +
+                    "-e eval this expr \n" +
+                    "-g generate java source code \n" +
+                    "-c compile java source code [need -g] \n" +
+                    "Just-REPL support assign(=) operator to set id-token's value, this grammar \n " +
+                    "won't support in JustEL";
 
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_PURPLE = "\u001B[35m";
@@ -66,6 +74,26 @@ public class JustRepl {
         return ANSI_CYAN + msg + ANSI_RESET;
     }
 
+    private static void resolveCommandFlag(String command, boolean flag) {
+        if (command.contains("a")) openAst = flag;
+        if (command.contains("e")) openMockEval = flag;
+        if (command.contains("c")) openMockCompile = flag;
+        if (command.contains("g")) openMockGenerate = flag;
+    }
+
+    private static boolean resolveCommandLine(String command) {
+        String trimCommand = command.trim();
+        if (trimCommand.startsWith("+")) {
+            resolveCommandFlag(trimCommand, true);
+        } else if (trimCommand.startsWith("-")) {
+            resolveCommandFlag(trimCommand, false);
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
     private static void run() throws IOException {
         ConsoleReader reader = new ConsoleReader();
         reader.setHistoryEnabled(true);
@@ -75,7 +103,8 @@ public class JustRepl {
         while ((command = reader.readLine(cyanPrint(JUST_EL))) != null) {
 
             if (command.equals("")) continue;
-            else if (command.trim().equals("-q")) break;
+            else if (command.trim().equals("-q")) return;
+            else if (resolveCommandLine(command)) continue;
 
             try {
 
@@ -88,7 +117,7 @@ public class JustRepl {
                     String reformat = reformatAstPrint(node.toString());
                     String[] args = {
                             "AST ---- Lisp Style",
-                            insertNewLine(new StringBuilder(reformat), "\n","║").toString()
+                            insertNewLine(new StringBuilder(reformat), "\n", "║").toString()
                     };
 
                     System.out.println(cyanPrint(beautifulPrint(args)));
@@ -99,7 +128,7 @@ public class JustRepl {
 
                     String[] args = {
                             "Value ---- Eval",
-                            insertNewLine(new StringBuilder(reformat), "\n","\r\n║").toString()
+                            insertNewLine(new StringBuilder(reformat), "\n", "\r\n║").toString()
                     };
 
                     System.out.println(cyanPrint(beautifulPrint(args)));
@@ -113,6 +142,7 @@ public class JustRepl {
 
                     if (openMockCompile) {
                         long start = System.currentTimeMillis();
+
                         compiler.compile(javaSource);
                         AnsiConsole.out.println("Compile Time :" + (System.currentTimeMillis() - start + " ms"));
                     }
@@ -138,14 +168,12 @@ public class JustRepl {
         }));
 
         if (args.length < 1) {
-            throw new Exception("need more args to use this repl");
+            System.out.println(ansi().fgBrightGreen().render(help).reset().toString());
+            return;
         }
 
         String type = args[0];
-        if (type.contains("a")) openAst = true;
-        if (type.contains("e")) openMockEval = true;
-        if (type.contains("c")) openMockCompile = true;
-        if (type.contains("g")) openMockGenerate = true;
+        resolveCommandFlag(type, true);
 
         run();
     }

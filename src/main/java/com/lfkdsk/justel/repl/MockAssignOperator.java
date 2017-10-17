@@ -25,6 +25,9 @@ public class MockAssignOperator extends OperatorExpr {
     public String compile(JustContext env) {
         StringBuilder builder = new StringBuilder();
 
+        // add value to env
+        eval(env);
+
         builder.append(leftChild().toString())
                 .append("=")
                 .append(rightChild().compile(env));

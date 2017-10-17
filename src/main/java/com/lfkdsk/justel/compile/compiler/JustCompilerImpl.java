@@ -59,7 +59,6 @@ public class JustCompilerImpl implements JustCompiler {
 
     @Override
     public Expression compile(JavaSource code) {
-
         try {
             // found expression in cache.
             if (memCompilerCache.containsKey(code.getClassQualifiedName())) {
@@ -85,7 +84,6 @@ public class JustCompilerImpl implements JustCompiler {
 
             return expr;
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-
             e.printStackTrace();
             throw new CompilerException(e.getMessage());
         }
