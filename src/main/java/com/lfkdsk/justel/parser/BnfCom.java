@@ -118,15 +118,15 @@ public class BnfCom {
      * Repeat Node
      */
     protected static class Repeat extends Element {
-        protected BnfCom parser;
+        BnfCom parser;
 
-        protected boolean onlyOne;
+        boolean onlyOne;
 
         /**
          * @param parser  BNF
          * @param onlyOne onlyOne?
          */
-        public Repeat(BnfCom parser, boolean onlyOne) {
+        Repeat(BnfCom parser, boolean onlyOne) {
             this.parser = parser;
             this.onlyOne = onlyOne;
         }
@@ -158,9 +158,9 @@ public class BnfCom {
      */
     protected static abstract class AToken extends Element {
 
-        protected Factory factory;
+        Factory factory;
 
-        public AToken(Class<? extends AstLeaf> clazz) {
+        AToken(Class<? extends AstLeaf> clazz) {
             if (clazz == null) {
                 clazz = AstLeaf.class;
             }
@@ -201,7 +201,7 @@ public class BnfCom {
     protected static class IdToken extends AToken {
         Set<String> reserved;
 
-        public IdToken(Class<? extends AstLeaf> clazz, Set<String> reserved) {
+        IdToken(Class<? extends AstLeaf> clazz, Set<String> reserved) {
             super(clazz);
             this.reserved = reserved != null ? reserved : new HashSet<>();
         }
@@ -217,7 +217,7 @@ public class BnfCom {
      */
     protected static class NumToken extends AToken {
 
-        public NumToken(Class<? extends AstLeaf> clazz) {
+        NumToken(Class<? extends AstLeaf> clazz) {
             super(clazz);
         }
 
@@ -232,7 +232,7 @@ public class BnfCom {
      */
     protected static class StrToken extends AToken {
 
-        public StrToken(Class<? extends AstLeaf> clazz) {
+        StrToken(Class<? extends AstLeaf> clazz) {
             super(clazz);
         }
 
@@ -244,7 +244,7 @@ public class BnfCom {
 
     protected static class BoolToken extends AToken {
 
-        public BoolToken(Class<? extends AstLeaf> clazz) {
+        BoolToken(Class<? extends AstLeaf> clazz) {
             super(clazz);
         }
 
@@ -256,7 +256,7 @@ public class BnfCom {
 
     protected static class NullToken extends AToken {
 
-        public NullToken(Class<? extends AstLeaf> clazz) {
+        NullToken(Class<? extends AstLeaf> clazz) {
             super(clazz);
         }
 
@@ -268,7 +268,7 @@ public class BnfCom {
 
     protected static class TypeToken extends AToken {
 
-        public TypeToken(Class<? extends AstLeaf> clazz) {
+        TypeToken(Class<? extends AstLeaf> clazz) {
             super(clazz);
         }
 
@@ -282,9 +282,9 @@ public class BnfCom {
      * Leaf Node.
      */
     protected static class Leaf extends Element {
-        protected String[] tokens;
+        String[] tokens;
 
-        protected Leaf(String[] pat) {
+        Leaf(String[] pat) {
             this.tokens = pat;
         }
 
@@ -336,7 +336,7 @@ public class BnfCom {
 
     protected static class Skip extends Leaf {
 
-        protected Skip(String[] pat) {
+        Skip(String[] pat) {
             super(pat);
         }
 
@@ -352,14 +352,14 @@ public class BnfCom {
         }
     }
 
-    public static class Precedence {
-        public final int value;
-        public final boolean leftAssoc;
-        public final Class<? extends AstNode> clazz;
+    public final static class Precedence {
+        final int value;
+        final boolean leftAssoc;
+        final Class<? extends AstNode> clazz;
         public final Factory factory;
 
-        public Precedence(int value, boolean leftAssoc,
-                          Class<? extends AstNode> clazz) {
+        Precedence(int value, boolean leftAssoc,
+                   Class<? extends AstNode> clazz) {
             this.value = value;
             this.leftAssoc = leftAssoc;
             this.clazz = clazz;
@@ -525,7 +525,7 @@ public class BnfCom {
          * @param clazz class file
          * @return reflect factory
          */
-
+        @SuppressWarnings("unchecked")
         private static Factory getForAstList(Class<? extends AstNode> clazz) {
             Factory f = get(clazz, List.class);
 
@@ -555,8 +555,8 @@ public class BnfCom {
          * @return 工厂
          */
         @SuppressWarnings("unchecked")
-        protected static Factory get(Class<? extends AstNode> clazz,
-                                     Class<?> argType) {
+        static Factory get(Class<? extends AstNode> clazz,
+                           Class<?> argType) {
             if (clazz == null) {
                 return null;
             }
@@ -664,7 +664,7 @@ public class BnfCom {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // add token combinators
+    // add token combinator
     ///////////////////////////////////////////////////////////////////////////
 
     public BnfCom number() {

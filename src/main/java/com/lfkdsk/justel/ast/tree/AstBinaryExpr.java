@@ -24,7 +24,7 @@ import java.util.List;
  * Binary Expr will be replace by Operator Expr
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  * @see com.lfkdsk.justel.parser.JustParserImpl
  * @see com.lfkdsk.justel.ast.function.OperatorExpr
  */
