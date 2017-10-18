@@ -24,6 +24,11 @@ import static com.lfkdsk.justel.utils.FormatUtils.insertNewLine;
 import static com.lfkdsk.justel.utils.FormatUtils.reformatAstPrint;
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * JustEL Debug Tools
+ *
+ * @author liufengkai
+ */
 public class JustRepl {
     static String logoStr =
             "\n" +

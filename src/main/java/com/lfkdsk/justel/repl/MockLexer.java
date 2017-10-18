@@ -5,6 +5,11 @@ import com.lfkdsk.justel.token.SepToken;
 
 import java.io.Reader;
 
+/**
+ * insert symbol = operator for REPL
+ *
+ * @author liufengkai
+ */
 public class MockLexer extends JustLexerImpl {
 
     public MockLexer() {

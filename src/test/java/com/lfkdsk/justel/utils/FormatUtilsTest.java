@@ -3,6 +3,7 @@ package com.lfkdsk.justel.utils;
 import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
 
+import static com.lfkdsk.justel.utils.FormatUtils.insertNewLine;
 import static com.lfkdsk.justel.utils.FormatUtils.reformatAstPrint;
 
 class FormatUtilsTest {
@@ -22,6 +23,8 @@ class FormatUtilsTest {
 
     @Test
     void beautifulReformat() {
-        System.out.println(FormatUtils.beautifulPrint("lfkdsk", "11111111111111111", reformatAstPrint("(== (- (+ lfkdsk 1) lfkdsk) true)")));
+        System.out.println(FormatUtils.beautifulPrint("lfkdsk", "11111111111111111",
+                insertNewLine(new StringBuilder(reformatAstPrint("(== (- (+ lfkdsk 1) lfkdsk) true)")),
+                        "\n","║").toString()));
     }
 }

@@ -10,6 +10,11 @@ import com.lfkdsk.justel.token.Token;
 
 import java.util.List;
 
+/**
+ * = operator for REPL
+ *
+ * @author liufengkai
+ */
 public class MockAssignOperator extends OperatorExpr {
 
     public MockAssignOperator(List<AstNode> children) {
@@ -29,8 +34,8 @@ public class MockAssignOperator extends OperatorExpr {
         eval(env);
 
         builder.append(leftChild().toString())
-                .append("=")
-                .append(rightChild().compile(env));
+               .append("=")
+               .append(rightChild().compile(env));
 
         return builder.toString();
     }
