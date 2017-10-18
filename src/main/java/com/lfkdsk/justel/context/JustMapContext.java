@@ -9,7 +9,7 @@ import java.util.*;
  * Just Map Context
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/18.
+ * Created by liufengkai on 2017/7/18.
  */
 public class JustMapContext implements JustContext {
 
@@ -83,5 +83,11 @@ public class JustMapContext implements JustContext {
     @Override
     public List<Integer> varTraceList() {
         return traceList;
+    }
+
+    @Override
+    public boolean clearVars() {
+        map.clear();
+        return true;
     }
 }

@@ -8,6 +8,14 @@
     <artifactId>just-el</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <developers>
+        <developer>
+            <name>lfkdsk</name>
+            <email>lfk_dsk@hotmail.com</email>
+            <timezone>8</timezone>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>

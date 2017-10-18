@@ -71,10 +71,13 @@ public class JustRepl {
      */
     private static Generator generator = new JavaCodeGenerator();
 
+    private static JustContext env = new JustMapContext();
+
     private static boolean openAst = false;
     private static boolean openMockEval = false;
     private static boolean openMockCompile = false;
     private static boolean openMockGenerate = false;
+    private static boolean openStressedTest = false;
 
     private static String cyanPrint(String msg) {
         return ANSI_CYAN + msg + ANSI_RESET;
@@ -85,6 +88,8 @@ public class JustRepl {
         if (command.contains("e")) openMockEval = flag;
         if (command.contains("c")) openMockCompile = flag;
         if (command.contains("g")) openMockGenerate = flag;
+        if (command.contains("s")) openStressedTest = flag;
+        if (command.contains("-flush") && !flag) env.clearVars();
     }
 
     private static boolean resolveCommandLine(String command) {
@@ -100,12 +105,72 @@ public class JustRepl {
         return true;
     }
 
+    private static void runAst(AstNode node) {
+        String reformat = reformatAstPrint(node.toString());
+        String[] args = {
+                "AST ---- Lisp Style",
+                insertNewLine(new StringBuilder(reformat), "\n", "║").toString()
+        };
+
+        System.out.println(cyanPrint(beautifulPrint(args)));
+    }
+
+    private static void runEval(AstNode node, JustContext env) {
+        long start = System.nanoTime();
+        Expression expr = node.expr();
+        AnsiConsole.out.println("Eval Expression Time :" + (System.nanoTime() - start + " ns"));
+
+        String reformat = expr.eval(env).toString();
+
+        String[] args = {
+                "Value ---- Eval",
+                insertNewLine(new StringBuilder(reformat), "\n", "\r\n║").toString()
+        };
+
+        System.out.println(cyanPrint(beautifulPrint(args)));
+
+        if (openStressedTest) {
+
+            start = System.currentTimeMillis();
+
+            for (int i = 0; i < 1_0000; i++) {
+                expr.eval(env);
+            }
+
+            AnsiConsole.out.println("Run Eval 1_0000 Time :" + (System.currentTimeMillis() - start + " ms"));
+        }
+    }
+
+    private static void runCompile(AstNode node, JustContext env) {
+        generator.reset(env, node);
+
+        JavaSource javaSource = generator.generate();
+        System.out.println(cyanPrint(javaSource.toString()));
+
+        if (openMockCompile) {
+
+            long start = System.currentTimeMillis();
+            Expression expr = compiler.compile(javaSource);
+            AnsiConsole.out.println("Compile Time :" + (System.currentTimeMillis() - start + " ms"));
+
+            if (openStressedTest) {
+
+                start = System.currentTimeMillis();
+
+                for (int i = 0; i < 1_0000; i++) {
+                    expr.eval(env);
+                }
+
+                AnsiConsole.out.println("Run 1_0000 Time :" + (System.currentTimeMillis() - start + " ms"));
+            }
+        }
+    }
+
     private static void run() throws IOException {
         ConsoleReader reader = new ConsoleReader();
         reader.setHistoryEnabled(true);
 
         String command;
-        JustContext env = new JustMapContext();
         while ((command = reader.readLine(cyanPrint(JUST_EL))) != null) {
 
             if (command.equals("")) continue;
@@ -120,41 +185,15 @@ public class JustRepl {
                 AstNode node = parser.parser(lexer);
 
                 if (openAst) {
-                    String reformat = reformatAstPrint(node.toString());
-                    String[] args = {
-                            "AST ---- Lisp Style",
-                            insertNewLine(new StringBuilder(reformat), "\n", "║").toString()
-                    };
-
-                    System.out.println(cyanPrint(beautifulPrint(args)));
+                    runAst(node);
                 }
 
                 if (openMockEval) {
-                    String reformat = node.eval(env).toString();
-
-                    String[] args = {
-                            "Value ---- Eval",
-                            insertNewLine(new StringBuilder(reformat), "\n", "\r\n║").toString()
-                    };
-
-                    System.out.println(cyanPrint(beautifulPrint(args)));
+                    runEval(node, env);
                 }
 
                 if (openMockGenerate) {
-                    generator.reset(env, node);
-
-                    JavaSource javaSource = generator.generate();
-                    System.out.println(cyanPrint(javaSource.toString()));
-
-                    if (openMockCompile) {
-                        long start = System.currentTimeMillis();
-
-                        // save
-                        Expression expr = compiler.compile(javaSource);
-                        env.put(javaSource.className.toLowerCase(), expr);
-
-                        AnsiConsole.out.println("Compile Time :" + (System.currentTimeMillis() - start + " ms"));
-                    }
+                    runCompile(node, env);
                 }
 
             } catch (Throwable e) {

@@ -175,7 +175,7 @@ public final class JustEL {
      * @see JustCompiler
      * @see Generator
      */
-    public static class Builder {
+    public final static class Builder {
 
         /**
          * just-parse

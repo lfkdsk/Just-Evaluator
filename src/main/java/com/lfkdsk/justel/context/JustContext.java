@@ -43,4 +43,6 @@ public interface JustContext {
     List<String> commandList();
 
     List<Integer> varTraceList();
+
+    boolean clearVars();
 }
