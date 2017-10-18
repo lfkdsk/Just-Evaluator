@@ -46,12 +46,12 @@ public class JustRepl {
                     "                                                     \n";
 
     private static final String help =
-            "-a show ast structure of this expr \n" +
-                    "-e eval this expr \n" +
-                    "-g generate java source code \n" +
-                    "-c compile java source code [need -g] \n" +
-                    "-s stressed test of this expr\n" +
-                    "Just-REPL support assign(=) operator to set id-token's value, this grammar \n " +
+            " -a show ast structure of this expr \n" +
+                    " -e eval this expr \n" +
+                    " -g generate java source code \n" +
+                    " -c compile java source code [need -g] \n" +
+                    " -s stressed test of this expr\n" +
+                    " Just-REPL support assign(=) operator to set id-token's value, this grammar \n " +
                     "won't support in JustEL";
 
     private static final String ANSI_RESET = "\u001B[0m";
