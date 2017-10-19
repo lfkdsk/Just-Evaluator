@@ -29,7 +29,7 @@ public class NegativePostfix extends AstList {
         super(children, AstNode.NEGATIVE_OP);
     }
 
-    public AstNode operand() {
+    public final AstNode operand() {
         return child(0);
     }
 

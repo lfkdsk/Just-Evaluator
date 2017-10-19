@@ -9,6 +9,7 @@
 package com.lfkdsk.justel.ast.tree;
 
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.visitor.VisitorBinder;
 
 /**
  * Abstract Postfix Expr =>
@@ -22,7 +23,7 @@ import com.lfkdsk.justel.context.JustContext;
  * @see com.lfkdsk.justel.ast.operators.DotExpr
  * @see AstFuncArguments
  */
-public interface AstPostfixExpr {
+public interface AstPostfixExpr extends VisitorBinder<Object> {
 
     /**
      * Evaluate Postfix Expr

@@ -35,11 +35,11 @@ public class AstCondExpr extends AstList {
         return child.childCount() == 2 && child.child(1) instanceof CondOp;
     }
 
-    private AstNode condExpr() {
+    public final AstNode condExpr() {
         return child(0);
     }
 
-    private CondOp condOp() {
+    public final CondOp condOp() {
         return (CondOp) child(1);
     }
 
@@ -56,5 +56,22 @@ public class AstCondExpr extends AstList {
         }
 
         return super.eval(env);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append('(')
+               .append(condOp().funcName())
+               .append(' ')
+               .append(condExpr().toString())
+               .append(' ')
+               .append(condOp().trueExpr().toString())
+               .append(' ')
+               .append(condOp().falseExpr().toString())
+               .append(')');
+
+        return builder.toString();
     }
 }

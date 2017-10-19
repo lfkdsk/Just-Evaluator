@@ -9,205 +9,274 @@ import com.lfkdsk.justel.ast.operators.*;
 import com.lfkdsk.justel.ast.postfix.NegativePostfix;
 import com.lfkdsk.justel.ast.postfix.NotPostfix;
 import com.lfkdsk.justel.ast.tree.*;
-import com.lfkdsk.justel.context.JustContext;
-import com.lfkdsk.justel.generate.javagen.Var;
 import com.lfkdsk.justel.literal.BoolLiteral;
 import com.lfkdsk.justel.literal.IDLiteral;
 import com.lfkdsk.justel.literal.NumberLiteral;
 import com.lfkdsk.justel.literal.StringLiteral;
-import com.lfkdsk.justel.utils.GeneratedId;
+import com.lfkdsk.justel.token.Token;
 import com.lfkdsk.justel.visitor.AstVisitor;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
-public class ELByteCodeGenVisitor implements AstVisitor<String> {
+import static com.lfkdsk.justel.generate.bytegen.ELCommand.CommandType.*;
 
-    private JustContext env;
+public class ELByteCodeGenVisitor implements AstVisitor<Boolean> {
 
     private List<ELCommand> commands;
 
-    private Stack<Var> varStack;
-
-    public ELByteCodeGenVisitor(@NotNull JustContext env) {
-        this.env = env;
+    public ELByteCodeGenVisitor() {
         this.commands = new LinkedList<>();
-        this.varStack = new Stack<>();
+
     }
 
     @Override
-    public String visitAstLeaf(AstLeaf leaf) {
-        String tmp = "t" + GeneratedId.generateAtomId();
-        varStack.push(new Var(tmp, leaf.token().toString()));
-
-        return tmp;
+    public Boolean visitAstLeaf(AstLeaf leaf) {
+        return null;
     }
 
     @Override
-    public String visitAstList(AstList list) {
+    public Boolean visitAstList(AstList list) {
+        return null;
+    }
 
-        for (AstNode astNode : list) {
-            astNode.accept(this);
+    @Override
+    public Boolean visitBoolLiteral(BoolLiteral visitor) {
+        return commands.add(new ELCommand(
+                push,
+                String.valueOf(Token.BOOLEAN),
+                String.valueOf(visitor.value())));
+    }
+
+    @Override
+    public Boolean visitIDLiteral(IDLiteral visitor) {
+        return commands.add(new ELCommand(
+                load,
+                visitor.name()
+        ));
+    }
+
+    @Override
+    public Boolean visitNumberLiteral(NumberLiteral visitor) {
+        return commands.add(new ELCommand(
+                push,
+                String.valueOf(visitor.token().getTag()),
+                visitor.toString()
+        ));
+    }
+
+    @Override
+    public Boolean visitStringLiteral(StringLiteral visitor) {
+        return commands.add(new ELCommand(
+                push,
+                String.valueOf(Token.STRING),
+                visitor.literal()
+        ));
+    }
+
+    @Override
+    public Boolean visitExtendFunctionExpr(ExtendFunctionExpr extendFunctionExpr) {
+        return commands.add(new ELCommand(
+                load,
+                String.valueOf(AstNode.FUNCTION_EXPR),
+                extendFunctionExpr.funcName()
+        ));
+    }
+
+    @Override
+    public Boolean visitOperatorExpr(OperatorExpr operatorExpr) {
+        return visitOperatorExpr(operatorExpr, 0);
+    }
+
+    private boolean visitOperatorExpr(OperatorExpr operatorExpr, int paramsCount) {
+        operatorExpr.leftChild().accept(this);
+        operatorExpr.rightChild().accept(this);
+
+        return commands.add(new ELCommand(
+                op,
+                operatorExpr.operator().toString(),
+                String.valueOf(paramsCount)
+        ));
+    }
+
+    @Override
+    public Boolean visitAmpersandOp(AmpersandOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitAndOp(AndOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitArrayIndexExpr(ArrayIndexExpr visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitCondOp(CondOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitDivOp(DivOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitDotExpr(DotExpr visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitEqualOp(EqualOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitGreaterThanEqualOp(GreaterThanEqualOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitGreaterThanOp(GreaterThanOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitLessThanEqualOp(LessThanEqualOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitLessThanOp(LessThanOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitMinusOp(MinusOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitModOp(ModOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitMulOp(MulOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitOrOp(OrOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitPlusOp(PlusOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitUnEqualOp(UnEqualOp visitor) {
+        return visitOperatorExpr(visitor, 2);
+    }
+
+    @Override
+    public Boolean visitNegativePostfix(NegativePostfix visitor) {
+        visitor.operand().accept(this);
+        return commands.add(new ELCommand(
+                op,
+                "-",
+                String.valueOf(1)
+        ));
+    }
+
+    @Override
+    public Boolean visitNotPostfix(NotPostfix visitor) {
+        visitor.operand().accept(this);
+        return commands.add(new ELCommand(
+                op,
+                "!",
+                String.valueOf(1)
+        ));
+    }
+
+    @Override
+    public Boolean visitAstBinaryExpr(AstBinaryExpr visitor) {
+        return null;
+    }
+
+    @Override
+    public Boolean visitAstCondExpr(AstCondExpr visitor) {
+        visitor.condExpr().accept(this);
+
+        return commands.add(new ELCommand(
+                cond,
+                visitor.condOp().funcName(),
+                visitor.condOp().toString()
+        ));
+    }
+
+    @Override
+    public Boolean visitAstFuncArguments(AstFuncArguments visitor) {
+        return null;
+    }
+
+    @Override
+    public Boolean visitAstFuncExpr(AstFuncExpr visitor) {
+        visitor.funcArgs().accept(this);
+
+        return commands.add(new ELCommand(
+                call,
+                visitor.funcName().toString(),
+                visitor.funcArgs().toString()
+        ));
+    }
+
+    @Override
+    public Boolean visitAstPrimaryExpr(AstPrimaryExpr visitor) {
+        int childCount = visitor.childCount();
+        int nest = childCount - 2;
+
+        while (visitor.hasPostfix(visitor, nest) && nest >= 0) {
+            AstPostfixExpr postfixExpr = visitor.postfix(visitor, nest);
+
+            if (nest == childCount - 2) {
+                // to stack
+                commands.add(new ELCommand(
+                        postfix,
+                        postfixExpr.postfix(),
+                        visitor.operand(visitor).toString(),
+                        postfixExpr.toString()
+                ));
+
+            } else {
+                commands.add(new ELCommand(
+                        postfix,
+                        postfixExpr.postfix(),
+                        "#1",
+                        postfixExpr.toString()
+                ));
+            }
+            nest--;
         }
 
         return null;
     }
 
     @Override
-    public String visitBoolLiteral(BoolLiteral visitor) {
-        return null;
+    public Boolean visitAstProgram(AstProgram visitor) {
+        return (Boolean) visitor.program().accept(this);
     }
 
-    @Override
-    public String visitIDLiteral(IDLiteral visitor) {
-        return null;
+    public Boolean visit(AstProgram visitor) {
+        return visitAstProgram(visitor);
     }
 
-    @Override
-    public String visitNumberLiteral(NumberLiteral visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitStringLiteral(StringLiteral visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitExtendFunctionExpr(ExtendFunctionExpr extendFunctionExpr) {
-        return null;
-    }
-
-    @Override
-    public String visitOperatorExpr(OperatorExpr operatorExpr) {
-        return null;
-    }
-
-    @Override
-    public String visitAmpersandOp(AmpersandOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitAndOp(AndOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitArrayIndexExpr(ArrayIndexExpr visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitCondOp(CondOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitDivOp(DivOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitDotExpr(DotExpr visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitEqualOp(EqualOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitGreaterThanEqualOp(GreaterThanEqualOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitGreaterThanOp(GreaterThanOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitLessThanEqualOp(LessThanEqualOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitLessThanOp(LessThanOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitMinusOp(MinusOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitModOp(ModOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitMulOp(MulOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitOrOp(OrOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitPlusOp(PlusOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitUnEqualOp(UnEqualOp visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitNegativePostfix(NegativePostfix visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitNotPostfix(NotPostfix visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitAstBinaryExpr(AstBinaryExpr visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitAstCondExpr(AstCondExpr visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitAstFuncArguments(AstFuncArguments visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitAstFuncExpr(AstFuncExpr visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitAstPrimaryExpr(AstPrimaryExpr visitor) {
-        return null;
-    }
-
-    @Override
-    public String visitAstProgram(AstProgram visitor) {
-        return (String) visitor.program()
-                             .accept(this);
+    public List<ELCommand> getCommands() {
+        return commands;
     }
 }

@@ -28,7 +28,7 @@ public class NotPostfix extends AstList {
         super(children, AstNode.NOT_OP);
     }
 
-    private AstNode operand() {
+    public final AstNode operand() {
         return child(0);
     }
 

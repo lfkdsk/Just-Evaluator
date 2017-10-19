@@ -47,15 +47,15 @@ public abstract class OperatorExpr extends AstList implements Function {
     // left operator right
     ///////////////////////////////////////////////////////////////////////////
 
-    protected AstNode leftChild() {
+    public AstNode leftChild() {
         return child(0);
     }
 
-    protected AstNode rightChild() {
+    public AstNode rightChild() {
         return child(2);
     }
 
-    protected AstLeaf operator() {
+    public AstLeaf operator() {
         return (AstLeaf) child(1);
     }
 

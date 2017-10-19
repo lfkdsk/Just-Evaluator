@@ -40,11 +40,11 @@ public class CondOp extends OperatorExpr {
         isCond = cond;
     }
 
-    private AstNode trueExpr() {
+    public final AstNode trueExpr() {
         return child(0);
     }
 
-    private AstNode falseExpr() {
+    public final AstNode falseExpr() {
         return child(1);
     }
 
@@ -78,6 +78,6 @@ public class CondOp extends OperatorExpr {
 
     @Override
     public String toString() {
-        return "(?: " + trueExpr().toString() + " " + falseExpr().toString() + ")";
+        return trueExpr().toString() + " " + falseExpr().toString();
     }
 }

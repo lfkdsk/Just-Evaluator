@@ -8,7 +8,10 @@ public class ELCommand {
         // call <function> <arg1> <arg2> <arg3>
         call("call"),
         // op <operator> <arg1> <arg2>
-        op("op");
+        op("op"),
+        postfix("postfix"),
+        cond("cond"),
+        push("push");
 
         public final String cmdOp;
 
@@ -20,8 +23,23 @@ public class ELCommand {
     public final CommandType type;
     public final String[] args;
 
-    public ELCommand(CommandType type, String[] args) {
+    public ELCommand(CommandType type, String... args) {
         this.type = type;
         this.args = args;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(type.cmdOp)
+               .append(' ');
+
+        for (String arg : args) {
+            builder.append(arg).append(' ');
+        }
+
+        builder.append('\n');
+
+        return builder.toString();
     }
 }

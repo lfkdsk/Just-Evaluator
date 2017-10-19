@@ -46,7 +46,7 @@ public class AstPrimaryExpr extends AstList {
      * @param expr Primary Expr
      * @return prefix Node
      */
-    private Object operand(AstPrimaryExpr expr) {
+    public final Object operand(AstPrimaryExpr expr) {
         return expr.child(0);
     }
 
@@ -57,7 +57,7 @@ public class AstPrimaryExpr extends AstList {
      * @param nest nest index
      * @return postfix expr
      */
-    private AstPostfixExpr postfix(AstPrimaryExpr expr, int nest) {
+    public final AstPostfixExpr postfix(AstPrimaryExpr expr, int nest) {
         return (AstPostfixExpr) expr.child(expr.childCount() - nest - 1);
     }
 
@@ -68,7 +68,7 @@ public class AstPrimaryExpr extends AstList {
      * @param nest nest index
      * @return has postfix?
      */
-    private boolean hasPostfix(AstPrimaryExpr expr, int nest) {
+    public final boolean hasPostfix(AstPrimaryExpr expr, int nest) {
         return expr.childCount() - nest > 1;
     }
 
