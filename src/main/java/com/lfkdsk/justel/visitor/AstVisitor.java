@@ -8,6 +8,10 @@ import com.lfkdsk.justel.ast.operators.*;
 import com.lfkdsk.justel.ast.postfix.NegativePostfix;
 import com.lfkdsk.justel.ast.postfix.NotPostfix;
 import com.lfkdsk.justel.ast.tree.*;
+import com.lfkdsk.justel.literal.BoolLiteral;
+import com.lfkdsk.justel.literal.IDLiteral;
+import com.lfkdsk.justel.literal.NumberLiteral;
+import com.lfkdsk.justel.literal.StringLiteral;
 
 public interface AstVisitor<T> {
 
@@ -18,6 +22,18 @@ public interface AstVisitor<T> {
     T visitAstLeaf(AstLeaf leaf);
 
     T visitAstList(AstList list);
+
+    ///////////////////////////////////////////////////////////////////////////
+    // literal interface
+    ///////////////////////////////////////////////////////////////////////////
+
+    T visitBoolLiteral(BoolLiteral visitor);
+
+    T visitIDLiteral(IDLiteral visitor);
+
+    T visitNumberLiteral(NumberLiteral visitor);
+
+    T visitStringLiteral(StringLiteral visitor);
 
     ///////////////////////////////////////////////////////////////////////////
     // function interface

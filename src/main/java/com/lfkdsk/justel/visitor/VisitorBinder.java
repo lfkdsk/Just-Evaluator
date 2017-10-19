@@ -18,7 +18,7 @@ public interface VisitorBinder<T> {
     }
 
     @SuppressWarnings("unchecked")
-    default <E extends AstVisitor<T>> T accept(E visitor)  {
+    default <E extends AstVisitor> T accept(E visitor)  {
         Method method = findVisitorMethod(visitor, getClass());
         if (method != null) {
             try {
