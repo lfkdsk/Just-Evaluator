@@ -21,7 +21,7 @@ import java.util.List;
  * function( expr , expr , expr)
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/27.
+ * Created by liufengkai on 2017/7/27.
  */
 public class AstFuncExpr extends AstList {
 
@@ -83,13 +83,35 @@ public class AstFuncExpr extends AstList {
         env.put(funcVar, extendFunc);
 
         builder.append(funcVar)
-                .append(".call")
-                .append("(")
-                .append("new Object[]{")
-                .append(funcArgs().compile(env))
-                .append("}")
-                .append(")");
+               .append(".call")
+               .append("(")
+               .append("new Object[]{")
+               .append(funcArgs().compile(env))
+               .append("}")
+               .append(")");
 
         return builder.toString();
+    }
+
+    @Override
+    public String toString() {
+        if (evalString == null) {
+            StringBuilder builder = new StringBuilder();
+
+            builder.append('(')
+                   .append("call ");
+
+            String sep = "";
+
+            for (AstNode node : children) {
+                builder.append(sep);
+                sep = " ";
+                builder.append(node.toString());
+            }
+
+            evalString = builder.append(")").toString();
+        }
+
+        return evalString;
     }
 }

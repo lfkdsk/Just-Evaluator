@@ -18,7 +18,7 @@ import com.lfkdsk.justel.utils.GeneratedId;
 
 import java.util.List;
 
-import static com.lfkdsk.justel.compile.generate.Var.getTypeDeclare;
+import static com.lfkdsk.justel.generate.javagen.Var.getTypeDeclare;
 import static com.lfkdsk.justel.utils.TypeUtils.*;
 
 /**

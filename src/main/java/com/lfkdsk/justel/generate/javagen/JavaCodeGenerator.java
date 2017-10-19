@@ -6,11 +6,12 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.lfkdsk.justel.compile.generate;
+package com.lfkdsk.justel.generate.javagen;
 
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
+import com.lfkdsk.justel.generate.Generator;
 import com.lfkdsk.justel.template.TemplateImpl;
 import com.lfkdsk.justel.template.dom.DomCom;
 import com.lfkdsk.justel.utils.GeneratedId;

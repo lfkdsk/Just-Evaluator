@@ -1,9 +1,9 @@
 package com.lfkdsk.justel.compile.compiler;
 
 import com.lfkdsk.justel.ast.tree.AstProgram;
-import com.lfkdsk.justel.compile.generate.Generator;
-import com.lfkdsk.justel.compile.generate.JavaCodeGenerator;
-import com.lfkdsk.justel.compile.generate.JavaSource;
+import com.lfkdsk.justel.generate.Generator;
+import com.lfkdsk.justel.generate.javagen.JavaCodeGenerator;
+import com.lfkdsk.justel.generate.javagen.JavaSource;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.lexer.JustLexerImpl;

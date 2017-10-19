@@ -1,6 +1,6 @@
 package com.lfkdsk.justel.compile.compiler;
 
-import com.lfkdsk.justel.compile.generate.JavaSource;
+import com.lfkdsk.justel.generate.javagen.JavaSource;
 import com.lfkdsk.justel.compile.memory.JustMemClassLoader;
 import com.lfkdsk.justel.compile.memory.JustMemFileManager;
 import com.lfkdsk.justel.exception.CompilerException;

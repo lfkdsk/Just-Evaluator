@@ -10,6 +10,7 @@ package com.lfkdsk.justel.ast.tree;
 
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
@@ -22,7 +23,9 @@ public class AstFuncArgumentsTest {
     @Test
     void testParserFuncArgs() {
         // parser
-        runExpr("lfkdsk(lfkdsk,lfkdsk,lfkdsk)", false, null);
+        Assertions.assertEquals(
+                runExpr("lfkdsk(lfkdsk,lfkdsk,lfkdsk)", false, null)
+                ,"(call lfkdsk lfkdsk lfkdsk lfkdsk)");
     }
 
     public static class O {

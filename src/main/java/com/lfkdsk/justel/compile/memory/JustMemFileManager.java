@@ -1,6 +1,6 @@
 package com.lfkdsk.justel.compile.memory;
 
-import com.lfkdsk.justel.compile.generate.JavaSource;
+import com.lfkdsk.justel.generate.javagen.JavaSource;
 
 import javax.tools.*;
 import java.io.ByteArrayOutputStream;
@@ -46,7 +46,7 @@ public class JustMemFileManager extends ForwardingJavaFileManager<JavaFileManage
         }
     }
 
-    static class MemInputJavaFileObject extends SimpleJavaFileObject {
+    final class MemInputJavaFileObject extends SimpleJavaFileObject {
         final JavaSource source;
 
         protected MemInputJavaFileObject(JavaSource source) {
@@ -60,7 +60,7 @@ public class JustMemFileManager extends ForwardingJavaFileManager<JavaFileManage
         }
     }
 
-    class MemOutputJavaFileObject extends SimpleJavaFileObject {
+    final class MemOutputJavaFileObject extends SimpleJavaFileObject {
 
         final String className;
 

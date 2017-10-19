@@ -3,7 +3,7 @@ package com.lfkdsk.justel.template;
 import com.lfkdsk.justel.template.dom.DomCom;
 import com.lfkdsk.justel.template.dom.Template;
 
-import static com.lfkdsk.justel.compile.generate.JavaSource.GENERATE_DEFAULT_PACKAGE;
+import static com.lfkdsk.justel.generate.javagen.JavaSource.GENERATE_DEFAULT_PACKAGE;
 
 
 /**

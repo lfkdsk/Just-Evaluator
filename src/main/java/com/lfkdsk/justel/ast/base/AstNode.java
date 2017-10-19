@@ -16,6 +16,7 @@ import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.exception.CompilerException;
 import com.lfkdsk.justel.exception.EvalException;
 import com.lfkdsk.justel.utils.MurmurHash3;
+import com.lfkdsk.justel.visitor.VisitorBinder;
 
 import java.util.Iterator;
 
@@ -23,10 +24,10 @@ import java.util.Iterator;
  * AST Tree Basic Node
  *
  * @author liufengkai
- *         Created by liufengkai on 17/7/11.
+ * Created by liufengkai on 17/7/11.
  */
 public abstract class AstNode implements Iterable<AstNode>
-        , Evaluable, Compilable, Expressible {
+        , Evaluable, Compilable, Expressible, VisitorBinder<Object> {
 
     /**
      * Spec Tag for Ast Node

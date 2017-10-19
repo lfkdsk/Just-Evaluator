@@ -111,6 +111,11 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
     }
 
     @Override
+    public String postfix() {
+        return ".";
+    }
+
+    @Override
     public String compile(JustContext env) {
         return "." + name();
     }
@@ -128,8 +133,6 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
     @Override
     public String toString() {
 
-        return "(. " +
-                leftChild().toString() +
-                ")";
+        return leftChild().toString();
     }
 }

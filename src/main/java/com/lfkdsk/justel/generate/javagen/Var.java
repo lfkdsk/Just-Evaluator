@@ -6,7 +6,7 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.lfkdsk.justel.compile.generate;
+package com.lfkdsk.justel.generate.javagen;
 
 import com.lfkdsk.justel.utils.ReflectUtils;
 

@@ -1,4 +1,4 @@
-package com.lfkdsk.justel.compile.generate;
+package com.lfkdsk.justel.generate.javagen;
 
 import java.nio.CharBuffer;
 

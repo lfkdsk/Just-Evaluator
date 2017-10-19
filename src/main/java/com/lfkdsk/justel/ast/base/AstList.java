@@ -64,7 +64,7 @@ public class AstList extends AstNode {
 
             StringBuilder builder = new StringBuilder();
 
-            builder.append('(');
+//            builder.append('(');
 
             String sep = "";
 
@@ -74,7 +74,7 @@ public class AstList extends AstNode {
                 builder.append(node.toString());
             }
 
-            evalString = builder.append(")").toString();
+            evalString = builder.toString();
         }
 
         return evalString;

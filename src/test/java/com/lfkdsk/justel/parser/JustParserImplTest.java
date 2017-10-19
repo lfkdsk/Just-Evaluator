@@ -92,12 +92,15 @@ public class JustParserImplTest {
         while (lexer.hasMore()) {
             AstNode node = parser.parser(lexer);
 
-            Logger.v(" => " + node.toString() + "  ");
+            returnString = node.toString();
+            Logger.v(" => " + returnString + "  ");
+
             if (eval) {
                 returnString = node.eval(context).toString();
                 Logger.v(" => " + returnString + "  ");
             }
         }
+
         return returnString;
     }
 }

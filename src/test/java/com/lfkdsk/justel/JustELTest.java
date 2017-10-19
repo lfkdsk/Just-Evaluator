@@ -1,10 +1,10 @@
 package com.lfkdsk.justel;
 
 import com.lfkdsk.justel.compile.compiler.JustCompilerImpl;
-import com.lfkdsk.justel.compile.generate.JavaCodeGenerator;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.eval.ConstExpression;
+import com.lfkdsk.justel.generate.javagen.JavaCodeGenerator;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.parser.JustParserImpl;
 import com.lfkdsk.justel.utils.logger.Logger;
@@ -22,7 +22,7 @@ class JustELTest {
             put("lfkdsk", "sss");
         }};
 
-        Logger.i(String.valueOf(new JustEL.Builder()
+        Logger.i(String.valueOf(new com.lfkdsk.justel.JustEL.Builder()
                 .lexer(new JustLexerImpl())
                 .parser(new JustParserImpl())
                 .compiler(new JustCompilerImpl())
@@ -41,7 +41,7 @@ class JustELTest {
         }};
 
         Logger.i(String.valueOf(
-                new JustEL.Builder()
+                new com.lfkdsk.justel.JustEL.Builder()
                         .lexer(new JustLexerImpl())
                         .parser(new JustParserImpl())
                         .compiler(new JustCompilerImpl())
@@ -61,21 +61,21 @@ class JustELTest {
         }};
 
         Logger.i(String.valueOf(
-                JustEL.builder()
-                        .lexer(new JustLexerImpl())
-                        .parser(new JustParserImpl())
-                        .compiler(new JustCompilerImpl())
-                        .generator(new JavaCodeGenerator())
-                        .create()
-                        .compile("1111 + lfkdsk + sss", context)
-                        .eval(context)
+                com.lfkdsk.justel.JustEL.builder()
+                                        .lexer(new JustLexerImpl())
+                                        .parser(new JustParserImpl())
+                                        .compiler(new JustCompilerImpl())
+                                        .generator(new JavaCodeGenerator())
+                                        .create()
+                                        .compile("1111 + lfkdsk + sss", context)
+                                        .eval(context)
         ));
     }
 
     @Test
     void runEval() {
         Logger.init();
-        Logger.i(String.valueOf(JustEL.runEval("1111 + lfkdsk + sss", new JustMapContext() {{
+        Logger.i(String.valueOf(com.lfkdsk.justel.JustEL.runEval("1111 + lfkdsk + sss", new JustMapContext() {{
             put("sss", 1111);
             put("lfkdsk", "sss");
         }})));
@@ -88,19 +88,19 @@ class JustELTest {
             put("sss", 1111);
             put("lfkdsk", "sss");
         }};
-        Logger.i(String.valueOf(JustEL.runCompile("1111 + lfkdsk + sss", context).eval(context)));
+        Logger.i(String.valueOf(com.lfkdsk.justel.JustEL.runCompile("1111 + lfkdsk + sss", context).eval(context)));
     }
 
 
     @Test
     void testJustELBuilder() {
         Logger.init();
-        Logger.i(JustEL.builder()
-                .compiler(code -> new ConstExpression("lfkdsk"))
-                .create()
-                .eval("lfkdsk", new JustMapContext() {{
+        Logger.i(com.lfkdsk.justel.JustEL.builder()
+                                         .compiler(code -> new ConstExpression("lfkdsk"))
+                                         .create()
+                                         .eval("lfkdsk", new JustMapContext() {{
                     put("lfkdsk", 1000);
                 }})
-                .toString());
+                                         .toString());
     }
 }

@@ -8,6 +8,7 @@
 
 package com.lfkdsk.justel.compile.generate;
 
+import com.lfkdsk.justel.generate.javagen.Var;
 import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

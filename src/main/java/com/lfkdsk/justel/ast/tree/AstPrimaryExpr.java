@@ -19,7 +19,7 @@ import java.util.List;
  * primary expr = ( expr ) | number | id | string | boolean
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  * @see com.lfkdsk.justel.compile.compiler.JustCompilerImpl
  */
 public class AstPrimaryExpr extends AstList {
@@ -107,6 +107,7 @@ public class AstPrimaryExpr extends AstList {
         }
     }
 
+
     @Override
     public Object eval(JustContext env) {
         return evalSubExpr(env, this, 0);
@@ -117,6 +118,32 @@ public class AstPrimaryExpr extends AstList {
         StringBuilder builder = new StringBuilder();
         compileSubExpr(env, this, builder, 0);
 
+        return builder.toString();
+    }
+
+    @Override
+    public String toString() {
+        int childCount = childCount();
+        int nest = childCount - 2;
+        StringBuilder builder = new StringBuilder();
+
+        while (hasPostfix(this, nest) && nest >= 0) {
+            AstPostfixExpr postfixExpr = postfix(this, nest);
+
+            if (nest == childCount - 2) {
+                builder.append('(')
+                       .append(postfixExpr.postfix())
+                       .append(' ')
+                       .append(operand(this).toString())
+                       .append(' ')
+                       .append(postfixExpr.toString())
+                       .append(')');
+            } else {
+                builder.insert(0, '(' + postfixExpr.postfix() + ' ');
+                builder.insert(builder.length(), ' ' + postfixExpr.toString() + ')');
+            }
+            nest--;
+        }
         return builder.toString();
     }
 }

@@ -1,12 +1,12 @@
 package com.lfkdsk.justel.compile.compiler;
 
-import com.lfkdsk.justel.compile.generate.JavaSource;
 import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.eval.Expression;
-import org.junit.jupiter.api.Test;
+import com.lfkdsk.justel.generate.javagen.JavaSource;
 import com.lfkdsk.justel.template.TemplateImpl;
 import com.lfkdsk.justel.template.dom.DomCom;
 import com.lfkdsk.justel.utils.GeneratedId;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by liufengkai on 2017/7/20.

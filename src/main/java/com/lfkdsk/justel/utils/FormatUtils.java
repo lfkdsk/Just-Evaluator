@@ -27,8 +27,7 @@ public class FormatUtils {
     public static String reformatAstPrint(String msg) {
         StringBuilder builder = new StringBuilder();
         int level = 0;
-        for (Character character : msg.substring(1, msg.length() - 1)
-                                      .toCharArray()) {
+        for (Character character : msg.toCharArray()) {
             switch (character) {
                 case '(': {
                     builder.append('(');

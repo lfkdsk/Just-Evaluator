@@ -34,5 +34,7 @@ public interface AstPostfixExpr {
     Object eval(JustContext env, Object value);
 
     Object compile(JustContext env, Object value, StringBuilder builder);
+
+    String postfix();
 }
 

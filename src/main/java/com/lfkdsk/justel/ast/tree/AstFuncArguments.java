@@ -23,7 +23,7 @@ import java.util.List;
  * Func Arguments
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  */
 public class AstFuncArguments extends AstList implements AstPostfixExpr {
 
@@ -76,8 +76,13 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
     @Override
     public Object compile(JustContext env, Object value, StringBuilder builder) {
         return builder.append("(")
-                .append(compile(env))
-                .append(")");
+                      .append(compile(env))
+                      .append(")");
+    }
+
+    @Override
+    public String postfix() {
+        return "call";
     }
 
     private Object invokeMethod(Method method, Object obj, Object[] args) {
@@ -103,6 +108,19 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
             builder.append(child.compile(env));
 
             if (i != childCount() - 1) builder.append(ReservedToken.COMMA);
+        }
+
+        return builder.toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < childCount(); i++) {
+            AstNode child = child(i);
+            builder.append(child.toString());
+            if (i != childCount() - 1) builder.append(' ');
         }
 
         return builder.toString();
