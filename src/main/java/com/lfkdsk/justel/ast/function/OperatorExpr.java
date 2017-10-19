@@ -144,8 +144,7 @@ public abstract class OperatorExpr extends AstList implements Function {
 
         StringBuilder builder = new StringBuilder();
 
-        builder
-                .append(type)
+        builder.append(type)
                 .append(" ")
                 .append(var)
                 .append("=")
