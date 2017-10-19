@@ -21,6 +21,7 @@ import java.util.List;
 
 import static com.lfkdsk.justel.generate.bytegen.ELCommand.CommandType.*;
 
+@Deprecated
 public class ELByteCodeGenVisitor implements AstVisitor<Boolean> {
 
     private List<ELCommand> commands;
@@ -116,7 +117,9 @@ public class ELByteCodeGenVisitor implements AstVisitor<Boolean> {
 
     @Override
     public Boolean visitCondOp(CondOp visitor) {
-        return visitOperatorExpr(visitor, 2);
+        visitor.trueExpr().accept(this);
+        visitor.falseExpr().accept(this);
+        return null;
     }
 
     @Override
@@ -212,11 +215,11 @@ public class ELByteCodeGenVisitor implements AstVisitor<Boolean> {
     @Override
     public Boolean visitAstCondExpr(AstCondExpr visitor) {
         visitor.condExpr().accept(this);
+        visitor.condOp().accept(this);
 
         return commands.add(new ELCommand(
                 cond,
-                visitor.condOp().funcName(),
-                visitor.condOp().toString()
+                String.valueOf(2)
         ));
     }
 

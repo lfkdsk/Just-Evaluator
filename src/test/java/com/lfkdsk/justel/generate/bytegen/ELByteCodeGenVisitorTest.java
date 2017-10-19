@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.StringReader;
 
+@Deprecated
 class ELByteCodeGenVisitorTest {
 
     @Test

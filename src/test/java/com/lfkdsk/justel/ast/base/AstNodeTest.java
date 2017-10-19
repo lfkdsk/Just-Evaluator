@@ -17,6 +17,10 @@ import java.util.HashMap;
  */
 public class AstNodeTest {
 
+    /**
+     * same expressions have same const hash.
+     * murmurhash3 is faster than default method.
+     */
     @Test
     void testHash() {
         String a = " lfkdsk  == 1";
@@ -34,6 +38,7 @@ public class AstNodeTest {
         String c = "(lfkdsk ==1)";
         AstNode cNode = toNode(c);
         Logger.v(cNode.hashCode() + "");
+        Assertions.assertTrue(bNode.hashCode() == cNode.hashCode());
     }
 
     public static AstNode toNode(String arg) {
@@ -43,6 +48,9 @@ public class AstNodeTest {
         return parser.parser(lexer);
     }
 
+    /**
+     * attach cache of same expression.
+     */
     @Test
     void testHashTree() {
         Logger.init();

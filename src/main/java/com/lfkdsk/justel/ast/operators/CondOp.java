@@ -63,7 +63,7 @@ public class CondOp extends OperatorExpr {
 
     @Override
     public String compile(JustContext env) {
-        return "?" + trueExpr().toString() + ":" + falseExpr().toString();
+        return "?" + trueExpr().compile(env) + ":" + falseExpr().compile(env);
     }
 
     @Override

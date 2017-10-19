@@ -3,12 +3,12 @@ package com.lfkdsk.justel.repl;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.compile.compiler.JustCompiler;
 import com.lfkdsk.justel.compile.compiler.JustCompilerImpl;
-import com.lfkdsk.justel.generate.Generator;
-import com.lfkdsk.justel.generate.javagen.JavaCodeGenerator;
-import com.lfkdsk.justel.generate.javagen.JavaSource;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.eval.Expression;
+import com.lfkdsk.justel.generate.Generator;
+import com.lfkdsk.justel.generate.javagen.JavaCodeGenerator;
+import com.lfkdsk.justel.generate.javagen.JavaSource;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.parser.JustParser;
 import jline.console.ConsoleReader;
@@ -83,6 +83,7 @@ public class JustRepl {
     private static boolean openMockCompile = false;
     private static boolean openMockGenerate = false;
     private static boolean openStressedTest = false;
+//    private static boolean openOutPut = false;
 
     private static String cyanPrint(String msg) {
         return ANSI_CYAN + msg + ANSI_RESET;
@@ -94,6 +95,7 @@ public class JustRepl {
         if (command.contains("c")) openMockCompile = flag;
         if (command.contains("g")) openMockGenerate = flag;
         if (command.contains("s")) openStressedTest = flag;
+//        if (command.contains("o")) openOutPut = flag;
         if (command.contains("-flush") && !flag) env.clearVars();
     }
 
@@ -111,7 +113,7 @@ public class JustRepl {
     }
 
     private static void runAst(AstNode node) {
-        String reformat = reformatAstPrint(node.toString());
+        String reformat = reformatAstPrint(node.toString() + '\n');
         String[] args = {
                 "AST ---- Lisp Style",
                 insertNewLine(new StringBuilder(reformat), "\n", "║").toString()
@@ -177,13 +179,15 @@ public class JustRepl {
         FileHistory fileHistory = new FileHistory(new File("./sh/history.just"));
         reader.setHistoryEnabled(true);
         reader.setHistory(fileHistory);
+        reader.setExpandEvents(false);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("");
             System.out.println(ANSI_PURPLE + "Have a nice Day~~" + ANSI_RESET);
             try {
                 fileHistory.flush();
-            } catch (IOException ignored) { }
+            } catch (IOException ignored) {
+            }
         }));
 
         String command;
@@ -204,6 +208,10 @@ public class JustRepl {
                     runAst(node);
                 }
 
+//                if (openOutPut) {
+//                    runELOutput(node);
+//                }
+
                 if (openMockEval) {
                     runEval(node, env);
                 }
@@ -213,6 +221,7 @@ public class JustRepl {
                 }
 
             } catch (Throwable e) {
+//                e.printStackTrace();
                 AnsiConsole.out.println(ansi().fgRed().a(JUST_EL + e.getMessage()).reset().toString());
             }
         }

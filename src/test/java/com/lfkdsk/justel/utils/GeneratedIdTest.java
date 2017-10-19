@@ -24,11 +24,11 @@ class GeneratedIdTest {
         Logger.init("gen-code");
         // need curr - table
 
-        for (int j = 0; j < 20; j++) {
+        for (int j = 0; j < 10; j++) {
             // hash-table current-control is needed
             Hashtable<Integer, Integer> set = new Hashtable<>();
 
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 10; i++) {
                 new Thread(() -> {
                     Integer integer = GeneratedId.generateAtomId();
 
@@ -46,7 +46,7 @@ class GeneratedIdTest {
 
             // just wait thread completed
             Thread.sleep(1000);
-            Assertions.assertEquals(set.size(), 100);
+            Assertions.assertEquals(set.size(), 10);
         }
 
 

@@ -25,7 +25,7 @@ public class AstFuncArgumentsTest {
         // parser
         Assertions.assertEquals(
                 runExpr("lfkdsk(\"lfkdsk\",lfkdsk,lfkdsk)", false, null)
-                ,"(call lfkdsk lfkdsk lfkdsk lfkdsk)");
+                ,"(call lfkdsk \"lfkdsk\" lfkdsk lfkdsk)");
     }
 
     public static class O {

@@ -13,6 +13,7 @@ import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.parser.JustParserImpl;
 import com.lfkdsk.justel.utils.NumberUtils;
 import com.lfkdsk.justel.utils.logger.Logger;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.StringReader;
@@ -113,12 +114,12 @@ class OperatorExprTest {
 
     @Test
     void insertOperatorEval() {
-        insertRunExpr("1111 ** 121", null);
+        Assertions.assertEquals(insertRunExpr("1111 ** 121", null), "1353");
     }
 
     @Test
     void insertCompiler() {
-        insertCompiler("1111 ** 121", null);
+        Assertions.assertEquals(insertCompiler("1111 ** 121", null), "1353");
     }
 
     @Test
@@ -155,7 +156,6 @@ class OperatorExprTest {
             Logger.v(parser.parser(lexer).toString());
         }
     }
-
 
 
 }

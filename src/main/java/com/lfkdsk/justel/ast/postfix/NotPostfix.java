@@ -20,7 +20,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isBoolean;
  * ! Postfix
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  */
 public class NotPostfix extends AstList {
 
@@ -34,7 +34,7 @@ public class NotPostfix extends AstList {
 
     @Override
     public String toString() {
-        return "! " + operand();
+        return "(! " + operand() + ")";
     }
 
     @Override

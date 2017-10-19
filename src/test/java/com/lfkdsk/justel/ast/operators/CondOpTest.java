@@ -41,4 +41,9 @@ class CondOpTest {
         context.put("lfkdsk", true);
         compiler("lfkdsk ? 123 : 123.123f", context);
     }
+
+    @Test
+    void testExpr() {
+        compiler("1 + 2 + 3 == 6 ? !true && false : 3", new JustMapContext());
+    }
 }

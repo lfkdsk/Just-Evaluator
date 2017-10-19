@@ -60,9 +60,9 @@ public class FormatUtils {
     }
 
     public static StringBuilder insertNewLine(StringBuilder builder, String symbol,String insertSymbol) {
-        int start = 0, end = builder.length();
+        int start = 0;
         int index;
-        while (start < end) {
+        while (start < builder.length()) {
             index = builder.indexOf(symbol, start);
 
             if (index == -1) break;

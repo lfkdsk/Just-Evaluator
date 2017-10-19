@@ -1,5 +1,6 @@
 package com.lfkdsk.justel.generate.bytegen;
 
+@Deprecated
 public class ELCommand {
     public enum CommandType {
 

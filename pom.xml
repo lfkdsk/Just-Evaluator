@@ -66,6 +66,7 @@
                     <excludes>
                         <!-- 50s+ -->
                         <exclude>com.lfkdsk.justel.compile.compiler.CompareTest.java</exclude>
+                        <exclude>com.lfkdsk.justel.compile.compiler.CornerTest3.java</exclude>
                     </excludes>
                     <properties>
                         <!-- <includeTags>fast</includeTags> -->
