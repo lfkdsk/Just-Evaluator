@@ -96,7 +96,7 @@ public abstract class OperatorExpr extends AstList implements Function {
     }
 
     protected boolean isShouldSplit() {
-        return astLevel > 4;
+        return astLevel > 2;
     }
 
     private String splitSubAstEval(JustContext env) {
@@ -126,7 +126,6 @@ public abstract class OperatorExpr extends AstList implements Function {
         Object leftCache = env.getCache(node.hashCode());
 
         String var;
-
         if (leftCache == null) {
             var = "var" + GeneratedId.generateAtomId();
             env.putCache(node.hashCode(), var);
