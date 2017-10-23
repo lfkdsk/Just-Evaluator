@@ -96,7 +96,10 @@ public class JustRepl {
         if (command.contains("g")) openMockGenerate = flag;
         if (command.contains("s")) openStressedTest = flag;
 //        if (command.contains("o")) openOutPut = flag;
-        if (command.contains("-flush") && !flag) env.clearVars();
+        if (command.contains("-flush") && !flag) {
+            generator.clear();
+            env.clearVars();
+        }
     }
 
     private static boolean resolveCommandLine(String command) {

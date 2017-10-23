@@ -1,4 +1,4 @@
-package com.lfkdsk.justel.generate.bytegen;
+package com.lfkdsk.justel.generate.midgen;
 
 @Deprecated
 public class ELCommand {

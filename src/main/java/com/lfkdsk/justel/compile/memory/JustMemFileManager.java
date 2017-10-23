@@ -13,7 +13,7 @@ import java.net.URI;
  * Just Memory FileManager
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/20.
+ * Created by liufengkai on 2017/7/20.
  */
 public class JustMemFileManager extends ForwardingJavaFileManager<JavaFileManager> {
 
@@ -33,7 +33,7 @@ public class JustMemFileManager extends ForwardingJavaFileManager<JavaFileManage
     }
 
     public JavaFileObject makeStringSource(JavaSource source) {
-        return new MemInputJavaFileObject(source);
+        return new MemInputJavaFileObject(source, source.kind);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class JustMemFileManager extends ForwardingJavaFileManager<JavaFileManage
     final class MemInputJavaFileObject extends SimpleJavaFileObject {
         final JavaSource source;
 
-        protected MemInputJavaFileObject(JavaSource source) {
-            super(URI.create("string:///" + source.getFileName()), Kind.SOURCE);
+        protected MemInputJavaFileObject(JavaSource source, Kind kind) {
+            super(URI.create("string:///" + source.getFileName()), kind);
             this.source = source;
         }
 

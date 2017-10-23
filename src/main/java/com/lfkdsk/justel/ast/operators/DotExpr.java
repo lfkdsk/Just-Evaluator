@@ -126,7 +126,7 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
     }
 
     @Override
-    protected boolean isShouldSplit() {
+    public boolean isShouldSplit() {
         return false;
     }
 

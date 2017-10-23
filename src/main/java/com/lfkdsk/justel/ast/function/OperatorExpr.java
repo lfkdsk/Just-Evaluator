@@ -95,11 +95,11 @@ public abstract class OperatorExpr extends AstList implements Function {
         this.isConstNode = isConstNode();
     }
 
-    protected boolean isShouldSplit() {
+    public boolean isShouldSplit() {
         return astLevel > 2;
     }
 
-    private String splitSubAstEval(JustContext env) {
+    public final String splitSubAstEval(JustContext env) {
         // reset this state flag
         this.isThisNodeSpited = true;
 

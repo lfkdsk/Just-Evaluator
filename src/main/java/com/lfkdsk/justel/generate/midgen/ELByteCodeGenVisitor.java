@@ -1,4 +1,4 @@
-package com.lfkdsk.justel.generate.bytegen;
+package com.lfkdsk.justel.generate.midgen;
 
 import com.lfkdsk.justel.ast.base.AstLeaf;
 import com.lfkdsk.justel.ast.base.AstList;
@@ -19,7 +19,7 @@ import com.lfkdsk.justel.visitor.AstVisitor;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.lfkdsk.justel.generate.bytegen.ELCommand.CommandType.*;
+import static com.lfkdsk.justel.generate.midgen.ELCommand.CommandType.*;
 
 @Deprecated
 public class ELByteCodeGenVisitor implements AstVisitor<Boolean> {

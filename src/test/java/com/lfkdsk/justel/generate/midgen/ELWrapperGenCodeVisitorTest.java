@@ -1,4 +1,4 @@
-package com.lfkdsk.justel.generate.bytegen;
+package com.lfkdsk.justel.generate.midgen;
 
 import com.lfkdsk.justel.ast.tree.AstProgram;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.io.StringReader;
 
 @Deprecated
-class ELByteCodeGenVisitorTest {
+class ELWrapperGenCodeVisitorTest {
 
     @Test
     void testELByteCodeGen() {

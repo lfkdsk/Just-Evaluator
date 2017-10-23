@@ -94,4 +94,10 @@ public class JavaCodeGenerator extends Generator {
 
         return super.reset(context, rootNode);
     }
+
+    @Override
+    public void clear() {
+        super.clear();
+        this.varSet.clear();
+    }
 }

@@ -1,5 +1,8 @@
 package com.lfkdsk.justel.generate.javagen;
 
+import org.jetbrains.annotations.NotNull;
+
+import javax.tools.JavaFileObject;
 import java.nio.CharBuffer;
 
 import static com.lfkdsk.justel.utils.FormatUtils.beautifulPrint;
@@ -28,6 +31,8 @@ public final class JavaSource {
 
     public final String sourceCode;
 
+    public final JavaFileObject.Kind kind;
+
     /**
      * source code => code char
      */
@@ -39,6 +44,15 @@ public final class JavaSource {
         this.className = className;
         this.sourceCode = sourceCode;
         this.packageName = packageName;
+        this.kind = JavaFileObject.Kind.SOURCE;
+    }
+
+    public JavaSource(String packageName, String className,@NotNull CharSequence sourceCodeChar) {
+        this.sourceCode = null;
+        this.packageName = packageName;
+        this.className = className;
+        this.sourceCodeChar = sourceCodeChar;
+        this.kind = JavaFileObject.Kind.CLASS;
     }
 
     /**

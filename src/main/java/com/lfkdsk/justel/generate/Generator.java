@@ -20,7 +20,7 @@ import com.lfkdsk.justel.generate.javagen.JavaSource;
  * 2. Ast node => return expr
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/8/4.
+ * Created by liufengkai on 2017/8/4.
  * @see JavaCodeGenerator
  */
 public abstract class Generator {
@@ -47,5 +47,9 @@ public abstract class Generator {
         this.rootNode = rootNode;
 
         return this;
+    }
+
+    public void clear() {
+        this.context.clearVars();
     }
 }

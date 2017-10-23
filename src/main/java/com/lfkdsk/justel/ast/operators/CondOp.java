@@ -67,7 +67,7 @@ public class CondOp extends OperatorExpr {
     }
 
     @Override
-    protected boolean isShouldSplit() {
+    public boolean isShouldSplit() {
         return false;
     }
 

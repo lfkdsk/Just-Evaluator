@@ -88,6 +88,7 @@ public class JustMapContext implements JustContext {
     @Override
     public boolean clearVars() {
         map.clear();
+        commandList.clear();
         return true;
     }
 }

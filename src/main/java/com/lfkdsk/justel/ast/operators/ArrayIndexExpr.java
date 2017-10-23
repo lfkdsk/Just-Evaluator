@@ -83,7 +83,7 @@ public class ArrayIndexExpr extends OperatorExpr implements AstPostfixExpr {
     }
 
     @Override
-    protected boolean isShouldSplit() {
+    public boolean isShouldSplit() {
         return false;
     }
 
