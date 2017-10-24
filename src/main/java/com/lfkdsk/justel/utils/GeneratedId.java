@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public final class GeneratedId {
 
-    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(100);
 
     private GeneratedId() {}
 

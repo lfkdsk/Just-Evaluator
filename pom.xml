@@ -97,7 +97,7 @@
 
         <dependency>
             <groupId>org.ow2.asm</groupId>
-            <artifactId>asm</artifactId>
+            <artifactId>asm-all</artifactId>
             <version>4.0</version>
         </dependency>
         <dependency>

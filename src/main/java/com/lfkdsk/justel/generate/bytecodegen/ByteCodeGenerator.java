@@ -9,6 +9,7 @@ import com.lfkdsk.justel.utils.GeneratedId;
 import com.lfkdsk.justel.utils.asm.ClassBuilder;
 import com.lfkdsk.justel.utils.asm.MethodBuilder;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Type;
 
 import java.util.Collection;
 
@@ -30,8 +31,11 @@ public class ByteCodeGenerator extends Generator {
      */
     private final String contextGetDesc = "(Ljava/lang/String;)Ljava/lang/Object;";
 
+    private ByteCodeGenVisitor byteCodeGenVisitor;
+
     public ByteCodeGenerator(JustContext context, AstNode rootNode) {
         super(context, rootNode);
+        this.byteCodeGenVisitor = new ByteCodeGenVisitor(context);
     }
 
     @Override
@@ -41,10 +45,9 @@ public class ByteCodeGenerator extends Generator {
                 ACC_PUBLIC,
                 className,
                 null,
-                "java/lang/Object",
+                Type.getInternalName(Object.class),
                 new String[]{classInterface},
                 ClassWriter.COMPUTE_FRAMES);
-
 
         MethodBuilder eval = builder.newMethod(
                 ACC_PUBLIC,
@@ -62,14 +65,11 @@ public class ByteCodeGenerator extends Generator {
         for (String key : keySet) {
             Var var = new Var(key, context.get(key));
 
-            String type = var.getType().getCanonicalName().replace('.', '/');
+            String type = Type.getInternalName(var.getType());
             eval.invokeinterface(contextDesc, "get", contextGetDesc);
             eval.checkcast(type);
-            eval.invokevirtual(type,"","()");
+            eval.invokevirtual(type, "", Type.getMethodDescriptor(Type.getType(int.class)));
         }
-
-
-//        eval.invokevirtual();
 
         return null;
     }

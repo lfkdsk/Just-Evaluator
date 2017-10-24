@@ -14,11 +14,83 @@ import com.lfkdsk.justel.literal.BoolLiteral;
 import com.lfkdsk.justel.literal.IDLiteral;
 import com.lfkdsk.justel.literal.NumberLiteral;
 import com.lfkdsk.justel.literal.StringLiteral;
+import com.lfkdsk.justel.token.NumberToken;
+import com.lfkdsk.justel.token.Token;
+import com.lfkdsk.justel.utils.GeneratedId;
+import com.lfkdsk.justel.utils.asm.ClassBuilder;
+import com.lfkdsk.justel.utils.asm.MethodBuilder;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
-public class ByteCodeGenVisitor extends WrapperGenCodeVisitor{
+import java.util.Stack;
+
+import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
+import static org.objectweb.asm.Opcodes.V1_7;
+
+public class ByteCodeGenVisitor extends WrapperGenCodeVisitor {
+
+    private final int generateClassId = GeneratedId.generateAtomId();
+    private final String className = "com/lfkdsk/justel/generatecode/JustEL" + generateClassId;
+    private final String classInterface = "com/lfkdsk/justel/eval/Expression";
+    private final String contextDesc = "com/lfkdsk/justel/context/JustContext";
+    private final String methodDesc = "(Lcom/lfkdsk/justel/context/JustContext;)Ljava/lang/Object;";
+    private final String contextGetDesc = "(Ljava/lang/String;)Ljava/lang/Object;";
+    /**
+     * Class Builder -- builder
+     * Control Class Structure
+     */
+    private final ClassBuilder builder;
+
+    /**
+     * Method Constructor
+     */
+    private final MethodBuilder constructor;
+
+    /**
+     * Method Eval -- Expression Eval
+     */
+    private final MethodBuilder eval;
+
+    private final Stack<Object> evalStack = new Stack<>();
 
     public ByteCodeGenVisitor(JustContext env) {
         super(env);
+
+        ///////////////////////////////////////////////////////////////////////////
+        // Generate Constructor && Method
+        ///////////////////////////////////////////////////////////////////////////
+
+        builder = new ClassBuilder(
+                V1_7,
+                ACC_PUBLIC,
+                className,
+                null,
+                Type.getInternalName(Object.class),
+                new String[]{classInterface},
+                ClassWriter.COMPUTE_FRAMES);
+
+        constructor = builder.newMethod(
+                Opcodes.ACC_PUBLIC,
+                "<init>",
+                "()V",
+                null,
+                null,
+                0,
+                0);
+
+        constructor.aload_0();
+        constructor.invokespecial("java/lang/Object", "<init>", "()V");
+        constructor.return_();
+
+        eval = builder.newMethod(
+                ACC_PUBLIC,
+                "eval",
+                methodDesc,
+                null,
+                null,
+                0, 0
+        );
     }
 
     @Override
@@ -43,6 +115,22 @@ public class ByteCodeGenVisitor extends WrapperGenCodeVisitor{
 
     @Override
     public String visitNumberLiteral(NumberLiteral visitor) {
+        NumberToken token = visitor.numberToken();
+        switch (token.getTag()) {
+            case Token.INTEGER: {
+                eval.sipush(token.integerValue());
+                // push
+                evalStack.push(token.integerValue());
+                break;
+            }
+            case Token.DOUBLE: {
+                eval.sipush(token.integerValue());
+                // push
+                evalStack.push(token.integerValue());
+                break;
+            }
+        }
+
         return super.visitNumberLiteral(visitor);
     }
 
