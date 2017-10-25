@@ -11,7 +11,11 @@ package com.lfkdsk.justel.ast.tree;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 
 import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
@@ -25,7 +29,7 @@ public class AstFuncArgumentsTest {
         // parser
         Assertions.assertEquals(
                 runExpr("lfkdsk(\"lfkdsk\",lfkdsk,lfkdsk)", false, null)
-                ,"(call lfkdsk \"lfkdsk\" lfkdsk lfkdsk)");
+                , "(call lfkdsk \"lfkdsk\" lfkdsk lfkdsk)");
     }
 
     public static class O {
@@ -42,20 +46,33 @@ public class AstFuncArgumentsTest {
         }
     }
 
+    private JustContext context;
+
+    @BeforeEach
+    void setUp() {
+        context = new JustMapContext();
+        context.put("O", new O());
+    }
 
     @Test
     void testGetter() {
-        JustContext context = new JustMapContext();
-        context.put("O", new O());
         runExpr("O.lfkdsk", true, context);
     }
 
     @Test
     void testCompilerGetter() {
-        JustContext context = new JustMapContext();
-        context.put("O", new O());
         compiler("O.lfkdsk", context);
         compiler("O.lllll[2]", context);
         compiler("O.getLllll()[2]", context);
+    }
+
+    @Test
+    void testMethodHandler() {
+        MethodHandles.Lookup lookup = MethodHandles.lookup();
+        try {
+            lookup.findVirtual(O.class, "getLfkdsk", MethodType.methodType(int.class));
+        } catch (IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -9,7 +9,6 @@ import com.lfkdsk.justel.ast.postfix.NegativePostfix;
 import com.lfkdsk.justel.ast.postfix.NotPostfix;
 import com.lfkdsk.justel.ast.tree.*;
 import com.lfkdsk.justel.context.JustContext;
-import com.lfkdsk.justel.generate.WrapperGenCodeVisitor;
 import com.lfkdsk.justel.literal.BoolLiteral;
 import com.lfkdsk.justel.literal.IDLiteral;
 import com.lfkdsk.justel.literal.NumberLiteral;
@@ -19,6 +18,7 @@ import com.lfkdsk.justel.token.Token;
 import com.lfkdsk.justel.utils.GeneratedId;
 import com.lfkdsk.justel.utils.asm.ClassBuilder;
 import com.lfkdsk.justel.utils.asm.MethodBuilder;
+import com.lfkdsk.justel.visitor.AstVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -28,7 +28,7 @@ import java.util.Stack;
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 import static org.objectweb.asm.Opcodes.V1_7;
 
-public class ByteCodeGenVisitor extends WrapperGenCodeVisitor {
+public class ByteCodeGenVisitor implements AstVisitor<ClassBuilder> {
 
     private final int generateClassId = GeneratedId.generateAtomId();
     private final String className = "com/lfkdsk/justel/generatecode/JustEL" + generateClassId;
@@ -54,8 +54,10 @@ public class ByteCodeGenVisitor extends WrapperGenCodeVisitor {
 
     private final Stack<Object> evalStack = new Stack<>();
 
+    private final JustContext env;
+
     public ByteCodeGenVisitor(JustContext env) {
-        super(env);
+        this.env = env;
 
         ///////////////////////////////////////////////////////////////////////////
         // Generate Constructor && Method
@@ -93,184 +95,219 @@ public class ByteCodeGenVisitor extends WrapperGenCodeVisitor {
         );
     }
 
+
     @Override
-    public String visitAstLeaf(AstLeaf leaf) {
-        return super.visitAstLeaf(leaf);
+    public ClassBuilder visitAstLeaf(AstLeaf leaf) {
+        return null;
     }
 
     @Override
-    public String visitAstList(AstList list) {
-        return super.visitAstList(list);
+    public ClassBuilder visitAstList(AstList list) {
+        return null;
     }
 
     @Override
-    public String visitBoolLiteral(BoolLiteral visitor) {
-        return super.visitBoolLiteral(visitor);
+    public ClassBuilder visitBoolLiteral(BoolLiteral visitor) {
+        Boolean value = visitor.value();
+        if (value) {
+            eval.iconst_1();
+        } else {
+            eval.iconst_0();
+        }
+
+        evalStack.push(value);
+        return builder;
     }
 
     @Override
-    public String visitIDLiteral(IDLiteral visitor) {
-        return super.visitIDLiteral(visitor);
+    public ClassBuilder visitIDLiteral(IDLiteral visitor) {
+        return builder;
     }
 
     @Override
-    public String visitNumberLiteral(NumberLiteral visitor) {
+    public ClassBuilder visitNumberLiteral(NumberLiteral visitor) {
         NumberToken token = visitor.numberToken();
         switch (token.getTag()) {
             case Token.INTEGER: {
-                eval.sipush(token.integerValue());
+                int value = token.integerValue();
+                // -128 ~ 127
+                if (value >= -128 && value <= 127) {
+                    eval.bipush(value);
+                }
+                // -32768~32767
+                else if (value >= -32768 && value <= 32768) {
+                    eval.sipush(value);
+                } else {
+                    eval.ldc(value);
+                }
                 // push
                 evalStack.push(token.integerValue());
                 break;
             }
             case Token.DOUBLE: {
-                eval.sipush(token.integerValue());
+                // push double => stack
+                eval.ldc2_w(token.doubleValue());
                 // push
-                evalStack.push(token.integerValue());
+                evalStack.push(token.doubleValue());
+                break;
+            }
+            case Token.FLOAT: {
+                eval.ldc(token.floatValue());
+                evalStack.push(token.floatValue());
+                break;
+            }
+            case Token.LONG: {
+                eval.ldc2_w(token.longValue());
+                evalStack.push(token.longValue());
                 break;
             }
         }
 
-        return super.visitNumberLiteral(visitor);
+        return builder;
     }
 
     @Override
-    public String visitStringLiteral(StringLiteral visitor) {
-        return super.visitStringLiteral(visitor);
+    public ClassBuilder visitStringLiteral(StringLiteral visitor) {
+        // push string => stack
+        eval.ldc(visitor.value());
+        evalStack.push(visitor.value());
+
+        return builder;
     }
 
     @Override
-    public String visitExtendFunctionExpr(ExtendFunctionExpr extendFunctionExpr) {
-        return super.visitExtendFunctionExpr(extendFunctionExpr);
+    public ClassBuilder visitExtendFunctionExpr(ExtendFunctionExpr extendFunctionExpr) {
+        return null;
     }
 
     @Override
-    public String visitOperatorExpr(OperatorExpr operatorExpr) {
-        return super.visitOperatorExpr(operatorExpr);
+    public ClassBuilder visitOperatorExpr(OperatorExpr operatorExpr) {
+        return null;
     }
 
     @Override
-    public String visitAmpersandOp(AmpersandOp visitor) {
-        return super.visitAmpersandOp(visitor);
+    public ClassBuilder visitAmpersandOp(AmpersandOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitAndOp(AndOp visitor) {
-        return super.visitAndOp(visitor);
+    public ClassBuilder visitAndOp(AndOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitArrayIndexExpr(ArrayIndexExpr visitor) {
-        return super.visitArrayIndexExpr(visitor);
+    public ClassBuilder visitArrayIndexExpr(ArrayIndexExpr visitor) {
+        return null;
     }
 
     @Override
-    public String visitCondOp(CondOp visitor) {
-        return super.visitCondOp(visitor);
+    public ClassBuilder visitCondOp(CondOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitDivOp(DivOp visitor) {
-        return super.visitDivOp(visitor);
+    public ClassBuilder visitDivOp(DivOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitDotExpr(DotExpr visitor) {
-        return super.visitDotExpr(visitor);
+    public ClassBuilder visitDotExpr(DotExpr visitor) {
+        return null;
     }
 
     @Override
-    public String visitEqualOp(EqualOp visitor) {
-        return super.visitEqualOp(visitor);
+    public ClassBuilder visitEqualOp(EqualOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitGreaterThanEqualOp(GreaterThanEqualOp visitor) {
-        return super.visitGreaterThanEqualOp(visitor);
+    public ClassBuilder visitGreaterThanEqualOp(GreaterThanEqualOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitGreaterThanOp(GreaterThanOp visitor) {
-        return super.visitGreaterThanOp(visitor);
+    public ClassBuilder visitGreaterThanOp(GreaterThanOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitLessThanEqualOp(LessThanEqualOp visitor) {
-        return super.visitLessThanEqualOp(visitor);
+    public ClassBuilder visitLessThanEqualOp(LessThanEqualOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitLessThanOp(LessThanOp visitor) {
-        return super.visitLessThanOp(visitor);
+    public ClassBuilder visitLessThanOp(LessThanOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitMinusOp(MinusOp visitor) {
-        return super.visitMinusOp(visitor);
+    public ClassBuilder visitMinusOp(MinusOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitModOp(ModOp visitor) {
-        return super.visitModOp(visitor);
+    public ClassBuilder visitModOp(ModOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitMulOp(MulOp visitor) {
-        return super.visitMulOp(visitor);
+    public ClassBuilder visitMulOp(MulOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitOrOp(OrOp visitor) {
-        return super.visitOrOp(visitor);
+    public ClassBuilder visitOrOp(OrOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitPlusOp(PlusOp visitor) {
-        return super.visitPlusOp(visitor);
+    public ClassBuilder visitPlusOp(PlusOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitUnEqualOp(UnEqualOp visitor) {
-        return super.visitUnEqualOp(visitor);
+    public ClassBuilder visitUnEqualOp(UnEqualOp visitor) {
+        return null;
     }
 
     @Override
-    public String visitNegativePostfix(NegativePostfix visitor) {
-        return super.visitNegativePostfix(visitor);
+    public ClassBuilder visitNegativePostfix(NegativePostfix visitor) {
+        return null;
     }
 
     @Override
-    public String visitNotPostfix(NotPostfix visitor) {
-        return super.visitNotPostfix(visitor);
+    public ClassBuilder visitNotPostfix(NotPostfix visitor) {
+        return null;
     }
 
     @Override
-    public String visitAstBinaryExpr(AstBinaryExpr visitor) {
-        return super.visitAstBinaryExpr(visitor);
+    public ClassBuilder visitAstBinaryExpr(AstBinaryExpr visitor) {
+        return null;
     }
 
     @Override
-    public String visitAstCondExpr(AstCondExpr visitor) {
-        return super.visitAstCondExpr(visitor);
+    public ClassBuilder visitAstCondExpr(AstCondExpr visitor) {
+        return null;
     }
 
     @Override
-    public String visitAstFuncArguments(AstFuncArguments visitor) {
-        return super.visitAstFuncArguments(visitor);
+    public ClassBuilder visitAstFuncArguments(AstFuncArguments visitor) {
+        return null;
     }
 
     @Override
-    public String visitAstFuncExpr(AstFuncExpr visitor) {
-        return super.visitAstFuncExpr(visitor);
+    public ClassBuilder visitAstFuncExpr(AstFuncExpr visitor) {
+        return null;
     }
 
     @Override
-    public String visitAstPrimaryExpr(AstPrimaryExpr visitor) {
-        return super.visitAstPrimaryExpr(visitor);
+    public ClassBuilder visitAstPrimaryExpr(AstPrimaryExpr visitor) {
+        return null;
     }
 
     @Override
-    public String visitAstProgram(AstProgram visitor) {
-        return super.visitAstProgram(visitor);
+    public ClassBuilder visitAstProgram(AstProgram visitor) {
+        return null;
     }
+
 }

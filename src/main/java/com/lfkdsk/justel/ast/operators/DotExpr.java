@@ -13,6 +13,7 @@ import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.function.OperatorExpr;
 import com.lfkdsk.justel.ast.tree.AstPostfixExpr;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.exception.NoSuchMethodException;
 import com.lfkdsk.justel.utils.ReflectUtils;
 
 import java.lang.reflect.Field;
@@ -26,7 +27,7 @@ import java.util.List;
  * 2. primary.method( expr, expr | null )
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  * @see AstPostfixExpr
  * @see OperatorExpr
  */
@@ -105,6 +106,8 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
                 builder.append(".").append(isMethodStr);
                 return builder.append("()");
             }
+
+            throw new NoSuchMethodException("cannot found field :" + isMethodStr + " or " + getMethodStr, this);
         }
 
         return builder.append(compile(env));
