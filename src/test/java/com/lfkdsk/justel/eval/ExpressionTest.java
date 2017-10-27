@@ -32,4 +32,13 @@ class ExpressionTest {
                 }})
                 .toString());
     }
+
+    @Test
+    void evalMidStr() {
+        Logger.init();
+        Logger.i(new JustEL.Builder()
+                .create()
+                .parse("lfkdsk + lfkdsk * 10000 & 0")
+                .toString());
+    }
 }

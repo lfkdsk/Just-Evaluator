@@ -23,12 +23,19 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
+import static com.lfkdsk.justel.utils.ReflectUtils.isPrimitiveOrWrapNumber;
+import static com.lfkdsk.justel.utils.ReflectUtils.toPrimitiveClass;
+import static com.lfkdsk.justel.utils.ReflectUtils.toWrapperClass;
+import static com.lfkdsk.justel.utils.TypeUtils.isInteger;
+import static com.lfkdsk.justel.utils.TypeUtils.isString;
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 import static org.objectweb.asm.Opcodes.V1_7;
 
-public class ByteCodeGenVisitor implements AstVisitor<ClassBuilder> {
+public class ByteCodeGenVisitor implements AstVisitor<Object> {
 
     private final int generateClassId = GeneratedId.generateAtomId();
     private final String className = "com/lfkdsk/justel/generatecode/JustEL" + generateClassId;
@@ -36,6 +43,7 @@ public class ByteCodeGenVisitor implements AstVisitor<ClassBuilder> {
     private final String contextDesc = "com/lfkdsk/justel/context/JustContext";
     private final String methodDesc = "(Lcom/lfkdsk/justel/context/JustContext;)Ljava/lang/Object;";
     private final String contextGetDesc = "(Ljava/lang/String;)Ljava/lang/Object;";
+
     /**
      * Class Builder -- builder
      * Control Class Structure
@@ -52,7 +60,64 @@ public class ByteCodeGenVisitor implements AstVisitor<ClassBuilder> {
      */
     private final MethodBuilder eval;
 
-    private final Stack<Object> evalStack = new Stack<>();
+    public static class OperatorStack {
+
+        public final Stack<Object> evalStack = new Stack<>();
+
+        public final Map<String, Integer> localMap = new HashMap<>();
+
+        private int operatorCounts = 0;
+
+        private int maxStacks = 0;
+
+        private int maxLocals = 1;
+
+        public void pushOperator() {
+            this.pushOperator(0);
+        }
+
+        public void popOperator() {
+            this.operatorCounts--;
+        }
+
+        public void pushOperator(int extra) {
+            this.operatorCounts++;
+            this.operatorCounts += extra;
+            this.setMaxStacks(operatorCounts);
+        }
+
+        public void setMaxLocals(int maxLocals) {
+            this.maxLocals = maxLocals;
+        }
+
+        public void setMaxStacks(int maxStacks) {
+            if (maxStacks > this.maxStacks) {
+                this.maxStacks = maxStacks;
+            }
+        }
+
+        public Object push(Object obj) {
+            return evalStack.push(obj);
+        }
+
+        public Object pop() {
+            return evalStack.pop();
+        }
+
+        public int getOperatorCounts() {
+            return operatorCounts;
+        }
+
+        public int getLocalCounts() {
+            return maxLocals;
+        }
+
+        public int addLocalCount() {
+            return maxLocals++;
+        }
+    }
+
+    private final OperatorStack evalStack = new OperatorStack();
 
     private final JustContext env;
 
@@ -70,7 +135,7 @@ public class ByteCodeGenVisitor implements AstVisitor<ClassBuilder> {
                 null,
                 Type.getInternalName(Object.class),
                 new String[]{classInterface},
-                ClassWriter.COMPUTE_FRAMES);
+                ClassWriter.COMPUTE_FRAMES, true);
 
         constructor = builder.newMethod(
                 Opcodes.ACC_PUBLIC,
@@ -93,21 +158,54 @@ public class ByteCodeGenVisitor implements AstVisitor<ClassBuilder> {
                 null,
                 0, 0
         );
+
+        start();
+    }
+
+    private void loadEnv() {
+        evalStack.pushOperator();
+        eval.aload_1();
+    }
+
+    private void removeEnv() {
+        evalStack.popOperator();
+    }
+
+    private void start() {
+        for (String varName : env.varsKeySet()) {
+            loadEnv();
+
+            eval.ldc(varName);
+            eval.invokeinterface(
+                    Type.getInternalName(JustContext.class),
+                    "get",
+                    Type.getMethodDescriptor(
+                            Type.getType(Object.class),
+                            Type.getType(String.class))
+            );
+            eval.checkcast(Type.getInternalName(env.get(varName).getClass()));
+
+            evalStack.addLocalCount();
+            eval.astore(evalStack.getLocalCounts());
+            evalStack.localMap.put(varName, evalStack.getLocalCounts());
+
+            removeEnv();
+        }
     }
 
 
     @Override
-    public ClassBuilder visitAstLeaf(AstLeaf leaf) {
-        return null;
+    public Object visitAstLeaf(AstLeaf leaf) {
+        return leaf.eval(env);
     }
 
     @Override
-    public ClassBuilder visitAstList(AstList list) {
-        return null;
+    public Object visitAstList(AstList list) {
+        return list.eval(env);
     }
 
     @Override
-    public ClassBuilder visitBoolLiteral(BoolLiteral visitor) {
+    public Object visitBoolLiteral(BoolLiteral visitor) {
         Boolean value = visitor.value();
         if (value) {
             eval.iconst_1();
@@ -115,17 +213,30 @@ public class ByteCodeGenVisitor implements AstVisitor<ClassBuilder> {
             eval.iconst_0();
         }
 
+        // true or false
         evalStack.push(value);
-        return builder;
+        evalStack.pushOperator();
+
+        return visitor.eval(env);
     }
 
     @Override
-    public ClassBuilder visitIDLiteral(IDLiteral visitor) {
-        return builder;
+    public Object visitIDLiteral(IDLiteral visitor) {
+        Integer integer = evalStack.localMap.get(visitor.name());
+
+        if (integer != null) {
+            eval.aload(integer);
+            evalStack.push(env.get(visitor.name()));
+            evalStack.pushOperator();
+
+            return visitor.eval(env);
+        }
+
+        return null;
     }
 
     @Override
-    public ClassBuilder visitNumberLiteral(NumberLiteral visitor) {
+    public Object visitNumberLiteral(NumberLiteral visitor) {
         NumberToken token = visitor.numberToken();
         switch (token.getTag()) {
             case Token.INTEGER: {
@@ -140,6 +251,7 @@ public class ByteCodeGenVisitor implements AstVisitor<ClassBuilder> {
                 } else {
                     eval.ldc(value);
                 }
+
                 // push
                 evalStack.push(token.integerValue());
                 break;
@@ -163,151 +275,184 @@ public class ByteCodeGenVisitor implements AstVisitor<ClassBuilder> {
             }
         }
 
-        return builder;
+        evalStack.pushOperator();
+        return visitor.eval(env);
     }
 
     @Override
-    public ClassBuilder visitStringLiteral(StringLiteral visitor) {
+    public Object visitStringLiteral(StringLiteral visitor) {
         // push string => stack
         eval.ldc(visitor.value());
         evalStack.push(visitor.value());
+        evalStack.pushOperator();
 
         return builder;
     }
 
     @Override
-    public ClassBuilder visitExtendFunctionExpr(ExtendFunctionExpr extendFunctionExpr) {
+    public Object visitExtendFunctionExpr(ExtendFunctionExpr extendFunctionExpr) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitOperatorExpr(OperatorExpr operatorExpr) {
+    public Object visitOperatorExpr(OperatorExpr operatorExpr) {
+        System.out.println(operatorExpr.compile(env));
         return null;
     }
 
     @Override
-    public ClassBuilder visitAmpersandOp(AmpersandOp visitor) {
+    public Object visitAmpersandOp(AmpersandOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitAndOp(AndOp visitor) {
+    public Object visitAndOp(AndOp visitor) {
+        return visitor.eval(env);
+    }
+
+    @Override
+    public Object visitArrayIndexExpr(ArrayIndexExpr visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitArrayIndexExpr(ArrayIndexExpr visitor) {
+    public Object visitCondOp(CondOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitCondOp(CondOp visitor) {
+    public Object visitDivOp(DivOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitDivOp(DivOp visitor) {
+    public Object visitDotExpr(DotExpr visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitDotExpr(DotExpr visitor) {
+    public Object visitEqualOp(EqualOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitEqualOp(EqualOp visitor) {
+    public Object visitGreaterThanEqualOp(GreaterThanEqualOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitGreaterThanEqualOp(GreaterThanEqualOp visitor) {
+    public Object visitGreaterThanOp(GreaterThanOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitGreaterThanOp(GreaterThanOp visitor) {
+    public Object visitLessThanEqualOp(LessThanEqualOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitLessThanEqualOp(LessThanEqualOp visitor) {
+    public Object visitLessThanOp(LessThanOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitLessThanOp(LessThanOp visitor) {
+    public Object visitMinusOp(MinusOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitMinusOp(MinusOp visitor) {
+    public Object visitModOp(ModOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitModOp(ModOp visitor) {
+    public Object visitMulOp(MulOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitMulOp(MulOp visitor) {
+    public Object visitOrOp(OrOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitOrOp(OrOp visitor) {
+    public Object visitPlusOp(PlusOp visitor) {
+        Object left = visitor.leftChild().accept(this);
+        Object right = visitor.rightChild().accept(this);
+        if (isString(left) && isString(right)) {
+            String stringBuilderType = Type.getInternalName(StringBuilder.class);
+            eval.new_(stringBuilderType);
+            eval.dup();
+            eval.invokespecial(stringBuilderType, "<init>", "()V");
+//            eval.
+        } else if (isInteger(left) && isInteger(right)){
+            eval.iadd();
+        }
+
+        return visitor.eval(env);
+    }
+
+    @Override
+    public Object visitUnEqualOp(UnEqualOp visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitPlusOp(PlusOp visitor) {
+    public Object visitNegativePostfix(NegativePostfix visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitUnEqualOp(UnEqualOp visitor) {
+    public Object visitNotPostfix(NotPostfix visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitNegativePostfix(NegativePostfix visitor) {
+    public Object visitAstBinaryExpr(AstBinaryExpr visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitNotPostfix(NotPostfix visitor) {
+    public Object visitAstCondExpr(AstCondExpr visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitAstBinaryExpr(AstBinaryExpr visitor) {
+    public Object visitAstFuncArguments(AstFuncArguments visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitAstCondExpr(AstCondExpr visitor) {
+    public Object visitAstFuncExpr(AstFuncExpr visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitAstFuncArguments(AstFuncArguments visitor) {
+    public Object visitAstPrimaryExpr(AstPrimaryExpr visitor) {
         return null;
     }
 
     @Override
-    public ClassBuilder visitAstFuncExpr(AstFuncExpr visitor) {
-        return null;
+    public Object visitAstProgram(AstProgram visitor) {
+        visitor.program().accept(this);
+
+        return builder;
     }
 
-    @Override
-    public ClassBuilder visitAstPrimaryExpr(AstPrimaryExpr visitor) {
-        return null;
-    }
+    public byte[] toByteArray() {
+        evalStack.popOperator();
+        Object obj = evalStack.pop();
+        if (isPrimitiveOrWrapNumber(obj.getClass())) {
+            Class<?> wrapperClass = toWrapperClass(obj.getClass());
+            Class<?> primaryClass = toPrimitiveClass(obj.getClass());
+            eval.invokestatic(
+                    Type.getInternalName(wrapperClass),
+                    "valueOf",
+                    Type.getMethodDescriptor(Type.getType(wrapperClass), Type.getType(primaryClass)));
+        }
 
-    @Override
-    public ClassBuilder visitAstProgram(AstProgram visitor) {
-        return null;
+//        eval.invokestatic("java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;");
+        eval.areturn();
+        return builder.toByteArray();
     }
-
 }

@@ -16,7 +16,7 @@ import java.util.*;
  * BnfCom Engine
  *
  * @author liufengkai
- *         Created by liufengkai on 16/7/11.
+ * Created by liufengkai on 16/7/11.
  * @see AToken
  * @see Expr
  * @see Element
@@ -211,6 +211,26 @@ public class BnfCom {
             return token.isIdentifier() && !reserved.contains(token.getText());
         }
     }
+
+
+    /**
+     * Reserved Token
+     */
+    protected static class ReservedToken extends AToken {
+        Set<String> reserved;
+
+        ReservedToken(Class<? extends AstLeaf> clazz, Set<String> reserved) {
+            super(clazz);
+            this.reserved = reserved != null ? reserved : new HashSet<>();
+        }
+
+        @Override
+        protected boolean tokenTest(Token token) {
+            return token.isIdentifier() && reserved.contains(token.getText());
+        }
+    }
+
+
 
     /**
      * Number Token
@@ -468,7 +488,7 @@ public class BnfCom {
          * @return Symbol Operator
          * @throws ParseException
          */
-        private Precedence nextOperator(Lexer lexer) throws ParseException {
+        protected Precedence nextOperator(Lexer lexer) throws ParseException {
             Token token = lexer.peek(0);
 
             if (token.isIdentifier()) {
@@ -492,6 +512,29 @@ public class BnfCom {
             } else {
                 return prec >= nextPrec.value;
             }
+        }
+
+        @Override
+        protected boolean match(Lexer lexer) throws ParseException {
+            return factor.match(lexer);
+        }
+    }
+
+    protected static class SExpr extends Expr {
+
+        SExpr(Class<? extends AstNode> clazz, BnfCom factor, Operators ops) {
+            super(clazz, factor, ops);
+        }
+
+        @Override
+        protected void parse(Lexer lexer, List<AstNode> nodes) throws ParseException {
+            AstNode right = factor.parse(lexer);
+            Precedence prec;
+            while ((prec = nextOperator(lexer)) != null) {
+
+            }
+
+            nodes.add(right);
         }
 
         @Override
@@ -571,7 +614,8 @@ public class BnfCom {
                         return (AstNode) m.invoke(null, arg);
                     }
                 };
-            } catch (NoSuchMethodException ignored) { }
+            } catch (NoSuchMethodException ignored) {
+            }
 
             // call constructor
             try {
@@ -683,6 +727,12 @@ public class BnfCom {
     public BnfCom identifier(Class<? extends AstLeaf> clazz,
                              Set<String> reserved) {
         elements.add(new IdToken(clazz, reserved));
+        return this;
+    }
+
+    public BnfCom reserved(Class<? extends AstLeaf> clazz,
+                             Set<String> reserved) {
+        elements.add(new ReservedToken(clazz, reserved));
         return this;
     }
 
@@ -802,6 +852,12 @@ public class BnfCom {
     public BnfCom expression(Class<? extends AstNode> clazz, BnfCom subExp,
                              Operators operators) {
         elements.add(new Expr(clazz, subExp, operators));
+        return this;
+    }
+
+    public BnfCom sExpr(Class<? extends AstNode> clazz, BnfCom subExp,
+                             Operators operators) {
+        elements.add(new SExpr(clazz, subExp, operators));
         return this;
     }
 

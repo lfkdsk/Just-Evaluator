@@ -12,7 +12,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.sql.Ref;
 import java.util.*;
 
 /**
@@ -26,8 +25,10 @@ public final class ReflectUtils {
      * key为基本类型及其包装类型，value为包装类型
      */
     static final Map<Class<?>, Class<?>> wrapperToPrimary = new HashMap<>(wrapperToPrimaryMap());
+    static final Map<Class<?>, Class<?>> primaryToWrapper = new HashMap<>(primaryToWrapperMap());
 
-    private ReflectUtils() {}
+    private ReflectUtils() {
+    }
 
     private static Map<Class<?>, Class<?>> wrapperToPrimaryMap() {
         Map<Class<?>, Class<?>> map = new HashMap<>();
@@ -57,6 +58,36 @@ public final class ReflectUtils {
         return map;
     }
 
+    private static Map<Class<?>, Class<?>> primaryToWrapperMap() {
+        Map<Class<?>, Class<?>> map = new HashMap<>();
+
+        map.put(byte.class, Byte.class);
+        map.put(Byte.class, Byte.class);
+
+        map.put(short.class, Short.class);
+        map.put(Short.class, Short.class);
+
+        map.put(int.class, Integer.class);
+        map.put(Integer.class, Integer.class);
+
+        map.put(long.class, Long.class);
+        map.put(Long.class, Long.class);
+
+        map.put(float.class, Float.class);
+        map.put(Float.class, Float.class);
+
+        map.put(double.class, Double.class);
+        map.put(Double.class, Double.class);
+
+        map.put(char.class, Character.class);
+        map.put(Character.class, Character.class);
+
+        map.put(boolean.class, Boolean.class);
+        map.put(Boolean.class, Boolean.class);
+
+        return map;
+    }
+
 
     public static boolean isPrimitiveOrWrapNumber(Class<?> c) {
         return wrapperToPrimary.containsKey(c);
@@ -66,10 +97,17 @@ public final class ReflectUtils {
         return c != null && c.isPrimitive() && (c != boolean.class);
     }
 
+    public static boolean isWrapperNumber(Class<?> c) {
+        return primaryToWrapper.containsKey(c);
+    }
+
     public static Class<?> toPrimitiveClass(Class<?> c) {
         return wrapperToPrimary.get(c);
     }
 
+    public static Class<?> toWrapperClass(Class<?> c) {
+        return primaryToWrapper.get(c);
+    }
 
     public static final Class<?>[] EMPTY_PARAM_TYPES = new Class<?>[0];
     public static final Object[] EMPTY_PARAMS = new Object[0];

@@ -57,7 +57,7 @@ public final class JustEL {
         this.generator = generator;
     }
 
-    private AstProgram parse(String expr) {
+    public AstProgram parse(String expr) {
         // reset lexer
         lexer.reset(expr);
         // read line

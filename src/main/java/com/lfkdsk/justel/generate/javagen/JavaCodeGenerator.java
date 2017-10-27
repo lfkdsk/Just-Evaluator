@@ -71,7 +71,6 @@ public class JavaCodeGenerator extends Generator {
         return builder.toString();
     }
 
-
     @Override
     public JavaSource generate() {
         JustContext templateContext = new JustMapContext();

@@ -199,13 +199,7 @@ public abstract class AstNode implements Iterable<AstNode>
 
     @Override
     public Expression expr() {
-
-        return new Expression() {
-            @Override
-            public Object eval(JustContext context) {
-                return AstNode.this.eval(context);
-            }
-        };
+        return AstNode.this::eval;
     }
 
     @Override
