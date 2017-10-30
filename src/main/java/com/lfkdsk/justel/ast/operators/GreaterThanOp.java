@@ -25,7 +25,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
  * eq: expr > expr
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/31.
+ * Created by liufengkai on 2017/7/31.
  * @see OperatorExpr
  */
 public class GreaterThanOp extends OperatorExpr {
@@ -46,7 +46,7 @@ public class GreaterThanOp extends OperatorExpr {
         Object right = rightChild().eval(env);
 
         if (isNumber(left) && isNumber(right)) {
-            return computeValue(left) > computeValue(right);
+            return Double.compare(computeValue(left), computeValue(right)) > 0;
         } else if (isComparable(left) && isComparable(right)) {
             return ((Comparable) left).compareTo(right) > 0;
         }

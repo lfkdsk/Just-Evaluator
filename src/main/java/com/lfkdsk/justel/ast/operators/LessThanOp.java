@@ -46,11 +46,10 @@ public class LessThanOp extends OperatorExpr {
         Object right = rightChild().eval(env);
 
         if (isNumber(left) && isNumber(right)) {
-            return computeValue(left) < computeValue(right);
+            return Double.compare(computeValue(left), computeValue(right)) < 0;
         } else if (isComparable(left) && isComparable(right)) {
             return ((Comparable) left).compareTo(right) < 0;
         }
-
 
         return super.eval(env);
     }
