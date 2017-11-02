@@ -1,6 +1,8 @@
 package com.lfkdsk.justel.repl;
 
+import com.lfkdsk.justel.JustEL;
 import com.lfkdsk.justel.ast.base.AstNode;
+import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
 import com.lfkdsk.justel.compile.compiler.JustCompiler;
 import com.lfkdsk.justel.compile.compiler.JustCompilerImpl;
 import com.lfkdsk.justel.compile.generate.Generator;
@@ -11,7 +13,9 @@ import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.parser.JustParser;
+import com.lfkdsk.justel.utils.logger.Logger;
 import jline.console.ConsoleReader;
+import jline.console.completer.StringsCompleter;
 import jline.console.history.FileHistory;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
@@ -20,6 +24,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.lfkdsk.justel.utils.FormatUtils.*;
 import static org.fusesource.jansi.Ansi.ansi;
@@ -50,7 +56,7 @@ public class JustRepl {
                     " -e eval this expr \n" +
                     " -g generate java source code \n" +
                     " -c compile java source code [need -g] \n" +
-                    " -s stressed test of this expr\n" +
+                    " -flush clear all environment var \n" +
                     " Just-REPL support assign(=) operator to set id-token's value, this grammar \n " +
                     "won't support in JustEL";
 
@@ -77,12 +83,23 @@ public class JustRepl {
      */
     private static Generator generator = new JavaCodeGenerator();
 
-    private static JustContext env = new JustMapContext();
+    private static JustContext env = new JustMapContext() {{
+        putExtendFunc("compileTest", new CompileTestFunctionExpr());
+        putExtendFunc("evalTest", new EvalTestFunctionExpr());
+    }};
+
+    private static JustEL justEL = JustEL.builder()
+                                         .lexer(lexer)
+                                         .parser(parser)
+                                         .compiler(compiler)
+                                         .create();
+
+    private static ExecutorService executor = Executors.newFixedThreadPool(10);
+
     private static boolean openAst = false;
     private static boolean openMockEval = false;
     private static boolean openMockCompile = false;
     private static boolean openMockGenerate = false;
-    private static boolean openStressedTest = false;
 
     private static String cyanPrint(String msg) {
         return ANSI_CYAN + msg + ANSI_RESET;
@@ -93,7 +110,6 @@ public class JustRepl {
         if (command.contains("e")) openMockEval = flag;
         if (command.contains("c")) openMockCompile = flag;
         if (command.contains("g")) openMockGenerate = flag;
-        if (command.contains("s")) openStressedTest = flag;
         if (command.contains("-flush") && !flag) env.clearVars();
     }
 
@@ -133,17 +149,6 @@ public class JustRepl {
         };
 
         System.out.println(cyanPrint(beautifulPrint(args)));
-
-        if (openStressedTest) {
-
-            start = System.currentTimeMillis();
-
-            for (int i = 0; i < 1_0000; i++) {
-                expr.eval(env);
-            }
-
-            AnsiConsole.out.println("Run Eval 1_0000 Time :" + (System.currentTimeMillis() - start + " ms"));
-        }
     }
 
     private static void runCompile(AstNode node, JustContext env) {
@@ -157,22 +162,12 @@ public class JustRepl {
             long start = System.currentTimeMillis();
             Expression expr = compiler.compile(javaSource);
             AnsiConsole.out.println("Compile Time :" + (System.currentTimeMillis() - start + " ms"));
-
-            if (openStressedTest) {
-
-                start = System.currentTimeMillis();
-
-                for (int i = 0; i < 1_0000; i++) {
-                    expr.eval(env);
-                }
-
-                AnsiConsole.out.println("Run 1_0000 Time :" + (System.currentTimeMillis() - start + " ms"));
-            }
         }
     }
 
     private static void run() throws IOException {
         ConsoleReader reader = new ConsoleReader();
+        reader.addCompleter(new StringsCompleter("compileTest", "evalTest", "-acge"));
 
         FileHistory fileHistory = new FileHistory(new File("./sh/history.just"));
         reader.setHistoryEnabled(true);
@@ -183,7 +178,8 @@ public class JustRepl {
             System.out.println(ANSI_PURPLE + "Have a nice Day~~" + ANSI_RESET);
             try {
                 fileHistory.flush();
-            } catch (IOException ignored) { }
+            } catch (IOException ignored) {
+            }
         }));
 
         String command;
@@ -218,8 +214,71 @@ public class JustRepl {
         }
     }
 
+    public static class CompileTestFunctionExpr extends ExtendFunctionExpr {
+
+        @Override
+        public Object call(Object... params) {
+            assert params.length == 2;
+            assert params[0] instanceof String;
+            assert params[1] instanceof Integer;
+
+            int times = (int) params[1];
+            String expr = (String) params[0];
+
+            System.out.println(cyanPrint("Start Compile Test in another thread"));
+            executor.execute(() -> {
+                long start = System.currentTimeMillis();
+                Expression expression = justEL.compile(expr, env);
+                for (int i = 0; i < times; i++) {
+                    expression.eval(env);
+                }
+                System.out.println("");
+                System.out.println(cyanPrint(beautifulPrint("use time :" + (System.currentTimeMillis() - start) + " ms" + " run " + times + " times")));
+            });
+
+            return "testing";
+        }
+
+        @Override
+        public String funcName() {
+            return "compileTest";
+        }
+    }
+
+
+    public static class EvalTestFunctionExpr extends ExtendFunctionExpr {
+
+        @Override
+        public Object call(Object... params) {
+            assert params.length == 2;
+            assert params[0] instanceof String;
+            assert params[1] instanceof Integer;
+            int times = (int) params[1];
+            String expr = (String) params[0];
+
+            System.out.println(cyanPrint("Start Eval Test in another thread"));
+            executor.execute(() -> {
+                long start = System.currentTimeMillis();
+                Expression expression = justEL.expr(expr);
+                for (int i = 0; i < times; i++) {
+                    expression.eval(env);
+                }
+                System.out.println("");
+                System.out.println(cyanPrint(beautifulPrint("use time :" + (System.currentTimeMillis() - start) + " ms" + " run " + times + " times")));
+            });
+
+            return "testing";
+        }
+
+        @Override
+        public String funcName() {
+            return "evalTest";
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         AnsiConsole.systemInstall();
+        Logger.init();
         logoStr = logoStr.replace("█", ansi().fg(Ansi.Color.GREEN).a("█").reset().toString());
 
         System.out.println(ansi().eraseScreen().render(logoStr));
@@ -235,6 +294,9 @@ public class JustRepl {
         resolveCommandFlag(type, true);
 
         run();
+
+        // close executor
+        executor.shutdown();
     }
 
 }

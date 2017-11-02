@@ -13,6 +13,7 @@ import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.function.OperatorExpr;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.eval.ConstExpression;
+import com.lfkdsk.justel.eval.Expression;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isOperatorExpr;
  * Program is just a wrapper of Ast.
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  */
 public class AstProgram extends AstList {
 
@@ -66,12 +67,14 @@ public class AstProgram extends AstList {
         return isProgramConst;
     }
 
-    public ConstExpression getConstExpression() {
-        return constExpression;
-    }
-
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public Expression getConstExpression(JustContext env) {
+        return constExpression == null
+                ? constExpression = new ConstExpression(program().eval(env))
+                : constExpression;
     }
 }

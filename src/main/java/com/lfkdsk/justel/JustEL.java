@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
  * Just EL Wrapper
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/8/22.
+ * Created by liufengkai on 2017/8/22.
  */
 public final class JustEL {
 
@@ -109,7 +109,7 @@ public final class JustEL {
 
         // const value
         if (rootNode.isProgramConst()) {
-            return rootNode.getConstExpression();
+            return rootNode.getConstExpression(env);
         }
 
         // generate java source
