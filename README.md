@@ -2,32 +2,6 @@
 
 **JVM platform, high performance, lightweight** expression computing engine, providing interpretation and compilation and other methods to achieve.
 
-
-### How to use？
-
-* with maven：
-
-**Step 1.** Add the JitPack repository to your build file
-
-``` xml
-	<repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-	</repositories>
-```
-
-**Step 2.** Add the dependency
-
-```xml
-	<dependency>
-	    <groupId>com.github.lfkdsk</groupId>
-	    <artifactId>Just-Evaluator</artifactId>
-	    <version>v1.0</version>
-	</dependency>
-```
-
 ### Usage
 
 #### 1.Eval Simple Expr：

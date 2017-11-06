@@ -418,6 +418,11 @@ public class JustLexerImpl implements Lexer {
             StringBuilder builder = new StringBuilder();
             char lastChar = ' ';
             for (readChar(); ; readChar()) {
+
+                if (endOfLine) {
+                    break;
+                }
+
                 if (peekChar == '\"' && returnFlag
                         && lastChar != '\\') {
                     break;
