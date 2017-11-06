@@ -16,6 +16,7 @@ import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.exception.CompilerException;
 import com.lfkdsk.justel.exception.EvalException;
 import com.lfkdsk.justel.utils.MurmurHash3;
+import com.lfkdsk.justel.utils.logger.Logger;
 
 import java.util.Iterator;
 
@@ -23,7 +24,7 @@ import java.util.Iterator;
  * AST Tree Basic Node
  *
  * @author liufengkai
- *         Created by liufengkai on 17/7/11.
+ * Created by liufengkai on 17/7/11.
  */
 public abstract class AstNode implements Iterable<AstNode>
         , Evaluable, Compilable, Expressible {
@@ -64,6 +65,12 @@ public abstract class AstNode implements Iterable<AstNode>
     public static final int EXTEND_FUNC = 614;
 
     public static final int PROGRAM = 700;
+
+    public static final int COLLECTION = 701;
+
+    public static final int FUNCTION_NAME = 702;
+
+    public static final int SYSTEM_FUNCTION = 703;
 
     /**
      * The level of AstNode
@@ -222,5 +229,9 @@ public abstract class AstNode implements Iterable<AstNode>
     public boolean equals(Object obj) {
 
         return hashCode() == obj.hashCode();
+    }
+
+    public void printAst() {
+        Logger.v(toString());
     }
 }

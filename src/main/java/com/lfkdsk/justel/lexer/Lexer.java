@@ -1,5 +1,6 @@
 package com.lfkdsk.justel.lexer;
 
+import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.token.Token;
 
 /**
@@ -34,7 +35,7 @@ public interface Lexer {
      *
      * @return has more?
      */
-    default boolean hasMore() {
+    default boolean hasMore() throws ParseException {
         return peek(0) != Token.EOF;
     }
 }

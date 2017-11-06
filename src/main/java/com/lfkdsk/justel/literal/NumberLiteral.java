@@ -1,7 +1,6 @@
 package com.lfkdsk.justel.literal;
 
 import com.lfkdsk.justel.context.JustContext;
-import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.token.NumberToken;
 import com.lfkdsk.justel.token.Token;
 
@@ -31,7 +30,7 @@ public class NumberLiteral extends Literal {
         if (token instanceof NumberToken) {
             this.number = ((NumberToken) token).getNumberValue();
         } else {
-            throw new ParseException("UnSupport number name where token " +
+            throw new UnsupportedOperationException("UnSupport number name where token " +
                     "type is not NumberToken");
         }
     }

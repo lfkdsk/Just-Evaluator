@@ -20,8 +20,8 @@ public class ReservedToken extends Token {
 
     public static final String EQ_TOKEN = "==", UQ_TOKEN = "!=";
 
-    public static final String LOGICAL_AND_TOKEN = "&&",
-            LOGICAL_OR_TOKEN = "||", LOGICAL_F_TOKEN = "!";
+    public static final String LOGICAL_AND_TOKEN = "and",
+            LOGICAL_OR_TOKEN = "or", LOGICAL_F_TOKEN = "!";
 
     public static final String LT_TOKEN = "<", GT_TOKEN = ">";
 

@@ -10,7 +10,6 @@ package com.lfkdsk.justel.ast.base;
 
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.exception.EvalException;
-import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.token.Token;
 import com.lfkdsk.justel.utils.ObjectHelper;
 import org.jetbrains.annotations.NotNull;
@@ -61,7 +60,7 @@ public class AstLeaf extends AstNode {
 
     @Override
     public AstNode resetChild(int index, AstNode node) {
-        throw new ParseException("Didn't support this method in Leaf");
+        throw new UnsupportedOperationException("Didn't support this method in Leaf");
     }
 
     @Override

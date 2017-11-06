@@ -12,10 +12,7 @@ import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.operators.*;
 import com.lfkdsk.justel.ast.postfix.NegativePostfix;
 import com.lfkdsk.justel.ast.postfix.NotPostfix;
-import com.lfkdsk.justel.ast.tree.AstBinaryExpr;
-import com.lfkdsk.justel.ast.tree.AstFuncArguments;
-import com.lfkdsk.justel.ast.tree.AstPrimaryExpr;
-import com.lfkdsk.justel.ast.tree.AstProgram;
+import com.lfkdsk.justel.ast.tree.*;
 import com.lfkdsk.justel.exception.ParseException;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.literal.BoolLiteral;
@@ -45,7 +42,7 @@ import static com.lfkdsk.justel.token.Token.EOL;
  * - program: expr EOL
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  */
 public class JustParserImpl implements JustParser {
 
@@ -70,6 +67,8 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom bool = rule().bool(BoolLiteral.class);
 
+    private BnfCom collection = rule(AstCollection.class).sep("[").ast(string).maybe(rule().repeat(rule().sep(",").ast(string))).sep("]");
+
     ///////////////////////////////////////////////////////////////////////////
     // primary expr = ( expr ) | number | id | string | boolean
     ///////////////////////////////////////////////////////////////////////////
@@ -80,7 +79,8 @@ public class JustParserImpl implements JustParser {
                     number,
                     id,
                     string,
-                    bool
+                    bool,
+                    collection
             );
 
     ///////////////////////////////////////////////////////////////////////////

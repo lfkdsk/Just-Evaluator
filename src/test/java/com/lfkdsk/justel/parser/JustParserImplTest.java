@@ -23,7 +23,7 @@ import java.io.StringReader;
  * Just Parser Impl Test
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  * @see JustParserImpl
  */
 public class JustParserImplTest {
@@ -99,5 +99,15 @@ public class JustParserImplTest {
             }
         }
         return returnString;
+    }
+
+    @Test
+    void testCollection() {
+        runExpr("[\"lfkdsk\"]", false, null);
+    }
+
+    @Test
+    void testComplexCollection() {
+        runExpr("[\"lfkdsk\",\"lfkdsk\",\"lfkdsk\",\"lfkdsk\",\"lfkdsk\"]", false, null);
     }
 }

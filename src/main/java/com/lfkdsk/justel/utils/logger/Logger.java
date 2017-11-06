@@ -10,6 +10,10 @@ public final class Logger {
 
     }
 
+    static {
+        init();
+    }
+
     /**
      * It is used to get the settings object in order to change settings
      *

@@ -23,7 +23,7 @@ import static com.lfkdsk.justel.token.ReservedToken.reservedToken;
  * Just catch token this Engine supported.
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/23.
+ * Created by liufengkai on 2017/7/23.
  */
 public class JustLexerImpl implements Lexer {
 
@@ -117,7 +117,7 @@ public class JustLexerImpl implements Lexer {
      * @return 返回状态
      * @throws ParseException
      */
-    private boolean fillQueue(int index) throws ParseException {
+    private boolean fillQueue(int index) {
         while (index >= queue.size()) {
             if (hasMore) {
                 readLine();
@@ -132,10 +132,8 @@ public class JustLexerImpl implements Lexer {
 
     /**
      * read one line
-     *
-     * @throws ParseException
-     */
-    private void readLine() throws ParseException {
+     **/
+    private void readLine() {
         String line;
 
         try {
@@ -356,6 +354,10 @@ public class JustLexerImpl implements Lexer {
                     checkedType = Token.LONG;
                 }
 
+//                if (peekChar == 'e' | peekChar == 'E') {
+//
+//                }
+
                 if (peekChar == 'l' || peekChar == 'L') {
                     checkedType = Token.LONG;
                     readChar();
@@ -418,8 +420,12 @@ public class JustLexerImpl implements Lexer {
             StringBuilder builder = new StringBuilder();
             char lastChar = ' ';
             for (readChar(); ; readChar()) {
-                if (peekChar == '\"' && returnFlag
-                        && lastChar != '\\') {
+
+                if (endOfLine) {
+                    break;
+                }
+
+                if (peekChar == '\"' && returnFlag && lastChar != '\\') {
                     break;
                 } else if (peekChar == '\n') {
                     lineNumber += 1;
