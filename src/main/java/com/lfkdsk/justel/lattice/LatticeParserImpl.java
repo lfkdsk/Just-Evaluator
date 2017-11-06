@@ -30,30 +30,30 @@ public class LatticeParserImpl implements JustParser {
     // Support Operators
     ///////////////////////////////////////////////////////////////////////////
 
-    final BnfCom.Operators operators = new BnfCom.Operators();
+    private final BnfCom.Operators operators = new BnfCom.Operators();
 
-    final BnfCom expr0 = rule();
+    private final BnfCom expr0 = rule();
 
 
     ///////////////////////////////////////////////////////////////////////////
     // base language type
     ///////////////////////////////////////////////////////////////////////////
 
-    final BnfCom number = rule().number(NumberLiteral.class);
+    private final BnfCom number = rule().number(NumberLiteral.class);
 
-    final BnfCom id = rule().identifier(IDLiteral.class, reservedToken);
+    private final BnfCom id = rule().identifier(IDLiteral.class, reservedToken);
 
-    final BnfCom string = rule().string(StringLiteral.class);
+    private final BnfCom string = rule().string(StringLiteral.class);
 
-    final BnfCom bool = rule().bool(BoolLiteral.class);
+    private final BnfCom bool = rule().bool(BoolLiteral.class);
 
-    final BnfCom collection = rule(AstCollection.class).sep("[").ast(string).maybe(rule().repeat(rule().sep(",").ast(string))).sep("]");
+    private final BnfCom collection = rule(AstCollection.class).sep("[").ast(string).maybe(rule().repeat(rule().sep(",").ast(string))).sep("]");
 
     ///////////////////////////////////////////////////////////////////////////
     // Value expr = number | id | string | boolean
     ///////////////////////////////////////////////////////////////////////////
 
-    final BnfCom value = rule(AstPrimaryExpr.class)
+    private final BnfCom value = rule(AstPrimaryExpr.class)
             .or(
                     rule().sep(LP_TOKEN).ast(expr0).sep(RP_TOKEN),
                     number,
@@ -63,7 +63,7 @@ public class LatticeParserImpl implements JustParser {
                     collection
             );
 
-    final BnfCom factor = rule()
+    private final BnfCom factor = rule()
             .or(
                     rule(NegativePostfix.class).sep(ReservedToken.MINUS).ast(value),
                     rule(NotPostfix.class).repeat(rule().sep(LOGICAL_F_TOKEN)).ast(value),
@@ -74,7 +74,7 @@ public class LatticeParserImpl implements JustParser {
     // expr = factor { OP factor }
     ///////////////////////////////////////////////////////////////////////////
 
-    final private BnfCom expr = expr0.expression(AstBinaryExpr.class, factor, operators);
+    private final BnfCom expr = expr0.expression(AstBinaryExpr.class, factor, operators);
 
     ///////////////////////////////////////////////////////////////////////////
     // postfix = | fun() | isXXX
@@ -86,14 +86,22 @@ public class LatticeParserImpl implements JustParser {
     );
 
     ///////////////////////////////////////////////////////////////////////////
+    // "xxx.xxx" meta-circle interpreter
+    ///////////////////////////////////////////////////////////////////////////
+
+    private BnfCom dot = rule(DotExpr.class).sep(DOT_TOKEN).identifier(reservedToken);
+
+    ///////////////////////////////////////////////////////////////////////////
     // program = expr EOL (end of line)
     ///////////////////////////////////////////////////////////////////////////
 
-    final BnfCom program = rule(AstProgram.class).ast(expr).sep(EOL);
+    private final BnfCom program = rule(AstProgram.class).ast(expr).sep(EOL);
 
     public LatticeParserImpl() {
         reservedToken.add(EOL);
-        string.repeat(postfix);
+
+        string.option(postfix);
+        id.repeat(dot);
 
         insertOperators(LOGICAL_OR_TOKEN, 12, LEFT, OrOp.class);
         insertOperators(LOGICAL_AND_TOKEN, 11, LEFT, AndOp.class);

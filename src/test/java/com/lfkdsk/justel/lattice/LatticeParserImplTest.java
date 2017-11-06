@@ -23,11 +23,11 @@ class LatticeParserImplTest {
     void testFactor() {
         lexer.reset("value");
         lexer.hasMore();
-        latticeParser.value.parse(lexer).printAst();
+        latticeParser.parser(lexer).printAst();
 
         lexer.reset("((value))");
         lexer.hasMore();
-        latticeParser.value.parse(lexer).printAst();
+        latticeParser.parser(lexer).printAst();
     }
 
     @Test
@@ -47,6 +47,13 @@ class LatticeParserImplTest {
     @Test
     void testNegative() {
         lexer.reset("!\"seller\" isBSeller()");
+        lexer.hasMore();
+        latticeParser.parser(lexer).printAst();
+    }
+
+    @Test
+    void testDot() {
+        lexer.reset("category.rootCategoryId");
         lexer.hasMore();
         latticeParser.parser(lexer).printAst();
     }

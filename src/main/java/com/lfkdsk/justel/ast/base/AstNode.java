@@ -17,6 +17,7 @@ import com.lfkdsk.justel.exception.CompilerException;
 import com.lfkdsk.justel.exception.EvalException;
 import com.lfkdsk.justel.utils.MurmurHash3;
 import com.lfkdsk.justel.utils.logger.Logger;
+import com.lfkdsk.justel.utils.visitor.VisitorBinder;
 
 import java.util.Iterator;
 
@@ -27,7 +28,7 @@ import java.util.Iterator;
  * Created by liufengkai on 17/7/11.
  */
 public abstract class AstNode implements Iterable<AstNode>
-        , Evaluable, Compilable, Expressible {
+        , Evaluable, Compilable, Expressible, VisitorBinder<AstNode> {
 
     /**
      * Spec Tag for Ast Node
