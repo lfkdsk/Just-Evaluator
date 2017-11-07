@@ -45,6 +45,8 @@ public final class Var {
     public static String getTypeDeclare(Class<?> objType) {
         String typeDeclare = objType.getCanonicalName();
 
+        if (typeDeclare == null) typeDeclare = objType.getName();
+
         if (ReflectUtils.isPrimitiveOrWrapNumber(objType)) {
             objType = ReflectUtils.toPrimitiveClass(objType);
             typeDeclare = objType.getSimpleName();
@@ -58,9 +60,10 @@ public final class Var {
 
         String typeDeclare = getTypeDeclare(getType());
 
-        builder.append(typeDeclare).append(" ").append(name).append("=")
-                .append("((").append(type.getCanonicalName()).append(")")
-                .append("context.get(\"").append(name).append("\")").append(");");
+        builder.append(typeDeclare).append(" ")
+               .append(name).append("=")
+               .append("((").append(type.getCanonicalName()).append(")")
+               .append("context.get(\"").append(name).append("\")").append(");");
 
         return builder.toString();
     }

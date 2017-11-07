@@ -9,13 +9,14 @@
 package com.lfkdsk.justel.compile.generate;
 
 import com.lfkdsk.justel.utils.logger.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
  * Created by liufengkai on 2017/8/4.
  */
-class VarTest {
+public class VarTest {
 
 
     @Test
@@ -33,6 +34,33 @@ class VarTest {
     void testBoolVar() {
         Var var = new Var("lfkdsk", true);
         Logger.init("var bool test");
+        Logger.i(var.generateVarAssignCode());
+    }
+
+    public
+    Comparable<Integer> integerComparable = new Comparable<Integer>() {
+        @Override
+        public int compareTo(@NotNull Integer o) {
+            return 0;
+        }
+    };
+
+    public Comparable<Integer> lambaInteger = o -> 0;
+
+    @Test
+    void testAnonymousClass() {
+        Var var = new Var("lfkdsk", integerComparable);
+        Logger.init("var anonymous test");
+        Logger.i(var.generateVarAssignCode());
+//        JustEL.runCompile("1000", new JustMapContext() {{
+//            put("lfkdsk", integerComparable);
+//        }});
+    }
+
+    @Test
+    void testLambda() {
+        Var var = new Var("lfkdsk", lambaInteger);
+        Logger.init("var anonymous test");
         Logger.i(var.generateVarAssignCode());
     }
 }

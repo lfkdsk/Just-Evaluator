@@ -24,6 +24,20 @@ public class DotExprTest {
     public class O {
         String ffff = "sss";
 
+        public class F {
+            String llll = "fff";
+
+            public String getLlll() {
+                return llll;
+            }
+        }
+
+        F f = new F();
+
+        public F getF() {
+            return f;
+        }
+
         public String lfk() {
             return "fffffff";
         }
@@ -60,5 +74,13 @@ public class DotExprTest {
         context.put("lfkdsk", new O());
         Logger.init();
         Logger.i(compiler("lfkdsk.lfkdsk(\"1111111\")", context));
+    }
+
+    @Test
+    void testDotEvalDouble() {
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", new O());
+        Logger.init();
+        Logger.i(compiler("lfkdsk.f.llll", context));
     }
 }

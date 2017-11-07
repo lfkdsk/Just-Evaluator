@@ -96,7 +96,8 @@ public abstract class OperatorExpr extends AstList implements Function {
     }
 
     protected boolean isShouldSplit() {
-        return astLevel > 4;
+        // READ > 2 and make expr be cache : (= i 2)
+        return astLevel > 2;
     }
 
     private String splitSubAstEval(JustContext env) {
@@ -111,10 +112,15 @@ public abstract class OperatorExpr extends AstList implements Function {
 
         String leftVar, rightVar;
 
+        // READ: cache shorter expr => you can attach this cache quickly!
         if (leftStr.length() < rightStr.length()) {
             leftVar = attachCache(left, env);
+            rightVar = right.compile(env);
+        } else if (leftStr.length() > rightStr.length()) {
             rightVar = attachCache(right, env);
+            leftVar = left.compile(env);
         } else {
+            // READ: if var.length equal ==> both attach cache ==> either lose one cache
             rightVar = attachCache(right, env);
             leftVar = attachCache(left, env);
         }
@@ -145,11 +151,11 @@ public abstract class OperatorExpr extends AstList implements Function {
         StringBuilder builder = new StringBuilder();
 
         builder.append(type)
-                .append(" ")
-                .append(var)
-                .append("=")
-                .append(node.compile(env))
-                .append(";");
+               .append(" ")
+               .append(var)
+               .append("=")
+               .append(node.compile(env))
+               .append(";");
 
         return builder.toString();
     }

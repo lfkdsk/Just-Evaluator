@@ -14,8 +14,10 @@ import com.lfkdsk.justel.ast.function.OperatorExpr;
 import com.lfkdsk.justel.ast.tree.AstPostfixExpr;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.utils.ReflectUtils;
+import com.lfkdsk.justel.utils.tools.TextUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -26,7 +28,7 @@ import java.util.List;
  * 2. primary.method( expr, expr | null )
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  * @see AstPostfixExpr
  * @see OperatorExpr
  */
@@ -90,20 +92,32 @@ public class DotExpr extends OperatorExpr implements AstPostfixExpr {
 
         // method
         String name = name();
-        if (name.length() > 2) {
+        if (!TextUtils.isEmpty(name)) {
             String firstUpper = String.valueOf(name.charAt(0)).toUpperCase() + name.substring(1);
             String getMethodStr = "get" + firstUpper;
             String isMethodStr = "is" + firstUpper;
             Method getMethod = ReflectUtils.getMethod(cls, getMethodStr, new Class[]{});
             Method isMethod = ReflectUtils.getMethod(cls, isMethodStr, new Class[]{});
-            if (getMethod != null) {
-                builder.append(".").append(getMethodStr);
-                return builder.append("()");
-            }
+            try {
 
-            if (isMethod != null) {
-                builder.append(".").append(isMethodStr);
-                return builder.append("()");
+                if (getMethod != null) {
+                    builder.append(".")
+                           .append(getMethodStr)
+                           .append("()");
+
+                    // READ: invoke this method to get the value ==> either cannot solve multi-level call.
+                    return getMethod.invoke(value);
+                }
+
+                if (isMethod != null) {
+                    builder.append(".")
+                           .append(isMethodStr)
+                           .append("()");
+                    return isMethod.invoke(value);
+                }
+
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
             }
         }
 
