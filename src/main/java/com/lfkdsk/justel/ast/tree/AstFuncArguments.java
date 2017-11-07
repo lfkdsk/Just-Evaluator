@@ -12,18 +12,21 @@ import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.operators.DotExpr;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.exception.EvalException;
 import com.lfkdsk.justel.token.ReservedToken;
 import com.lfkdsk.justel.utils.ReflectUtils;
+import com.lfkdsk.justel.utils.tools.TextUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Func Arguments
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  */
 public class AstFuncArguments extends AstList implements AstPostfixExpr {
 
@@ -35,8 +38,39 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
     public Object eval(JustContext env, Object value) {
 
         DotExpr.InnerReflect reflect = (DotExpr.InnerReflect) value;
+
+        Object innerReflect = reflect.originObj;
+        LinkedList<DotExpr.InnerReflect> queue = new LinkedList<>();
+        queue.push(reflect);
+
+        while (innerReflect != null && innerReflect instanceof DotExpr.InnerReflect) {
+            queue.push((DotExpr.InnerReflect) innerReflect);
+            innerReflect = ((DotExpr.InnerReflect) innerReflect).originObj;
+        }
+
+        Object result = null;
+
+        if (!queue.isEmpty()) {
+            result = queue.getFirst().originObj;
+        }
+
+        while (queue.size() > 1) {
+            DotExpr.InnerReflect level = queue.pollFirst();
+            level.originObj = result;
+            result = findMethodAndInvokeInOneLevel(level, env, 0);
+        }
+
+        DotExpr.InnerReflect level = queue.pollFirst();
+        level.originObj = result;
+        result = findMethodAndInvokeInOneLevel(level, env, this.childCount());
+
+        return result;
+    }
+
+    private Object findMethodAndInvokeInOneLevel(Object value, JustContext env, int count) {
+        DotExpr.InnerReflect reflect = (DotExpr.InnerReflect) value;
         // count of children
-        int count = this.childCount();
+//        int count = this.childCount();
         // cls obj
         Class<?> cls = ((DotExpr.InnerReflect) value).originObj.getClass();
 
@@ -52,13 +86,50 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
             args[i] = newArgs[i].getClass();
         }
 
-        Method method = ReflectUtils.getMethod(cls, reflect.name, args);
+        // READ: find method in this class
+        Method method = findMethod(cls, args, reflect);
+        if (method != null) {
+            return invokeMethod(method, reflect.originObj, newArgs);
+        }
+
+        // READ: find method in interfaces
+        Class<?>[] interfaces = cls.getInterfaces();
+        for (Class<?> anInterface : interfaces) {
+            method = findMethod(anInterface, args, reflect);
+            if (method != null) {
+                break;
+            }
+        }
 
         if (method != null) {
             return invokeMethod(method, reflect.originObj, newArgs);
         }
 
-        if (reflect.name.length() > 2) {
+        // READ: find method in super class
+        Class<?> superClass = cls.getSuperclass();
+        while (superClass != Object.class) {
+            method = findMethod(superClass, args, reflect);
+            superClass = superClass.getSuperclass();
+            if (method != null) {
+                break;
+            }
+        }
+
+        if (method != null) {
+            return invokeMethod(method, reflect.originObj, newArgs);
+        }
+
+        throw new EvalException("cannot find class : " + cls.getCanonicalName() + " 's method : " + reflect.name, this);
+    }
+
+    private Method findMethod(Class<?> cls, Class<?>[] args, DotExpr.InnerReflect reflect) {
+        Method method = ReflectUtils.getMethod(cls, reflect.name, args);
+
+        if (method != null) {
+            return method;
+        }
+
+        if (!TextUtils.isEmpty(reflect.name)) {
             String firstUpper = String.valueOf(reflect.name.charAt(0)).toUpperCase() + reflect.name.substring(1);
             Method getMethod = ReflectUtils.getMethod(cls, "get" + firstUpper, args);
             Method isMethod = ReflectUtils.getMethod(cls, "is" + firstUpper, args);
@@ -66,18 +137,18 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
             if (isMethod != null) method = isMethod;
 
             if (method != null) {
-                invokeMethod(method, reflect.originObj, newArgs);
+                return method;
             }
         }
 
-        return this.eval(env);
+        return null;
     }
 
     @Override
     public Object compile(JustContext env, Object value, StringBuilder builder) {
         return builder.append("(")
-                .append(compile(env))
-                .append(")");
+                      .append(compile(env))
+                      .append(")");
     }
 
     private Object invokeMethod(Method method, Object obj, Object[] args) {

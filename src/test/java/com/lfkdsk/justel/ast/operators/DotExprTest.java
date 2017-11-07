@@ -22,7 +22,7 @@ import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
 public class DotExprTest {
 
     public class O {
-        String ffff = "sss";
+        private String ffff = "sss";
 
         public class F {
             String llll = "fff";
@@ -30,9 +30,13 @@ public class DotExprTest {
             public String getLlll() {
                 return llll;
             }
+
+            public String hello(String ff) {
+                return " hello " + ff;
+            }
         }
 
-        F f = new F();
+        private F f = new F();
 
         public F getF() {
             return f;
@@ -82,5 +86,13 @@ public class DotExprTest {
         context.put("lfkdsk", new O());
         Logger.init();
         Logger.i(compiler("lfkdsk.f.llll", context));
+    }
+
+    @Test
+    void testDotEvalThird() {
+        JustContext context = new JustMapContext();
+        context.put("lfkdsk", new O());
+        Logger.init();
+        Logger.i(runExpr("lfkdsk.f.hello(\"lfkdsk\")", true, context));
     }
 }

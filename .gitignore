@@ -3,7 +3,6 @@
 
 *.iml
 .idea/
-
 # Log file
 *.log
 
@@ -26,3 +25,4 @@ target/
 .classpath
 .project
 sh/history.just
+src/test/java/com/lfkdsk/justel/utils/test/
