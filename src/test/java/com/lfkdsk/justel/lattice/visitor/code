@@ -1,3 +1,6 @@
+"item" contains "lfkdsk"
+"item" hasKey "lfkdsk"
+
 "item" hasTag() "108098"
 "item" hasTag() "104066"
 "item" hasTag() "110594" and "category" hasFeatureValue() "ecard_charge,2"

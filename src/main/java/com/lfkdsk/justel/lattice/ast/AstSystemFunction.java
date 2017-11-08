@@ -23,8 +23,13 @@ public class AstSystemFunction extends AstList {
         super(children, AstNode.FUNCTION_NAME);
     }
 
-    @Override
-    public String toString() {
-        return child(0).toString();
-    }
+//    @Override
+//    public String toString() {
+//        StringBuilder builder = new StringBuilder();
+//        builder.append(".").append(child(0).toString()).append("(");
+//        for (int i = 1; i < children.size(); i++) {
+//            builder.append(child(i).toString());
+//        }
+//        return builder.append(")").toString();
+//    }
 }

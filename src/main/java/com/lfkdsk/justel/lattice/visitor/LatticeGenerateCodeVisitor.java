@@ -209,7 +209,12 @@ public class LatticeGenerateCodeVisitor implements AstVisitor<String> {
     }
 
     public String visitAstSystemFunction(AstSystemFunction visitor) {
-        return visitor.toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append(".").append(visitor.child(0).toString()).append("(");
+        for (int i = 1; i < visitor.getChildren().size(); i++) {
+            builder.append(visitor.child(i).accept(this));
+        }
+        return builder.append(")").toString();
     }
 
     @Override

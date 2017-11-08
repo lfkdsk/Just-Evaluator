@@ -85,9 +85,9 @@ public class LatticeParserImpl implements JustParser {
     ///////////////////////////////////////////////////////////////////////////
 
     private BnfCom postfix = rule().or(
-            rule(AstFunctionName.class).identifier(reservedToken).sep("(").sep(")").option(rule().repeat(value)),
-            rule(AstSystemFunction.class).token("isEmpty", "isNotBlank", "isNotEmpty", "isBlank", "isNull", "contains", "hasValue", "hasKV")
-                                         .option(rule().repeat(value))
+            rule(AstSystemFunction.class).token("isEmpty", "isNotBlank", "isNotEmpty","hasKey", "isBlank", "isNull", "contains", "hasValue", "hasKV")
+                                         .option(rule().repeat(value)),
+            rule(AstFunctionName.class).identifier(reservedToken).sep("(").sep(")").option(rule().repeat(value))
     );
 
     ///////////////////////////////////////////////////////////////////////////
