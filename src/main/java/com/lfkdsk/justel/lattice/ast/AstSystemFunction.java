@@ -22,4 +22,9 @@ public class AstSystemFunction extends AstList {
     public AstSystemFunction(List<AstNode> children) {
         super(children, AstNode.FUNCTION_NAME);
     }
+
+    @Override
+    public String toString() {
+        return child(0).toString();
+    }
 }

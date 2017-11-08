@@ -1,0 +1,193 @@
+"item" hasTag() "108098"
+"item" hasTag() "104066"
+"item" hasTag() "110594" and "category" hasFeatureValue() "ecard_charge,2"
+"item" hasTag() "54402" and !"seller" isBSeller()
+"seller" isBSeller() and "item" hasTag() "54402"
+"item" hasTag() "70338" and !"seller" isBSeller()
+"item" hasTag() "70338" and "seller" isBSeller()
+"seller" isBSeller() and "item" hasTag() "116034"
+"item" hasTag() "22594"
+"buyer" hasTagOn() "36,14"
+!"seller" isBSeller() and ("category.rootCategoryId" == "50026316" or "category.rootCategoryId" == "50008141" or "category.rootCategoryId" == "50016422" or "category.rootCategoryId" == "50002766" or "category.rootCategoryId" == "50050359" or "category.rootCategoryId" == "50020275" or "category.rootCategoryId" == "124458005")
+!"seller" isBSeller() and ("category.rootCategoryId" == "29" or "category.rootCategoryId" == "50017300" or "category.rootCategoryId" == "50007216" or "category.rootCategoryId" == "124484008" or "category.rootCategoryId" == "124354002" or "category.rootCategoryId" == "50510002" or "category.rootCategoryId" == "50011699" or "category.rootCategoryId" == "50012029" or "category.rootCategoryId" == "50013886" or "category.rootCategoryId" == "50010728" or "category.rootCategoryId" == "122684003")
+!"seller" isBSeller() and ("category.rootCategoryId" == "50016891" or "category.rootCategoryId" == "50011665" or "category.rootCategoryId" == "40" or "category.rootCategoryId" == "99" or "category.rootCategoryId" == "50008907" or "category.rootCategoryId" == "50004958")
+!"seller" isBSeller() and ("category.rootCategoryId" == "50454031" or "category.rootCategoryId" == "50025707" or "category.rootCategoryId" == "50011949")
+!"seller" isBSeller() and ("category.rootCategoryId" == "1801" or "category.rootCategoryId" == "50010788" or "category.rootCategoryId" == "50023282" or "category.rootCategoryId" == "50025705")
+!"seller" isBSeller() and ("category.rootCategoryId" == "23" or "category.rootCategoryId" == "33" or "category.rootCategoryId" == "34" or "category.rootCategoryId" == "50026800")
+!"seller" isBSeller() and ("category.rootCategoryId" == "122952001" or "category.rootCategoryId" == "50016349" or "category.rootCategoryId" == "50016348" or "category.rootCategoryId" == "122950001" or "category.rootCategoryId" == "21" or "category.rootCategoryId" == "122928002")
+!"seller" isBSeller() and ("category.rootCategoryId" == "11" or "category.rootCategoryId" == "14" or "category.rootCategoryId" == "20" or "category.rootCategoryId" == "1201" or "category.rootCategoryId" == "1101" or "category.rootCategoryId" == "50018222" or "category.rootCategoryId" == "50008090" or "category.rootCategoryId" == "50012164" or "category.rootCategoryId" == "50023904" or "category.rootCategoryId" == "50019780" or "category.rootCategoryId" == "50012082" or "category.rootCategoryId" == "50002768" or "category.rootCategoryId" == "50012100" or "category.rootCategoryId" == "50011972" or "category.rootCategoryId" == "124242008" or "category.rootCategoryId" == "124044001")
+!"seller" isBSeller() and ("category.rootCategoryId" == "50025618" or "category.rootCategoryId" == "50024186" or "category.rootCategoryId" == "50025111" or "category.rootCategoryId" == "50488001" or "category.rootCategoryId" == "50050471" or "category.rootCategoryId" == "50026523" or "category.rootCategoryId" == "50025110" or "category.rootCategoryId" == "50019095" or "category.rootCategoryId" == "50014442" or "category.rootCategoryId" == "50026555" or "category.rootCategoryId" == "50008075" or "category.rootCategoryId" == "50158001")
+!"seller" isBSeller() and ("category.rootCategoryId" == "25" or "category.rootCategoryId" == "28" or "category.rootCategoryId" == "35" or "category.rootCategoryId" == "50022517" or "category.rootCategoryId" == "50013864" or "category.rootCategoryId" == "50468001" or "category.rootCategoryId" == "50011397" or "category.rootCategoryId" == "50005700" or "category.rootCategoryId" == "50008165" or "category.rootCategoryId" == "122650005" or "category.rootCategoryId" == "50014812")
+!"seller" isBSeller() and ("category.rootCategoryId" == "16" or "category.rootCategoryId" == "30" or "category.rootCategoryId" == "50010404" or "category.rootCategoryId" == "50011740" or "category.rootCategoryId" == "50006842" or "category.rootCategoryId" == "1625" or "category.rootCategoryId" == "50006843")
+!"seller" isBSeller() and "category.rootCategoryId" == "50014927"
+!"seller" isBSeller() and "category.rootCategoryId" == "1512"
+!"seller" isBSeller() and "category.rootCategoryId" == "50023575"
+!"seller" isBSeller() and ("category.rootCategoryId" == "27" or "category.rootCategoryId" == "50020579" or "category.rootCategoryId" == "50020332" or "category.rootCategoryId" == "50023804" or "category.rootCategoryId" == "50008163" or "category.rootCategoryId" == "50020808" or "category.rootCategoryId" == "50020857" or "category.rootCategoryId" == "50008164" or "category.rootCategoryId" == "124568010" or "category.rootCategoryId" == "122852001" or "category.rootCategoryId" == "124050001")
+!"seller" isBSeller() and ("category.rootCategoryId" == "50022703" or "category.rootCategoryId" == "50074001" or "category.rootCategoryId" == "26" or "category.rootCategoryId" == "50024971" or "category.rootCategoryId" == "124470006")
+!"seller" isBSeller() and ("category.rootCategoryId" == "124470001" or "category.rootCategoryId" == "124468001" or "category.rootCategoryId" == "124466001" or "category.rootCategoryId" == "50025004" or "category.rootCategoryId" == "50020611" or "category.rootCategoryId" == "50020485" or "category.rootCategoryId" == "50007218" or "category.rootCategoryId" == "50018004" or "category.rootCategoryId" == "50018264")
+!"seller" isBSeller() and ("category.rootCategoryId" == "2813" or "category.rootCategoryId" == "122718004")
+!"seller" isBSeller() and "item" hasTag() "44994" and "category" hasFeatureValue() "auto_sold_by_preAuth,1"
+!"seller" isBSeller() and "category.rootCategoryId" == "52034"
+"item" hasTag() "28162"
+!"seller" isBSeller()
+!"seller" isBSeller() and "item" hasTag() "23106"
+"category" hasFeatureValue() "House_Yu_Ebao_Block_Transaction,1" and !"seller" isBSeller()
+"category" hasFeatureValue() "charity_charge,1" and "category" hasFeatureValue() "charity_donation_charge,1" and !"seller" isBSeller()
+"item" hasTag() "196" or "item" hasTag() "28226" or "item" hasTag() "36738"
+"item" hasTag() "24706"
+"item" hasOption() "268435456"
+"item" hasTag() "123"
+"item" hasFeature() "mdItem"
+"item" hasTag() "32194"
+"item" matchAuctionType() "a"
+"category" hasFeatureValue() "baoxian_spec,1"
+"item" matchAuctionType() "a"
+
+"buyer" hasTagOn() "1,2" and "seller" isBSeller()
+"buyer" hasTagOn() "1,2"
+"buyer" hasTagOn() "1,2"
+"buyer" hasTagOn() "1,2"
+"buyer" hasTagOn() "1,2"
+"buyer" hasTagOn() "1,2" and "seller" isBSeller() or "seller" hasTagOn() "2,3" or "item" hasPropertyWithValue() "44" and "item" hasOption() "555" or "category.rootCategoryId" > "111" or "category" hasFeatureValue() "dd,fff"
+"category" hasFeatureValue() "100,200"
+"item" hasTag() "5003"
+"item" hasTag() "5003"
+"item" hasFeature() "123"
+"seller" hasTagOn() "19,10"
+"seller" hasTagOn() "5,11"
+"category" hasFeatureValue() "licai_spec_category,1"
+"item" hasTag() "60098"
+"item" hasTag() "82626" or "item" hasTag() "52546"
+
+"item" hasTag() "4531" or "seller" isBSeller() and "category.categoryId" == "1234"
+"seller" isBSeller() and "category.categoryId" == "1234"
+!"seller" isBSeller()
+
+"seller.asas" isNotBlank and "seller" hasTagOn() "11,12"
+"item" hasTag() "4235" and "item" hasPropertyWithValue() "4124602" and "item" hasFeature() "antiOverSold"
+"item" hasTag() "5579"
+"item" matchAuctionType() "123"
+"item" hasOption() "123"
+"category.rootCategoryId" == "50050359"
+"category" hasFeatureValue() "h_food,1"
+"category.categoryId" != "111"
+
+"item" hasTag() "53249" and "category.categoryId" == "162104111"
+"seller.asas" isNull and "seller" isBSeller()
+"seller" hasTagOn() "12,12" and "item" hasTag() "47568"
+"category.categoryId" == "1000"
+"buyer" hasTagOn() "1,2"
+"category.categoryId" == "100" or "category.categoryId" != "99"
+"seller" hasTagOn() "123,134"
+"seller" isBSeller()
+"seller" isBSeller()
+"item" hasTag() "45314"
+"category.categoryId" == "2000"
+"seller.hasTagOn" == "usertTag" and "item.hasTag" == "45132"
+
+
+"seller.hasTagOn" == "123" or "item.hasTag" == "456"
+
+"category.categoryId" == "50003313"
+"category.categoryId" != "1"
+"order" hasAttributeValue() "uniqlo,1"
+
+"seller" isBSeller()
+"seller" isBSeller()
+"seller" isBSeller()
+"seller" isBSeller()
+"seller" isBSeller()
+"seller" isBSeller()
+"category.categoryId" != "12"
+"category.categoryId" != "123"
+"category.categoryId" != "12"
+"category.categoryId" != "123"
+
+
+"seller" isBSeller()
+"item.hasTag" == "1991"
+"item" hasTag() "1234"
+"item" hasTag() "3787" and "item" hasTag() "5835"
+"category" hasFeatureValue() "1,2"
+
+"category" hasFeatureValue() "12,23"
+
+
+
+
+
+
+
+
+
+
+"item" hasTag() "4550" and "item" hasFeature() "source:sell"
+"item" hasTag() "4550" and "item" hasFeature() "source:sell"
+"item" hasTag() "4550" and "item" hasFeature() "source"
+"item" hasTag() "6081" and "item" hasFeature() "subStockAtBuy"
+"item" hasTag() "1995" and "item" hasTag() "2059" and "item" hasTag() "5835" and "item" hasFeature() "tags"
+"item" hasTag() "1995" and "item" hasTag() "2059" and "item" hasTag() "5835" and "item" hasFeature() "tags"
+"item" hasTag() "1995" and "item" hasTag() "2059" and "item" hasTag() "5835" and "item" hasFeature() "tags"
+"item" hasTag() "1995" and "item" hasTag() "2059" and "item" hasTag() "5835" and "item" hasFeature() "tags"
+"item" hasTag() "1995" and "item" hasTag() "2059" and "item" hasTag() "5835" and "item" hasFeature() "tags"
+"item" hasTag() "1995" and "item" hasTag() "2059" and "item" hasTag() "5835" and "item" hasFeature() "tags"
+"item" hasTag() "1995" and "item" hasTag() "2059" and "item" hasTag() "5835" and "item" hasFeature() "tags"
+"item" hasTag() "1995" and "item" hasTag() "2059" and "item" hasTag() "5835" and "item" hasFeature() "tags"
+"item" hasTag() "6081"
+"item" hasTag() "6081"
+
+
+
+
+
+
+
+"item" hasOption() "999999999"
+
+
+
+
+
+
+
+
+
+
+"seller" isBSeller() and "item" hasTag() "1234"
+"category.categoryId" == "100" and "buyer" hasTagOn() "2,2"
+"category" hasFeatureValue() "1,1" and "seller" isBSeller()
+
+
+
+
+
+
+
+"item" hasTag() "29378"
+
+
+
+
+"item" hasTag() "23424" and "seller" isBSeller()
+
+"category.categoryId" != "11111111" or "category.categoryId" > "1111111111"
+"item" hasTag() "83906"
+"item" hasTag() "88386"
+"item" hasTag() "158658"
+"item" hasTag() "119874"
+"item" hasTag() "115458"
+"item" hasTag() "104642"
+"item" hasTag() "96194"
+"item" hasTag() "164482"
+"seller" isBSeller()
+
+"item" hasTag() "41153"
+"item" hasTag() "139714"
+"category.categoryId" == "122012002"
+"item" hasTag() "98818"
+"category.rootCategoryId" == "26"
+"category.categoryId" == "50050566"
+"item" hasTag() "83906"
+"item" hasTag() "88386"
+"item" hasTag() "158658"
+"item" hasTag() "119874"

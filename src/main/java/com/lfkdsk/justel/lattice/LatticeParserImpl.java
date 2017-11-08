@@ -9,6 +9,8 @@ import com.lfkdsk.justel.ast.tree.AstCollection;
 import com.lfkdsk.justel.ast.tree.AstPrimaryExpr;
 import com.lfkdsk.justel.ast.tree.AstProgram;
 import com.lfkdsk.justel.exception.ParseException;
+import com.lfkdsk.justel.lattice.ast.AstFunctionName;
+import com.lfkdsk.justel.lattice.ast.AstSystemFunction;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.literal.BoolLiteral;
 import com.lfkdsk.justel.literal.IDLiteral;
@@ -18,6 +20,8 @@ import com.lfkdsk.justel.parser.BnfCom;
 import com.lfkdsk.justel.parser.JustParser;
 import com.lfkdsk.justel.token.ReservedToken;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
 
 import static com.lfkdsk.justel.lattice.ParserHelper.generateAst;
 import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
@@ -81,8 +85,9 @@ public class LatticeParserImpl implements JustParser {
     ///////////////////////////////////////////////////////////////////////////
 
     private BnfCom postfix = rule().or(
-            rule().identifier(reservedToken).sep("(").sep(")"),
-            rule().token("isEmpty")
+            rule(AstFunctionName.class).identifier(reservedToken).sep("(").sep(")").option(rule().repeat(value)),
+            rule(AstSystemFunction.class).token("isEmpty", "isNotBlank", "isNotEmpty", "isBlank", "isNull", "contains", "hasValue", "hasKV")
+                                         .option(rule().repeat(value))
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -98,6 +103,7 @@ public class LatticeParserImpl implements JustParser {
     private final BnfCom program = rule(AstProgram.class).ast(expr).sep(EOL);
 
     public LatticeParserImpl() {
+        reservedToken.addAll(Arrays.asList("isEmpty", "isNotBlank", "isNotEmpty", "isBlank", "isNull", "contains", "hasValue", "hasKV"));
         reservedToken.add(EOL);
 
         string.option(postfix);

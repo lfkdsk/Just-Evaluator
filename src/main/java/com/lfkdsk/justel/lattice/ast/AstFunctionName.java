@@ -5,10 +5,13 @@ import com.lfkdsk.justel.ast.base.AstNode;
 
 import java.util.List;
 
-public class AstFunctionName extends AstList{
+public class AstFunctionName extends AstList {
     public AstFunctionName(List<AstNode> children) {
         super(children, AstNode.FUNCTION_NAME);
     }
 
-
+    @Override
+    public String toString() {
+        return "." + child(0) + "()";
+    }
 }

@@ -53,7 +53,7 @@ class LatticeParserImplTest {
 
     @Test
     void testDot() {
-        lexer.reset("category.rootCategoryId");
+        lexer.reset("\"seller.asas\" isNotBlank");
         lexer.hasMore();
         latticeParser.parser(lexer).printAst();
     }
