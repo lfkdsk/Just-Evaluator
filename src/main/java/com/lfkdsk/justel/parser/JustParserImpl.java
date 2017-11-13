@@ -45,7 +45,7 @@ import static com.lfkdsk.justel.token.Token.EOL;
  * - program: expr EOL
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  */
 public class JustParserImpl implements JustParser {
 
@@ -113,6 +113,19 @@ public class JustParserImpl implements JustParser {
 
     private BnfCom postfix = rule().or(
             rule().sep(LP_TOKEN).maybe(args).sep(RP_TOKEN),
+//            rule(AstSystemMethodExpr.class).sep(".")
+//                                           .token("isEmpty",
+//                                                   "isNotEmpty",
+//                                                   "isBlank",
+//                                                   "isNotBlank",
+//                                                   "isNull",
+//                                                   "isNotNull",
+////                                                   "contains",
+//                                                   "in",
+////                                                   "hasKey",
+////                                                   "hasValue",
+//                                                   "hasKV")
+//                                           .sep(LP_TOKEN).maybe(args).sep(RP_TOKEN),
             rule(DotExpr.class).sep(DOT_TOKEN).identifier(reservedToken),
             rule(ArrayIndexExpr.class).sep(LM_TOKEN).ast(expr).sep(RM_TOKEN)
     );
