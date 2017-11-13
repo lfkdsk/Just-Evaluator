@@ -10,8 +10,25 @@ public class AstFunctionName extends AstList {
         super(children, AstNode.FUNCTION_NAME);
     }
 
+    public List<AstNode> args() {
+        return children.subList(1, children.size());
+    }
+
     @Override
     public String toString() {
-        return "." + child(0) + "()";
+        StringBuilder builder = new StringBuilder();
+        builder.append(".")
+               .append(child(0))
+               .append("(");
+
+        List<AstNode> args = args();
+        for (int i = 0; i < args.size(); i++) {
+            builder.append(args.get(i).toString());
+            if (i != args.size() - 1) {
+                builder.append(",");
+            }
+        }
+
+        return builder.append(")").toString();
     }
 }
