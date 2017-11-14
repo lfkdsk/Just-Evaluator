@@ -21,7 +21,7 @@ import static com.lfkdsk.justel.utils.TypeUtils.isNumber;
  * - Postfix
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  */
 public class NegativePostfix extends AstList {
 
@@ -52,6 +52,6 @@ public class NegativePostfix extends AstList {
 
     @Override
     public String compile(JustContext env) {
-        return toString();
+        return "-" + operand().compile(env);
     }
 }

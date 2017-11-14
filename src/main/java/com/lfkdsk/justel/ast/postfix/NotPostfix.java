@@ -50,6 +50,6 @@ public class NotPostfix extends AstList {
 
     @Override
     public String compile(JustContext env) {
-        return toString();
+        return "! " + operand().compile(env);
     }
 }

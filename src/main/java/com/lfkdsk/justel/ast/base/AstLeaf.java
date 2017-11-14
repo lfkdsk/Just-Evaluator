@@ -22,7 +22,7 @@ import java.util.Iterator;
  * AST Leaf Node
  *
  * @author liufengkai
- *         Created by liufengkai on 17/7/11.
+ * Created by liufengkai on 17/7/11.
  */
 public class AstLeaf extends AstNode {
 
@@ -84,6 +84,10 @@ public class AstLeaf extends AstNode {
 
     @Override
     public String compile(JustContext env) {
-        return toString();
+        if (evalString == null) {
+            evalString = token.getText();
+        }
+
+        return evalString;
     }
 }
