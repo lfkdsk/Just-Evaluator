@@ -84,10 +84,6 @@ public class AstLeaf extends AstNode {
 
     @Override
     public String compile(JustContext env) {
-        if (evalString == null) {
-            evalString = token.getText();
-        }
-
-        return evalString;
+        return toString();
     }
 }
