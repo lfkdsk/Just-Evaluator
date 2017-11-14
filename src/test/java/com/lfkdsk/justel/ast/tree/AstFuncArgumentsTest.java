@@ -30,6 +30,18 @@ public class AstFuncArgumentsTest {
 
         private int[] lllll = new int[]{111, 111, 11222};
 
+        public class Inner {
+            public String sayHello(String ss) {
+                return "Hello World" + ss;
+            }
+        }
+
+        private Inner inner = new Inner();
+
+        public Inner getInner() {
+            return inner;
+        }
+
         public int[] getLllll() {
             return lllll;
         }
@@ -45,6 +57,14 @@ public class AstFuncArgumentsTest {
         JustContext context = new JustMapContext();
         context.put("O", new O());
         runExpr("O.lfkdsk", true, context);
+    }
+
+    @Test
+    void testMultiFunctionCall() {
+        JustContext context = new JustMapContext();
+        context.put("O", new O());
+        runExpr("O.inner.sayHello(\"lfkdsk\")", true, context);
+        runExpr("O.getInner().sayHello(\"lfkdsk\")", true, context);
     }
 
     @Test
