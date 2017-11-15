@@ -2,6 +2,7 @@ package com.lfkdsk.justel.utils.collection;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 class ArrayMapTest {
@@ -63,5 +64,26 @@ class ArrayMapTest {
         }
 
         System.out.println(" " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    @Test
+    void testArray() {
+        ArrayList<Object> arrayMap = new ArrayList<>();
+        arrayMap.add(3600);
+        arrayMap.add(10);
+        arrayMap.add(100);
+
+        int sum = 0;
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1_0000_0000; i++) {
+            int a = (int) arrayMap.get(0);
+            int b = (int) arrayMap.get(1);
+            int c = (int) arrayMap.get(2);
+
+            sum += a + b + c;
+        }
+
+        System.out.println(" " + (System.currentTimeMillis() - start) + " ms");
+
     }
 }

@@ -8,6 +8,7 @@
 
 package com.lfkdsk.justel.compile.generate;
 
+import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.utils.logger.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
@@ -25,16 +26,16 @@ public class VarTest {
         Var var = new Var("lfkdsk", lfkdsk);
 
         Logger.init("var test");
-        Logger.i(var.generateVarAssignCode());
+        Logger.i(new JustMapContext().generateVarAssignCode(var));
 
-        Assertions.assertEquals(var.generateVarAssignCode(), "float lfkdsk=((java.lang.Float)context.get(\"lfkdsk\"));");
+        Assertions.assertEquals(new JustMapContext().generateVarAssignCode(var), "float lfkdsk=((java.lang.Float)context.get(\"lfkdsk\"));");
     }
 
     @Test
     void testBoolVar() {
         Var var = new Var("lfkdsk", true);
         Logger.init("var bool test");
-        Logger.i(var.generateVarAssignCode());
+        Logger.i(new JustMapContext().generateVarAssignCode(var));
     }
 
     public
@@ -51,7 +52,7 @@ public class VarTest {
     void testAnonymousClass() {
         Var var = new Var("lfkdsk", integerComparable);
         Logger.init("var anonymous test");
-        Logger.i(var.generateVarAssignCode());
+        Logger.i(new JustMapContext().generateVarAssignCode(var));
 //        JustEL.runCompile("1000", new JustMapContext() {{
 //            put("lfkdsk", integerComparable);
 //        }});
@@ -61,6 +62,6 @@ public class VarTest {
     void testLambda() {
         Var var = new Var("lfkdsk", lambaInteger);
         Logger.init("var anonymous test");
-        Logger.i(var.generateVarAssignCode());
+        Logger.i(new JustMapContext().generateVarAssignCode(var));
     }
 }

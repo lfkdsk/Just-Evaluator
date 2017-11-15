@@ -54,17 +54,4 @@ public final class Var {
 
         return typeDeclare;
     }
-
-    public String generateVarAssignCode() {
-        StringBuilder builder = new StringBuilder();
-
-        String typeDeclare = getTypeDeclare(getType());
-
-        builder.append(typeDeclare).append(" ")
-               .append(name).append("=")
-               .append("((").append(type.getCanonicalName()).append(")")
-               .append("context.get(\"").append(name).append("\")").append(");");
-
-        return builder.toString();
-    }
 }

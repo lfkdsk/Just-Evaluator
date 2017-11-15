@@ -13,11 +13,11 @@ import java.util.*;
  */
 public class JustMapContext implements JustContext {
 
-    private Map<String, Object> map = new HashMap<>(10);
+    private Map<String, Object> map = new HashMap<>();
 
     private List<String> commandList = new LinkedList<>();
 
-    private Map<String, ExtendFunctionExpr> extFunc = new HashMap<>(10);
+    private Map<String, ExtendFunctionExpr> extFunc = new HashMap<>();
 
     private Map<Integer, Object> astCache = new HashMap<>();
 

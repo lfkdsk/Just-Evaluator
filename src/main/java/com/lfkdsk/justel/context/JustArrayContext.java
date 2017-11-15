@@ -1,80 +1,105 @@
 package com.lfkdsk.justel.context;
 
 import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
+import com.lfkdsk.justel.compile.generate.Var;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class JustArrayContext implements JustContext {
 
-    private JustMapContext innerContext = new JustMapContext();
 
-    private List<String> names = new ArrayList<>(10);
+    private JustMapContext inner = new JustMapContext();
 
-    private List<Object> vars = new ArrayList<>(10);
+    private Map<String, Integer> indexMap = new HashMap<>();
+
+    private ArrayList<Object> objectList = new ArrayList<>();
 
     @Override
     public boolean contain(String name) {
-        return innerContext.contain(name);
+        return this.indexMap.containsKey(name);
     }
 
     @Override
     public Object get(String objName) {
-        int index = names.indexOf(objName);
-        return vars.get(index);
+        return objectList.get(indexMap.get(objName));
     }
 
     @Override
     public Object put(String key, Object val) {
-        innerContext.put(key, val);
-        names.add(key);
-        vars.add(val);
+        Integer index = indexMap.get(key);
+        if (index != null) {
+            objectList.set(index, val);
+        } else {
+            objectList.add(val);
+            indexMap.put(key, objectList.size() - 1);
+
+        }
 
         return val;
     }
 
     @Override
     public Object getCache(Integer astHash) {
-        return innerContext.getCache(astHash);
+        return inner.getCache(astHash);
     }
 
     @Override
     public Object putCache(Integer key, Object val) {
-        return innerContext.putCache(key, val);
+        return inner.putCache(key, val);
     }
 
     @Override
     public ExtendFunctionExpr putExtendFunc(String name, ExtendFunctionExpr expr) {
-        return innerContext.putExtendFunc(name, expr);
+        return inner.putExtendFunc(name, expr);
     }
 
     @Override
     public ExtendFunctionExpr getExtendFunc(String name) {
-        return innerContext.getExtendFunc(name);
+        return inner.getExtendFunc(name);
     }
 
     @Override
     public Object command(String command) {
-        return innerContext.command(command);
+        return inner.command(command);
     }
 
     @Override
     public Collection<String> varsKeySet() {
-        return innerContext.varsKeySet();
+        return indexMap.keySet();
     }
 
     @Override
     public List<String> commandList() {
-        return innerContext.commandList();
+        return inner.commandList();
     }
 
     @Override
     public boolean clearVars() {
-        innerContext.clearVars();
-        names.clear();
-        vars.clear();
-        
-        return false;
+        inner.clearVars();
+        return true;
+    }
+
+    @Override
+    public int indexOf(String key) {
+        return indexMap.get(key);
+    }
+
+    @Override
+    public Object getWith(int index) {
+        return objectList.get(index);
+    }
+
+    @Override
+    public String generateVarAssignCode(Var var) {
+        StringBuilder builder = new StringBuilder();
+
+        String typeDeclare = Var.getTypeDeclare(var.getType());
+
+        builder.append(typeDeclare).append(" ")
+               .append(var.name).append("=")
+               .append("((").append(var.getType().getCanonicalName()).append(")")
+               .append("context.getWith(").append(indexOf(var.name)).append(")").append(");");
+
+        return builder.toString();
     }
 }

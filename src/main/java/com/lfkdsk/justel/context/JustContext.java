@@ -1,6 +1,7 @@
 package com.lfkdsk.justel.context;
 
 import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
+import com.lfkdsk.justel.compile.generate.Var;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * Context => { key : name }
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/18.
+ * Created by liufengkai on 2017/7/18.
  */
 public interface JustContext {
 
@@ -41,4 +42,25 @@ public interface JustContext {
     List<String> commandList();
 
     boolean clearVars();
+
+    default int indexOf(String key) {
+        throw new UnsupportedOperationException("Unsupported method indexOf ");
+    }
+
+    default Object getWith(int index) {
+        throw new UnsupportedOperationException("Unsupported method getWith ");
+    }
+
+    default String generateVarAssignCode(Var var) {
+        StringBuilder builder = new StringBuilder();
+
+        String typeDeclare = Var.getTypeDeclare(var.getType());
+
+        builder.append(typeDeclare).append(" ")
+               .append(var.name).append("=")
+               .append("((").append(var.getType().getCanonicalName()).append(")")
+               .append("context.get(\"").append(var.name).append("\")").append(");");
+
+        return builder.toString();
+    }
 }

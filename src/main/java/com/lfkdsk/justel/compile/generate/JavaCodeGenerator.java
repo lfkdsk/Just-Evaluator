@@ -49,7 +49,7 @@ public class JavaCodeGenerator extends Generator {
         for (String key : keySet) {
             Var var = new Var(key, context.get(key));
             varSet.add(var);
-            builder.append(var.generateVarAssignCode());
+            builder.append(context.generateVarAssignCode(var));
         }
 
         List<String> commandSet = context.commandList();
