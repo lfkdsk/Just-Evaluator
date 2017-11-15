@@ -9,6 +9,7 @@
 package com.lfkdsk.justel.ast.operators;
 
 import com.lfkdsk.justel.JustEL;
+import com.lfkdsk.justel.context.JustArrayContext;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.eval.Expression;
@@ -85,7 +86,7 @@ class PlusOpTest {
 
     @Test
     void testEl() {
-        final JustContext ctx = new JustMapContext();
+        final JustContext ctx = new JustArrayContext();
         ctx.put("a", 3600);
         ctx.put("b", 14);
         ctx.put("c", 5);
