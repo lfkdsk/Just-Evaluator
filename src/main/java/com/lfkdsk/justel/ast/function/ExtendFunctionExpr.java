@@ -74,4 +74,6 @@ public abstract class ExtendFunctionExpr implements Function, Evaluable {
     protected boolean paramsCheck(Object[] params) {
         return true;
     }
+
+
 }

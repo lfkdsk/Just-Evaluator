@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.lfkdsk.justel.ast.function.ExtendFunctionExpr.of;
 import static com.lfkdsk.justel.utils.FormatUtils.*;
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -84,8 +85,48 @@ public class JustRepl {
     private static Generator generator = new JavaCodeGenerator();
 
     private static JustContext env = new JustMapContext() {{
-        putExtendFunc("compileTest", new CompileTestFunctionExpr());
-        putExtendFunc("evalTest", new EvalTestFunctionExpr());
+        putExtendFunc("compileTest", of("compileTest", (params -> {
+            assert params.length == 2;
+            assert params[0] instanceof String;
+            assert params[1] instanceof Integer;
+
+            int times = (int) params[1];
+            String expr = (String) params[0];
+
+            System.out.println(cyanPrint("Start Compile Test in another thread"));
+            executor.execute(() -> {
+                long start = System.currentTimeMillis();
+                Expression expression = justEL.compile(expr, env);
+                for (int i = 0; i < times; i++) {
+                    expression.eval(env);
+                }
+                System.out.println("");
+                System.out.println(cyanPrint(beautifulPrint("use time :" + (System.currentTimeMillis() - start) + " ms" + " run " + times + " times")));
+            });
+
+            return "testing";
+        })));
+
+        putExtendFunc("evalTest", ExtendFunctionExpr.of("evalTest", (params -> {
+            assert params.length == 2;
+            assert params[0] instanceof String;
+            assert params[1] instanceof Integer;
+            int times = (int) params[1];
+            String expr = (String) params[0];
+
+            System.out.println(cyanPrint("Start Eval Test in another thread"));
+            executor.execute(() -> {
+                long start = System.currentTimeMillis();
+                Expression expression = justEL.expr(expr);
+                for (int i = 0; i < times; i++) {
+                    expression.eval(env);
+                }
+                System.out.println("");
+                System.out.println(cyanPrint(beautifulPrint("use time :" + (System.currentTimeMillis() - start) + " ms" + " run " + times + " times")));
+            });
+
+            return "testing";
+        })));
     }};
 
     private static JustEL justEL = JustEL.builder()
