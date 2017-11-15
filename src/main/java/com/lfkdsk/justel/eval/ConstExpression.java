@@ -21,11 +21,6 @@ public final class ConstExpression implements Expression {
 
     @Override
     public Object eval(JustContext context) {
-        return eval();
-    }
-
-    @Override
-    public Object eval() {
         return constVal;
     }
 }

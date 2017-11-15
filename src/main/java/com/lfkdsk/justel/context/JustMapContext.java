@@ -21,8 +21,6 @@ public class JustMapContext implements JustContext {
 
     private Map<Integer, Object> astCache = new HashMap<>();
 
-    private List<Integer> traceList = new ArrayList<>();
-
     @Override
     public boolean contain(String name) {
         return map.containsKey(name);
@@ -66,11 +64,6 @@ public class JustMapContext implements JustContext {
     }
 
     @Override
-    public Object traceVar(Integer varHash) {
-        return traceList.add(varHash);
-    }
-
-    @Override
     public Collection<String> varsKeySet() {
         return map.keySet();
     }
@@ -78,11 +71,6 @@ public class JustMapContext implements JustContext {
     @Override
     public List<String> commandList() {
         return commandList;
-    }
-
-    @Override
-    public List<Integer> varTraceList() {
-        return traceList;
     }
 
     @Override

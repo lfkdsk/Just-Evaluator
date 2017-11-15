@@ -2,7 +2,6 @@ package com.lfkdsk.justel.repl;
 
 import com.lfkdsk.justel.JustEL;
 import com.lfkdsk.justel.ast.base.AstNode;
-import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
 import com.lfkdsk.justel.compile.compiler.JustCompiler;
 import com.lfkdsk.justel.compile.compiler.JustCompilerImpl;
 import com.lfkdsk.justel.compile.generate.Generator;
@@ -107,7 +106,7 @@ public class JustRepl {
             return "testing";
         })));
 
-        putExtendFunc("evalTest", ExtendFunctionExpr.of("evalTest", (params -> {
+        putExtendFunc("evalTest", of("evalTest", (params -> {
             assert params.length == 2;
             assert params[0] instanceof String;
             assert params[1] instanceof Integer;
@@ -252,68 +251,6 @@ public class JustRepl {
             } catch (Throwable e) {
                 AnsiConsole.out.println(ansi().fgRed().a(JUST_EL + e.getMessage()).reset().toString());
             }
-        }
-    }
-
-    public static class CompileTestFunctionExpr extends ExtendFunctionExpr {
-
-        @Override
-        public Object call(Object... params) {
-            assert params.length == 2;
-            assert params[0] instanceof String;
-            assert params[1] instanceof Integer;
-
-            int times = (int) params[1];
-            String expr = (String) params[0];
-
-            System.out.println(cyanPrint("Start Compile Test in another thread"));
-            executor.execute(() -> {
-                long start = System.currentTimeMillis();
-                Expression expression = justEL.compile(expr, env);
-                for (int i = 0; i < times; i++) {
-                    expression.eval(env);
-                }
-                System.out.println("");
-                System.out.println(cyanPrint(beautifulPrint("use time :" + (System.currentTimeMillis() - start) + " ms" + " run " + times + " times")));
-            });
-
-            return "testing";
-        }
-
-        @Override
-        public String funcName() {
-            return "compileTest";
-        }
-    }
-
-
-    public static class EvalTestFunctionExpr extends ExtendFunctionExpr {
-
-        @Override
-        public Object call(Object... params) {
-            assert params.length == 2;
-            assert params[0] instanceof String;
-            assert params[1] instanceof Integer;
-            int times = (int) params[1];
-            String expr = (String) params[0];
-
-            System.out.println(cyanPrint("Start Eval Test in another thread"));
-            executor.execute(() -> {
-                long start = System.currentTimeMillis();
-                Expression expression = justEL.expr(expr);
-                for (int i = 0; i < times; i++) {
-                    expression.eval(env);
-                }
-                System.out.println("");
-                System.out.println(cyanPrint(beautifulPrint("use time :" + (System.currentTimeMillis() - start) + " ms" + " run " + times + " times")));
-            });
-
-            return "testing";
-        }
-
-        @Override
-        public String funcName() {
-            return "evalTest";
         }
     }
 

@@ -31,13 +31,4 @@ public interface Expression extends Evaluable {
     default Object eval(JustContext context) {
         throw new EvalException("Use default call in expression");
     }
-
-    /**
-     * Eval Const Value
-     *
-     * @return value
-     */
-    default Object eval() {
-        return eval(null);
-    }
 }

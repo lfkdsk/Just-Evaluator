@@ -53,7 +53,7 @@ public class JavaCodeGenerator extends Generator {
         }
 
         List<String> commandSet = context.commandList();
-        List<Integer> traceList = context.varTraceList();
+//        List<Integer> traceList = context.varTraceList();
 
 //        for (int i = traceList.size() - 1; i >= 0; i--) {
 //            Integer varHash = traceList.get(i);

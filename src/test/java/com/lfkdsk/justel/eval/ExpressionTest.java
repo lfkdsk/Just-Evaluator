@@ -20,11 +20,6 @@ class ExpressionTest {
                     public Object eval(JustContext context) {
                         return context.get("lfkdsk");
                     }
-
-                    @Override
-                    public Object eval() {
-                        return 1000;
-                    }
                 })
                 .create()
                 .eval("lfkdsk", new JustMapContext() {{

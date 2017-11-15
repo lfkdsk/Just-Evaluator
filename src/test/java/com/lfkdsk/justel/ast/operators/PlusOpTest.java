@@ -8,10 +8,14 @@
 
 package com.lfkdsk.justel.ast.operators;
 
+import com.lfkdsk.justel.JustEL;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
+import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
+
+import java.util.Random;
 
 import static com.lfkdsk.justel.compile.generate.JavaCodeGeneratorTest.compiler;
 import static com.lfkdsk.justel.parser.JustParserImplTest.runExpr;
@@ -76,5 +80,25 @@ class PlusOpTest {
     void testForConst() {
         Logger.init();
         compiler("1000+100.0*99-(600-3*15)%(((68-9)-3)*2-100)+10000%7*71", null);
+    }
+
+
+    @Test
+    void testEl() {
+        final JustContext ctx = new JustMapContext();
+        ctx.put("a", 3600);
+        ctx.put("b", 14);
+        ctx.put("c", 5);
+        JustEL el = JustEL.builder().create();
+        Random random = new Random();
+        Expression expression = el.compile("a*(b+c)*a*(b+c)*a*(b+c)*a*(b+c)*a*(b+c)*a*(b+c)", ctx);
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1_0000_0000; i++) {
+            ctx.put("a", random.nextInt(10000));
+            ctx.put("b", random.nextInt(100));
+            ctx.put("c", random.nextInt(100));
+            expression.eval(ctx);
+        }
+        System.out.println(" time: " + (System.currentTimeMillis() - start) + " ms");
     }
 }

@@ -36,13 +36,9 @@ public interface JustContext {
      */
     Object command(String command);
 
-    Object traceVar(Integer var);
-
     Collection<String> varsKeySet();
 
     List<String> commandList();
-
-    List<Integer> varTraceList();
 
     boolean clearVars();
 }
