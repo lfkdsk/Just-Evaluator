@@ -8,17 +8,78 @@
 
 package com.lfkdsk.justel.compile.generate;
 
-import com.lfkdsk.justel.context.JustMapContext;
+import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
+import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.utils.logger.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by liufengkai on 2017/8/4.
  */
 public class VarTest {
 
+    private JustContext context = new JustContext() {
+
+        @Override
+        public boolean contain(String name) {
+            return false;
+        }
+
+        @Override
+        public Object get(String objName) {
+            return null;
+        }
+
+        @Override
+        public Object put(String key, Object val) {
+            return null;
+        }
+
+        @Override
+        public Object getCache(Integer astHash) {
+            return null;
+        }
+
+        @Override
+        public Object putCache(Integer key, Object val) {
+            return null;
+        }
+
+        @Override
+        public ExtendFunctionExpr putExtendFunc(ExtendFunctionExpr expr) {
+            return null;
+        }
+
+        @Override
+        public ExtendFunctionExpr getExtendFunc(String name) {
+            return null;
+        }
+
+        @Override
+        public Object command(String command) {
+            return null;
+        }
+
+        @Override
+        public Collection<String> varsKeySet() {
+            return null;
+        }
+
+        @Override
+        public List<String> commandList() {
+            return null;
+        }
+
+        @Override
+        public boolean clearVars() {
+            return false;
+        }
+    };
 
     @Test
     void testVar() {
@@ -26,16 +87,16 @@ public class VarTest {
         Var var = new Var("lfkdsk", lfkdsk);
 
         Logger.init("var test");
-        Logger.i(new JustMapContext().generateVarAssignCode(var));
+        Logger.i(context.generateVarAssignCode(var));
 
-        Assertions.assertEquals(new JustMapContext().generateVarAssignCode(var), "float lfkdsk=((java.lang.Float)context.get(\"lfkdsk\"));");
+        Assertions.assertEquals(context.generateVarAssignCode(var), "float lfkdsk=((java.lang.Float)context.get(\"lfkdsk\"));");
     }
 
     @Test
     void testBoolVar() {
         Var var = new Var("lfkdsk", true);
         Logger.init("var bool test");
-        Logger.i(new JustMapContext().generateVarAssignCode(var));
+        Logger.i(context.generateVarAssignCode(var));
     }
 
     public
@@ -52,7 +113,7 @@ public class VarTest {
     void testAnonymousClass() {
         Var var = new Var("lfkdsk", integerComparable);
         Logger.init("var anonymous test");
-        Logger.i(new JustMapContext().generateVarAssignCode(var));
+        Logger.i(context.generateVarAssignCode(var));
 //        JustEL.runCompile("1000", new JustMapContext() {{
 //            put("lfkdsk", integerComparable);
 //        }});
@@ -62,6 +123,6 @@ public class VarTest {
     void testLambda() {
         Var var = new Var("lfkdsk", lambaInteger);
         Logger.init("var anonymous test");
-        Logger.i(new JustMapContext().generateVarAssignCode(var));
+        Logger.i(context.generateVarAssignCode(var));
     }
 }

@@ -23,7 +23,7 @@ class JavaSourceTest {
         Logger.init();
         ExtendFunctionExprTest.ExtendFunc func = new ExtendFunctionExprTest.ExtendFunc();
         JustContext context = new JustMapContext();
-        context.putExtendFunc(func.funcName(), func);
+        context.putExtendFunc(func);
 
         Logger.init("gen-code");
         Lexer lexer = new JustLexerImpl(new StringReader("add(111,222)"));

@@ -49,7 +49,7 @@ public class ExtendFunctionExprTest {
         String returnStr = runExpr("add(1111,2222)",
                 true,
                 new JustMapContext() {{
-                    putExtendFunc("add", func);
+                    putExtendFunc(func);
                 }});
         Assertions.assertEquals((int) Integer.valueOf(returnStr), 3333);
     }
@@ -60,7 +60,7 @@ public class ExtendFunctionExprTest {
         Logger.init();
         ExtendFunc func = new ExtendFunc();
         JustContext context = new JustMapContext();
-        context.putExtendFunc(func.funcName(), func);
+        context.putExtendFunc(func);
         String returnStr = compiler("add(1111,2222)", context);
         Assertions.assertEquals((int) Integer.valueOf(returnStr), 3333);
     }

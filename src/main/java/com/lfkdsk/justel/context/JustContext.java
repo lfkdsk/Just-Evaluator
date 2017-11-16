@@ -24,7 +24,7 @@ public interface JustContext {
 
     Object putCache(Integer key, Object val);
 
-    ExtendFunctionExpr putExtendFunc(String name, ExtendFunctionExpr expr);
+    ExtendFunctionExpr putExtendFunc(ExtendFunctionExpr expr);
 
     ExtendFunctionExpr getExtendFunc(String name);
 

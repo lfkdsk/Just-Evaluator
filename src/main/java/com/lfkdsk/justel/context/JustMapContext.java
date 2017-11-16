@@ -47,8 +47,8 @@ public class JustMapContext implements JustContext {
     }
 
     @Override
-    public ExtendFunctionExpr putExtendFunc(String name, ExtendFunctionExpr expr) {
-        return extFunc.put(name, expr);
+    public ExtendFunctionExpr putExtendFunc(ExtendFunctionExpr expr) {
+        return extFunc.put(expr.funcName(), expr);
     }
 
     @Override

@@ -7,12 +7,15 @@ import java.util.*;
 
 public class JustArrayContext implements JustContext {
 
-
-    private JustMapContext inner = new JustMapContext();
-
     private Map<String, Integer> indexMap = new HashMap<>();
 
     private ArrayList<Object> objectList = new ArrayList<>();
+
+    private List<String> commandList = new LinkedList<>();
+
+    private Map<String, ExtendFunctionExpr> extFunc = new HashMap<>();
+
+    private Map<Integer, Object> astCache = new HashMap<>();
 
     @Override
     public boolean contain(String name) {
@@ -40,27 +43,27 @@ public class JustArrayContext implements JustContext {
 
     @Override
     public Object getCache(Integer astHash) {
-        return inner.getCache(astHash);
+        return astCache.get(astHash);
     }
 
     @Override
     public Object putCache(Integer key, Object val) {
-        return inner.putCache(key, val);
+        return astCache.put(key, val);
     }
 
     @Override
-    public ExtendFunctionExpr putExtendFunc(String name, ExtendFunctionExpr expr) {
-        return inner.putExtendFunc(name, expr);
+    public ExtendFunctionExpr putExtendFunc(ExtendFunctionExpr expr) {
+        return extFunc.put(expr.funcName(), expr);
     }
 
     @Override
     public ExtendFunctionExpr getExtendFunc(String name) {
-        return inner.getExtendFunc(name);
+        return extFunc.get(name);
     }
 
     @Override
     public Object command(String command) {
-        return inner.command(command);
+        return commandList.add(command);
     }
 
     @Override
@@ -70,12 +73,16 @@ public class JustArrayContext implements JustContext {
 
     @Override
     public List<String> commandList() {
-        return inner.commandList();
+        return commandList;
     }
 
     @Override
     public boolean clearVars() {
-        inner.clearVars();
+        indexMap.clear();
+        commandList.clear();
+        astCache.clear();
+        objectList.clear();
+
         return true;
     }
 
