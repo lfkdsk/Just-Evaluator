@@ -150,5 +150,5 @@
       <version>1.12.6</version> 
     </dependency> 
   </dependencies>  
-  <contributors><contributor><properties><provider>lfk_dsk@hotmail.com</provider><codeName>null</codeName><codeUrl>git@github.com:lfkdsk/Just-EL.git commit:b8b224b</codeUrl><description>contributors added by SCM Plugin, please don't modify it!</description></properties></contributor></contributors>
+  <contributors><contributor><properties><provider>lfk_dsk@hotmail.com</provider><codeName>null</codeName><codeUrl>git@github.com:lfkdsk/Just-EL.git commit:3e3dfe8</codeUrl><description>contributors added by SCM Plugin, please don't modify it!</description></properties></contributor></contributors>
 </project>

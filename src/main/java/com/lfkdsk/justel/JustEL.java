@@ -180,22 +180,23 @@ public final class JustEL {
         /**
          * just-parse
          */
-        JustParser parser = new JustParserImpl();
+        private JustParser parser = new JustParserImpl();
 
         /**
          * just-lexer
          */
-        Lexer lexer = new JustLexerImpl();
+        private Lexer lexer = new JustLexerImpl();
 
         /**
          * just-compiler
          */
-        JustCompiler compiler = new JustCompilerImpl();
+        private JustCompiler compiler = new JustCompilerImpl();
 
         /**
          * code-generator
          */
-        Generator generator = new JavaCodeGenerator();
+        private Generator generator = new JavaCodeGenerator();
+
 
         public Builder lexer(@NotNull Lexer lexer) {
             this.lexer = ObjectHelper.requireNonNull(lexer, "lexer is null");

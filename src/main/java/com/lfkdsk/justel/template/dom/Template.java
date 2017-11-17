@@ -6,8 +6,9 @@ package com.lfkdsk.justel.template.dom;
  * generateCode com.lfkdsk.justel.template file
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/19.
+ * Created by liufengkai on 2017/7/19.
  */
+@FunctionalInterface
 public interface Template {
     /**
      * generateCode-code com.lfkdsk.justel.template

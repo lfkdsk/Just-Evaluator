@@ -197,14 +197,12 @@ public abstract class AstNode implements Iterable<AstNode>
 
     @Override
     public Expression expr() {
-
-        return (AstNode.this::eval);
+        return this::eval;
     }
 
     @Override
     public int hashCode() {
         String eval = toString();
-
         if (hash == 0 && eval.length() != 0) {
 //            hash = MurmurHash3.hash(eval.getBytes());
             hash = eval.hashCode();

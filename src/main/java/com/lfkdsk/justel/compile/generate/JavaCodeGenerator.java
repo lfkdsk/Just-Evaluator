@@ -26,8 +26,6 @@ import java.util.*;
  */
 public final class JavaCodeGenerator implements Generator {
 
-//    private Set<Var> varSet = new HashSet<>();
-
     private static final DomCom mTemplate = new TemplateImpl().generateTemplate();
 
     private String generateLocalVars(JustContext context) {
@@ -67,5 +65,9 @@ public final class JavaCodeGenerator implements Generator {
         return new JavaSource(JavaSource.GENERATE_DEFAULT_PACKAGE,
                 className, mTemplate.fakeGenerateString(templateContext));
 
+    }
+
+    public static Generator create() {
+        return new JavaCodeGenerator();
     }
 }

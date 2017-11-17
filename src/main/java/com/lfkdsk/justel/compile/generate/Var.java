@@ -50,12 +50,12 @@ public final class Var {
         return typeDeclare;
     }
 
-    private void setValue(Object o) {
+    private void setValue(@NotNull Object o) {
         this.value = o;
         this.type = o.getClass();
     }
 
-    private void setName(String name) {
+    private void setName(@NotNull String name) {
         this.name = name;
     }
 
