@@ -51,7 +51,7 @@ class MurmurHash3Test {
 
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1_0000_0000; i++) {
-            int v = node.hashCode();
+            int v = node.toString().hashCode();
             if (i == 0)
                 Logger.v(String.valueOf(v));
         }

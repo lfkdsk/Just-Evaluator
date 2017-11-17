@@ -15,7 +15,6 @@ import com.lfkdsk.justel.eval.Expressible;
 import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.exception.CompilerException;
 import com.lfkdsk.justel.exception.EvalException;
-import com.lfkdsk.justel.utils.MurmurHash3;
 
 import java.util.Iterator;
 
@@ -23,7 +22,7 @@ import java.util.Iterator;
  * AST Tree Basic Node
  *
  * @author liufengkai
- *         Created by liufengkai on 17/7/11.
+ * Created by liufengkai on 17/7/11.
  */
 public abstract class AstNode implements Iterable<AstNode>
         , Evaluable, Compilable, Expressible {
@@ -199,12 +198,7 @@ public abstract class AstNode implements Iterable<AstNode>
     @Override
     public Expression expr() {
 
-        return new Expression() {
-            @Override
-            public Object eval(JustContext context) {
-                return AstNode.this.eval(context);
-            }
-        };
+        return (AstNode.this::eval);
     }
 
     @Override
@@ -212,7 +206,8 @@ public abstract class AstNode implements Iterable<AstNode>
         String eval = toString();
 
         if (hash == 0 && eval.length() != 0) {
-            hash = MurmurHash3.hash(eval.getBytes());
+//            hash = MurmurHash3.hash(eval.getBytes());
+            hash = eval.hashCode();
         }
 
         return hash;

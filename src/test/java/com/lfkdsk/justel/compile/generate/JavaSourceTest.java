@@ -32,8 +32,8 @@ class JavaSourceTest {
         while (lexer.hasMore()) {
             rootNode = parser.parser(lexer);
         }
-        Generator generator = new JavaCodeGenerator(context, rootNode);
-        JavaSource javaSource = generator.generate();
+        Generator generator = new JavaCodeGenerator();
+        JavaSource javaSource = generator.generate(context, rootNode);
 
         Logger.i(javaSource.toString());
     }

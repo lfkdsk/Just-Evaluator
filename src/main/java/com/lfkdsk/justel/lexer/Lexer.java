@@ -29,6 +29,7 @@ public interface Lexer {
 
     void reset(String expr);
 
+
     /**
      * has more tokens in Lexer
      *

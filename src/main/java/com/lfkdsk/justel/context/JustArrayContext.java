@@ -35,7 +35,6 @@ public class JustArrayContext implements JustContext {
         } else {
             objectList.add(val);
             indexMap.put(key, objectList.size() - 1);
-
         }
 
         return val;
@@ -103,9 +102,9 @@ public class JustArrayContext implements JustContext {
         String typeDeclare = Var.getTypeDeclare(var.getType());
 
         builder.append(typeDeclare).append(" ")
-               .append(var.name).append("=")
+               .append(var.getName()).append("=")
                .append("((").append(var.getType().getCanonicalName()).append(")")
-               .append("context.getWith(").append(indexOf(var.name)).append(")").append(");");
+               .append("context.getWith(").append(indexOf(var.getName())).append(")").append(");");
 
         return builder.toString();
     }

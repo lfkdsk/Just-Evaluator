@@ -18,32 +18,18 @@ import com.lfkdsk.justel.context.JustContext;
  * 2. Ast node => return expr
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/8/4.
+ * Created by liufengkai on 2017/8/4.
  * @see JavaCodeGenerator
  */
-public abstract class Generator {
+@FunctionalInterface
+public interface Generator {
 
     /**
-     * binder - context
+     * Generate Source Code
+     *
+     * @param context  context-env
+     * @param rootNode root-node
+     * @return SourceNode
      */
-    protected JustContext context;
-
-    /**
-     * binder - root node
-     */
-    protected AstNode rootNode;
-
-    public Generator(JustContext context, AstNode rootNode) {
-        this.context = context;
-        this.rootNode = rootNode;
-    }
-
-    public abstract JavaSource generate();
-
-    public Generator reset(JustContext context, AstNode rootNode) {
-        this.context = context;
-        this.rootNode = rootNode;
-
-        return this;
-    }
+    JavaSource generate(JustContext context, AstNode rootNode);
 }

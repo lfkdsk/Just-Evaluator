@@ -9,6 +9,7 @@ import com.lfkdsk.justel.eval.Expression;
  * @author liufengkai
  *         Created by liufengkai on 2017/7/20.
  */
+@FunctionalInterface
 public interface JustCompiler {
 
     /**

@@ -87,9 +87,9 @@ public class CompareTest {
             return time;
         }
 
-        Generator generator = new JavaCodeGenerator(context, rootNode);
+        Generator generator = new JavaCodeGenerator();
         JustCompiler compiler = new JustCompilerImpl();
-        JavaSource javaSource = generator.generate();
+        JavaSource javaSource = generator.generate(context, rootNode);
         Logger.v(javaSource.toString());
         com.lfkdsk.justel.eval.Expression expr = compiler.compile(javaSource);
 

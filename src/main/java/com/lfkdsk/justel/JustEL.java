@@ -113,7 +113,7 @@ public final class JustEL {
         }
 
         // generate java source
-        final JavaSource javaSource = generator.reset(env, rootNode).generate();
+        final JavaSource javaSource = generator.generate(env, rootNode);
 
         return compiler.compile(javaSource);
     }

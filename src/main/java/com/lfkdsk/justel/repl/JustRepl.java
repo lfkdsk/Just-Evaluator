@@ -213,9 +213,8 @@ public class JustRepl {
     }
 
     private static void runCompile(AstNode node, JustContext env) {
-        generator.reset(env, node);
 
-        JavaSource javaSource = generator.generate();
+        JavaSource javaSource = generator.generate(env, node);
         System.out.println(cyanPrint(javaSource.toString()));
 
         if (openMockCompile) {

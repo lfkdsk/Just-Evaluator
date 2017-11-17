@@ -11,6 +11,7 @@ import com.lfkdsk.justel.context.JustContext;
  * @see ConstExpression
  * @see com.lfkdsk.justel.ast.base.AstNode
  */
+@FunctionalInterface
 public interface Evaluable {
 
     /**

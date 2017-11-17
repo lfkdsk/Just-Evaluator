@@ -57,9 +57,9 @@ public interface JustContext {
         String typeDeclare = Var.getTypeDeclare(var.getType());
 
         builder.append(typeDeclare).append(" ")
-               .append(var.name).append("=")
+               .append(var.getName()).append("=")
                .append("((").append(var.getType().getCanonicalName()).append(")")
-               .append("context.get(\"").append(var.name).append("\")").append(");");
+               .append("context.get(\"").append(var.getName()).append("\")").append(");");
 
         return builder.toString();
     }

@@ -26,7 +26,7 @@ import java.util.Iterator;
  */
 public class AstLeaf extends AstNode {
 
-    private static ArrayList<AstNode> empty = new ArrayList<>();
+    private static final ArrayList<AstNode> empty = new ArrayList<>();
 
     protected Token token;
 
