@@ -23,7 +23,7 @@ import static com.lfkdsk.justel.token.ReservedToken.reservedToken;
  * Just catch token this Engine supported.
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/23.
+ * Created by liufengkai on 2017/7/23.
  */
 public class JustLexerImpl implements Lexer {
 
@@ -71,6 +71,10 @@ public class JustLexerImpl implements Lexer {
 
     public JustLexerImpl() {
         this(new StringReader(""));
+    }
+
+    public JustLexerImpl(String expr) {
+        this(new StringReader(expr));
     }
 
     public JustLexerImpl(Reader reader) {

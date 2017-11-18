@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>  
   <groupId>com.lfkdsk</groupId>  
   <artifactId>just-el</artifactId>  
-  <version>1.1.2-SNAPSHOT</version>  
+  <version>1.2.1-SNAPSHOT</version>  
   <developers> 
     <developer> 
       <name>lfkdsk</name>  
@@ -69,10 +69,10 @@
             <!-- <includeTags>fast</includeTags> -->  
             <excludeTags>slow</excludeTags>  
             <!--
-                        <configurationParameters>
-                            junit.jupiter.conditions.deactivate = *
-                        </configurationParameters>
-                        --> 
+                                                <configurationParameters>
+                                                    junit.jupiter.conditions.deactivate = *
+                                                </configurationParameters>
+                                                --> 
           </properties>  
           <parallel>methods</parallel>  
           <skipTests>${skipTests}</skipTests>  
@@ -143,7 +143,12 @@
       <artifactId>apiguardian-api</artifactId>  
       <version>1.0.0</version>  
       <scope>test</scope> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.projectlombok</groupId>  
+      <artifactId>lombok</artifactId>  
+      <version>1.12.6</version> 
     </dependency> 
   </dependencies>  
-  <contributors><contributor><properties><provider>lfk_dsk@hotmail.com</provider><codeName>null</codeName><codeUrl>git@github.com:lfkdsk/Just-EL.git commit:2f8c2e5</codeUrl><description>contributors added by SCM Plugin, please don't modify it!</description></properties></contributor></contributors>
+  <contributors><contributor><properties><provider>lfk_dsk@hotmail.com</provider><codeName>null</codeName><codeUrl>git@github.com:lfkdsk/Just-EL.git commit:9a97ad6</codeUrl><description>contributors added by SCM Plugin, please don't modify it!</description></properties></contributor></contributors>
 </project>

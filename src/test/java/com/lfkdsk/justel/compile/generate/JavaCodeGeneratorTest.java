@@ -36,9 +36,9 @@ public class JavaCodeGeneratorTest {
         JustContext context = new JustMapContext();
         context.put("lfkdsk", 10e2);
         context.put("pi", 3.14);
-        Generator generator = new JavaCodeGenerator(context, new AstLeaf(SepToken.AND_TOKEN));
+        Generator generator = new JavaCodeGenerator();
         Logger.init("gen-code");
-        Logger.i(generator.generate().toString());
+        Logger.i(generator.generate(context, new AstLeaf(SepToken.AND_TOKEN)).toString());
     }
 
     @Test
@@ -56,11 +56,11 @@ public class JavaCodeGeneratorTest {
         }
 
 
-        Generator generator = new JavaCodeGenerator(context, rootNode);
+        Generator generator = new JavaCodeGenerator();
         JustCompiler compiler = new JustCompilerImpl();
 
         Logger.init("gen-code");
-        JavaSource javaSource = generator.generate();
+        JavaSource javaSource = generator.generate(context, rootNode);
         Logger.i(javaSource.toString());
         Expression expr = compiler.compile(javaSource);
         Logger.i(expr.eval(context).toString());
@@ -83,9 +83,9 @@ public class JavaCodeGeneratorTest {
             return result.toString();
         }
 
-        Generator generator = new JavaCodeGenerator(context, rootNode);
+        Generator generator = new JavaCodeGenerator();
         JustCompiler compiler = new JustCompilerImpl();
-        JavaSource javaSource = generator.generate();
+        JavaSource javaSource = generator.generate(context, rootNode);
         Logger.v(javaSource.toString());
         Expression expr = compiler.compile(javaSource);
 

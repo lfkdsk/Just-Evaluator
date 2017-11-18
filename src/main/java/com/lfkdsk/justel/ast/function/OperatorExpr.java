@@ -185,7 +185,8 @@ public abstract class OperatorExpr extends AstList implements Function {
             else if (obj instanceof Long) return obj.toString() + "L";
 
             return obj.toString();
-        } else if (isShouldSplit()) {
+        }
+        else if (isShouldSplit()) {
             return splitSubAstEval(env);
         }
 

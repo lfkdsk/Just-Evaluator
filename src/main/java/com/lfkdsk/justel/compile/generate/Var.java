@@ -9,37 +9,32 @@
 package com.lfkdsk.justel.compile.generate;
 
 import com.lfkdsk.justel.utils.ReflectUtils;
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Var Abstract Class
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/8/4.
+ * Created by liufengkai on 2017/8/4.
  */
 public final class Var {
 
-    public final String name;
+    @Getter
+    private String name;
 
+    @Getter
+    private Class<?> type;
+
+    @Getter
     private Object value;
 
-    private final Class<?> type;
+    private static Var cache = new Var("object", new Object());
 
-    public Var(String name, Object value) {
+    public Var(@NotNull String name, @NotNull Object value) {
         this.name = name;
         this.value = value;
         this.type = value.getClass();
-    }
-
-    public void setValue(Object value) {
-        this.value = value;
-    }
-
-    public Object getValue() {
-        return value;
-    }
-
-    public Class<?> getType() {
-        return type;
     }
 
     public static String getTypeDeclare(Class<?> objType) {
@@ -55,16 +50,19 @@ public final class Var {
         return typeDeclare;
     }
 
-    public String generateVarAssignCode() {
-        StringBuilder builder = new StringBuilder();
+    private void setValue(@NotNull Object o) {
+        this.value = o;
+        this.type = o.getClass();
+    }
 
-        String typeDeclare = getTypeDeclare(getType());
+    private void setName(@NotNull String name) {
+        this.name = name;
+    }
 
-        builder.append(typeDeclare).append(" ")
-               .append(name).append("=")
-               .append("((").append(type.getCanonicalName()).append(")")
-               .append("context.get(\"").append(name).append("\")").append(");");
+    public static Var of(String name, Object obj) {
+        cache.setValue(obj);
+        cache.setName(name);
 
-        return builder.toString();
+        return cache;
     }
 }

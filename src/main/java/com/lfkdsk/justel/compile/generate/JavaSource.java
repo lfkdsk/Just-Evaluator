@@ -1,5 +1,7 @@
 package com.lfkdsk.justel.compile.generate;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.nio.CharBuffer;
 
 import static com.lfkdsk.justel.utils.FormatUtils.beautifulPrint;
@@ -22,20 +24,20 @@ public final class JavaSource {
      */
     public static final String GENERATE_DEFAULT_PACKAGE = "com.lfkdsk.justel.generatecode";
 
-    public final String packageName;
+    private final String packageName;
 
-    public final String className;
+    private final String className;
 
-    public final String sourceCode;
+    private final String sourceCode;
 
     /**
      * source code => code char
      */
     private CharSequence sourceCodeChar;
 
-    public JavaSource(String packageName,
-                      String className,
-                      String sourceCode) {
+    public JavaSource(@NotNull String packageName,
+                      @NotNull String className,
+                      @NotNull String sourceCode) {
         this.className = className;
         this.sourceCode = sourceCode;
         this.packageName = packageName;

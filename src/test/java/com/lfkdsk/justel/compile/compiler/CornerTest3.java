@@ -20,5 +20,4 @@ public class CornerTest3 {
         vars.put("b", (byte) 4);
         compiler(" pi*d+b-(1000-d*b/pi)/(pi+99-i*d)-i*pi*d/b", vars);
     }
-
 }

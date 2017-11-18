@@ -29,7 +29,7 @@ final class ParserHelper {
      * @param operators Support Operators
      * @return New Particular Expr
      */
-    static AstNode resetAstExpr(AstBinaryExpr expr, BnfCom.Operators operators) {
+    private static AstNode resetAstExpr(AstBinaryExpr expr, BnfCom.Operators operators) {
 
         // operator is Operator
         Operator operator = (Operator) expr.midOp();
@@ -47,7 +47,7 @@ final class ParserHelper {
      * @param operators Operators
      * @see JustParserImpl
      */
-    static AstNode transformAst(AstNode parent, BnfCom.Operators operators) {
+    private static AstNode transformAst(AstNode parent, BnfCom.Operators operators) {
         for (int i = 0; i < parent.childCount(); i++) {
             AstNode child = parent.child(i);
 

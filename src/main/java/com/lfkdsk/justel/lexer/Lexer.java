@@ -29,6 +29,8 @@ public interface Lexer {
 
     void reset(String expr);
 
+//    Queue<Token> scanner(String expr);
+
     /**
      * has more tokens in Lexer
      *

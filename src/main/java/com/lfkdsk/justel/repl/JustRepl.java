@@ -27,7 +27,6 @@ import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static com.lfkdsk.justel.ast.function.ExtendFunctionExpr.of;
 import static com.lfkdsk.justel.utils.FormatUtils.*;
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -84,8 +83,10 @@ public class JustRepl {
      */
     private static Generator generator = new JavaCodeGenerator();
 
-    private static JustContext env = new JustMapContext() {{
-        putExtendFunc("compileTest", of("compileTest", (params -> {
+    public static class CompileTest extends ExtendFunctionExpr {
+
+        @Override
+        public Object call(Object... params) {
             assert params.length == 2;
             assert params[0] instanceof String;
             assert params[1] instanceof Integer;
@@ -105,9 +106,18 @@ public class JustRepl {
             });
 
             return "testing";
-        })));
+        }
 
-        putExtendFunc("evalTest", ExtendFunctionExpr.of("evalTest", (params -> {
+        @Override
+        public String funcName() {
+            return "compileTest";
+        }
+    }
+
+    public static class EvalTest extends ExtendFunctionExpr {
+
+        @Override
+        public Object call(Object... params) {
             assert params.length == 2;
             assert params[0] instanceof String;
             assert params[1] instanceof Integer;
@@ -126,7 +136,17 @@ public class JustRepl {
             });
 
             return "testing";
-        })));
+        }
+
+        @Override
+        public String funcName() {
+            return "evalTest";
+        }
+    }
+
+    private static JustContext env = new JustMapContext() {{
+        putExtendFunc(new CompileTest());
+        putExtendFunc(new EvalTest());
     }};
 
     private static JustEL justEL = JustEL.builder()
@@ -193,9 +213,8 @@ public class JustRepl {
     }
 
     private static void runCompile(AstNode node, JustContext env) {
-        generator.reset(env, node);
 
-        JavaSource javaSource = generator.generate();
+        JavaSource javaSource = generator.generate(env, node);
         System.out.println(cyanPrint(javaSource.toString()));
 
         if (openMockCompile) {
@@ -252,68 +271,6 @@ public class JustRepl {
             } catch (Throwable e) {
                 AnsiConsole.out.println(ansi().fgRed().a(JUST_EL + e.getMessage()).reset().toString());
             }
-        }
-    }
-
-    public static class CompileTestFunctionExpr extends ExtendFunctionExpr {
-
-        @Override
-        public Object call(Object... params) {
-            assert params.length == 2;
-            assert params[0] instanceof String;
-            assert params[1] instanceof Integer;
-
-            int times = (int) params[1];
-            String expr = (String) params[0];
-
-            System.out.println(cyanPrint("Start Compile Test in another thread"));
-            executor.execute(() -> {
-                long start = System.currentTimeMillis();
-                Expression expression = justEL.compile(expr, env);
-                for (int i = 0; i < times; i++) {
-                    expression.eval(env);
-                }
-                System.out.println("");
-                System.out.println(cyanPrint(beautifulPrint("use time :" + (System.currentTimeMillis() - start) + " ms" + " run " + times + " times")));
-            });
-
-            return "testing";
-        }
-
-        @Override
-        public String funcName() {
-            return "compileTest";
-        }
-    }
-
-
-    public static class EvalTestFunctionExpr extends ExtendFunctionExpr {
-
-        @Override
-        public Object call(Object... params) {
-            assert params.length == 2;
-            assert params[0] instanceof String;
-            assert params[1] instanceof Integer;
-            int times = (int) params[1];
-            String expr = (String) params[0];
-
-            System.out.println(cyanPrint("Start Eval Test in another thread"));
-            executor.execute(() -> {
-                long start = System.currentTimeMillis();
-                Expression expression = justEL.expr(expr);
-                for (int i = 0; i < times; i++) {
-                    expression.eval(env);
-                }
-                System.out.println("");
-                System.out.println(cyanPrint(beautifulPrint("use time :" + (System.currentTimeMillis() - start) + " ms" + " run " + times + " times")));
-            });
-
-            return "testing";
-        }
-
-        @Override
-        public String funcName() {
-            return "evalTest";
         }
     }
 

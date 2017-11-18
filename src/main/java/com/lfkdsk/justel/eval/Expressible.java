@@ -8,6 +8,7 @@ package com.lfkdsk.justel.eval;
  * @see com.lfkdsk.justel.ast.base.AstNode
  * @see com.lfkdsk.justel.JustEL
  */
+@FunctionalInterface
 public interface Expressible {
 
     /**

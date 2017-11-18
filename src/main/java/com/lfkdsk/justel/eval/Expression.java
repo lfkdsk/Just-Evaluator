@@ -9,7 +9,6 @@
 package com.lfkdsk.justel.eval;
 
 import com.lfkdsk.justel.context.JustContext;
-import com.lfkdsk.justel.exception.EvalException;
 
 /**
  * Expression : Evaluable Expression.
@@ -19,6 +18,7 @@ import com.lfkdsk.justel.exception.EvalException;
  * @see Evaluable
  * @see com.lfkdsk.justel.JustEL
  */
+@FunctionalInterface
 public interface Expression extends Evaluable {
 
     /**
@@ -28,16 +28,5 @@ public interface Expression extends Evaluable {
      * @return value
      */
     @Override
-    default Object eval(JustContext context) {
-        throw new EvalException("Use default call in expression");
-    }
-
-    /**
-     * Eval Const Value
-     *
-     * @return value
-     */
-    default Object eval() {
-        return eval(null);
-    }
+    Object eval(JustContext context);
 }

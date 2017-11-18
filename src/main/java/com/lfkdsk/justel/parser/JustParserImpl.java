@@ -45,7 +45,7 @@ import static com.lfkdsk.justel.token.Token.EOL;
  * - program: expr EOL
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  */
 public class JustParserImpl implements JustParser {
 

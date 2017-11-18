@@ -26,7 +26,8 @@ class NotPostfixTest {
 
     @Test
     void notEqualCompiler() {
-        String result = compiler("lfkdsk == 1000 && !(lfkdsk == 1000)", new JustMapContext(){{
+        String result = compiler("lfkdsk == 1000 && !(lfkdsk == 1000) && lfkdsk == 1000 && lfkdsk == 1000 && lfkdsk == 1000 && lfkdsk == 1000 && lfkdsk == 1000"
+                , new JustMapContext(){{
             put("lfkdsk",1000);
         }});
         Assertions.assertFalse(Boolean.parseBoolean(result));

@@ -100,9 +100,9 @@ class OperatorExprTest {
         while (lexer.hasMore()) {
             rootNode = parser.parser(lexer);
         }
-        Generator generator = new JavaCodeGenerator(context, rootNode);
+        Generator generator = new JavaCodeGenerator();
         JustCompiler compiler = new JustCompilerImpl();
-        JavaSource javaSource = generator.generate();
+        JavaSource javaSource = generator.generate(context, rootNode);
         Expression expr = compiler.compile(javaSource);
 
         String result = expr.eval(context).toString();
