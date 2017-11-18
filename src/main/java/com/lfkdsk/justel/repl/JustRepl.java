@@ -13,6 +13,7 @@ import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.parser.JustParser;
+import com.lfkdsk.justel.token.Token;
 import com.lfkdsk.justel.utils.logger.Logger;
 import jline.console.ConsoleReader;
 import jline.console.completer.StringsCompleter;
@@ -24,6 +25,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -251,10 +253,9 @@ public class JustRepl {
 
             try {
 
-                lexer.reset(command);
-                lexer.hasMore();
+                Queue<Token> tokens = lexer.scanner(command);
 
-                AstNode node = parser.parser(lexer);
+                AstNode node = parser.parser(tokens);
 
                 if (openAst) {
                     runAst(node);

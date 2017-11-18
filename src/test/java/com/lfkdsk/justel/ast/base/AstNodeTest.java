@@ -9,7 +9,6 @@ import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.StringReader;
 import java.util.HashMap;
 
 /**
@@ -37,10 +36,10 @@ public class AstNodeTest {
     }
 
     public static AstNode toNode(String arg) {
-        JustLexerImpl lexer = new JustLexerImpl(new StringReader(arg));
+        JustLexerImpl lexer = new JustLexerImpl();
         JustParserImpl parser = new JustParserImpl();
 
-        return parser.parser(lexer);
+        return parser.parser(lexer.scanner(arg));
     }
 
     @Test

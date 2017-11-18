@@ -5,7 +5,6 @@ import com.lfkdsk.justel.ast.base.AstList;
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.ast.function.Operator;
 import com.lfkdsk.justel.exception.ParseException;
-import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.token.Token;
 
 import java.lang.reflect.Constructor;
@@ -32,7 +31,7 @@ public class BnfCom {
          * @param nodes Ast-List
          * @throws ParseException
          */
-        protected abstract void parse(Lexer lexer, List<AstNode> nodes)
+        protected abstract void parse(Queue<Token> lexer, List<AstNode> nodes)
                 throws ParseException;
 
         /**
@@ -42,7 +41,7 @@ public class BnfCom {
          * @return tof?
          * @throws ParseException
          */
-        protected abstract boolean match(Lexer lexer) throws ParseException;
+        protected abstract boolean match(Queue<Token> lexer) throws ParseException;
     }
 
     /**
@@ -56,12 +55,12 @@ public class BnfCom {
         }
 
         @Override
-        protected void parse(Lexer lexer, List<AstNode> nodes) throws ParseException {
+        protected void parse(Queue<Token> lexer, List<AstNode> nodes) throws ParseException {
             nodes.add(parser.parse(lexer));
         }
 
         @Override
-        protected boolean match(Lexer lexer) throws ParseException {
+        protected boolean match(Queue<Token> lexer) throws ParseException {
             return parser.match(lexer);
         }
     }
@@ -78,21 +77,21 @@ public class BnfCom {
         }
 
         @Override
-        protected void parse(Lexer lexer, List<AstNode> nodes) throws ParseException {
+        protected void parse(Queue<Token> lexer, List<AstNode> nodes) throws ParseException {
             BnfCom parser = choose(lexer);
             if (parser == null) {
-                throw new ParseException(lexer.peek(0));
+                throw new ParseException(lexer.peek());
             } else {
                 nodes.add(parser.parse(lexer));
             }
         }
 
         @Override
-        protected boolean match(Lexer lexer) throws ParseException {
+        protected boolean match(Queue<Token> lexer) throws ParseException {
             return choose(lexer) != null;
         }
 
-        private BnfCom choose(Lexer lexer) throws ParseException {
+        private BnfCom choose(Queue<Token> lexer) throws ParseException {
             for (BnfCom parser : parsers) {
                 if (parser.match(lexer)) {
                     return parser;
@@ -132,7 +131,7 @@ public class BnfCom {
         }
 
         @Override
-        protected void parse(Lexer lexer, List<AstNode> nodes) throws ParseException {
+        protected void parse(Queue<Token> lexer, List<AstNode> nodes) throws ParseException {
             while (parser.match(lexer)) {
 
                 AstNode node = parser.parse(lexer);
@@ -148,7 +147,7 @@ public class BnfCom {
         }
 
         @Override
-        protected boolean match(Lexer lexer) throws ParseException {
+        protected boolean match(Queue<Token> lexer) throws ParseException {
             return parser.match(lexer);
         }
     }
@@ -169,13 +168,13 @@ public class BnfCom {
         }
 
         @Override
-        protected boolean match(Lexer lexer) throws ParseException {
-            return tokenTest(lexer.peek(0));
+        protected boolean match(Queue<Token> lexer) throws ParseException {
+            return tokenTest(lexer.element());
         }
 
         @Override
-        protected void parse(Lexer lexer, List<AstNode> nodes) throws ParseException {
-            Token token = lexer.read();
+        protected void parse(Queue<Token> lexer, List<AstNode> nodes) throws ParseException {
+            Token token = lexer.poll();
 
             if (tokenTest(token)) {
                 AstNode leaf = factory.make(token);
@@ -289,8 +288,8 @@ public class BnfCom {
         }
 
         @Override
-        protected void parse(Lexer lexer, List<AstNode> nodes) throws ParseException {
-            Token token = lexer.read();
+        protected void parse(Queue<Token> lexer, List<AstNode> nodes) throws ParseException {
+            Token token = lexer.poll();
 
             if (token.isIdentifier()) {
                 for (String t : tokens) {
@@ -319,8 +318,8 @@ public class BnfCom {
         }
 
         @Override
-        protected boolean match(Lexer lexer) throws ParseException {
-            Token token = lexer.peek(0);
+        protected boolean match(Queue<Token> lexer) throws ParseException {
+            Token token = lexer.element();
 
             if (token.isIdentifier()) {
                 for (String t : tokens) {
@@ -408,7 +407,7 @@ public class BnfCom {
         }
 
         @Override
-        protected void parse(Lexer lexer, List<AstNode> nodes) throws ParseException {
+        protected void parse(Queue<Token> lexer, List<AstNode> nodes) throws ParseException {
             AstNode right = factor.parse(lexer);
 
             Precedence prec;
@@ -420,12 +419,12 @@ public class BnfCom {
             nodes.add(right);
         }
 
-        private AstNode doShift(Lexer lexer, AstNode left, int prec) throws ParseException {
+        private AstNode doShift(Queue<Token> lexer, AstNode left, int prec) throws ParseException {
             ArrayList<AstNode> list = new ArrayList<>();
 
             list.add(left);
             // 读取一个符号
-            list.add(new Operator(lexer.read()));
+            list.add(new Operator(lexer.poll()));
 //            Token operatorToken = lexer.read();
             // 返回节点放在右子树
             AstNode right = factor.parse(lexer);
@@ -468,8 +467,8 @@ public class BnfCom {
          * @return Symbol Operator
          * @throws ParseException
          */
-        private Precedence nextOperator(Lexer lexer) throws ParseException {
-            Token token = lexer.peek(0);
+        private Precedence nextOperator(Queue<Token> lexer) throws ParseException {
+            Token token = lexer.element();
 
             if (token.isIdentifier()) {
                 // get symbol
@@ -495,7 +494,7 @@ public class BnfCom {
         }
 
         @Override
-        protected boolean match(Lexer lexer) throws ParseException {
+        protected boolean match(Queue<Token> lexer) throws ParseException {
             return factor.match(lexer);
         }
     }
@@ -615,7 +614,7 @@ public class BnfCom {
      * @return AstNode
      * @throws ParseException
      */
-    public AstNode parse(Lexer lexer) throws ParseException {
+    public AstNode parse(Queue<Token> lexer) throws ParseException {
         ArrayList<AstNode> results = new ArrayList<>();
         for (Element e : elements) {
             e.parse(lexer, results);
@@ -624,7 +623,7 @@ public class BnfCom {
         return factory.make(results);
     }
 
-    private boolean match(Lexer lexer) throws ParseException {
+    private boolean match(Queue<Token> lexer) throws ParseException {
         if (elements.size() == 0) {
             return true;
         } else {

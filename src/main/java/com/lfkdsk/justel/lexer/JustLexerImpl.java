@@ -10,10 +10,7 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.lfkdsk.justel.token.ReservedToken.reservedToken;
 
@@ -83,7 +80,6 @@ public class JustLexerImpl implements Lexer {
         this.initialSymbols();
     }
 
-    @Override
     public void reset(String expr) {
         this.start = 0;
         this.end = 0;
@@ -96,7 +92,6 @@ public class JustLexerImpl implements Lexer {
         this.reader = new LineNumberReader(new StringReader(expr));
     }
 
-    @Override
     public Token peek(int index) {
         if (fillQueue(index)) {
             return queue.get(index);
@@ -105,7 +100,6 @@ public class JustLexerImpl implements Lexer {
         }
     }
 
-    @Override
     public Token read() {
         if (fillQueue(0)) {
             return queue.poll();
@@ -167,6 +161,7 @@ public class JustLexerImpl implements Lexer {
         }
 
         addToken(SepToken.EOL_TOKEN);
+        addToken(SepToken.EOF);
     }
 
     /**
@@ -495,5 +490,30 @@ public class JustLexerImpl implements Lexer {
      */
     private void addToken(Token token) {
         queue.add(token);
+    }
+
+    @Override
+    public Queue<Token> scanner(String expr) {
+        reset(expr);
+
+        if (fillQueue(0)) {
+            return queue;
+        }
+
+        throw new ParseException("lexer scanner error");
+    }
+
+    @Override
+    public boolean hasMore() {
+        return fillQueue(0);
+    }
+
+    @Override
+    public Queue<Token> tokens() {
+        if (hasMore()){
+            return queue;
+        }
+
+        throw new ParseException("lexer scanner error");
     }
 }
