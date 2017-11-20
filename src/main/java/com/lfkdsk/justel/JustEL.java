@@ -116,6 +116,13 @@ public final class JustEL {
         return compiler.compile(javaSource);
     }
 
+    /**
+     * Expr Stream
+     *
+     * @param expr     expression string
+     * @param contexts context
+     * @return expression - stream
+     */
     public Stream<Expression> expr(String expr, JustContext contexts) {
         return Stream.of(expr)
                      .map(lexer::scanner)
@@ -124,10 +131,21 @@ public final class JustEL {
                      .map(compiler::compile);
     }
 
-    public Stream<Expression> expr(ExprBinder exprBinder) {
-        return expr(exprBinder.getExpr(), exprBinder.getContexts());
+    /**
+     * Expr Stream
+     *
+     * @param binder binder
+     * @return expression - stream
+     */
+    public Stream<Expression> expr(ExprBinder binder) {
+        return expr(binder.getExpr(), binder.getContexts());
     }
 
+    /**
+     * Expr Stream
+     * @param binders binder
+     * @return expression - stream
+     */
     public Stream<Expression> exprs(ExprBinder... binders) {
         return Arrays.stream(binders).flatMap(this::expr);
     }
