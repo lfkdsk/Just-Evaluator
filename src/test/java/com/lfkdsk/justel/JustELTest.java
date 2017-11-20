@@ -5,13 +5,11 @@ import com.lfkdsk.justel.compile.generate.JavaCodeGenerator;
 import com.lfkdsk.justel.context.JustArrayContext;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
-import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.parser.JustParserImpl;
 import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.lfkdsk.justel.eval.ExprBinder.of;
@@ -101,26 +99,23 @@ class JustELTest {
     @Test
     void testJustELBuilder() {
         Logger.init();
-        List<Expression> expressionList =
-                JustEL.builder()
-                      .create()
-                      .exprs(
-                              of(new JustArrayContext() {{
-                                  put("lfkdsk", 10000);
-                              }}, "lfkdsk + 10000000"),
-                              of(new JustArrayContext() {{
-                                  put("lfkdsk", 10001);
-                              }}, "lfkdsk + 10000000"),
-                              of(new JustArrayContext() {{
-                                  put("lfkdsk", 11001);
-                              }}, "lfkdsk + 10000000"),
-                              of(new JustArrayContext() {{
-                                  put("lfkdsk", 11000);
-                              }}, "lfkdsk + 10000000"))
-                      .collect(Collectors.toList());
-
-        for (Expression expression : expressionList) {
-            System.out.println(expression.toString());
-        }
+//        List<Expression> expressionList =
+        JustEL.builder()
+              .create()
+              .exprs(
+                      of(new JustArrayContext() {{
+                          put("lfkdsk", 10000);
+                      }}, "lfkdsk + 10000000"),
+                      of(new JustArrayContext() {{
+                          put("lfkdsk", 10001);
+                      }}, "lfkdsk + 10000000"),
+                      of(new JustArrayContext() {{
+                          put("lfkdsk", 11001);
+                      }}, "lfkdsk + 10000000"),
+                      of(new JustArrayContext() {{
+                          put("lfkdsk", 11000);
+                      }}, "lfkdsk + 10000000"))
+              .collect(Collectors.toList())
+              .forEach(System.out::println);
     }
 }
