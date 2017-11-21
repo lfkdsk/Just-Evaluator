@@ -26,3 +26,4 @@ target/
 .classpath
 .project
 sh/history.just
+.settings/
