@@ -31,6 +31,11 @@ public class VarTest {
         }
 
         @Override
+        public Object remove(String key) {
+            return null;
+        }
+
+        @Override
         public Object get(String objName) {
             return null;
         }
@@ -72,6 +77,11 @@ public class VarTest {
 
         @Override
         public List<String> commandList() {
+            return null;
+        }
+
+        @Override
+        public List<String> functions() {
             return null;
         }
 

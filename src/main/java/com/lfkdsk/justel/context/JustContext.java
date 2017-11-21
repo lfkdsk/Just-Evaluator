@@ -16,6 +16,8 @@ public interface JustContext {
 
     boolean contain(String name);
 
+    Object remove(String key);
+
     Object get(String objName);
 
     Object put(String key, Object val);
@@ -40,6 +42,8 @@ public interface JustContext {
     Collection<String> varsKeySet();
 
     List<String> commandList();
+
+    List<String> functions();
 
     boolean clearVars();
 

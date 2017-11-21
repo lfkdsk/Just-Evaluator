@@ -79,8 +79,8 @@ public final class JavaSource {
     private String reformatToPrint() {
         StringBuilder builder = new StringBuilder(sourceCode);
 
-        builder = insertNewLine(builder, "{", "\r\n║");
-        builder = insertNewLine(builder, ";", "\r\n║");
+        builder = insertNewLine(builder, "{", "\r\n");
+        builder = insertNewLine(builder, ";", "\r\n");
 
         String[] args = {
                 "<Java Source Code> : ",

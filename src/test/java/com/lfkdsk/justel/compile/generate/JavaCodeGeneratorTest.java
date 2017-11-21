@@ -51,9 +51,8 @@ public class JavaCodeGeneratorTest {
 //        Lexer lexer = new JustLexerImpl(new StringReader("lfkdsk * pi"));
         JustParser parser = new JustParserImpl();
         AstNode rootNode = null;
-        while (lexer.hasMore()) {
-            rootNode = parser.parser(lexer);
-        }
+        lexer.hasMore();
+        rootNode = parser.parser(lexer.tokens());
 
 
         Generator generator = new JavaCodeGenerator();
@@ -70,13 +69,9 @@ public class JavaCodeGeneratorTest {
 
     public static String compiler(String exprStr, JustContext context) {
         Logger.init("gen-code");
-        Lexer lexer = new JustLexerImpl(new StringReader(exprStr));
+        Lexer lexer = new JustLexerImpl();
         JustParser parser = new JustParserImpl();
-        AstProgram rootNode = null;
-        while (lexer.hasMore()) {
-            rootNode = (AstProgram) parser.parser(lexer);
-        }
-
+        AstProgram rootNode = (AstProgram) parser.parser(lexer.scanner(exprStr));
         if (rootNode != null && rootNode.isProgramConst()) {
             Object result = rootNode.program().eval(context);
             Logger.i(result.toString());

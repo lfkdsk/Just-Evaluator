@@ -14,6 +14,8 @@ import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.template.TemplateImpl;
 import com.lfkdsk.justel.template.dom.DomCom;
 import com.lfkdsk.justel.utils.GeneratedId;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.*;
 
@@ -26,18 +28,17 @@ import java.util.*;
  */
 public final class JavaCodeGenerator implements Generator {
 
-    private static final DomCom mTemplate = new TemplateImpl().generateTemplate();
+    @Getter
+    @Setter
+    private DomCom mTemplate = new TemplateImpl().generateTemplate();
 
     private String generateLocalVars(JustContext context) {
-//        varSet.clear();
-
         if (context == null) return "";
         StringBuilder builder = new StringBuilder();
 
         Collection<String> keySet = context.varsKeySet();
         for (String key : keySet) {
             Var var = Var.of(key, context.get(key));
-//            varSet.add(var);
             builder.append(context.generateVarAssignCode(var));
         }
 

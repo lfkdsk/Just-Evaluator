@@ -28,10 +28,7 @@ class JavaSourceTest {
         Logger.init("gen-code");
         Lexer lexer = new JustLexerImpl(new StringReader("add(111,222)"));
         JustParser parser = new JustParserImpl();
-        AstNode rootNode = null;
-        while (lexer.hasMore()) {
-            rootNode = parser.parser(lexer);
-        }
+        AstNode rootNode = parser.parser(lexer.tokens());
         Generator generator = new JavaCodeGenerator();
         JavaSource javaSource = generator.generate(context, rootNode);
 

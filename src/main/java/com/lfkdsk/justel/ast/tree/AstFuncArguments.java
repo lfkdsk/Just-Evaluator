@@ -95,7 +95,6 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
     @Override
     public String compile(JustContext env) {
         // expr , expr , expr
-
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < childCount(); i++) {
@@ -106,5 +105,25 @@ public class AstFuncArguments extends AstList implements AstPostfixExpr {
         }
 
         return builder.toString();
+    }
+
+    @Override
+    public String toString() {
+        if (evalString == null) {
+
+            StringBuilder builder = new StringBuilder();
+
+            String sep = "";
+
+            for (AstNode node : children) {
+                builder.append(sep);
+                sep = " ";
+                builder.append(node.toString());
+            }
+
+            evalString = builder.toString();
+        }
+
+        return evalString;
     }
 }

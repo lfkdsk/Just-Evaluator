@@ -10,7 +10,9 @@ package com.lfkdsk.justel.parser;
 
 import com.lfkdsk.justel.ast.base.AstNode;
 import com.lfkdsk.justel.exception.ParseException;
-import com.lfkdsk.justel.lexer.Lexer;
+import com.lfkdsk.justel.token.Token;
+
+import java.util.Queue;
 
 /**
  * Just Parser Interface
@@ -29,5 +31,5 @@ public interface JustParser {
      * @return Root Node of AST
      * @throws ParseException Parse
      */
-    AstNode parser(Lexer lexer) throws ParseException;
+    AstNode parser(Queue<Token> lexer) throws ParseException;
 }

@@ -11,9 +11,9 @@ class FormatUtilsTest {
     @Test
     void testReformatString() {
         Logger.init();
-        Logger.v(reformatAstPrint("(+ lfkdsk 1)"));
-        Logger.v(reformatAstPrint("(- (+ lfkdsk 1) lfkdsk)"));
-        Logger.v(reformatAstPrint("(== (- (+ lfkdsk 1) lfkdsk) true)"));
+        Logger.v(reformatAstPrint("((+ lfkdsk 1))"));
+        Logger.v(reformatAstPrint("((- (+ lfkdsk 1) lfkdsk))"));
+        Logger.v(reformatAstPrint("((== (- (+ lfkdsk 1) lfkdsk) true))"));
     }
 
     @Test
@@ -25,6 +25,6 @@ class FormatUtilsTest {
     void beautifulReformat() {
         System.out.println(FormatUtils.beautifulPrint("lfkdsk", "11111111111111111",
                 insertNewLine(new StringBuilder(reformatAstPrint("(== (- (+ lfkdsk 1) lfkdsk) true)")),
-                        "\n","║").toString()));
+                        "\n","").toString()));
     }
 }

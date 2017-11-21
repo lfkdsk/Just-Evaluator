@@ -13,8 +13,6 @@ import com.lfkdsk.justel.parser.JustParserImpl;
 import com.lfkdsk.justel.utils.logger.Logger;
 import org.junit.jupiter.api.Test;
 
-import java.io.StringReader;
-
 /**
  * Created by liufengkai on 2017/8/11.
  */
@@ -66,12 +64,9 @@ public class CompareTest {
 
     public static long compiler(String exprStr, JustContext context) {
         Logger.init("gen-code");
-        Lexer lexer = new JustLexerImpl(new StringReader(exprStr));
+        Lexer lexer = new JustLexerImpl();
         JustParser parser = new JustParserImpl();
-        AstProgram rootNode = null;
-        while (lexer.hasMore()) {
-            rootNode = (AstProgram) parser.parser(lexer);
-        }
+        AstProgram rootNode = (AstProgram) parser.parser(lexer.scanner(exprStr));
 
         if (rootNode != null && rootNode.isProgramConst()) {
             long startTime = System.currentTimeMillis();

@@ -23,7 +23,7 @@ import java.io.StringReader;
  * Just Parser Impl Test
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/7/26.
+ * Created by liufengkai on 2017/7/26.
  * @see JustParserImpl
  */
 public class JustParserImplTest {
@@ -68,11 +68,11 @@ public class JustParserImplTest {
             for (int j = 0; j < 1000; j++) {
 
                 Lexer lexer = new JustLexerImpl(new StringReader(expr));
-                while (lexer.hasMore()) {
-                    AstNode node = parser.parser(lexer);
-                    node.eval(context);
+                lexer.hasMore();
+                AstNode node = parser.parser(lexer.tokens());
+                node.eval(context);
 //                    Logger.v(" => " + node.call(context).toString() + "  ");
-                }
+
             }
             System.out.println(System.currentTimeMillis() - start);
         }
@@ -89,14 +89,13 @@ public class JustParserImplTest {
         JustParser parser = new JustParserImpl();
         Logger.init("test parser");
         String returnString = "";
-        while (lexer.hasMore()) {
-            AstNode node = parser.parser(lexer);
+        lexer.hasMore();
+        AstNode node = parser.parser(lexer.tokens());
 
-            Logger.v(" => " + node.toString() + "  ");
-            if (eval) {
-                returnString = node.eval(context).toString();
-                Logger.v(" => " + returnString + "  ");
-            }
+        Logger.v(" => " + node.toString() + "  ");
+        if (eval) {
+            returnString = node.eval(context).toString();
+            Logger.v(" => " + returnString + "  ");
         }
         return returnString;
     }

@@ -102,7 +102,7 @@ public class DomCom {
      * @return return binder-DomCom
      */
     public DomCom append(DomCom domCom) {
-        components.addAll(domCom.getComponents());
+        components.add(new SequenceDomComponent(domCom.getComponents()));
 
         return this;
     }
@@ -122,6 +122,16 @@ public class DomCom {
     public DomCom randomVal() {
         components.add(new RandomValComponent());
 
+        return this;
+    }
+
+    public DomCom reset() {
+        this.components.clear();
+        return this;
+    }
+
+    public DomCom reset(DomCom domCom) {
+        this.components = domCom.components;
         return this;
     }
 

@@ -7,6 +7,7 @@ import com.lfkdsk.justel.compile.generate.Generator;
 import com.lfkdsk.justel.compile.generate.JavaCodeGenerator;
 import com.lfkdsk.justel.compile.generate.JavaSource;
 import com.lfkdsk.justel.context.JustContext;
+import com.lfkdsk.justel.eval.ExprBinder;
 import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
 import com.lfkdsk.justel.lexer.Lexer;
@@ -15,6 +16,9 @@ import com.lfkdsk.justel.parser.JustParserImpl;
 import com.lfkdsk.justel.utils.ObjectHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * Just EL Wrapper
@@ -58,13 +62,7 @@ public final class JustEL {
     }
 
     private AstProgram parse(String expr) {
-        // reset lexer
-        lexer.reset(expr);
-        // read line
-        lexer.hasMore();
-        // read root node
-
-        return (AstProgram) parser.parser(lexer);
+        return (AstProgram) parser.parser(lexer.scanner(expr));
     }
 
     /**
@@ -116,6 +114,41 @@ public final class JustEL {
         final JavaSource javaSource = generator.generate(env, rootNode);
 
         return compiler.compile(javaSource);
+    }
+
+    /**
+     * Expr Stream
+     *
+     * @param expr     expression string
+     * @param contexts context
+     * @return expression - stream
+     */
+    public Stream<Expression> expr(@NotNull final String expr, @NotNull final JustContext contexts) {
+        return Stream.of(expr)
+                     .map(lexer::scanner)
+                     .map(parser::parser)
+                     .map(astNode -> generator.generate(contexts, astNode))
+                     .map(compiler::compile);
+    }
+
+    /**
+     * Expr Stream
+     *
+     * @param binder binder
+     * @return expression - stream
+     */
+    public Stream<Expression> expr(@NotNull final ExprBinder binder) {
+        return expr(binder.getExpr(), binder.getContexts());
+    }
+
+    /**
+     * Expr Stream
+     *
+     * @param binders binder
+     * @return expression - stream
+     */
+    public Stream<Expression> exprs(@NotNull final ExprBinder... binders) {
+        return Arrays.stream(binders).flatMap(this::expr);
     }
 
     /**

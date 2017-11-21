@@ -17,13 +17,15 @@ import com.lfkdsk.justel.ast.tree.AstFuncArguments;
 import com.lfkdsk.justel.ast.tree.AstPrimaryExpr;
 import com.lfkdsk.justel.ast.tree.AstProgram;
 import com.lfkdsk.justel.exception.ParseException;
-import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.literal.BoolLiteral;
 import com.lfkdsk.justel.literal.IDLiteral;
 import com.lfkdsk.justel.literal.NumberLiteral;
 import com.lfkdsk.justel.literal.StringLiteral;
 import com.lfkdsk.justel.token.ReservedToken;
+import com.lfkdsk.justel.token.Token;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Queue;
 
 import static com.lfkdsk.justel.parser.BnfCom.Operators.LEFT;
 import static com.lfkdsk.justel.parser.BnfCom.rule;
@@ -181,7 +183,7 @@ public class JustParserImpl implements JustParser {
     }
 
     @Override
-    public AstNode parser(Lexer lexer) throws ParseException {
+    public AstNode parser(Queue<Token> lexer) throws ParseException {
         return generateAst(program.parse(lexer), operators);
     }
 }

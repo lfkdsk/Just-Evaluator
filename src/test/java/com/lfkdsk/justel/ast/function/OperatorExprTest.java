@@ -78,28 +78,24 @@ class OperatorExprTest {
         JustLexerImpl lexer = new JustLexerImpl(new StringReader(expr));
         lexer.insertSymbol("**");
         String returnString = "";
-        while (lexer.hasMore()) {
-            AstNode node = parser.parser(lexer);
+        lexer.hasMore();
+        AstNode node = parser.parser(lexer.tokens());
 
-            Logger.v(" => " + node.toString() + "  ");
-            returnString = node.eval(context).toString();
-            Logger.v(" => " + returnString + "  ");
-        }
+        Logger.v(" => " + node.toString() + "  ");
+        returnString = node.eval(context).toString();
+        Logger.v(" => " + returnString + "  ");
 
         return returnString;
     }
 
     private String insertCompiler(String exprStr, JustContext context) {
         Logger.init("gen-code");
-        JustLexerImpl lexer = new JustLexerImpl(new StringReader(exprStr));
+        JustLexerImpl lexer = new JustLexerImpl();
         lexer.insertSymbol("**");
         JustParserImpl parser = new JustParserImpl();
         parser.insertOperators("**", 2, LEFT, NewOperator.class);
 
-        AstNode rootNode = null;
-        while (lexer.hasMore()) {
-            rootNode = parser.parser(lexer);
-        }
+        AstNode rootNode = parser.parser(lexer.scanner(exprStr));
         Generator generator = new JavaCodeGenerator();
         JustCompiler compiler = new JustCompilerImpl();
         JavaSource javaSource = generator.generate(context, rootNode);
@@ -150,12 +146,11 @@ class OperatorExprTest {
         };
 
         for (String arg : args) {
-            JustLexerImpl lexer = new JustLexerImpl(new StringReader(arg));
+            JustLexerImpl lexer = new JustLexerImpl();
             JustParserImpl parser = new JustParserImpl();
-            Logger.v(parser.parser(lexer).toString());
+            Logger.v(parser.parser(lexer.scanner(arg)).toString());
         }
     }
-
 
 
 }
