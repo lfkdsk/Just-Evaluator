@@ -13,7 +13,6 @@ import com.lfkdsk.justel.ast.tree.AstFuncExpr;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.eval.Evaluable;
 import com.lfkdsk.justel.exception.EvalException;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * ExtendFunction Basic Expr
@@ -74,20 +73,5 @@ public abstract class ExtendFunctionExpr implements Function, Evaluable {
      */
     protected boolean paramsCheck(Object[] params) {
         return true;
-    }
-
-    public static ExtendFunctionExpr of(@NotNull final String funcName,
-                                        @NotNull final java.util.function.Function<Object[], Object> call) {
-        return new ExtendFunctionExpr() {
-            @Override
-            public Object call(Object... params) {
-                return call.apply(params);
-            }
-
-            @Override
-            public String funcName() {
-                return funcName;
-            }
-        };
     }
 }

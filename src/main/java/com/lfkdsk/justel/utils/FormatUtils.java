@@ -60,7 +60,7 @@ public class FormatUtils {
         return builder.toString();
     }
 
-    public static StringBuilder insertNewLine(StringBuilder builder, String symbol,String insertSymbol) {
+    public static StringBuilder insertNewLine(StringBuilder builder, String symbol, String insertSymbol) {
         int start = 0, end = builder.length();
         int index;
         while (start < end) {
@@ -81,20 +81,25 @@ public class FormatUtils {
         for (int i = 0; i < lines.length; i++) {
             String arg = lines[i];
             if (i == lines.length - 1) {
-                parent.append("\r\n")
-                      .append(HORIZONTAL_DOUBLE_LINE)
-                      .append(arg)
-                      .append("\r\n")
+                for (String line : arg.split("\\r?\\n")) {
+                    parent.append("\r")
+                          .append(HORIZONTAL_DOUBLE_LINE)
+                          .append(line)
+                          .append("\t\n");
+                }
+
+                parent.append("\r")
                       .append(BOTTOM_BORDER);
                 break;
             }
 
-            parent.append("\t\n")
-                  .append(HORIZONTAL_DOUBLE_LINE)
-                  .append(arg)
-                  .append("\t\n")
-                  .append(MIDDLE_BORDER);
+            for (String line : arg.split("\\r?\\n")) {
+                parent.append("\t\n")
+                      .append(HORIZONTAL_DOUBLE_LINE)
+                      .append(line).append("\t\n");
+            }
 
+            parent.append(MIDDLE_BORDER);
         }
 
         return parent.toString();

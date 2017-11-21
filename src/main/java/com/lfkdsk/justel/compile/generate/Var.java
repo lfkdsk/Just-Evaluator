@@ -9,7 +9,6 @@
 package com.lfkdsk.justel.compile.generate;
 
 import com.lfkdsk.justel.utils.ReflectUtils;
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -20,13 +19,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class Var {
 
-    @Getter
     private String name;
 
-    @Getter
     private Class<?> type;
 
-    @Getter
     private Object value;
 
     private static Var cache = new Var("object", new Object());
@@ -64,5 +60,17 @@ public final class Var {
         cache.setName(name);
 
         return cache;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Class<?> getType() {
+        return type;
+    }
+
+    public Object getValue() {
+        return value;
     }
 }

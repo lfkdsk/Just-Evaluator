@@ -2,14 +2,12 @@ package com.lfkdsk.justel.repl;
 
 import com.lfkdsk.justel.JustEL;
 import com.lfkdsk.justel.ast.base.AstNode;
-import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
 import com.lfkdsk.justel.compile.compiler.JustCompiler;
 import com.lfkdsk.justel.compile.compiler.JustCompilerImpl;
 import com.lfkdsk.justel.compile.generate.Generator;
-import com.lfkdsk.justel.compile.generate.JavaCodeGenerator;
 import com.lfkdsk.justel.compile.generate.JavaSource;
+import com.lfkdsk.justel.context.JustArrayContext;
 import com.lfkdsk.justel.context.JustContext;
-import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.eval.Expression;
 import com.lfkdsk.justel.lexer.Lexer;
 import com.lfkdsk.justel.parser.JustParser;
@@ -29,6 +27,7 @@ import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.lfkdsk.justel.repl.ReplMethodHelper.*;
 import static com.lfkdsk.justel.utils.FormatUtils.*;
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -62,10 +61,6 @@ public class JustRepl {
                     " Just-REPL support assign(=) operator to set id-token's value, this grammar \n " +
                     "won't support in JustEL";
 
-    private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_PURPLE = "\u001B[35m";
-    private static final String ANSI_CYAN = "\u001B[36m";
-    private static final String JUST_EL = "JustEL > ";
 
     /**
      * just-lexer
@@ -83,90 +78,26 @@ public class JustRepl {
     /**
      * code-generator
      */
-    private static Generator generator = new JavaCodeGenerator();
+    private static Generator generator = new MockGenerator();
 
-    public static class CompileTest extends ExtendFunctionExpr {
+    static JustEL justEL = JustEL.builder()
+                                 .lexer(lexer)
+                                 .parser(parser)
+                                 .compiler(compiler)
+                                 .create();
 
-        @Override
-        public Object call(Object... params) {
-            assert params.length == 2;
-            assert params[0] instanceof String;
-            assert params[1] instanceof Integer;
+    static ExecutorService executor = Executors.newFixedThreadPool(10);
 
-            int times = (int) params[1];
-            String expr = (String) params[0];
-
-            System.out.println(cyanPrint("Start Compile Test in another thread"));
-            executor.execute(() -> {
-                long start = System.currentTimeMillis();
-                Expression expression = justEL.compile(expr, env);
-                for (int i = 0; i < times; i++) {
-                    expression.eval(env);
-                }
-                System.out.println("");
-                System.out.println(cyanPrint(beautifulPrint("use time :" + (System.currentTimeMillis() - start) + " ms" + " run " + times + " times")));
-            });
-
-            return "testing";
-        }
-
-        @Override
-        public String funcName() {
-            return "compileTest";
-        }
-    }
-
-    public static class EvalTest extends ExtendFunctionExpr {
-
-        @Override
-        public Object call(Object... params) {
-            assert params.length == 2;
-            assert params[0] instanceof String;
-            assert params[1] instanceof Integer;
-            int times = (int) params[1];
-            String expr = (String) params[0];
-
-            System.out.println(cyanPrint("Start Eval Test in another thread"));
-            executor.execute(() -> {
-                long start = System.currentTimeMillis();
-                Expression expression = justEL.expr(expr);
-                for (int i = 0; i < times; i++) {
-                    expression.eval(env);
-                }
-                System.out.println("");
-                System.out.println(cyanPrint(beautifulPrint("use time :" + (System.currentTimeMillis() - start) + " ms" + " run " + times + " times")));
-            });
-
-            return "testing";
-        }
-
-        @Override
-        public String funcName() {
-            return "evalTest";
-        }
-    }
-
-    private static JustContext env = new JustMapContext() {{
+    static JustContext env = new JustArrayContext() {{
         putExtendFunc(new CompileTest());
         putExtendFunc(new EvalTest());
+        putExtendFunc(new GetEnvironment());
     }};
-
-    private static JustEL justEL = JustEL.builder()
-                                         .lexer(lexer)
-                                         .parser(parser)
-                                         .compiler(compiler)
-                                         .create();
-
-    private static ExecutorService executor = Executors.newFixedThreadPool(10);
 
     private static boolean openAst = false;
     private static boolean openMockEval = false;
     private static boolean openMockCompile = false;
     private static boolean openMockGenerate = false;
-
-    private static String cyanPrint(String msg) {
-        return ANSI_CYAN + msg + ANSI_RESET;
-    }
 
     private static void resolveCommandFlag(String command, boolean flag) {
         if (command.contains("a")) openAst = flag;
@@ -193,7 +124,7 @@ public class JustRepl {
         String reformat = reformatAstPrint(node.toString());
         String[] args = {
                 "AST ---- Lisp Style",
-                insertNewLine(new StringBuilder(reformat), "\n", "║").toString()
+                insertNewLine(new StringBuilder(reformat), "\n", "").toString()
         };
 
         System.out.println(cyanPrint(beautifulPrint(args)));
@@ -208,7 +139,7 @@ public class JustRepl {
 
         String[] args = {
                 "Value ---- Eval",
-                insertNewLine(new StringBuilder(reformat), "\n", "\r\n║").toString()
+                insertNewLine(new StringBuilder(reformat), "\n", "\r\n").toString()
         };
 
         System.out.println(cyanPrint(beautifulPrint(args)));

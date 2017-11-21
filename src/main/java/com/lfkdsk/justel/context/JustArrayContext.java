@@ -2,14 +2,13 @@ package com.lfkdsk.justel.context;
 
 import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
 import com.lfkdsk.justel.compile.generate.Var;
+import com.lfkdsk.justel.utils.collection.ArrayBinder;
 
 import java.util.*;
 
 public class JustArrayContext implements JustContext {
 
-    private Map<String, Integer> indexMap = new HashMap<>();
-
-    private ArrayList<Object> objectList = new ArrayList<>();
+    private ArrayBinder<String, Object> indexBinder = new ArrayBinder<>();
 
     private List<String> commandList = new LinkedList<>();
 
@@ -19,25 +18,17 @@ public class JustArrayContext implements JustContext {
 
     @Override
     public boolean contain(String name) {
-        return this.indexMap.containsKey(name);
+        return this.indexBinder.containsKey(name);
     }
 
     @Override
     public Object get(String objName) {
-        return objectList.get(indexMap.get(objName));
+        return indexBinder.get(objName);
     }
 
     @Override
     public Object put(String key, Object val) {
-        Integer index = indexMap.get(key);
-        if (index != null) {
-            objectList.set(index, val);
-        } else {
-            objectList.add(val);
-            indexMap.put(key, objectList.size() - 1);
-        }
-
-        return val;
+        return indexBinder.put(key, val);
     }
 
     @Override
@@ -67,7 +58,7 @@ public class JustArrayContext implements JustContext {
 
     @Override
     public Collection<String> varsKeySet() {
-        return indexMap.keySet();
+        return indexBinder.keySet();
     }
 
     @Override
@@ -77,22 +68,21 @@ public class JustArrayContext implements JustContext {
 
     @Override
     public boolean clearVars() {
-        indexMap.clear();
+        indexBinder.clear();
         commandList.clear();
         astCache.clear();
-        objectList.clear();
 
         return true;
     }
 
     @Override
     public int indexOf(String key) {
-        return indexMap.get(key);
+        return indexBinder.indexOf(key);
     }
 
     @Override
     public Object getWith(int index) {
-        return objectList.get(index);
+        return indexBinder.getWith(index);
     }
 
     @Override
