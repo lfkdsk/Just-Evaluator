@@ -124,7 +124,7 @@ public class JustRepl {
         String reformat = reformatAstPrint(node.toString());
         String[] args = {
                 "AST ---- Lisp Style",
-                insertNewLine(new StringBuilder(reformat), "\n", "").toString()
+                insertNewLine(new StringBuilder(reformat), "", "").toString()
         };
 
         System.out.println(cyanPrint(beautifulPrint(args)));

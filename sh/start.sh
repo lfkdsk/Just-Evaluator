@@ -1,0 +1,1 @@
+java -jar target/just-el-2.2.1-SNAPSHOT-jar-with-dependencies.jar -ae

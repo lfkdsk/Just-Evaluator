@@ -27,6 +27,11 @@ public class JustMapContext implements JustContext {
     }
 
     @Override
+    public Object remove(String key) {
+        return map.remove(key);
+    }
+
+    @Override
     public Object get(String objName) {
         return map.get(objName);
     }
@@ -71,6 +76,11 @@ public class JustMapContext implements JustContext {
     @Override
     public List<String> commandList() {
         return commandList;
+    }
+
+    @Override
+    public List<String> functions() {
+        return new ArrayList<>(extFunc.keySet());
     }
 
     @Override

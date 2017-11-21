@@ -22,6 +22,11 @@ public class JustArrayContext implements JustContext {
     }
 
     @Override
+    public Object remove(String key) {
+        return indexBinder.remove(key);
+    }
+
+    @Override
     public Object get(String objName) {
         return indexBinder.get(objName);
     }
@@ -64,6 +69,11 @@ public class JustArrayContext implements JustContext {
     @Override
     public List<String> commandList() {
         return commandList;
+    }
+
+    @Override
+    public List<String> functions() {
+        return new ArrayList<>(extFunc.keySet());
     }
 
     @Override

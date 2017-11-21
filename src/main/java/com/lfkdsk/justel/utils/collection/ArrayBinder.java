@@ -23,11 +23,7 @@ public class ArrayBinder<Key, Value> implements Map<Key, Value> {
 
     @Override
     public int size() {
-        if (indexMap.size() == objectList.size()) {
-            return objectList.size();
-        }
-
-        throw new RuntimeException("indexMap Size && objList Size aren't equal ");
+        return indexMap.size();
     }
 
     @Override
@@ -52,7 +48,7 @@ public class ArrayBinder<Key, Value> implements Map<Key, Value> {
             return null;
         }
 
-        return objectList.get(index.intValue());
+        return objectList.get(index);
     }
 
     @Override
@@ -77,7 +73,7 @@ public class ArrayBinder<Key, Value> implements Map<Key, Value> {
         }
 
         Value value = objectList.get(index);
-        objectList.remove(index);
+        objectList.set(index, null);
         return value;
     }
 
