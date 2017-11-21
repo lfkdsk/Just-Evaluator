@@ -123,6 +123,12 @@ public class FormatUtils {
         return parent.toString();
     }
 
+    /**
+     * Print Context's Values && Funcs
+     *
+     * @param context ctx
+     * @return String-print
+     */
     public static String contextPrint(JustContext context) {
         if (context.varsKeySet().isEmpty()) {
             context.put("EMPTY_CONTEXT", new Object());

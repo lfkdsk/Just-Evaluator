@@ -148,7 +148,7 @@
       <groupId>org.projectlombok</groupId>  
       <artifactId>lombok</artifactId>  
       <version>1.12.6</version> 
-    </dependency>
-  </dependencies>
-  <contributors><contributor><properties><provider>lfk_dsk@hotmail.com</provider><codeName>null</codeName><codeUrl>git@github.com:lfkdsk/Just-EL.git commit:9556b18</codeUrl><description>contributors added by SCM Plugin, please don't modify it!</description></properties></contributor></contributors>
+    </dependency> 
+  </dependencies>  
+  <contributors><contributor><properties><provider>lfk_dsk@hotmail.com</provider><codeName>null</codeName><codeUrl>git@github.com:lfkdsk/Just-EL.git commit:14f4cc9</codeUrl><description>contributors added by SCM Plugin, please don't modify it!</description></properties></contributor></contributors>
 </project>
