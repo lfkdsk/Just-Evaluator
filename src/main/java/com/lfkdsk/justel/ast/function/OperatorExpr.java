@@ -183,10 +183,10 @@ public abstract class OperatorExpr extends AstList implements Function {
 
             if (obj instanceof Float) return obj.toString() + "F";
             else if (obj instanceof Long) return obj.toString() + "L";
+            else if (obj instanceof String) return "(\"" + obj + "\")";
 
             return obj.toString();
-        }
-        else if (isShouldSplit()) {
+        } else if (isShouldSplit()) {
             return splitSubAstEval(env);
         }
 
