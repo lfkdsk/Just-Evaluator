@@ -5,6 +5,7 @@ import com.lfkdsk.justel.ast.function.ExtendFunctionExpr;
 import com.lfkdsk.justel.compile.generate.JavaSource;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.eval.Expression;
+import jline.console.completer.StringsCompleter;
 import org.fusesource.jansi.AnsiConsole;
 
 import static com.lfkdsk.justel.repl.JustRepl.*;
@@ -115,6 +116,37 @@ public class ReplMethodHelper {
         @Override
         public String funcName() {
             return "getEnv";
+        }
+    }
+
+    public static class Eval extends ExtendFunctionExpr {
+
+        @Override
+        public Object call(Object... params) {
+            assert params.length == 1;
+            String expr = (String) params[0];
+            return parser.parser(lexer.scanner(expr)).eval(env).toString();
+        }
+
+        @Override
+        public String funcName() {
+            return "eval";
+        }
+    }
+
+    public static class AddKey extends ExtendFunctionExpr {
+
+        @Override
+        public Object call(Object... params) {
+            assert params.length == 1;
+            String key = (String) params[0];
+            reader.addCompleter(new StringsCompleter(key));
+            return key;
+        }
+
+        @Override
+        public String funcName() {
+            return "addKey";
         }
     }
 

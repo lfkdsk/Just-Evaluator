@@ -81,11 +81,15 @@ public class JustRepl {
         putExtendFunc(new CompileTest());
         putExtendFunc(new EvalTest());
         putExtendFunc(new GetEnvironment());
+        putExtendFunc(new Eval());
+        putExtendFunc(new AddKey());
     }};
 
+    static ConsoleReader reader = null;
+
     private static void run() throws IOException {
-        ConsoleReader reader = new ConsoleReader();
-        reader.addCompleter(new StringsCompleter("compileTest", "evalTest", "-acge", "getEnv()"));
+        reader = new ConsoleReader();
+        reader.addCompleter(new StringsCompleter("compileTest", "evalTest", "-acge", "getEnv()", "eval", "addKey"));
 
         FileHistory fileHistory = new FileHistory(new File("./sh/history.just"));
         reader.setHistoryEnabled(true);

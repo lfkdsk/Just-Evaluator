@@ -32,4 +32,12 @@ class JustReplTest {
         JustEL justEL = JustEL.builder().create();
         justEL.compile("\"fffff\" + \"fffff\"", new JustArrayContext());
     }
+
+    @Test
+    void testStringNumberAdder() {
+        JustEL justEL = JustEL.builder().create();
+        justEL.compile("\"fffff\" + 1", new JustArrayContext());
+//        Lexer lexer = new JustLexerImpl();
+//        lexer.scanner("1111 + \"fffff\"");
+    }
 }

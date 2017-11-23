@@ -96,26 +96,23 @@ public class FormatUtils {
             String arg = lines[i];
             if (i == lines.length - 1) {
                 for (String line : arg.split("\\r?\\n")) {
-                    parent.append("\r")
-                          .append(HORIZONTAL_DOUBLE_LINE)
+                    parent.append(HORIZONTAL_DOUBLE_LINE)
                           .append(line)
-                          .append("\t\n");
+                          .append("\n");
                 }
 
-                parent.append("\r").append(BOTTOM_BORDER);
+                parent.append(BOTTOM_BORDER);
                 break;
             }
 
             for (String line : arg.split("\\r?\\n")) {
-                if (i > 0) {
-                    parent.append("\r");
-                } else {
-                    parent.append("\r\n");
+                if (i <= 0) {
+                    parent.append("\n");
                 }
 
                 parent.append(HORIZONTAL_DOUBLE_LINE)
                       .append(line)
-                      .append("\t\n");
+                      .append("\n");
             }
 
             parent.append(MIDDLE_BORDER).append("\n");

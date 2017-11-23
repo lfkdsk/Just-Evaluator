@@ -510,7 +510,7 @@ public class JustLexerImpl implements Lexer {
 
     @Override
     public Queue<Token> tokens() {
-        if (hasMore()){
+        if (hasMore()) {
             return queue;
         }
 
