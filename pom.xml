@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
-  <parent> 
-    <groupId>com.taobao</groupId>  
-    <artifactId>parent</artifactId>  
-    <version>1.0.3</version> 
-  </parent>  
-  <modelVersion>4.0.0</modelVersion>  
+  <modelVersion>4.0.0</modelVersion>
   <groupId>com.lfkdsk</groupId>  
   <artifactId>just-el</artifactId>  
   <version>2.2.1-SNAPSHOT</version>  
@@ -150,5 +145,5 @@
       <version>1.12.6</version> 
     </dependency> 
   </dependencies>  
-  <contributors><contributor><properties><provider>lfk_dsk@hotmail.com</provider><codeName>null</codeName><codeUrl>git@github.com:lfkdsk/Just-EL.git commit:14f4cc9</codeUrl><description>contributors added by SCM Plugin, please don't modify it!</description></properties></contributor></contributors>
+  <contributors><contributor><properties><provider>lfk_dsk@hotmail.com</provider><codeName>null</codeName><codeUrl>git@github.com:lfkdsk/Just-EL.git commit:9afb321</codeUrl><description>contributors added by SCM Plugin, please don't modify it!</description></properties></contributor></contributors>
 </project>

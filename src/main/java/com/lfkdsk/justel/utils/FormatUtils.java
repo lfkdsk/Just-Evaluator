@@ -9,6 +9,7 @@ import com.lfkdsk.justel.utils.table.Board;
 import com.lfkdsk.justel.utils.table.Table;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -95,26 +96,23 @@ public class FormatUtils {
             String arg = lines[i];
             if (i == lines.length - 1) {
                 for (String line : arg.split("\\r?\\n")) {
-                    parent.append("\r")
-                          .append(HORIZONTAL_DOUBLE_LINE)
+                    parent.append(HORIZONTAL_DOUBLE_LINE)
                           .append(line)
-                          .append("\t\n");
+                          .append("\n");
                 }
 
-                parent.append("\r").append(BOTTOM_BORDER);
+                parent.append(BOTTOM_BORDER);
                 break;
             }
 
             for (String line : arg.split("\\r?\\n")) {
-                if (i > 0) {
-                    parent.append("\r");
-                } else {
-                    parent.append("\r\n");
+                if (i <= 0) {
+                    parent.append("\n");
                 }
 
                 parent.append(HORIZONTAL_DOUBLE_LINE)
                       .append(line)
-                      .append("\t\n");
+                      .append("\n");
             }
 
             parent.append(MIDDLE_BORDER).append("\n");
@@ -132,8 +130,6 @@ public class FormatUtils {
     public static String contextPrint(JustContext context) {
         if (context.varsKeySet().isEmpty()) {
             context.put("EMPTY_CONTEXT", new Object());
-        } else {
-            context.remove("EMPTY_CONTEXT");
         }
 
         final int valueOriginSize = context.varsKeySet().size();
@@ -171,10 +167,11 @@ public class FormatUtils {
                            return Arrays.asList(key,
                                    context instanceof JustArrayContext
                                            ? String.valueOf(context.indexOf(key))
-                                           : "DON'T SUPPORT",
+                                           : "0",
                                    o.getClass().getCanonicalName(),
                                    o.toString());
                        })
+                       .sorted(Comparator.comparingInt(o -> Integer.valueOf(o.get(1))))
                        .collect(toList());
 
         List<Integer> figuresColWidthsList = Arrays.asList(16, 32, 32, 32);

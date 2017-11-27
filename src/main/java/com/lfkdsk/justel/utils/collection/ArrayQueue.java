@@ -1,5 +1,6 @@
 package com.lfkdsk.justel.utils.collection;
 
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.Iterator;
  */
 public class ArrayQueue<E> implements Deque<E> {
 
+    @Getter
     private ArrayList<E> arrayList = new ArrayList<>();
 
     @Override
@@ -192,5 +194,16 @@ public class ArrayQueue<E> implements Deque<E> {
 
     public void clear() {
         arrayList.clear();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (E e : this) {
+            builder.append(e.toString())
+                   .append(' ');
+        }
+
+        return builder.toString();
     }
 }

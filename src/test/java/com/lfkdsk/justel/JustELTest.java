@@ -99,7 +99,6 @@ class JustELTest {
     @Test
     void testJustELBuilder() {
         Logger.init();
-//        List<Expression> expressionList =
         JustEL.builder()
               .create()
               .exprs(
