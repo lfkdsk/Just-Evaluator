@@ -1,0 +1,15 @@
+language: java   # 声明构建语言环境
+
+notifications:      # 每次构建的时候是否通知，如果不想收到通知邮箱（个人感觉邮件贼烦），那就设置false吧
+  email: true
+
+jdk:
+  - oraclejdk8
+
+install:
+  mvn install -DskipTests=true -Dmaven.javadoc.skip=true
+
+script:
+  echo "mvn package assembly:single"
+  mvn package assembly:single
+
