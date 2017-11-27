@@ -13,7 +13,7 @@ before_deploy:
 - git config --local user.email "lfk_dsk@hotmail.com"
 - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 - mv target/*.jar
-- mv target/surefire-reports/*
+- mv target/surefire-reports/
 deploy:
   provider: releases
   skip_cleanup: true
