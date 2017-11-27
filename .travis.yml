@@ -1,30 +1,26 @@
 language: java
-
 notifications:
   email: true
-
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 install:
-  - mvn install -DskipTests -Dmaven.javadoc.skip=true
-
+- mvn install -DskipTests -Dmaven.javadoc.skip=true
 script:
-  - echo "mvn package assembly:single"
-  - mvn package assembly:single
-
+- echo "mvn package assembly:single"
+- mvn package assembly:single
 before_deploy:
-  # Set up git user name and tag this
-  - git config --local user.name "JustWe"
-  - git config --local user.email "lfk_dsk@hotmail.com"
-  - git tag "Just-EL $(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
-  - mv target/*.jar
-  - mv target/surefire-reports/*
-
+- git config --local user.name "JustWe"
+- git config --local user.email "lfk_dsk@hotmail.com"
+- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+- mv target/*.jar
+- mv target/surefire-reports/*
 deploy:
   provider: releases
-  api_key: 9924dc5c077801f239a7a3801e055e03ea714aba
+  api_key:
+    secure: Pe/Lrhz3hTO/4th9slAaiZIFd0cK9VZRr/wnGXjwMNgSDoumrXGAY0/7U6sNhBFCdamexCeyoLY2puztLdPLfMHJ7DI3Sto1VO4tJOjMsz5AO0RX79VVxpo0678YKLOOCfBW7+jrK/7hNgdNTBRVS/6BER3Zvmb8R5ioLp/T/ayWxCQDqkfT+UxST8phhhxkw5CNfs5lPtle1IyiCblWXZ5GDPzcAkOELI2IYbbP/c63cTgZDqD8UoTEbKpi3TUKnQm8VoRoyElyLauxpqb8+xI0zfSI6IEANKsSYWoXQ4whY/iEumz4d8ySR0NWFIj/hjaVuCsvzc2zzitjbKsyBc+696br12kPXeMVuWQ6aBewjRZt+Ss9nJ9u/RgAVgmLrFphgxHzc9a0Zaa0LoDnwqtfmASSNpW+m5hqTWCTAa5+NFHUe5Ev2rV/LnLKzJNTo6/W4DruKrS8oq4veLqmalxOEKs7mPVpXFnVC77kBmd8Lke9KjMh1BQU08SyE0eZGLlqwmiJgYPOV0dAqN96iYKKgUbLksROPPZTC8oc8+6mqT1BZZjNPHw+k8LCk2LkQXEPPO3wtegNZNgebeeji6EF5KvmDf5pptelT94xzyEBBdc/K6nWROna/NJq9Bw0tKBLfe+I3Fgq+KIHYBZIF0UuLJKnvP2tnqZNbYwZVso=
   file: target/just-el-2.2.1-SNAPSHOT-jar-with-dependencies.jar
-  skip_cleanup: true
   on:
-    tags: true
+    repo: lfkdsk/Just-Evaluator
+env:
+  global:
+    secure: b3sV0h2+Trg1DFC7T+LqpcXn9SXdGES53f4awMfF0dtcFF6h+MO+c2tBKK0UGQJA6QcxngIHyLaZ7tLRa4m88RZiZccRZmTdHWVdsbTNv6BsIJYDlPB6kky9S3ulgdYgPASG2d+ECNWqvkgujDbIz0pxq5rZQzjelDSzWM8+z1KXvLAkfAWDC5pSYYsZy7yQ+1innK5yYm6la89weD/jsG2sAN+y3TFifss4+a+L/BAxCjfV7bhWV47mXuchu5N0GN6HMxOC4zlu8I++T+3X5Xkkrq19Gbhai9s9OMjqGUjPch05Nl8gpMDylFs5HvF/AgDm8ms/ebrs3fcJpeFGrrQ8xEaCYwlIpVBdOIgIIYUq4Mr5hifo1ErCrfMxEZRMoxgZLBGp+lMRbE6kPj4fQtJs+dP77+Psh2aPrp6BfC1QRZu48NejyUH5Sss2og8t1qAsL3EdBoe6hGP9AGEAO78zE9Om6bsbnSyMUo3CNxGTXQIdVayHHuoEy4Tz5xRsJzMo8ohPT1gLghOwPReUAu0B5JXDCUXzOZhUnLgFrUM6HVkKsmRUQn9WaHYElAjkC3KS+rVWRbgoOkQlOaniuw+vrjEQOJ6b31ouagHrOC3B1xOiTvEKdwyAaeD/4kb6Sl1oeHCh7vHxtNsOJlpurs6llEoLb2GhC/gmE4mPmkA=
