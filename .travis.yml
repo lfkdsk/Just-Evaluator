@@ -7,7 +7,7 @@ jdk:
   - oraclejdk8
 
 install:
-  - mvn install -Dmaven.javadoc.skip=true
+  - mvn install -DskipTests -Dmaven.javadoc.skip=true
 
 script:
   - echo "mvn package assembly:single"
@@ -19,6 +19,7 @@ before_deploy:
   - git config --local user.email "lfk_dsk@hotmail.com"
   - git tag "Just-EL $(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
   - mv target/*.jar
+  - mv target/surefire-reports/*
 
 deploy:
   provider: releases
