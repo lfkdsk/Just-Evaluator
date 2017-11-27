@@ -48,6 +48,7 @@ public class MockAssignOperator extends OperatorExpr {
         if (tag == Token.ID) {
             // 重设值
             env.put(((IDLiteral) node).name(), value);
+
             return value;
         } else {
             throw new EvalException("bad assign ", node);

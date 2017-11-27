@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static com.lfkdsk.justel.repl.ReplMethodHelper.*;
+import static java.util.stream.Collectors.toList;
 import static org.fusesource.jansi.Ansi.ansi;
 
 /**
@@ -114,6 +115,12 @@ public class JustRepl {
             try {
 
                 Queue<Token> tokens = lexer.scanner(command);
+
+                reader.addCompleter(
+                        new StringsCompleter(
+                                tokens.stream()
+                                      .map(Token::getText)
+                                      .collect(toList())));
 
                 AstNode node = parser.parser(tokens);
 
