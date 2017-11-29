@@ -24,7 +24,8 @@ deploy:
   file: target/just-el-2.2.1-SNAPSHOT-jar-with-dependencies.jar
   on:
     repo: lfkdsk/Just-Evaluator
-    all_branches: true
+    all_branches: false
+    branch: master
 env:
   global:
     secure: b3sV0h2+Trg1DFC7T+LqpcXn9SXdGES53f4awMfF0dtcFF6h+MO+c2tBKK0UGQJA6QcxngIHyLaZ7tLRa4m88RZiZccRZmTdHWVdsbTNv6BsIJYDlPB6kky9S3ulgdYgPASG2d+ECNWqvkgujDbIz0pxq5rZQzjelDSzWM8+z1KXvLAkfAWDC5pSYYsZy7yQ+1innK5yYm6la89weD/jsG2sAN+y3TFifss4+a+L/BAxCjfV7bhWV47mXuchu5N0GN6HMxOC4zlu8I++T+3X5Xkkrq19Gbhai9s9OMjqGUjPch05Nl8gpMDylFs5HvF/AgDm8ms/ebrs3fcJpeFGrrQ8xEaCYwlIpVBdOIgIIYUq4Mr5hifo1ErCrfMxEZRMoxgZLBGp+lMRbE6kPj4fQtJs+dP77+Psh2aPrp6BfC1QRZu48NejyUH5Sss2og8t1qAsL3EdBoe6hGP9AGEAO78zE9Om6bsbnSyMUo3CNxGTXQIdVayHHuoEy4Tz5xRsJzMo8ohPT1gLghOwPReUAu0B5JXDCUXzOZhUnLgFrUM6HVkKsmRUQn9WaHYElAjkC3KS+rVWRbgoOkQlOaniuw+vrjEQOJ6b31ouagHrOC3B1xOiTvEKdwyAaeD/4kb6Sl1oeHCh7vHxtNsOJlpurs6llEoLb2GhC/gmE4mPmkA=
