@@ -1,6 +1,7 @@
 ## Just-Evaluator
 
-**JVM platform, high performance, lightweight** expression computing engine, providing interpretation and compilation and other methods to achieve.
+**JVM platform, high performance, lightweight** expression computing engine, providing interpretation and compilation and other methods to achieve.  
+![](https://travis-ci.org/lfkdsk/Just-Evaluator.svg?branch=Just-Evaluator-20171127061533)
 
 ### Usage
 
