@@ -18,12 +18,16 @@ import java.util.Queue;
 import static org.junit.Assert.*;
 
 public class QueryGrammarTest {
+
     @Test
     public void testEmptyObjectValue() {
         String obj = "{}";
         Lexer lexer = new QueryLexer(obj);
         Queue<Token> tokens = lexer.tokens();
         AstNode node = new QueryGrammar().getObjectLabel().parse(tokens);
+        Assertions.assertEquals(node.childCount(), 3);
+        Assertions.assertEquals(node.child(0).toString(), "{");
+        Assertions.assertEquals(node.child(2).toString(), "}");
     }
 
     @Test
@@ -31,8 +35,29 @@ public class QueryGrammarTest {
         String obj = "[]";
         Lexer lexer = new QueryLexer(obj);
         Queue<Token> tokens = lexer.tokens();
+        AstNode node = new QueryGrammar().getArrayLabel().parse(tokens);
+        Assertions.assertEquals(node.childCount(), 3);
+        Assertions.assertEquals(node.child(0).toString(), "[");
+        Assertions.assertEquals(node.child(2).toString(), "]");
+    }
 
-        AstNode node = new QueryGrammar().getObjectLabel().parse(tokens);
+    @Test
+    public void testPrimary() {
+        String[] args = {"\"lfkdsk\"", "true", "100000"};
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            Lexer lexer = new QueryLexer(arg);
+            Queue<Token> tokens = lexer.tokens();
+            AstNode node = new QueryGrammar().getPrimary().parse(tokens);
+
+            if (i == 0) {
+                Assertions.assertEquals(node.child(0).getClass().getSimpleName(), "StringLiteral");
+            } else if (i == 1) {
+                Assertions.assertEquals(node.child(0).getClass().getSimpleName(), "BoolLiteral");
+            } else if (i == 2) {
+                Assertions.assertEquals(node.child(0).getClass().getSimpleName(), "NumberLiteral");
+            }
+        }
     }
 
     @Test
@@ -48,12 +73,18 @@ public class QueryGrammarTest {
 
     @Test
     public void testInnerLabel() {
-        String innerLabel = "\"lfkdsk\" : \"lfkdsk\"";
-        Lexer lexer = new JustLexerImpl(innerLabel);
-        AstNode node = new QueryGrammar().getInnerLabel().parse(lexer.tokens());
+        String[] innerLabels = {"\"lfkdsk\":{}", "\"lfkdsk\": []", "\"lfkdsk\": \"1111\""};
+        QueryGrammar grammar = new QueryGrammar();
+        for (int i = 0; i < innerLabels.length; i++) {
+            String innerLabel = innerLabels[i];
+            Lexer lexer = new QueryLexer(innerLabel);
+            Queue<Token> tokens = lexer.tokens();
+            AstNode node = grammar.getInnerLabel().parse(tokens);
+            Assertions.assertEquals(node.getClass().getSimpleName(), "AstInnerLabelExpr");
+            Assertions.assertEquals(node.child(0).toString(), "lfkdsk");
+            Assertions.assertEquals(node.child(2).getClass().getSimpleName(), "AstLabelExpr");
+        }
     }
-
-
 
     @Test
     public void testQuery() throws JSONException {
@@ -61,7 +92,9 @@ public class QueryGrammarTest {
         object.put("lfkdsk", "1");
 
         String query = object.toString();
-        Lexer lexer = new JustLexerImpl(query);
-        AstNode node = new QueryGrammar().getProgram().parse(lexer.tokens());
+        Lexer lexer = new QueryLexer(query);
+        Queue<Token> tokens = lexer.tokens();
+        AstNode node = new QueryGrammar().getProgram().parse(tokens);
+        Assertions.assertEquals(node.getClass().getSimpleName(), "AstQueryProgram");
     }
 }

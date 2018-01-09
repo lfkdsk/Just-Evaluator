@@ -36,20 +36,12 @@ public class QueryGrammar {
     // primary value := number | id | string | boolean
     ///////////////////////////////////////////////////////////////////////////
 
+    @Getter
     private BnfCom primary = rule(AstPrimary.class).or(
             number,
-            id,
             string,
             bool
     );
-
-
-    ///////////////////////////////////////////////////////////////////////////
-    // label name := "string" :
-    ///////////////////////////////////////////////////////////////////////////
-
-    private BnfCom labelName = rule().ast(string).sep(":");
-
 
     ///////////////////////////////////////////////////////////////////////////
     // value label := primary
@@ -62,13 +54,13 @@ public class QueryGrammar {
     ///////////////////////////////////////////////////////////////////////////
 
     @Getter
-    private BnfCom innerLabel = rule(AstInnerLabelExpr.class).ast(labelName).ast(label0);
+    private BnfCom innerLabel = rule(AstInnerLabelExpr.class).ast(string).token(":").ast(label0);
 
     ///////////////////////////////////////////////////////////////////////////
     // inner label list := innerLabel [, innerLabel] *
     ///////////////////////////////////////////////////////////////////////////
 
-    private BnfCom innerLabelList = rule(AstPrimaryList.class).ast(innerLabel).repeat(
+    private BnfCom innerLabelList = rule(AstLabelList.class).ast(innerLabel).repeat(
             rule().sep(",").repeat(innerLabel)
     );
 
@@ -107,7 +99,7 @@ public class QueryGrammar {
     ///////////////////////////////////////////////////////////////////////////
 
     @Getter
-    private BnfCom label = rule(AstLabelExpr.class).or(
+    private BnfCom label = label0.reset(AstLabelExpr.class).or(
             valueLabel,
             objectLabel,
             arrayLabel
@@ -121,8 +113,4 @@ public class QueryGrammar {
 
     @Getter
     private BnfCom program = rule(AstQueryProgram.class).token("{").maybe(innerLabelList).token("}").sep(EOL);
-
-    public QueryGrammar() {
-        this.label0 = label;
-    }
 }
