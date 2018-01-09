@@ -4,6 +4,7 @@ import com.lfkdsk.justel.ast.tree.AstProgram;
 import com.lfkdsk.justel.compile.generate.Generator;
 import com.lfkdsk.justel.compile.generate.JavaCodeGenerator;
 import com.lfkdsk.justel.compile.generate.JavaSource;
+import com.lfkdsk.justel.context.JustArrayContext;
 import com.lfkdsk.justel.context.JustContext;
 import com.lfkdsk.justel.context.JustMapContext;
 import com.lfkdsk.justel.lexer.JustLexerImpl;
@@ -44,7 +45,7 @@ public class CompareTest {
 
     @Test
     void ELEngineCornerTest4() {
-        JustContext vars = new JustMapContext();
+        JustContext vars = new JustArrayContext();
         vars.put("i", 100);
         vars.put("pi", 3.14d);
         vars.put("d", -3.9);

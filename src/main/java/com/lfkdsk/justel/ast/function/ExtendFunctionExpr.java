@@ -18,7 +18,7 @@ import com.lfkdsk.justel.exception.EvalException;
  * ExtendFunction Basic Expr
  *
  * @author liufengkai
- *         Created by liufengkai on 2017/8/3.
+ * Created by liufengkai on 2017/8/3.
  */
 public abstract class ExtendFunctionExpr implements Function, Evaluable {
 

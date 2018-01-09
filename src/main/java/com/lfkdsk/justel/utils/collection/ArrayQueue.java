@@ -198,12 +198,6 @@ public class ArrayQueue<E> implements Deque<E> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for (E e : this) {
-            builder.append(e.toString())
-                   .append(' ');
-        }
-
-        return builder.toString();
+        return arrayList.toString();
     }
 }
