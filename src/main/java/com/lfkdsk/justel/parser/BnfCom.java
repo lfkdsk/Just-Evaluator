@@ -400,7 +400,6 @@ public class BnfCom {
         BnfCom factor;
 
         Expr(Class<? extends AstNode> clazz, BnfCom factor, Operators ops) {
-
             this.factory = Factory.getForAstList(clazz);
             this.factor = factor;
             this.ops = ops;
